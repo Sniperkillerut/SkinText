@@ -173,6 +173,7 @@ namespace SkinText
                     //oldFileVersionInfo.FilePrivatePart 0
                     if (currentFileVersionInfo.FileMajorPart> oldFileVersionInfo.FileMajorPart)
                     {
+                        //MessageBox.Show("Thanks for updating!");
                         File.Copy(curFileName, path + "\\" + curFileName, true);
                     }
                     else
@@ -181,6 +182,7 @@ namespace SkinText
                         {
                             if (currentFileVersionInfo.FileMinorPart > oldFileVersionInfo.FileMinorPart)
                             {
+                                //MessageBox.Show("Thanks for updating!");
                                 File.Copy(curFileName, path + "\\" + curFileName, true);
                             }
                             else
@@ -189,6 +191,7 @@ namespace SkinText
                                 {
                                     if (currentFileVersionInfo.FileBuildPart > oldFileVersionInfo.FileBuildPart)
                                     {
+                                        //MessageBox.Show("Thanks for updating!");
                                         File.Copy(curFileName, path + "\\" + curFileName,true);
                                     }
                                     else
@@ -197,6 +200,7 @@ namespace SkinText
                                         {
                                             if (currentFileVersionInfo.FilePrivatePart > oldFileVersionInfo.FilePrivatePart)
                                             {
+                                                //MessageBox.Show("Thanks for updating!");
                                                 File.Copy(curFileName, path + "\\" + curFileName, true);
                                             }
                                             else
@@ -228,6 +232,11 @@ namespace SkinText
                    // MessageBox.Show(ex.ToString());
                 }
             }
+
+            //read FrostHive/SkinText/default.ini
+            //check what skin to use and load FrostHive/SkinText/SKIN01/skintext.ini
+            //skin information saved in FrostHive/SkinText/SKIN01/skin.ini
+
         }
     }
 }
