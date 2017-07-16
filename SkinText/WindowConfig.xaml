@@ -436,7 +436,7 @@
                         BorderThickness="2"
                         CornerRadius="3" 
                         Padding="5" >
-                        <TextBlock Text="Show Notification Icon, Recommended: On" FontSize="14.667" FontFamily="Tahoma" Foreground="#FFE6E6E6" FontWeight="Bold"/>
+                        <TextBlock Text="Show Notification Icon. Recommended: On" FontSize="14.667" FontFamily="Tahoma" Foreground="#FFE6E6E6" FontWeight="Bold"/>
                     </Border>
                 </ToolTip>
             </Label.ToolTip>
@@ -453,7 +453,7 @@
                         BorderThickness="2"
                         CornerRadius="3" 
                         Padding="5" >
-                        <TextBlock Text="Show Notification Icon, Recommended: On" FontSize="14.667" FontFamily="Tahoma" Foreground="#FFE6E6E6" FontWeight="Bold"/>
+                        <TextBlock Text="Show Notification Icon. Recommended: On" FontSize="14.667" FontFamily="Tahoma" Foreground="#FFE6E6E6" FontWeight="Bold"/>
                     </Border>
                 </ToolTip>
             </CheckBox.ToolTip>
