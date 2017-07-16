@@ -1388,7 +1388,7 @@ namespace SkinText
         }
         private void Rtb_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.SystemKey.Equals(Key.LeftAlt) || e.SystemKey.Equals(Key.RightAlt))
+            if (e.SystemKey.Equals(Key.LeftAlt) || e.Key.Equals(Key.LeftAlt) || e.SystemKey.Equals(Key.RightAlt) || e.Key.Equals(Key.RightAlt))
             {
                 menu.Visibility = Visibility.Visible;
             }
