@@ -40,7 +40,7 @@ namespace SkinText
         {
             if (fileChanged)
             {
-                switch (MessageBox.Show("There are unsaved Changes, Do you want to save?", "Save Changes?", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation, MessageBoxResult.Cancel))
+                switch (MessageBox.Show("There are unsaved Changes to: "+ filepath + "\r\nDo you want to save?", "Save Changes?", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation, MessageBoxResult.Cancel))
                 {
                     case (MessageBoxResult.Yes):
                         {
@@ -81,7 +81,7 @@ namespace SkinText
         {
             if (fileChanged)
             {
-                switch (MessageBox.Show("There are unsaved Changes, Do you want to save?", "Save Changes?", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation, MessageBoxResult.Cancel))
+                switch (MessageBox.Show("There are unsaved Changes to: " + filepath + "\r\nDo you want to save?", "Save Changes?", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation, MessageBoxResult.Cancel))
                 {
                     case (MessageBoxResult.Yes):
                         {
@@ -166,7 +166,7 @@ namespace SkinText
         {
             if (fileChanged)
             {
-                switch (MessageBox.Show("There are unsaved Changes, Do you want to save?", "Save Changes?", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation, MessageBoxResult.Cancel))
+                switch (MessageBox.Show("There are unsaved Changes to: " + filepath + "\r\nDo you want to save?", "Save Changes?", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation, MessageBoxResult.Cancel))
                 {
                     case (MessageBoxResult.Yes):
                         {
@@ -1367,7 +1367,7 @@ namespace SkinText
         {
             if (fileChanged)
             {
-                switch (MessageBox.Show("There are unsaved Changes, Do you want to save?", "Save Changes?", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation, MessageBoxResult.Cancel))
+                switch (MessageBox.Show("There are unsaved Changes to: " + filepath + "\r\nDo you want to save?", "Save Changes?", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation, MessageBoxResult.Cancel))
                 {
                     case (MessageBoxResult.Yes):
                         {
@@ -1412,6 +1412,7 @@ namespace SkinText
         {
             if (e.SystemKey.Equals(Key.LeftAlt) || e.Key.Equals(Key.LeftAlt) || e.SystemKey.Equals(Key.RightAlt) || e.Key.Equals(Key.RightAlt))
             {
+                //TODO: fix
                 menu.Visibility = Visibility.Visible;
             }
         }
