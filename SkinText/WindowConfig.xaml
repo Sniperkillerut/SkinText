@@ -11,9 +11,9 @@
         Height="500"
         Width="350"
         MinWidth="350"
-        MinHeight="500"
+        MinHeight="530"
         MaxWidth="350"
-        MaxHeight="500"
+        MaxHeight="530"
         WindowStyle="None"
         SnapsToDevicePixels="True"
         ResizeMode="NoResize"
@@ -33,6 +33,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -458,7 +459,40 @@
                 </ToolTip>
             </CheckBox.ToolTip>
         </CheckBox>
-        <Label Grid.Column="0" Grid.Row="17" Background="Transparent">
+        <Label Grid.Column="0" Grid.Row="17">
+            <Label.ToolTip>
+                <ToolTip Background="Transparent"
+                         BorderBrush="Transparent"
+                         BorderThickness="0"
+                         VerticalOffset="-10">
+                    <Border Background="#C03A3A3A"
+                        BorderBrush="#997E7E7E"
+                        BorderThickness="2"
+                        CornerRadius="3" 
+                        Padding="5" >
+                        <TextBlock Text="Show Resize on Bottom Right Corner. Recommended: Off" FontSize="14.667" FontFamily="Tahoma" Foreground="#FFE6E6E6" FontWeight="Bold"/>
+                    </Border>
+                </ToolTip>
+            </Label.ToolTip>
+            <TextBlock Text="Resize Corner:" FontSize="14.667" FontFamily="Tahoma" Foreground="#FFE6E6E6" FontWeight="Bold"/>
+        </Label>
+        <CheckBox x:Name="ResizeVisible" Grid.Column="1" Grid.Row="17" Margin="10,0" Checked="ResizeVisible_Unchecked" Unchecked="ResizeVisible_Unchecked" IsChecked="True" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" VerticalAlignment="Center" >
+            <CheckBox.ToolTip>
+                <ToolTip Background="Transparent"
+                         BorderBrush="Transparent"
+                         BorderThickness="0"
+                         VerticalOffset="-10">
+                    <Border Background="#C03A3A3A"
+                        BorderBrush="#997E7E7E"
+                        BorderThickness="2"
+                        CornerRadius="3" 
+                        Padding="5" >
+                        <TextBlock Text="Show Resize on Bottom Right Corner. Recommended: Off" FontSize="14.667" FontFamily="Tahoma" Foreground="#FFE6E6E6" FontWeight="Bold"/>
+                    </Border>
+                </ToolTip>
+            </CheckBox.ToolTip>
+        </CheckBox>
+        <Label Grid.Column="0" Grid.Row="18" Background="Transparent">
             <Label.ToolTip>
                 <ToolTip Background="Transparent"
                          BorderBrush="Transparent"
@@ -475,8 +509,8 @@
             </Label.ToolTip>
             <TextBlock Text="GIF uses:" FontSize="14.667" FontFamily="Tahoma" Foreground="#FFE6E6E6" FontWeight="Bold"/>
         </Label>
-        <RadioButton x:Name="GifMethodRAM" Grid.Column="1" Grid.Row="17" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,10,0" IsChecked="True" Checked="GifMethodRAM_Checked"/>
-        <Label Grid.Column="1" Grid.Row="17" HorizontalAlignment="Center">
+        <RadioButton x:Name="GifMethodRAM" Grid.Column="1" Grid.Row="18" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,10,0" IsChecked="True" Checked="GifMethodRAM_Checked"/>
+        <Label Grid.Column="1" Grid.Row="18" HorizontalAlignment="Center">
             <Label.ToolTip>
                 <ToolTip Background="Transparent"
                          BorderBrush="Transparent"
@@ -493,7 +527,7 @@
             </Label.ToolTip>
             <TextBlock Text="RAM   or   CPU" FontSize="14.667" FontFamily="Tahoma" Foreground="#FFE6E6E6" FontWeight="Bold" HorizontalAlignment="Center"/>
         </Label>
-        <RadioButton x:Name="GifMethodCPU" Grid.Column="1" Grid.Row="17" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0,10,0" IsChecked="True" Checked="GifMethodCPU_Checked"/>
+        <RadioButton x:Name="GifMethodCPU" Grid.Column="1" Grid.Row="18" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0,10,0" IsChecked="True" Checked="GifMethodCPU_Checked"/>
 
 
 

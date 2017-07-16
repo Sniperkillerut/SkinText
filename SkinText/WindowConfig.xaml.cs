@@ -309,6 +309,17 @@ namespace SkinText
                 par.window.MyNotifyIcon.Visibility = Visibility.Collapsed;
             }
         }
+        private void ResizeVisible_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (ResizeVisible.IsChecked.Value)
+            {
+                par.window.ResizeMode = ResizeMode.CanResizeWithGrip;
+            }
+            else
+            {
+                par.window.ResizeMode = ResizeMode.NoResize;
+            }
+        }
 
         private void GifMethodRAM_Checked(object sender, RoutedEventArgs e)
         {

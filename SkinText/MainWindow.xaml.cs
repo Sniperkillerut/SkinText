@@ -843,6 +843,24 @@ namespace SkinText
                                 break;
                                 #endregion
                             }
+                        case "resize_visible":
+                            {
+                                #region  resize visible
+                                try
+                                {
+                                    if (bool.TryParse(line[1], out bool tcheck))
+                                    {
+                                        config.ResizeVisible.IsChecked = tcheck;
+                                    }
+                                }
+                                catch (System.Exception)
+                                {
+                                    config.ResizeVisible.IsChecked = true;
+                                    //throw;
+                                }
+                                break;
+                                #endregion
+                            }
                         default: break;
                     }
                     /*
@@ -965,6 +983,9 @@ namespace SkinText
                     //notification_icon
                     data = "notification_icon = " + config.NotificationVisible.IsChecked.Value.ToString();
                     writer.WriteLine(data);
+                    //ResizeVisible
+                    data = "resize_visible = " + config.ResizeVisible.IsChecked.Value.ToString();
+                    writer.WriteLine(data);
                 }
                 
                 //FileInfo info;
@@ -1057,6 +1078,7 @@ namespace SkinText
             config.allwaysontop.IsChecked = false;
             config.taskbarvisible.IsChecked = true;
             config.NotificationVisible.IsChecked = true;
+            config.ResizeVisible.IsChecked = true;
 
         }
         private void Save(bool saveas)
