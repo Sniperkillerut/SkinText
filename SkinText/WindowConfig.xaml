@@ -128,7 +128,7 @@
             </Label.ToolTip>
             <TextBlock Text="Resize border Width: " FontSize="14.667" FontFamily="Tahoma" Foreground="#FFE6E6E6" FontWeight="Bold"/>
         </Label>
-        <Slider Grid.Column="1" Grid.Row="3" x:Name="bordersize" Maximum="20" Minimum="1" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" ValueChanged="bordersize_ValueChanged" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center"/>
+        <Slider Grid.Column="1" Grid.Row="3" x:Name="bordersize" Maximum="20" Minimum="1" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" ValueChanged="Bordersize_ValueChanged" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center"/>
         <Label Grid.Column="0" Grid.Row="4">
             <Label.ToolTip>
                 <ToolTip Background="Transparent"
@@ -164,7 +164,7 @@
             </Label.ToolTip>
             <TextBlock Text="Rotation Angle: " FontSize="14.667" FontFamily="Tahoma" Foreground="#FFE6E6E6" FontWeight="Bold"/>
         </Label>
-        <Slider Grid.Column="1" Grid.Row="5" Minimum="0" Maximum="359" TickFrequency="1" IsSnapToTickEnabled="True" x:Name="slValue" SmallChange="1" Margin="10,0,10,0" ValueChanged="slValue_ValueChanged" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center"/>
+        <Slider Grid.Column="1" Grid.Row="5" Minimum="0" Maximum="359" TickFrequency="1" IsSnapToTickEnabled="True" x:Name="slValue" SmallChange="1" Margin="10,0,10,0" ValueChanged="SlValue_ValueChanged" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center"/>
         <Label Grid.Column="0" Grid.Row="6">
             <Label.ToolTip>
                 <ToolTip Background="Transparent"
@@ -182,7 +182,7 @@
             </Label.ToolTip>
             <TextBlock Text="Background Image: " FontSize="14.667" FontFamily="Tahoma" Foreground="#FFE6E6E6" FontWeight="Bold"/>
         </Label>
-        <Button x:Name="imagedir" Grid.Column="1" Grid.Row="6" Click="imagedir_Click" BorderBrush="{x:Null}" Foreground="#FFE6E6E6">
+        <Button x:Name="imagedir" Grid.Column="1" Grid.Row="6" Click="Imagedir_Click" BorderBrush="{x:Null}" Foreground="#FFE6E6E6">
             <Button.Style>
                 <Style TargetType="{x:Type Button}">
                     <Setter Property="Background" Value="#602C2C2C"/>
@@ -257,7 +257,7 @@
             </Label.ToolTip>
             <TextBlock Text="Image Opacity: " FontSize="14.667" FontFamily="Tahoma" Foreground="#FFE6E6E6" FontWeight="Bold"/>
         </Label>
-        <Slider Grid.Column="1" Grid.Row="9" Minimum="0" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center" x:Name="imageopacityslider" ValueChanged="imageopacityslider_ValueChanged"/>
+        <Slider Grid.Column="1" Grid.Row="9" Minimum="0" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center" x:Name="imageopacityslider" ValueChanged="Imageopacityslider_ValueChanged"/>
         <Label Grid.Column="0" Grid.Row="10">
             <Label.ToolTip>
                 <ToolTip Background="Transparent"
@@ -275,7 +275,7 @@
             </Label.ToolTip>
             <TextBlock Text="Text Opacity: " FontSize="14.667" FontFamily="Tahoma" Foreground="#FFE6E6E6" FontWeight="Bold"/>
         </Label>
-        <Slider Grid.Column="1" Grid.Row="10" Minimum="0" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center"  x:Name="textopacityslider" ValueChanged="textopacityslider_ValueChanged"/>
+        <Slider Grid.Column="1" Grid.Row="10" Minimum="0" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center"  x:Name="textopacityslider" ValueChanged="TextOpacityslider_ValueChanged"/>
         <Label Grid.Column="0" Grid.Row="11">
             <Label.ToolTip>
                 <ToolTip Background="Transparent"
@@ -293,7 +293,7 @@
             </Label.ToolTip>
             <TextBlock Text="Window Opacity: " FontSize="14.667" FontFamily="Tahoma" Foreground="#FFE6E6E6" FontWeight="Bold"/>
         </Label>
-        <Slider Grid.Column="1" Grid.Row="11" Minimum="0" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center" x:Name="windowopacityslider" ValueChanged="windowopacityslider_ValueChanged"/>
+        <Slider Grid.Column="1" Grid.Row="11" Minimum="0" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center" x:Name="windowopacityslider" ValueChanged="WindowOpacityslider_ValueChanged"/>
         <Label Grid.Column="0" Grid.Row="12">
             <Label.ToolTip>
                 <ToolTip Background="Transparent"
@@ -311,7 +311,7 @@
             </Label.ToolTip>
             <TextBlock Text="Read Only: " FontSize="14.667" FontFamily="Tahoma" Foreground="#FFE6E6E6" FontWeight="Bold"/>
         </Label>
-        <CheckBox x:Name="readonly" Grid.Column="1" Grid.Row="12" VerticalAlignment="Center" Margin="10,0,10,0" Checked="readonly_Checked" Unchecked="readonly_Checked" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center">
+        <CheckBox x:Name="readonly" Grid.Column="1" Grid.Row="12" VerticalAlignment="Center" Margin="10,0,10,0" Checked="Readonly_Checked" Unchecked="Readonly_Checked" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center">
             <CheckBox.ToolTip>
                 <ToolTip Background="Transparent"
                          BorderBrush="Transparent"
@@ -344,7 +344,7 @@
             </Label.ToolTip>
             <TextBlock Text="Spell Check: " FontSize="14.667" FontFamily="Tahoma" Foreground="#FFE6E6E6" FontWeight="Bold"/>
         </Label>
-        <CheckBox x:Name="spellcheck" Grid.Column="1" Grid.Row="13" VerticalAlignment="Center" Margin="10,0,10,0" Checked="spellcheck_Checked" Unchecked="spellcheck_Checked" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center">
+        <CheckBox x:Name="spellcheck" Grid.Column="1" Grid.Row="13" VerticalAlignment="Center" Margin="10,0,10,0" Checked="Spellcheck_Checked" Unchecked="Spellcheck_Checked" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center">
             <CheckBox.ToolTip>
                 <ToolTip Background="Transparent"
                          BorderBrush="Transparent"
@@ -377,7 +377,7 @@
             </Label.ToolTip>
             <TextBlock Text="Allways on Top:" FontSize="14.667" FontFamily="Tahoma" Foreground="#FFE6E6E6" FontWeight="Bold"/>
         </Label>
-        <CheckBox x:Name="allwaysontop" Grid.Column="1" Grid.Row="14" Margin="10,0" Checked="allwaysontop_Unchecked" Unchecked="allwaysontop_Unchecked" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" VerticalAlignment="Center">
+        <CheckBox x:Name="allwaysontop" Grid.Column="1" Grid.Row="14" Margin="10,0" Checked="Allwaysontop_Unchecked" Unchecked="Allwaysontop_Unchecked" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" VerticalAlignment="Center">
             <CheckBox.ToolTip>
                 <ToolTip Background="Transparent"
                          BorderBrush="Transparent"
@@ -410,7 +410,7 @@
             </Label.ToolTip>
             <TextBlock Text="TaskBar Icon:" FontSize="14.667" FontFamily="Tahoma" Foreground="#FFE6E6E6" FontWeight="Bold"/>
         </Label>
-        <CheckBox x:Name="taskbarvisible" Grid.Column="1" Grid.Row="15" Margin="10,0" Checked="taskbarvisible_Unchecked" Unchecked="taskbarvisible_Unchecked" IsChecked="True" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" VerticalAlignment="Center">
+        <CheckBox x:Name="taskbarvisible" Grid.Column="1" Grid.Row="15" Margin="10,0" Checked="Taskbarvisible_Unchecked" Unchecked="Taskbarvisible_Unchecked" IsChecked="True" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" VerticalAlignment="Center">
             <CheckBox.ToolTip>
                 <ToolTip Background="Transparent"
                          BorderBrush="Transparent"

@@ -33,9 +33,9 @@ namespace SkinText
             ClrPcker_Background3.SelectedColor = newBrush.Color;
 
             newBrush = null;
-            if (par.imagepath.Length<4)
+            if (par.Imagepath.Length<4)
             {
-                par.imagepath = "";
+                par.Imagepath = "";
             }
             imagedir.Content = "Change Background";
             //imagedir.Content = par.imagepath.Substring(par.imagepath.LastIndexOf("\\") + 1);
@@ -49,33 +49,33 @@ namespace SkinText
         private void CloseButt_Click(object sender, RoutedEventArgs e)
         {
             this.Hide();
-            par.Save_config();            
+            par.SaveConfig();            
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
         }
-        private void bordersize_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void Bordersize_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             try
             {
-                par.borderSz = int.Parse(bordersize.Value.ToString());
-                par.corner1.Width = par.corner1.Height = par.borderSz * 2;
-                par.corner2.Width = par.corner2.Height = par.borderSz * 2;
-                par.corner3.Width = par.corner3.Height = par.borderSz * 2;
-                par.corner4.Width = par.corner4.Height = par.borderSz * 2;
-                par.splitter1.Width = par.borderSz;
-                par.splitter2.Height = par.borderSz;
-                par.splitter3.Width = par.borderSz;
-                par.splitter4.Height = par.borderSz;
-                par.Rtb_SizeChanged(null, null);
+                par.BorderSZ = int.Parse(bordersize.Value.ToString(System.Globalization.CultureInfo.InvariantCulture), System.Globalization.CultureInfo.InvariantCulture);
+                par.corner1.Width = par.corner1.Height = par.BorderSZ * 2;
+                par.corner2.Width = par.corner2.Height = par.BorderSZ * 2;
+                par.corner3.Width = par.corner3.Height = par.BorderSZ * 2;
+                par.corner4.Width = par.corner4.Height = par.BorderSZ * 2;
+                par.splitter1.Width = par.BorderSZ;
+                par.splitter2.Height = par.BorderSZ;
+                par.splitter3.Width = par.BorderSZ;
+                par.splitter4.Height = par.BorderSZ;
+                par.RtbSizeChanged(null, null);
             }
-            catch (System.Exception)
+            catch (Exception)
             {
             }
         }
-        private void slValue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void SlValue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             RotateTransform rotateTransform = new RotateTransform(slValue.Value);
             par.grid.RenderTransformOrigin = new Point(0.5, 0.5);
@@ -128,7 +128,6 @@ namespace SkinText
         public ImageSource BitmapFromUri(Uri source)
         {
             //TODO: move to library class
-            //No longer in use, but usefull for future uses
             var bitmap = new BitmapImage();
             bitmap.BeginInit();
             bitmap.UriSource = source;
@@ -151,10 +150,10 @@ namespace SkinText
         {
             if (File.Exists(imagepath))
             {
-                var uri = new System.Uri(imagepath);
-                if (Path.GetExtension(imagepath).ToLower() == ".gif")
+                var uri = new Uri(imagepath);
+                if (Path.GetExtension(imagepath).ToUpperInvariant() == ".GIF")
                 {
-                    if (par.gifMethod == "RAM")
+                    if (par.GifMethod == "RAM")
                     {
                         ImageSource bitmap = BitmapFromUri(uri);
                         ImageBehavior.SetAnimatedSource(par.backgroundimg, bitmap);
@@ -175,7 +174,7 @@ namespace SkinText
             }
         }
 
-        private void imagedir_Click(object sender, RoutedEventArgs e)
+        private void Imagedir_Click(object sender, RoutedEventArgs e)
         {
             //openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             OpenFileDialog openFileDialog = new OpenFileDialog()
@@ -192,11 +191,11 @@ namespace SkinText
                 try
                 {
                     string imagepath = openFileDialog.FileName;
-                    string newImagePath = par.path + "\\bgImg"+ Path.GetExtension(imagepath);//+ Path.GetFileName(imagepath);
+                    string newImagePath = par.AppDataPath + "\\bgImg"+ Path.GetExtension(imagepath);//+ Path.GetFileName(imagepath);
                     ImageClear();
-                    if (File.Exists(par.imagepath))
+                    if (File.Exists(par.Imagepath))
                     {
-                        File.Delete(par.imagepath);
+                        File.Delete(par.Imagepath);
                     }
                     File.Copy(imagepath, newImagePath,true);
 
@@ -204,7 +203,7 @@ namespace SkinText
 
                     //imagedir.Content = newImagePath.Substring(newImagePath.LastIndexOf("\\")+1);
                     //imagedir.ToolTip = newImagePath;
-                    par.imagepath = newImagePath;
+                    par.Imagepath = newImagePath;
                     ClrPcker_Background2.SelectedColor = Colors.Transparent;
                 }
                 catch (Exception ex)
@@ -218,7 +217,7 @@ namespace SkinText
             else
             {
                 ImageClear();
-                par.imagepath = "";
+                par.Imagepath = "";
                 //imagedir.Content = par.imagepath.Substring(par.imagepath.LastIndexOf("\\") + 1);
                 //imagedir.ToolTip = par.imagepath;
                 ClrPcker_Background2.SelectedColor = (Color)ColorConverter.ConvertFromString("#85949494");
@@ -235,21 +234,21 @@ namespace SkinText
             Color color = ClrPcker_Background3.SelectedColor.Value;
             Brush brush = new SolidColorBrush(color);
             par.rtb.Background = brush;
-            par.font.txtSampleText.Background = brush;
+            par.FontConf.txtSampleText.Background = brush;
         }
-        private void imageopacityslider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void Imageopacityslider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             par.backgroundimg.Opacity = imageopacityslider.Value/100;
         }
-        private void textopacityslider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void TextOpacityslider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             par.rtb.Opacity = textopacityslider.Value/100;
         }
-        private void windowopacityslider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void WindowOpacityslider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             par.window.Opacity = windowopacityslider.Value/100;
         }
-        private void readonly_Checked(object sender, RoutedEventArgs e)
+        private void Readonly_Checked(object sender, RoutedEventArgs e)
         {
             if (@readonly.IsChecked.Value)
             {
@@ -262,7 +261,7 @@ namespace SkinText
                 par.rtb.IsReadOnlyCaretVisible = true;
             }
         }
-        private void spellcheck_Checked(object sender, RoutedEventArgs e)
+        private void Spellcheck_Checked(object sender, RoutedEventArgs e)
         {
             if (spellcheck.IsChecked.Value)
             {
@@ -275,7 +274,7 @@ namespace SkinText
                 par.rtb.SpellCheck.IsEnabled = false;
             }            
         }
-        private void allwaysontop_Unchecked(object sender, RoutedEventArgs e)
+        private void Allwaysontop_Unchecked(object sender, RoutedEventArgs e)
         {
             if (allwaysontop.IsChecked.Value)
             {
@@ -286,7 +285,7 @@ namespace SkinText
                 par.window.Topmost = false;
             }
         }
-        private void taskbarvisible_Unchecked(object sender, RoutedEventArgs e)
+        private void Taskbarvisible_Unchecked(object sender, RoutedEventArgs e)
         {
             if (taskbarvisible.IsChecked.Value)
             {
@@ -323,12 +322,12 @@ namespace SkinText
 
         private void GifMethodRAM_Checked(object sender, RoutedEventArgs e)
         {
-            par.gifMethod = "RAM";
+            par.GifMethod = "RAM";
         }
 
         private void GifMethodCPU_Checked(object sender, RoutedEventArgs e)
         {
-            par.gifMethod = "CPU";
+            par.GifMethod = "CPU";
         }
         
     }

@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace SkinText
@@ -16,34 +11,37 @@ namespace SkinText
     /// </summary>
     public partial class App : Application
     {
-        public string GetPath()
+        public string GAppPath
         {
-            //TODO: create funtion library to avoid calling everywhere
-            Assembly assm;
-            Type at;
-            Type at2;
-            object[] r;
-            object[] r2;
-            // Get the .EXE assembly
-            assm = Assembly.GetEntryAssembly();
-            // Get a 'Type' of the AssemblyCompanyAttribute
-            at = typeof(AssemblyCompanyAttribute);
-            at2 = typeof(AssemblyTitleAttribute);
-            // Get a collection of custom attributes from the .EXE assembly
-            r = assm.GetCustomAttributes(at, false);
-            r2 = assm.GetCustomAttributes(at2, false);
-            // Get the Company Attribute
-            AssemblyCompanyAttribute ct = ((AssemblyCompanyAttribute)(r[0]));
-            AssemblyTitleAttribute ct2 = ((AssemblyTitleAttribute)(r2[0]));
-            // Build the User App Data Path
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            //path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            path += @"\" + ct.Company;
-            path += @"\" + ct2.Title;
-            path += @"\Default";
-            //path += @"\" + assm.GetName().Name.ToString();
-            //path += @"\" + assm.GetName().Version.ToString();
-            return path;
+            get
+            {
+                //TODO: create funtion library to avoid calling everywhere
+                Assembly assm;
+                Type at;
+                Type at2;
+                object[] r;
+                object[] r2;
+                // Get the .EXE assembly
+                assm = Assembly.GetEntryAssembly();
+                // Get a 'Type' of the AssemblyCompanyAttribute
+                at = typeof(AssemblyCompanyAttribute);
+                at2 = typeof(AssemblyTitleAttribute);
+                // Get a collection of custom attributes from the .EXE assembly
+                r = assm.GetCustomAttributes(at, false);
+                r2 = assm.GetCustomAttributes(at2, false);
+                // Get the Company Attribute
+                AssemblyCompanyAttribute ct = ((AssemblyCompanyAttribute)(r[0]));
+                AssemblyTitleAttribute ct2 = ((AssemblyTitleAttribute)(r2[0]));
+                // Build the User App Data Path
+                string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                //path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                path += @"\" + ct.Company;
+                path += @"\" + ct2.Title;
+                path += @"\Default";
+                //path += @"\" + assm.GetName().Name.ToString();
+                //path += @"\" + assm.GetName().Version.ToString();
+                return path;
+            }
         }
         private void FirstRun(string path)
         {
@@ -64,7 +62,7 @@ namespace SkinText
         private void Application_Startup(object sender, StartupEventArgs e)
         {
 
-            string path = GetPath();
+            string path = GAppPath;
 
             // Application is running
             // Process command line args
@@ -109,18 +107,15 @@ namespace SkinText
                     try
                     {
                         //Request admin rights
-                        var psi = new ProcessStartInfo()
+                        using (Process process = new Process())
                         {
-                            FileName = curFileName,
-                            Arguments = "-FirstRun",
-                            Verb = "runas"
-                        };
-                        var process = new Process()
-                        {
-                            StartInfo = psi
-                        };
-                        process.Start();
-                        process.WaitForExit();
+                            process.StartInfo.FileName = curFileName;
+                            process.StartInfo.Arguments = "-FirstRun";
+                            process.StartInfo.Verb = "runas";
+                            process.Start();
+                            process.WaitForExit();
+                            //process.Dispose();
+                        }
                     }
                     catch (Exception)
                     {
@@ -141,18 +136,14 @@ namespace SkinText
                     {
                         MessageBox.Show("Detected a missing file and need to create it", "!!", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                         //Request admin rights
-                        var psi = new ProcessStartInfo()
-                        {
-                            FileName = curFileName,
-                            Arguments = "-FirstRun",
-                            Verb = "runas"
-                        };
-                        var process = new Process()
-                        {
-                            StartInfo = psi
-                        };
-                        process.Start();
-                        process.WaitForExit();
+                        using (Process process = new Process()) {
+                            process.StartInfo.FileName = curFileName;
+                            process.StartInfo.Arguments = "-FirstRun";
+                            process.StartInfo.Verb = "runas";
+                            process.Start();
+                            process.WaitForExit();
+                            //process.Dispose();
+                        }
                     }
                     catch (Exception)
                     {

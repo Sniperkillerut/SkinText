@@ -28,7 +28,7 @@ namespace SkinText
         private void CloseButt_Click(object sender, RoutedEventArgs e)
         {
             this.Hide();
-            par.Save_config();
+            par.SaveConfig();
         }
         public void UpdateStrikethrough()
         {
@@ -43,18 +43,22 @@ namespace SkinText
             if (Strikethrough.IsChecked.Value)
             {
                 textrun.TextDecorations.Add(TextDecorations.Strikethrough);
+                //textrun.BaselineAlignment = BaselineAlignment.Baseline;
             }
             if (Underline.IsChecked.Value)
             {
                 textrun.TextDecorations.Add(TextDecorations.Underline);
+                //textrun.BaselineAlignment = BaselineAlignment.Bottom;
             }
             if (OverLine.IsChecked.Value)
             {
                 textrun.TextDecorations.Add(TextDecorations.OverLine);
+                //textrun.BaselineAlignment = BaselineAlignment.TextBottom;
             }
             if (Baseline.IsChecked.Value)
             {
                 textrun.TextDecorations.Add(TextDecorations.Baseline);
+                //textrun.BaselineAlignment = BaselineAlignment.Subscript;
             }
         }
         private void Strikethrough_Checked(object sender, RoutedEventArgs e)
@@ -93,7 +97,7 @@ namespace SkinText
             {
                 textrun.TextDecorations = new TextDecorationCollection();
             }
-            par.TextFormat(textrun.Foreground, textrun.Background, textrun.FontFamily, textrun.FontSize, textrun.TextDecorations, textrun.FontStyle, textrun.FontWeight, txtSampleText.Selection.Start.Paragraph.TextAlignment, txtSampleText.FlowDirection);
+            par.TextFormat(textrun.Foreground, textrun.Background, textrun.FontFamily, textrun.FontSize, textrun.TextDecorations, textrun.FontStyle, textrun.FontWeight, txtSampleText.Selection.Start.Paragraph.TextAlignment, txtSampleText.FlowDirection, textrun.BaselineAlignment);
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {

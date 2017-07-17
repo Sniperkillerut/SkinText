@@ -24,13 +24,20 @@ namespace SkinText
     public partial class MainWindow : Window
     {
         private string filepath ;
-        private bool fileChanged=false;
-        public string gifMethod = "CPU";
-        public string path;
-        public string imagepath ;
-        public int borderSz;
+        private bool fileChanged = false;
+        private string gifMethod = "CPU";
+        private string appDataPath;
+        private string imagepath;
+        private int borderSZ;
         private WindowConfig config;
-        public FontConfig font;
+        private FontConfig fontConf;
+
+        public string GifMethod { get => gifMethod; set => gifMethod = value; }
+        public string AppDataPath { get => appDataPath; set => appDataPath = value; }
+        public string Imagepath { get => imagepath; set => imagepath = value; }
+        public int BorderSZ { get => borderSZ; set => borderSZ = value; }
+        public FontConfig FontConf { get => fontConf; set => fontConf = value; }
+
         public MainWindow()
         { 
             InitializeComponent();
@@ -40,7 +47,7 @@ namespace SkinText
         {
             if (fileChanged)
             {
-                switch (MessageBox.Show("There are unsaved Changes to: "+ filepath + "\r\nDo you want to save?", "Save Changes?", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation, MessageBoxResult.Cancel))
+                switch (MessageBox.Show("There are unsaved Changes to: " + filepath + "\r\nDo you want to save?", "Save Changes?", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation, MessageBoxResult.Cancel))
                 {
                     case (MessageBoxResult.Yes):
                         {
@@ -54,10 +61,11 @@ namespace SkinText
                             break;
                         }
                     case MessageBoxResult.Cancel:
-                        {
-                            //do nothing
-                            break;
-                        }
+                        break;
+                    case MessageBoxResult.None:
+                        break;
+                    case MessageBoxResult.OK:
+                        break;
                     default: break;
                 }
             }
@@ -99,6 +107,11 @@ namespace SkinText
                             //do nothing
                             break;
                         }
+
+                    case MessageBoxResult.None:
+                        break;
+                    case MessageBoxResult.OK:
+                        break;
                     default: break;
                 }
             }
@@ -126,26 +139,28 @@ namespace SkinText
                     TextRange range;
                     FileStream fStream;
                     range = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
-                    fStream = new FileStream(filepath, FileMode.OpenOrCreate);
-                   if (filepath.Substring(filepath.Length-3).ToLower().Equals("rtf"))
+                    using (fStream = new FileStream(filepath, FileMode.OpenOrCreate))
                     {
-                        range.Load(fStream, DataFormats.Rtf);
+                        if (Path.GetExtension(filepath).ToUpperInvariant().Equals(".RTF"))
+                        {
+                            range.Load(fStream, DataFormats.Rtf);
+                        }
+                        else
+                        {
+                            range.Load(fStream, DataFormats.Text);
+                        }
+                        /*
+                        using (MemoryStream rtfMemoryStream = new MemoryStream())
+                        {
+                            rtfMemoryStream.Seek(0, SeekOrigin.Begin);
+                            fStream.Seek(0, SeekOrigin.Begin);
+                            fStream.CopyTo(rtfMemoryStream);
+                            range.Load(rtfMemoryStream, DataFormats.Rtf);
+                        }*/
+                        fileChanged = false;
+                        SaveConfig();
+                        //fStream.Close();
                     }
-                    else
-                    {
-                        range.Load(fStream, DataFormats.Text);
-                    }
-                    /*
-                    using (MemoryStream rtfMemoryStream = new MemoryStream())
-                    {
-                        rtfMemoryStream.Seek(0, SeekOrigin.Begin);
-                        fStream.Seek(0, SeekOrigin.Begin);
-                        fStream.CopyTo(rtfMemoryStream);
-                        range.Load(rtfMemoryStream, DataFormats.Rtf);
-                    }*/
-                    fStream.Close();
-                    fileChanged = false;
-                    Save_config();
                 }
                 catch (Exception)
                 {
@@ -194,9 +209,9 @@ namespace SkinText
         }
         private void Exit_program()
         {
-            font.Close();
+            FontConf.Close();
             config.Close();
-            Save_config();
+            SaveConfig();
             this.Close();
         }
         private void Config_Click(object sender, RoutedEventArgs e)
@@ -235,9 +250,16 @@ namespace SkinText
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
-                this.DragMove();
+            {
+                try
+                {
+                    this.DragMove();
+                }
+                catch (Exception)
+                { }
+            }
         }
-        public void Rtb_SizeChanged(object sender, SizeChangedEventArgs e)
+        public void RtbSizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (panel.ActualWidth>21)
             {
@@ -251,10 +273,10 @@ namespace SkinText
             double row2 = grid.RowDefinitions[2].ActualHeight;
             double column0 = grid.ColumnDefinitions[0].ActualWidth;
             double column2 = grid.ColumnDefinitions[2].ActualWidth;
-            corner1.Margin = new Thickness(column0 - borderSz   , row0 - borderSz   , 0         , 0                 );
-            corner2.Margin = new Thickness(column0 - borderSz   , -borderSz         , 0         , row2    );
-            corner3.Margin = new Thickness(-borderSz            , row0 - borderSz   , column2   , 0                 );
-            corner4.Margin = new Thickness(-borderSz            , -borderSz         , column2   , row2  );
+            corner1.Margin = new Thickness(column0 - BorderSZ   , row0 - BorderSZ   , 0         , 0                 );
+            corner2.Margin = new Thickness(column0 - BorderSZ   , -BorderSZ         , 0         , row2    );
+            corner3.Margin = new Thickness(-BorderSZ            , row0 - BorderSZ   , column2   , 0                 );
+            corner4.Margin = new Thickness(-BorderSZ            , -BorderSZ         , column2   , row2  );
         }
         [DllImport("user32.dll")]
         private static extern IntPtr SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
@@ -266,10 +288,10 @@ namespace SkinText
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             config = new WindowConfig(this);
-            font = new FontConfig(this);
+            FontConf = new FontConfig(this);
             Load_default();
             //getPath();
-            path = ((App)Application.Current).GetPath();
+            AppDataPath = ((App)Application.Current).GAppPath;
             #region get FileName test
             /*
             string fileNameTest1 = window.GetType().Assembly.Lo‌​cation;
@@ -339,563 +361,399 @@ namespace SkinText
         {
             try
             {
-                StreamReader reader = new StreamReader(path+@"\skintext.ini",System.Text.Encoding.UTF8);
-                string currentLine;
-                string[] line;
-                config.bordersize.Value = borderSz = 5;//default value due to text size dependency
-                while ((currentLine = reader.ReadLine()) != null)
+                using (StreamReader reader = new StreamReader(AppDataPath + @"\skintext.ini", System.Text.Encoding.UTF8))
                 {
-                    line = currentLine.Split('=');
-                    line[0] = line[0].Trim();
-                    line[0] = line[0].ToLower();
-                    if (line[0] != "")
+                    string currentLine;
+                    string[] line;
+                    while ((currentLine = reader.ReadLine()) != null)
                     {
-                        line[1] = line[1].Trim();
+                        line = currentLine.Split('=');
+                        line[0] = line[0].Trim();
+                        line[0] = line[0].ToUpperInvariant();
+                        if (!String.IsNullOrEmpty(line[0]))
+                        {
+                            line[1] = line[1].Trim();
+                        }
+                        ReadConfigLine(line);
                     }
-                    switch (line[0])
-                    {
-                        case "window_position":
-                            {
-                                #region position
-                                try
-                                {
-                                    string[] pos = line[1].Split(',');
-                                    if (double.TryParse(pos[0], out double top) && double.TryParse(pos[1], out double left))
-                                    {
-                                        window.Top = top;
-                                        window.Left = left;
-                                    }
-                                }
-                                catch (System.Exception)
-                                {
-                                    double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
-                                    double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
-                                    double windowWidth = this.Width;
-                                    double windowHeight = this.Height;
-                                    this.Left = (screenWidth / 2) - (windowWidth / 2);
-                                    this.Top = (screenHeight / 2) - (windowHeight / 2);
-                                    //throw;
-                                }
-                                break;
-                                #endregion
-                            }
-                        case "window_size":
-                            {
-                                #region size
-                                try
-                                {
-                                    string[] wsize = line[1].Split(',');
-                                    if (double.TryParse(wsize[0], out double wwidth) && double.TryParse(wsize[1], out double wheight))
-                                    {
-                                        if (wwidth > window.MinWidth && wwidth < window.MaxWidth)
-                                        {
-                                            window.Width = wwidth;
-                                        }
-                                        if (wheight > window.MinHeight && wheight < window.MaxHeight)
-                                        {
-                                            window.Height = wheight;
-                                        }
-                                    }
-                                }
-                                catch (System.Exception)
-                                {
-                                    window.Width = 525;
-                                    window.Height = 350;
-                                    //throw;
-                                }
-                                break;
-                                #endregion
-                            }
-                        case "border_size":
-                            {
-                                #region border size
-                                try
-                                {
-                                    if (int.TryParse(line[1], out int bsize))
-                                    {
-                                        if (bsize <= config.bordersize.Maximum && bsize > 0)
-                                        {
-                                            config.bordersize.Value = borderSz = bsize;
-                                        }
-                                    }
-                                }
-                                catch (System.Exception)
-                                {
-                                    config.bordersize.Value = borderSz = 5;
-                                    //throw;
-                                }
-                                break;
-                                #endregion
-                            }
-                        case "text_size":
-                            {
-                                #region text_size
-                                try
-                                {
-                                    string[] tsize = line[1].Split(',');
-                                    if (double.TryParse(tsize[0], out double twidth0) && double.TryParse(tsize[1], out double twidth1) && double.TryParse(tsize[2], out double twidth2) && double.TryParse(tsize[3], out double theight0) && double.TryParse(tsize[4], out double theight1) && double.TryParse(tsize[5], out double theight2))
-                                    {
-                                        if (twidth0 >= 0)
-                                        {
-                                            GridLength gl = new GridLength(twidth0, GridUnitType.Star);
-                                            grid.ColumnDefinitions[0].Width = gl;
-                                        }
-                                        if (twidth2 >= 0)
-                                        {
-                                            GridLength gl = new GridLength(twidth2, GridUnitType.Star);
-                                            grid.ColumnDefinitions[2].Width = gl;
-                                        }
-                                        if (theight0 >= 0)
-                                        {
-                                            GridLength gl = new GridLength(theight0, GridUnitType.Star);
-                                            grid.RowDefinitions[0].Height = gl;
-                                        }
-                                        if (theight2 >= 0)
-                                        {
-                                            GridLength gl = new GridLength(theight2, GridUnitType.Star);
-                                            grid.RowDefinitions[2].Height = gl;
-                                        }
-
-
-                                        if ((twidth1 < window.Width - (borderSz * 2 + 1)) && (twidth1 >= grid.ColumnDefinitions[1].MinWidth))
-                                        {
-                                            GridLength tw = new GridLength(twidth1);
-                                            grid.ColumnDefinitions[1].Width = tw;
-                                        }
-                                        else
-                                        {
-                                            GridLength tw = new GridLength(window.Width - (borderSz * 2 + 1));
-                                            grid.ColumnDefinitions[1].Width = tw;
-                                        }
-                                        if ((theight1 < window.Height - (borderSz * 2 + 1)) && (theight1 >= grid.RowDefinitions[1].MinHeight))
-                                        {
-                                            GridLength th = new GridLength(theight1);
-                                            grid.RowDefinitions[1].Height = th;
-                                        }
-                                        else
-                                        {
-                                            GridLength th = new GridLength(window.Height - (borderSz * 2 + 1));
-                                            grid.RowDefinitions[1].Height = th;
-                                        }
-                                    }
-                                }
-                                catch (System.Exception)
-                                {
-                                    grid.ColumnDefinitions[1].Width = new GridLength(window.Width - (borderSz * 2 + 1));
-                                    grid.RowDefinitions[1].Height = new GridLength(window.Height - (borderSz * 2 + 1));
-                                    //throw;
-                                }
-                                break;
-                                #endregion
-                            }
-                        case "file":
-                            {
-                                #region file
-                                try
-                                {
-                                    string fileName = line[1].Trim();
-                                    TextRange range;
-                                    FileStream fStream;
-                                    if (!fileName.Contains("\\") && fileName != "")
-                                    {
-                                        fileName = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + fileName;
-                                    }
-                                    if (File.Exists(fileName))
-                                    {
-                                        range = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
-                                        fStream = new FileStream(fileName, FileMode.OpenOrCreate);
-                                        if (fileName.Substring(fileName.Length - 3).ToLower().Equals("rtf"))
-                                        {
-                                            range.Load(fStream, DataFormats.Rtf);
-                                        }
-                                        else
-                                        {
-                                            range.Load(fStream, DataFormats.Text);
-                                        }
-                                        /*
-                                        using (MemoryStream rtfMemoryStream = new MemoryStream())
-                                        {
-                                            rtfMemoryStream.Seek(0, SeekOrigin.Begin);
-                                            fStream.Seek(0, SeekOrigin.Begin);
-                                            fStream.CopyTo(rtfMemoryStream);
-                                            range.Load(rtfMemoryStream, DataFormats.Rtf);
-
-                                        }*/
-
-
-                                        fStream.Close();
-                                        filepath = fileName;
-                                    }
-                                    else
-                                    {
-                                        if (fileName != "")
-                                        {
-                                            MessageBox.Show("Failed to Open File:\r\n " + fileName, "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
-                                        }
-                                    }                                        
-                                    
-                                }
-                                catch (System.Exception)
-                                {
-                                    filepath = "";
-                                    //empty file
-                                    //throw;
-                                }
-                                break;
-                                #endregion
-                            }
-                        case "resize_enabled":
-                            {
-                                #region border show
-                                try
-                                {
-                                    if (bool.TryParse(line[1], out bool rcheck))
-                                    {
-                                        config.resizecheck.IsChecked = rcheck;
-                                    }
-                                }
-                                catch (System.Exception)
-                                {
-                                    config.resizecheck.IsChecked = true;
-                                    //throw;
-                                }
-                                break;
-                                #endregion
-                            }
-                        case "border_color":
-                            {
-                                #region border color
-                                try
-                                {
-                                    Color bcolor = (Color)ColorConverter.ConvertFromString(line[1]);
-                                    config.ClrPcker_Background.SelectedColor = bcolor;
-                                }
-                                catch (System.Exception)
-                                {
-                                    //#997E7E7E by default in xaml
-                                    //and copies to config.ClrPcker_Background.SelectedColor on its Window_Loaded()
-                                    Color color = (Color)ColorConverter.ConvertFromString("#997E7E7E");
-                                    config.ClrPcker_Background.SelectedColor = color;
-                                    //throw;
-                                }
-                                break;
-                                #endregion
-                            }
-                        case "window_color":
-                            {
-                                #region window color
-                                try
-                                {
-                                    Color wcolor = (Color)ColorConverter.ConvertFromString(line[1]);
-                                    config.ClrPcker_Background2.SelectedColor = wcolor;
-                                }
-                                catch (System.Exception)
-                                {
-                                    //transparent by default in xaml
-                                    //and copies to config.ClrPcker_Background2.SelectedColor on its Window_Loaded()
-                                    config.ClrPcker_Background2.SelectedColor = Colors.Transparent;
-                                    //throw;
-                                }
-                                break;
-                                #endregion
-                            }
-                        case "text_bg_color":
-                            {
-                                #region text bg color
-                                try
-                                {
-                                    Color tcolor = (Color)ColorConverter.ConvertFromString(line[1]);
-                                    config.ClrPcker_Background3.SelectedColor = tcolor;
-                                }
-                                catch (System.Exception)
-                                {
-                                    //transparent by default in xaml
-                                    //and copies to config.ClrPcker_Background3.SelectedColor on its Window_Loaded()
-                                    config.ClrPcker_Background3.SelectedColor = Colors.Transparent;
-                                    //throw;
-                                }
-                                break;
-                                #endregion
-                            }
-                        case "rotation":
-                            {
-                                #region rotation
-                                try
-                                {
-                                    if (double.TryParse(line[1], out double angle))
-                                    {
-                                        config.slValue.Value = angle;
-                                    }
-                                }
-                                catch (System.Exception)
-                                {
-                                    config.slValue.Value = 0;
-                                    //throw;
-                                }
-                                break;
-                                #endregion
-                            }
-                        case "gifmethod":
-                            {
-                                #region gifMethod
-                                try
-                                {
-                                    string method = line[1].Trim().ToUpper();
-                                    if (method != "RAM")
-                                    {
-                                        method = "CPU";
-                                        config.GifMethodCPU.IsChecked = true;
-                                    }
-                                    else
-                                    {
-                                        config.GifMethodRAM.IsChecked = true;
-                                    }
-                                    gifMethod = method;
-                                }
-                                catch (System.Exception)
-                                {
-                                    gifMethod = "CPU";
-                                    config.GifMethodCPU.IsChecked = true;
-                                    //throw;
-                                }
-                                break;
-                                #endregion
-                            }
-                        case "bg_image":
-                            {
-                                #region Load Background Image
-                                try
-                                {
-                                    imagepath = line[1].Trim();
-                                    if (!imagepath.Contains("\\") && imagepath != "")
-                                    {
-                                        imagepath =Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + imagepath;
-                                    }
-                                    if (File.Exists(imagepath))
-                                    {
-                                        config.LoadImage(imagepath);
-                                    }
-                                    else
-                                    {
-                                        if (imagepath != "")
-                                        {
-                                            MessageBox.Show("Failed to Load Image:\r\n " + imagepath, "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
-                                            if (window.Background.ToString() == Colors.Transparent.ToString())
-                                            {
-                                                config.ClrPcker_Background2.SelectedColor = (Color)ColorConverter.ConvertFromString("#85949494");
-                                            }
-                                        }
-                                    }
-                                }
-                                catch (Exception)
-                                {
-                                    if (window.Background.ToString() == Colors.Transparent.ToString())
-                                    {
-                                        config.ClrPcker_Background2.SelectedColor = (Color)ColorConverter.ConvertFromString("#85949494");
-                                        imagepath = "";
-                                    }
-                                    //throw;
-                                }
-                                break;
-                                #endregion
-                            }
-                        case "image_opacity":
-                            {
-                                #region image opcatity
-                                try
-                                {
-                                    if (double.TryParse(line[1], out double ival))
-                                    {
-                                        config.imageopacityslider.Value = ival;
-                                    }
-                                }
-                                catch (System.Exception)
-                                {
-                                    config.imageopacityslider.Value = 100;
-                                    //throw;
-                                }
-                                break;
-                                #endregion
-                            }
-                        case "text_opacity":
-                            {
-                                #region text opcatity
-                                try
-                                {
-                                    if (double.TryParse(line[1], out double tval))
-                                    {
-                                        config.textopacityslider.Value = tval;
-                                    }
-                                }
-                                catch (System.Exception)
-                                {
-                                    //default=100;
-                                    //throw;
-                                }
-                                break;
-                                #endregion
-                            }
-                        case "window_opacity":
-                            {
-                                #region window opcatity
-                                try
-                                {
-                                    if (double.TryParse(line[1], out double wval))
-                                    {
-                                        config.windowopacityslider.Value = wval;
-                                    }
-                                }
-                                catch (System.Exception)
-                                {
-                                    //default=100;
-                                    //throw;
-                                }
-                                break;
-                                #endregion
-                            }
-                        case "read_only":
-                            {
-                                #region read only
-                                try
-                                {
-                                    if (bool.TryParse(line[1], out bool rocheck))
-                                    {
-                                        config.@readonly.IsChecked = rocheck;
-                                    }
-                                }
-                                catch (System.Exception)
-                                {
-                                    config.@readonly.IsChecked = false;
-                                    //throw;
-                                }
-                                break;
-                                #endregion
-                            }
-                        case "spell_check":
-                            {
-                                #region spellcheck
-                                try
-                                {
-                                    if (bool.TryParse(line[1], out bool scheck))
-                                    {
-                                        config.spellcheck.IsChecked = scheck;
-                                    }
-                                }
-                                catch (System.Exception)
-                                {
-                                    config.spellcheck.IsChecked = false;
-                                    //throw;
-                                }
-                                break;
-                                #endregion
-                            }
-                        case "always_on_top":
-                            {
-                                #region  always on top
-                                try
-                                {
-                                    if (bool.TryParse(line[1], out bool acheck))
-                                    {
-                                        config.allwaysontop.IsChecked = acheck;
-                                    }
-                                }
-                                catch (System.Exception)
-                                {
-                                    config.allwaysontop.IsChecked = false;
-                                    //throw;
-                                }
-                                break;
-                                #endregion
-                            }
-                        case "taskbar_icon":
-                            {
-                                #region  taskbar icon
-                                try
-                                {
-                                    if (bool.TryParse(line[1], out bool tcheck))
-                                    {
-                                        config.taskbarvisible.IsChecked = tcheck;
-                                    }
-                                }
-                                catch (System.Exception)
-                                {
-                                    config.taskbarvisible.IsChecked = true;
-                                    //throw;
-                                }
-                                break;
-                                #endregion
-                            }
-                        case "notification_icon":
-                            {
-                                #region  notification icon
-                                try
-                                {
-                                    if (bool.TryParse(line[1], out bool tcheck))
-                                    {
-                                        config.NotificationVisible.IsChecked = tcheck;
-                                    }
-                                }
-                                catch (System.Exception)
-                                {
-                                    config.NotificationVisible.IsChecked = true;
-                                    //throw;
-                                }
-                                break;
-                                #endregion
-                            }
-                        case "resize_visible":
-                            {
-                                #region  resize visible
-                                try
-                                {
-                                    if (bool.TryParse(line[1], out bool tcheck))
-                                    {
-                                        config.ResizeVisible.IsChecked = tcheck;
-                                    }
-                                }
-                                catch (System.Exception)
-                                {
-                                    config.ResizeVisible.IsChecked = true;
-                                    //throw;
-                                }
-                                break;
-                                #endregion
-                            }
-                        default: break;
-                    }
-                    /*
-                        spellcheck dictionary
-                    */
+                    //reader.Close();
                 }
             }
             catch (System.Exception)
             {
                 // The appdata folders dont exist
+                //can be first open, let default values
                 //throw;
             }
         }
-        public void Save_config()
+        private void ReadConfigLine(string[] line)
+        {
+            try
+            {
+                switch (line[0])
+                {
+                    case "WINDOW_POSITION":
+                        {
+                            #region position
+                            string[] pos = line[1].Split(',');
+                            if (double.TryParse(pos[0], out double top) && double.TryParse(pos[1], out double left))
+                            {
+                                window.Top = top;
+                                window.Left = left;
+                            }
+                            break;
+                            #endregion
+                        }
+                    case "WINDOW_SIZE":
+                        {
+                            #region size
+                            string[] wsize = line[1].Split(',');
+                            if (double.TryParse(wsize[0], out double wwidth) && double.TryParse(wsize[1], out double wheight))
+                            {
+                                if (wwidth > window.MinWidth && wwidth < window.MaxWidth)
+                                {
+                                    window.Width = wwidth;
+                                }
+                                if (wheight > window.MinHeight && wheight < window.MaxHeight)
+                                {
+                                    window.Height = wheight;
+                                }
+                            }
+                            break;
+                            #endregion
+                        }
+                    case "BORDER_SIZE":
+                        {
+                            #region border size
+                            if (int.TryParse(line[1], out int bsize))
+                            {
+                                if (bsize <= config.bordersize.Maximum && bsize > 0)
+                                {
+                                    config.bordersize.Value = BorderSZ = bsize;
+                                }
+                            }
+                            break;
+                            #endregion
+                        }
+                    case "TEXT_SIZE":
+                        {
+                            #region text_size
+                            string[] tsize = line[1].Split(',');
+                            if (double.TryParse(tsize[0], out double twidth0) && double.TryParse(tsize[1], out double twidth1) && double.TryParse(tsize[2], out double twidth2) && double.TryParse(tsize[3], out double theight0) && double.TryParse(tsize[4], out double theight1) && double.TryParse(tsize[5], out double theight2))
+                            {
+                                if (twidth0 >= 0)
+                                {
+                                    GridLength gl = new GridLength(twidth0, GridUnitType.Star);
+                                    grid.ColumnDefinitions[0].Width = gl;
+                                }
+                                if (twidth2 >= 0)
+                                {
+                                    GridLength gl = new GridLength(twidth2, GridUnitType.Star);
+                                    grid.ColumnDefinitions[2].Width = gl;
+                                }
+                                if (theight0 >= 0)
+                                {
+                                    GridLength gl = new GridLength(theight0, GridUnitType.Star);
+                                    grid.RowDefinitions[0].Height = gl;
+                                }
+                                if (theight2 >= 0)
+                                {
+                                    GridLength gl = new GridLength(theight2, GridUnitType.Star);
+                                    grid.RowDefinitions[2].Height = gl;
+                                }
+                                ////////////////////////
+                                if ((twidth1 < window.Width - (BorderSZ * 2 + 1)) && (twidth1 >= grid.ColumnDefinitions[1].MinWidth))
+                                {
+                                    GridLength tw = new GridLength(twidth1);
+                                    grid.ColumnDefinitions[1].Width = tw;
+                                }
+                                else
+                                {
+                                    GridLength tw = new GridLength(window.Width - (BorderSZ * 2 + 1));
+                                    grid.ColumnDefinitions[1].Width = tw;
+                                }
+                                if ((theight1 < window.Height - (BorderSZ * 2 + 1)) && (theight1 >= grid.RowDefinitions[1].MinHeight))
+                                {
+                                    GridLength th = new GridLength(theight1);
+                                    grid.RowDefinitions[1].Height = th;
+                                }
+                                else
+                                {
+                                    GridLength th = new GridLength(window.Height - (BorderSZ * 2 + 1));
+                                    grid.RowDefinitions[1].Height = th;
+                                }
+                            }
+                            break;
+                            #endregion
+                        }
+                    case "FILE":
+                        {
+                            #region file
+                            string fileName = line[1].Trim();
+                            TextRange range;
+                            FileStream fStream;
+                            if (!fileName.Contains("\\") && !String.IsNullOrEmpty(fileName))
+                            {
+                                fileName = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + fileName;
+                            }
+                            if (File.Exists(fileName))
+                            {
+                                range = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
+                                using (fStream = new FileStream(fileName, FileMode.OpenOrCreate))
+                                {
+                                    if (Path.GetExtension(fileName).ToUpperInvariant().Equals(".RTF"))
+                                    {
+                                        range.Load(fStream, DataFormats.Rtf);
+                                    }
+                                    else
+                                    {
+                                        range.Load(fStream, DataFormats.Text);
+                                    }
+                                    filepath = fileName;
+                                    //fStream.Close();
+                                }
+                            }
+                            else
+                            {
+                                if (!String.IsNullOrEmpty(fileName))
+                                {
+                                    MessageBox.Show("Failed to Open File:\r\n " + fileName, "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
+                                }
+                            }
+                            break;
+                            #endregion
+                        }
+                    case "RESIZE_ENABLED":
+                        {
+                            #region border show
+                            if (bool.TryParse(line[1], out bool rcheck))
+                            {
+                                config.resizecheck.IsChecked = rcheck;
+                            }
+                            break;
+                            #endregion
+                        }
+                    case "BORDER_COLOR":
+                        {
+                            #region border color
+                            Color bcolor = (Color)ColorConverter.ConvertFromString(line[1]);
+                            config.ClrPcker_Background.SelectedColor = bcolor;
+                            break;
+                            #endregion
+                        }
+                    case "WINDOW_COLOR":
+                        {
+                            #region window color
+                            Color wcolor = (Color)ColorConverter.ConvertFromString(line[1]);
+                            config.ClrPcker_Background2.SelectedColor = wcolor;
+                            break;
+                            #endregion
+                        }
+                    case "TEXT_BG_COLOR":
+                        {
+                            #region text bg color
+                            Color tcolor = (Color)ColorConverter.ConvertFromString(line[1]);
+                            config.ClrPcker_Background3.SelectedColor = tcolor;
+                            break;
+                            #endregion
+                        }
+                    case "ROTATION":
+                        {
+                            #region rotation
+                            if (double.TryParse(line[1], out double angle))
+                            {
+                                if (angle < 361 && angle > -1)
+                                {
+                                    config.slValue.Value = angle;
+                                }
+                            }
+                            break;
+                            #endregion
+                        }
+                    case "GIFMETHOD":
+                        {
+                            #region gifMethod
+                            string method = line[1].Trim().ToUpperInvariant();
+                            if (method != "RAM")
+                            {
+                                method = "CPU";
+                                config.GifMethodCPU.IsChecked = true;
+                            }
+                            else
+                            {
+                                config.GifMethodRAM.IsChecked = true;
+                            }
+                            GifMethod = method;
+                            break;
+                            #endregion
+                        }
+                    case "BG_IMAGE":
+                        {
+                            #region Load Background Image
+                            try
+                            {
+                                Imagepath = line[1].Trim();
+                                if (!Imagepath.Contains("\\") && !String.IsNullOrEmpty(Imagepath))
+                                {
+                                    Imagepath = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + Imagepath;
+                                }
+                                if (File.Exists(Imagepath))
+                                {
+                                    config.LoadImage(Imagepath);
+                                }
+                                else
+                                {
+                                    if (!String.IsNullOrEmpty(Imagepath))
+                                    {
+                                        MessageBox.Show("Failed to Load Image:\r\n " + Imagepath, "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
+                                        if (window.Background.ToString() == Colors.Transparent.ToString())
+                                        {
+                                            config.ClrPcker_Background2.SelectedColor = (Color)ColorConverter.ConvertFromString("#85949494");
+                                        }
+                                    }
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                if (window.Background.ToString() == Colors.Transparent.ToString())
+                                {
+                                    config.ClrPcker_Background2.SelectedColor = (Color)ColorConverter.ConvertFromString("#85949494");
+                                    Imagepath = "";
+                                }
+                                //throw;
+                            }
+                            break;
+                            #endregion
+                        }
+                    case "IMAGE_OPACITY":
+                        {
+                            #region image opcatity
+                            if (double.TryParse(line[1], out double ival))
+                            {
+                                if (ival < 101 && ival > -1)
+                                {
+                                    config.imageopacityslider.Value = ival;
+                                }
+                            }
+                            break;
+                            #endregion
+                        }
+                    case "TEXT_OPACITY":
+                        {
+                            #region text opcatity
+                            if (double.TryParse(line[1], out double tval))
+                            {
+                                if (tval < 101 && tval > -1)
+                                {
+                                    config.textopacityslider.Value = tval;
+                                }
+                            }
+                            break;
+                            #endregion
+                        }
+                    case "WINDOW_OPACITY":
+                        {
+                            #region window opcatity
+                            if (double.TryParse(line[1], out double wval))
+                            {
+                                if (wval < 101 && wval > -1)
+                                {
+                                    config.windowopacityslider.Value = wval;
+                                }
+                            }
+                            break;
+                            #endregion
+                        }
+                    case "READ_ONLY":
+                        {
+                            #region read only
+                            if (bool.TryParse(line[1], out bool rocheck))
+                            {
+                                config.@readonly.IsChecked = rocheck;
+                            }
+                            break;
+                            #endregion
+                        }
+                    case "SPELL_CHECK":
+                        {
+                            #region spellcheck
+                            if (bool.TryParse(line[1], out bool scheck))
+                            {
+                                config.spellcheck.IsChecked = scheck;
+                            }
+                            break;
+                            #endregion
+                        }
+                    case "ALWAYS_ON_TOP":
+                        {
+                            #region  always on top
+                            if (bool.TryParse(line[1], out bool acheck))
+                            {
+                                config.allwaysontop.IsChecked = acheck;
+                            }
+                            break;
+                            #endregion
+                        }
+                    case "TASKBAR_ICON":
+                        {
+                            #region  taskbar icon
+                            if (bool.TryParse(line[1], out bool tcheck))
+                            {
+                                config.taskbarvisible.IsChecked = tcheck;
+                            }
+                            break;
+                            #endregion
+                        }
+                    case "NOTIFICATION_ICON":
+                        {
+                            #region  notification icon
+                            if (bool.TryParse(line[1], out bool tcheck))
+                            {
+                                config.NotificationVisible.IsChecked = tcheck;
+                            }
+                            break;
+                            #endregion
+                        }
+                    case "RESIZE_VISIBLE":
+                        {
+                            #region  resize visible
+                            if (bool.TryParse(line[1], out bool tcheck))
+                            {
+                                config.ResizeVisible.IsChecked = tcheck;
+                            }
+                            break;
+                            #endregion
+                        }
+                    default: break;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+        public void SaveConfig()
         {
             //had to do this: https://msdn.microsoft.com/library/ms182334.aspx
             FileStream fs = null;
             try
             {
-                fs = new FileStream(path + @"\skintext.ini", FileMode.Create, FileAccess.Write);
+                fs = new FileStream(AppDataPath + @"\skintext.ini", FileMode.Create, FileAccess.Write);
                 using (TextWriter writer = new StreamWriter(fs, System.Text.Encoding.UTF8))
                 {
                     fs = null;
                     string data;
                     //window_position
-                    data = "window_position = " + window.Top.ToString() + " , " + window.Left.ToString();
+                    data = "window_position = " + window.Top.ToString(System.Globalization.CultureInfo.InvariantCulture) + " , " + window.Left.ToString(System.Globalization.CultureInfo.InvariantCulture);
                     writer.WriteLine(data);
                     //window_size
-                    data = "window_size = " + window.Width.ToString() + " , " + window.Height.ToString();
+                    data = "window_size = " + window.Width.ToString(System.Globalization.CultureInfo.InvariantCulture) + " , " + window.Height.ToString(System.Globalization.CultureInfo.InvariantCulture);
                     writer.WriteLine(data);
                     //border_size
-                    data = "border_size = " + borderSz;
+                    data = "border_size = " + BorderSZ;
                     writer.WriteLine(data);
                     //text_size
-                    data = "text_size = " + grid.ColumnDefinitions[0].ActualWidth.ToString() + " , " + grid.ColumnDefinitions[1].ActualWidth.ToString() + " , " + grid.ColumnDefinitions[2].ActualWidth.ToString() + " , " + grid.RowDefinitions[0].ActualHeight.ToString() + " , " + grid.RowDefinitions[1].ActualHeight.ToString() + " , " + grid.RowDefinitions[2].ActualHeight.ToString();
+                    data = "text_size = " + grid.ColumnDefinitions[0].ActualWidth.ToString(System.Globalization.CultureInfo.InvariantCulture) + " , " + grid.ColumnDefinitions[1].ActualWidth.ToString(System.Globalization.CultureInfo.InvariantCulture) + " , " + grid.ColumnDefinitions[2].ActualWidth.ToString(System.Globalization.CultureInfo.InvariantCulture) + " , " + grid.RowDefinitions[0].ActualHeight.ToString(System.Globalization.CultureInfo.InvariantCulture) + " , " + grid.RowDefinitions[1].ActualHeight.ToString(System.Globalization.CultureInfo.InvariantCulture) + " , " + grid.RowDefinitions[2].ActualHeight.ToString(System.Globalization.CultureInfo.InvariantCulture);
                     writer.WriteLine(data);
                     //filetry 
                     try
@@ -932,10 +790,10 @@ namespace SkinText
                     data = "text_bg_color = " + config.ClrPcker_Background3.SelectedColor.ToString();
                     writer.WriteLine(data);
                     //rotation
-                    data = "rotation = " + config.slValue.Value.ToString();
+                    data = "rotation = " + config.slValue.Value.ToString(System.Globalization.CultureInfo.InvariantCulture);
                     writer.WriteLine(data);
                     //GIF Method
-                    data = "gifMethod = " + gifMethod;
+                    data = "gifMethod = " + GifMethod;
                     writer.WriteLine(data);
                     //bg_image
                     try
@@ -955,7 +813,7 @@ namespace SkinText
                         {
                             imagepath = imagepath.Substring(index + 1);
                         }*/
-                        data = "bg_image = " + imagepath;
+                        data = "bg_image = " + Imagepath;
                         writer.WriteLine(data);
                     }
                     catch (Exception) { }
@@ -1029,11 +887,11 @@ namespace SkinText
             this.Top = (screenHeight / 2) - (windowHeight / 2);
             
             //border size
-            config.bordersize.Value = borderSz = 5;
+            config.bordersize.Value = BorderSZ = 5;//default value due to text size dependency
 
             //text area size
-            grid.ColumnDefinitions[1].Width = new GridLength(window.Width - (borderSz * 2 + 1)); ;
-            grid.RowDefinitions[1].Height = new GridLength(window.Height - (borderSz * 2 + 1));
+            grid.ColumnDefinitions[1].Width = new GridLength(window.Width - (BorderSZ * 2 + 1));
+            grid.RowDefinitions[1].Height = new GridLength(window.Height - (BorderSZ * 2 + 1));
 
             //border color
             //#997E7E7E by default in xaml
@@ -1059,12 +917,13 @@ namespace SkinText
             filepath = "";
 
             //GIF Method
+            GifMethod = "CPU";
             config.GifMethodCPU.IsChecked = true;
 
             //change bg to something visible (overwrites default window color)
             config.ImageClear();
             config.ClrPcker_Background2.SelectedColor = (Color)ColorConverter.ConvertFromString("#85949494");
-            imagepath = "";
+            Imagepath = "";
 
             //opacity
             config.imageopacityslider.Value = 100;
@@ -1107,23 +966,24 @@ namespace SkinText
                         filepath = savedialog.FileName;
 
                         TextRange t = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
-                        FileStream file = new FileStream(filepath, FileMode.Create);
-                        t.Save(file, System.Windows.DataFormats.Rtf);
-                        /*using (MemoryStream rtfMemoryStream = new MemoryStream())
-                        {
-                            using (StreamWriter rtfStreamWriter = new StreamWriter(rtfMemoryStream))
+                        using (FileStream file = new FileStream(filepath, FileMode.Create) ){ 
+                            t.Save(file, System.Windows.DataFormats.Rtf);
+                            /*using (MemoryStream rtfMemoryStream = new MemoryStream())
                             {
-                                t.Save(rtfMemoryStream, DataFormats.Rtf);
-                                rtfMemoryStream.Flush();
-                                rtfMemoryStream.Position = 0;
-                                StreamReader sr = new StreamReader(rtfMemoryStream);
-                                //MessageBox.Show(sr.ReadToEnd());
-                                rtfMemoryStream.WriteTo(file);
-                            }
-                        }*/
-                        file.Close();
-                        fileChanged = false;
-                        Save_config();                        
+                                using (StreamWriter rtfStreamWriter = new StreamWriter(rtfMemoryStream))
+                                {
+                                    t.Save(rtfMemoryStream, DataFormats.Rtf);
+                                    rtfMemoryStream.Flush();
+                                    rtfMemoryStream.Position = 0;
+                                    StreamReader sr = new StreamReader(rtfMemoryStream);
+                                    //MessageBox.Show(sr.ReadToEnd());
+                                    rtfMemoryStream.WriteTo(file);
+                                }
+                            }*/
+                            fileChanged = false;
+                            SaveConfig();
+                            //file.Close();
+                        }
                     }
                 }
                 catch (Exception)
@@ -1136,23 +996,13 @@ namespace SkinText
                 try
                 {
                     TextRange t = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
-                    FileStream file = new FileStream(filepath, FileMode.Create);
-                    t.Save(file, System.Windows.DataFormats.Rtf);
-                    /*using (MemoryStream rtfMemoryStream = new MemoryStream())
+                    using (FileStream file = new FileStream(filepath, FileMode.Create))
                     {
-                        using (StreamWriter rtfStreamWriter = new StreamWriter(rtfMemoryStream))
-                        {
-                            t.Save(rtfMemoryStream, DataFormats.Rtf);
-                            rtfMemoryStream.Flush();
-                            rtfMemoryStream.Position = 0;
-                            StreamReader sr = new StreamReader(rtfMemoryStream);
-                            //MessageBox.Show(sr.ReadToEnd());
-                            rtfMemoryStream.WriteTo(file);
-                        }
-                    }*/
-                    file.Close();
-                    fileChanged = false;
-                    Save_config();
+                        t.Save(file, System.Windows.DataFormats.Rtf);
+                        fileChanged = false;
+                        SaveConfig();
+                        //file.Close();
+                    }
                 }
                 catch (Exception)
                 {
@@ -1160,13 +1010,15 @@ namespace SkinText
                 }
             }
         }
-        public void TextFormat(Brush foreColor,Brush backgroundColor,FontFamily fontFamily,double fontSize,TextDecorationCollection decor,FontStyle fontStyle,FontWeight fontWeight, TextAlignment textalign, FlowDirection flow)
+        public void TextFormat(Brush foreColor,Brush backgroundColor,FontFamily fontFamily,double fontSize,TextDecorationCollection decor,FontStyle fontStyle,FontWeight fontWeight, TextAlignment textalign, FlowDirection flow, BaselineAlignment basealign)
         {
-            if (backgroundColor.Equals(Brushes.Transparent))
+            if (backgroundColor != null)
             {
-                backgroundColor = null;
+                if (backgroundColor.Equals(Brushes.Transparent))
+                {
+                    backgroundColor = null;
+                }
             }
-
             // Make sure we have a selection. Should have one even if there is no text selected.
             if (rtb.Selection != null)
             {
@@ -1204,10 +1056,15 @@ namespace SkinText
                             FontSize = fontSize,
                             TextDecorations = null
                         };
-                        newRun.TextDecorations = decor.Clone();
+                        if (decor !=null)
+                        {
+                            newRun.TextDecorations = decor.Clone();
+                        }
                         newRun.FontStyle = fontStyle;
                         newRun.FontWeight = fontWeight;
                         newRun.FlowDirection = flow;
+                        newRun.BaselineAlignment = basealign;
+
                         rtb.Document.Blocks.Add(p);// worked!
                         p.Inlines.Add(newRun);
                         //curParagraph.LineHeight = lineHeight;
@@ -1218,7 +1075,7 @@ namespace SkinText
 
                     }
                     else
-                    {
+                    {   //not an empty textbox
                         // Get current position of cursor
                         TextPointer curCaret = rtb.CaretPosition;
                         // Get the current block object that the cursor is in
@@ -1236,10 +1093,23 @@ namespace SkinText
                                 FontSize = fontSize,
                                 TextDecorations = null
                             };
-                            newRun.TextDecorations = decor.Clone();
+                            if (decor != null)
+                            {
+                                newRun.TextDecorations = decor.Clone();
+                            }
                             newRun.FontStyle = fontStyle;
                             newRun.FontWeight = fontWeight;
                             newRun.FlowDirection = flow;
+
+                            newRun.BaselineAlignment = basealign;
+
+
+                            /*Hyperlink textlink = new Hyperlink(new Run("LINK"))
+                            {
+                                NavigateUri = new Uri("https://ar.ikariam.gameforge.com/main/gametour_extended")
+                            };
+                            curParagraph.Inlines.Add(textlink);*/
+
                             curParagraph.Inlines.Add(newRun);
                             //curParagraph.LineHeight = lineHeight;
                             curParagraph.TextAlignment = textalign;
@@ -1259,10 +1129,16 @@ namespace SkinText
                     selectionTextRange.ApplyPropertyValue(TextElement.FontStyleProperty, fontStyle);
                     selectionTextRange.ApplyPropertyValue(TextElement.FontWeightProperty, fontWeight);
                     selectionTextRange.ApplyPropertyValue(Inline.TextDecorationsProperty, null);
-                    selectionTextRange.ApplyPropertyValue(Inline.TextDecorationsProperty, decor.Clone());
+                    if (decor != null)
+                    {
+                        selectionTextRange.ApplyPropertyValue(Inline.TextDecorationsProperty, decor.Clone());
+                    }
                     //selectionTextRange.ApplyPropertyValue(Paragraph.LineHeightProperty, lineHeight);
                     selectionTextRange.ApplyPropertyValue(Paragraph.TextAlignmentProperty, textalign);
                     selectionTextRange.ApplyPropertyValue(Paragraph.FlowDirectionProperty, flow);
+
+                    selectionTextRange.ApplyPropertyValue(Inline.BaselineAlignmentProperty, basealign);
+                                        
                 }
             }
             //rtb.Document.LineHeight = lineHeight;
@@ -1272,7 +1148,7 @@ namespace SkinText
         }
         private void Font_Click(object sender, RoutedEventArgs e)
         {
-            font.Show();
+            FontConf.Show();
         }
         private void Panel_MouseLeave(object sender, MouseEventArgs e)
         {
@@ -1288,78 +1164,64 @@ namespace SkinText
                 {
                     TextRange selectionTextRange = new TextRange(rtb.Selection.Start, rtb.Selection.End);
                     SolidColorBrush newBrush = (SolidColorBrush)selectionTextRange.GetPropertyValue(TextElement.ForegroundProperty);
-                    font.ClrPcker_Font.SelectedColor = newBrush.Color;
+                    FontConf.ClrPcker_Font.SelectedColor = newBrush.Color;
                     newBrush = (SolidColorBrush)selectionTextRange.GetPropertyValue(TextElement.BackgroundProperty);
                     if (null == newBrush)
                     {
-                        font.ClrPcker_Bg.SelectedColor = Colors.Transparent;
+                        FontConf.ClrPcker_Bg.SelectedColor = Colors.Transparent;
                     }
                     else
                     {
-                        font.ClrPcker_Bg.SelectedColor = newBrush.Color;
+                        FontConf.ClrPcker_Bg.SelectedColor = newBrush.Color;
                     }
-
-                    font.fontSizeSlider.Value = (double)selectionTextRange.GetPropertyValue(TextElement.FontSizeProperty);
-
+                    FontConf.fontSizeSlider.Value = (double)selectionTextRange.GetPropertyValue(TextElement.FontSizeProperty);
                     object fontfamily= selectionTextRange.GetPropertyValue(TextElement.FontFamilyProperty);
-                    font.lstFamily.SelectedItem = fontfamily;
-
+                    FontConf.lstFamily.SelectedItem = fontfamily;
                     FontStyle fontsyle = (FontStyle)selectionTextRange.GetPropertyValue(TextElement.FontStyleProperty);
                     FontWeight fontweight = (FontWeight)selectionTextRange.GetPropertyValue(TextElement.FontWeightProperty);
-                    FontStretch fonttretch = (FontStretch)selectionTextRange.GetPropertyValue(TextElement.FontStretchProperty);
-
+                    FontStretch fontStretch = (FontStretch)selectionTextRange.GetPropertyValue(TextElement.FontStretchProperty);
                     FamilyTypeface fonttype = new FamilyTypeface()
                     {
                         Style = fontsyle,
                         Weight = fontweight,
-                        Stretch = FontStretch
+                        Stretch = fontStretch
                     };
-                    font.lstTypefaces.SelectedItem = fonttype;
-
-                    font.txtSampleText.Selection.Start.Paragraph.TextAlignment = (TextAlignment)selectionTextRange.GetPropertyValue(Paragraph.TextAlignmentProperty);
-
+                    FontConf.lstTypefaces.SelectedItem = fonttype;
+                    FontConf.txtSampleText.Selection.Start.Paragraph.TextAlignment = (TextAlignment)selectionTextRange.GetPropertyValue(Paragraph.TextAlignmentProperty);
                     //flow direction is working, see examples: https://stackoverflow.com/questions/7045676/wpf-how-does-flowdirection-righttoleft-change-a-string
-
-                    font.txtSampleText.FlowDirection = (FlowDirection)selectionTextRange.GetPropertyValue(Paragraph.FlowDirectionProperty);
-
+                    FontConf.txtSampleText.FlowDirection = (FlowDirection)selectionTextRange.GetPropertyValue(Paragraph.FlowDirectionProperty);
                     TextDecorationCollection temp = (TextDecorationCollection)selectionTextRange.GetPropertyValue(Inline.TextDecorationsProperty);
-                    font.textrun.TextDecorations = null;
-                    font.textrun.TextDecorations = temp.Clone();//this works, but is overriden on textrun.TextDecorations.Clear(); of UpdateStrikethrough in fontConfig 
-
-
-
-                    font.Baseline.IsChecked = false;
-                    font.OverLine.IsChecked = false;
-                    font.Strikethrough.IsChecked = false;
-                    font.Underline.IsChecked = false;
-                    
-                    font.UpdateStrikethrough();
-                    
+                    FontConf.textrun.TextDecorations = null;
+                    FontConf.textrun.TextDecorations = temp.Clone();//this works, but is overriden on textrun.TextDecorations.Clear(); of UpdateStrikethrough in fontConfig 
+                    FontConf.Baseline.IsChecked = false;
+                    FontConf.OverLine.IsChecked = false;
+                    FontConf.Strikethrough.IsChecked = false;
+                    FontConf.Underline.IsChecked = false;
+                    FontConf.UpdateStrikethrough();                    
                     /*not working*/
                     //TODO: Fix decorators
                     foreach (TextDecoration decor in temp)
                     {
-                        if (decor.Location.Equals(System.Windows.TextDecorationLocation.Baseline))
+                        if (decor.Location.Equals(TextDecorationLocation.Baseline))
                         {
-                            font.Baseline.IsChecked = true;
+                            FontConf.Baseline.IsChecked = true;
                         }
-                        if (decor.Location.Equals(System.Windows.TextDecorationLocation.OverLine))
+                        if (decor.Location.Equals(TextDecorationLocation.OverLine))
                         {
-                            font.OverLine.IsChecked = true;
+                            FontConf.OverLine.IsChecked = true;
                         }
-                        if (decor.Location.Equals(System.Windows.TextDecorationLocation.Strikethrough))
+                        if (decor.Location.Equals(TextDecorationLocation.Strikethrough))
                         {
-                            font.Strikethrough.IsChecked = true;
+                            FontConf.Strikethrough.IsChecked = true;
                         }
-                        if (decor.Location.Equals(System.Windows.TextDecorationLocation.Underline))
+                        if (decor.Location.Equals(TextDecorationLocation.Underline))
                         {
-                            font.Underline.IsChecked = true;
+                            FontConf.Underline.IsChecked = true;
                         }
                     }
                 }
-
             }
-            catch (System.Exception)
+            catch (Exception)
             {
             }
         }
@@ -1419,17 +1281,31 @@ namespace SkinText
         private void CharMap_Click(object sender, RoutedEventArgs e)
         {
             Process process = new Process();
+            try
+            {
             process.StartInfo.FileName = "charmap";
             //process.StartInfo.Arguments = arguments;
             //process.StartInfo.ErrorDialog = true;
             //process.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
-            process.Start(); 
+                process.Start();
+                process.Dispose();
+            }
+            catch (Exception)
+            {
+                process.Dispose();
+            }
             //process.WaitForExit(1000 * 60 * 5);    // Wait up to five minutes.
         }
         private void Rtb_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
             //creates a spam on first load, fixed on window_onLoad()
             fileChanged = true; 
+        }
+
+        private void Hyperlink_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var hyperlink = (Hyperlink)sender;
+            Process.Start(hyperlink.NavigateUri.ToString());
         }
     }
     public class ShowMessageCommand : ICommand
