@@ -216,12 +216,17 @@
                 HorizontalAlignment="Stretch"
                 HorizontalScrollBarVisibility="Auto"
                 VerticalScrollBarVisibility="Auto"
-                SizeChanged="Rtb_SizeChanged" SelectionChanged="Rtb_SelectionChanged" IsDocumentEnabled="True" KeyUp="Rtb_KeyUp" TextChanged="Rtb_TextChanged"   
+                SizeChanged="RtbSizeChanged" SelectionChanged="Rtb_SelectionChanged" IsDocumentEnabled="True" KeyUp="Rtb_KeyUp" TextChanged="Rtb_TextChanged"
+                IsInactiveSelectionHighlightEnabled="True"   
                 >
                 <FlowDocument LineStackingStrategy="BlockLineHeight"/>
                 <RichTextBox.Resources>
                     <Style TargetType="{x:Type Paragraph}">
                         <Setter Property="Margin" Value="0"/>
+                    </Style>
+                    <Style TargetType="Hyperlink">
+                        <Setter Property="Cursor" Value="Hand"/>
+                        <EventSetter Event="MouseLeftButtonDown" Handler="Hyperlink_MouseLeftButtonDown"/>
                     </Style>
                 </RichTextBox.Resources>
             </RichTextBox>
