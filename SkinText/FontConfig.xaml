@@ -400,7 +400,7 @@
                         </Style>
                     </Button.Style>
                     <Button.Content>
-                        <Image Source="" />
+                        <Image Source="Images/flowDir.png" />
                     </Button.Content>
                 </Button>
             </Grid>

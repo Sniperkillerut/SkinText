@@ -301,11 +301,11 @@ namespace SkinText
         {
             if (NotificationVisible.IsChecked.Value)
             {
-                par.window.MyNotifyIcon.Visibility = Visibility.Visible;
+                par.MyNotifyIcon.Visibility = Visibility.Visible;
             }
             else
             {
-                par.window.MyNotifyIcon.Visibility = Visibility.Collapsed;
+                par.MyNotifyIcon.Visibility = Visibility.Collapsed;
             }
         }
         private void ResizeVisible_Unchecked(object sender, RoutedEventArgs e)
