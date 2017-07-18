@@ -82,6 +82,7 @@ namespace SkinText
         private void New_File()
         {
             filepath = "";
+            MenuFileName.Header = "";
             rtb.Document = new FlowDocument();
             fileChanged = false;
         }
@@ -129,11 +130,12 @@ namespace SkinText
                 CheckPathExists = true,
                 ValidateNames = true,
                 RestoreDirectory = true,
-                Filter = "Text files (*.txt, *.rtf) | *.txt; *.rtf"
+                Filter = "Text files (*.txt, *.rtf, *.xaml, *.xamlp) | *.txt; *.rtf; *.xaml; *.xamlp"
             };
             if (openFileDialog.ShowDialog() == true)
             {
                 filepath = openFileDialog.FileName;
+                MenuFileName.Header = Path.GetFileName(filepath);
                 try
                 {
                     TextRange range;
@@ -141,13 +143,34 @@ namespace SkinText
                     range = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
                     using (fStream = new FileStream(filepath, FileMode.OpenOrCreate))
                     {
-                        if (Path.GetExtension(filepath).ToUpperInvariant().Equals(".RTF"))
+                        switch (Path.GetExtension(filepath).ToUpperInvariant())
                         {
-                            range.Load(fStream, DataFormats.Rtf);
-                        }
-                        else
-                        {
-                            range.Load(fStream, DataFormats.Text);
+                            case (".RTF"):
+                                {
+                                    range.Load(fStream, System.Windows.DataFormats.Rtf);
+                                    break;
+                                }
+                            case (".TXT"):
+                                {
+                                    range.Load(fStream, System.Windows.DataFormats.Text);
+                                    break;
+                                }
+                            case (".XAML"):
+                                {
+                                    range.Load(fStream, System.Windows.DataFormats.Xaml);
+                                    break;
+                                }
+
+                            case (".XAMLP"):
+                                {
+                                    range.Load(fStream, System.Windows.DataFormats.XamlPackage);
+                                    break;
+                                }
+                            default:
+                                {//TODO: if no format open as txt, or should throw error?
+                                    range.Load(fStream, System.Windows.DataFormats.Text);
+                                    break;
+                                }
                         }
                         /*
                         using (MemoryStream rtfMemoryStream = new MemoryStream())
@@ -165,6 +188,7 @@ namespace SkinText
                 catch (Exception)
                 {
                     filepath = "";
+                    MenuFileName.Header = "";
                     MessageBox.Show("Failed to Open File:\r\n" + filepath, "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
                 }
             }
@@ -501,15 +525,38 @@ namespace SkinText
                                 range = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
                                 using (fStream = new FileStream(fileName, FileMode.OpenOrCreate))
                                 {
-                                    if (Path.GetExtension(fileName).ToUpperInvariant().Equals(".RTF"))
+                                    switch (Path.GetExtension(fileName).ToUpperInvariant())
                                     {
-                                        range.Load(fStream, DataFormats.Rtf);
-                                    }
-                                    else
-                                    {
-                                        range.Load(fStream, DataFormats.Text);
+                                        case (".RTF"):
+                                            {
+                                                range.Load(fStream, System.Windows.DataFormats.Rtf);
+                                                break;
+                                            }
+                                        case (".TXT"):
+                                            {
+                                                range.Load(fStream, System.Windows.DataFormats.Text);
+                                                break;
+                                            }
+                                        case (".XAML"):
+                                            {
+                                                range.Load(fStream, System.Windows.DataFormats.Xaml);
+                                                break;
+                                            }
+
+                                        case (".XAMLP"):
+                                            {
+                                                range.Load(fStream, System.Windows.DataFormats.XamlPackage);
+                                                break;
+                                            }
+                                        default:
+                                            {//TODO: if no format open as txt, or should throw error?
+                                                range.Load(fStream, System.Windows.DataFormats.Text);
+                                                break;
+                                            }
                                     }
                                     filepath = fileName;
+                                    MenuFileName.Header = Path.GetFileName(filepath);
+                                    fileChanged = false;
                                     //fStream.Close();
                                 }
                             }
@@ -915,6 +962,7 @@ namespace SkinText
 
             //no file
             filepath = "";
+            MenuFileName.Header = "";
 
             //GIF Method
             GifMethod = "CPU";
@@ -958,35 +1006,50 @@ namespace SkinText
                         ValidateNames = true,
                         RestoreDirectory = true,
                         FileName = "Notes",
-                        Filter = "RTF|*.rtf",
-                        DefaultExt = ".rtf"
+                        Filter = "XAML Package (*.xamlp)|*.xamlp|Rich Text File (*.rtf)|*.rtf|XAML File (*.xaml)|*.xaml|Text file (*.txt)|*.txt",
+                        DefaultExt = ".xamlp"
                     };
                     if (savedialog.ShowDialog() == true)
                     {
                         filepath = savedialog.FileName;
-
+                        MenuFileName.Header = Path.GetFileName(filepath);
                         TextRange t = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
                         using (FileStream file = new FileStream(filepath, FileMode.Create) ){ 
-                            t.Save(file, System.Windows.DataFormats.Rtf);
-                            /*using (MemoryStream rtfMemoryStream = new MemoryStream())
+                            switch(Path.GetExtension(filepath).ToUpperInvariant())
                             {
-                                using (StreamWriter rtfStreamWriter = new StreamWriter(rtfMemoryStream))
-                                {
-                                    t.Save(rtfMemoryStream, DataFormats.Rtf);
-                                    rtfMemoryStream.Flush();
-                                    rtfMemoryStream.Position = 0;
-                                    StreamReader sr = new StreamReader(rtfMemoryStream);
-                                    //MessageBox.Show(sr.ReadToEnd());
-                                    rtfMemoryStream.WriteTo(file);
-                                }
-                            }*/
+                                case (".RTF"):
+                                    {
+                                        t.Save(file, System.Windows.DataFormats.Rtf);
+                                        break;
+                                    }
+                                case (".TXT"):
+                                    {
+                                        t.Save(file, System.Windows.DataFormats.Text);
+                                        break;
+                                    }
+                                case (".XAML"):
+                                    {
+                                        t.Save(file, System.Windows.DataFormats.Xaml);
+                                        break;
+                                    }
+
+                                case (".XAMLP"):
+                                    {
+                                        t.Save(file, System.Windows.DataFormats.XamlPackage);
+                                        break;
+                                    }
+                                default:
+                                    {
+                                        throw new Exception();
+                                        //break;
+                                    }
+                            }
                             fileChanged = false;
                             SaveConfig();
-                            //file.Close();
                         }
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     MessageBox.Show("Failed to Write File", "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
                 }
@@ -998,7 +1061,35 @@ namespace SkinText
                     TextRange t = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
                     using (FileStream file = new FileStream(filepath, FileMode.Create))
                     {
-                        t.Save(file, System.Windows.DataFormats.Rtf);
+                        switch (Path.GetExtension(filepath).ToUpperInvariant())
+                        {
+                            case (".RTF"):
+                                {
+                                    t.Save(file, System.Windows.DataFormats.Rtf);
+                                    break;
+                                }
+                            case (".TXT"):
+                                {
+                                    t.Save(file, System.Windows.DataFormats.Text);
+                                    break;
+                                }
+                            case (".XAML"):
+                                {
+                                    t.Save(file, System.Windows.DataFormats.Xaml);
+                                    break;
+                                }
+
+                            case (".XAMLP"):
+                                {
+                                    t.Save(file, System.Windows.DataFormats.XamlPackage);
+                                    break;
+                                }
+                            default:
+                                {
+                                    throw new Exception();
+                                    //break;
+                                }
+                        }
                         fileChanged = false;
                         SaveConfig();
                         //file.Close();
@@ -1247,6 +1338,11 @@ namespace SkinText
                             //do nothing
                             break;
                         }
+
+                    case MessageBoxResult.None:
+                        break;
+                    case MessageBoxResult.OK:
+                        break;
                     default: break;
                 }
             }

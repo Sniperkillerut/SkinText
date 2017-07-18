@@ -202,6 +202,8 @@
                     <Separator/>
                     <MenuItem Header="Donate" Template="{DynamicResource MenuItemControlTemplate2}" Click="Donate_Click"></MenuItem>
                 </MenuItem>
+                <MenuItem x:Name="MenuFileName" Header="Name" Template="{DynamicResource MenuItemControlTemplate1}">
+                </MenuItem>
             </Menu>
             <RichTextBox
                 x:Name="rtb"
