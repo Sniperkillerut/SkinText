@@ -40,25 +40,21 @@ namespace SkinText
             {
                 textrun.TextDecorations = new TextDecorationCollection();
             }
-            if (Strikethrough.IsChecked.Value)
-            {
-                textrun.TextDecorations.Add(TextDecorations.Strikethrough);
-                //textrun.BaselineAlignment = BaselineAlignment.Baseline;
-            }
-            if (Underline.IsChecked.Value)
-            {
-                textrun.TextDecorations.Add(TextDecorations.Underline);
-                //textrun.BaselineAlignment = BaselineAlignment.Bottom;
-            }
             if (OverLine.IsChecked.Value)
             {
                 textrun.TextDecorations.Add(TextDecorations.OverLine);
-                //textrun.BaselineAlignment = BaselineAlignment.TextBottom;
+            }
+            if (Strikethrough.IsChecked.Value)
+            {
+                textrun.TextDecorations.Add(TextDecorations.Strikethrough);
             }
             if (Baseline.IsChecked.Value)
             {
                 textrun.TextDecorations.Add(TextDecorations.Baseline);
-                //textrun.BaselineAlignment = BaselineAlignment.Subscript;
+            }
+            if (Underline.IsChecked.Value)
+            {
+                textrun.TextDecorations.Add(TextDecorations.Underline);
             }
         }
         private void Strikethrough_Checked(object sender, RoutedEventArgs e)
@@ -105,13 +101,13 @@ namespace SkinText
             {
                 txtSampleText.Selection.Start.Paragraph.TextAlignment = TextAlignment.Left;
             }
-            if (right.Equals(sender))
-            {
-                txtSampleText.Selection.Start.Paragraph.TextAlignment = TextAlignment.Right;
-            }
             if (center.Equals(sender))
             {
                 txtSampleText.Selection.Start.Paragraph.TextAlignment = TextAlignment.Center;
+            }
+            if (right.Equals(sender))
+            {
+                txtSampleText.Selection.Start.Paragraph.TextAlignment = TextAlignment.Right;
             }
             if (justify.Equals(sender))
             {
@@ -127,6 +123,38 @@ namespace SkinText
             else
             {
                 txtSampleText.FlowDirection = FlowDirection.LeftToRight;
+            }
+        }
+
+        private void Button2_Click(object sender, RoutedEventArgs e)
+        {
+            if (subscript.Equals(sender))
+            {
+                textrun.BaselineAlignment = BaselineAlignment.Subscript;
+            }
+            if (superscript.Equals(sender))
+            {
+                textrun.BaselineAlignment = BaselineAlignment.Superscript;
+            }
+            if (right2.Equals(sender))
+            {
+                textrun.BaselineAlignment = BaselineAlignment.TextTop;
+            }
+            if (justify2.Equals(sender))
+            {
+                textrun.BaselineAlignment = BaselineAlignment.Top;
+            }
+            if (flowdir2.Equals(sender))
+            {
+                textrun.BaselineAlignment = BaselineAlignment.TextBottom;
+            }
+        }
+
+        private void fontSizeText_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.SystemKey.Equals(Key.Return) || e.Key.Equals(Key.Return) || e.SystemKey.Equals(Key.Enter) || e.Key.Equals(Key.Enter))
+            {
+                fontSizeSlider.Focus();
             }
         }
     }
