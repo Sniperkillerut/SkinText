@@ -237,6 +237,13 @@
   <ItemGroup>
     <Resource Include="Resources\icon_01.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\SubScript.png" />
+    <Resource Include="Resources\SuperScript.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\X.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

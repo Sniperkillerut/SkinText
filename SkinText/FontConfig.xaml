@@ -25,10 +25,13 @@
                 <scm:SortDescription PropertyName="Source" Direction="Ascending" />
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
-        <BitmapImage x:Key="ImageSource1Left" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="Resources\Left.png"/>
-        <BitmapImage x:Key="ImageSource1Center" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="Resources\Center.png"/>
-        <BitmapImage x:Key="ImageSource1Right" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="Resources\Right.png"/>
-        <BitmapImage x:Key="ImageSource1Justify" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="Resources\justify.png"/>
+        <BitmapImage x:Key="ImageSource1Left"           CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="Resources\Left.png"/>
+        <BitmapImage x:Key="ImageSource1Center"         CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="Resources\Center.png"/>
+        <BitmapImage x:Key="ImageSource1Right"          CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="Resources\Right.png"/>
+        <BitmapImage x:Key="ImageSource1Justify"        CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="Resources\justify.png"/>
+        <BitmapImage x:Key="ImageSource1SuperScript"    CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="Resources\SuperScript.png"/>
+        <BitmapImage x:Key="ImageSource1SubScript"      CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="Resources\SubScript.png"/>
+        <BitmapImage x:Key="ImageSource1X"              CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="Resources\X.png"/>
     </Window.Resources>
     <Grid DataContext="{StaticResource familyCollection}" >
         <Grid.ColumnDefinitions>
@@ -415,7 +418,7 @@
                         </Style>
                     </Button.Style>
                     <Button.Content>
-                        <Image Source="Images/flowDir.png" />
+                        <Image Source="{DynamicResource ImageSource1X}" />
                     </Button.Content>
                 </Button>
             </Grid>
@@ -451,7 +454,7 @@
                         </Style>
                     </Button.Style>
                     <Button.Content>
-                        <Image Source="{DynamicResource ImageSource1Left}" />
+                        <Image Source="{DynamicResource ImageSource1SubScript}" />
                     </Button.Content>
                 </Button>
                 <Button x:Name="superscript" Grid.Column="1" Grid.Row="0" Width="25" Height="25"  HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="{x:Null}" FontSize="16" FontFamily="Arial Black" FontWeight="Bold" Click="Button2_Click" >
@@ -475,7 +478,7 @@
                         </Style>
                     </Button.Style>
                     <Button.Content>
-                        <Image Source="{DynamicResource ImageSource1Center}" />
+                        <Image Source="{DynamicResource ImageSource1SuperScript}" />
                     </Button.Content>
                 </Button>
                 <Button x:Name="right2" Grid.Column="2" Grid.Row="0" Width="25" Height="25"  HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="{x:Null}" FontSize="16" FontFamily="Arial Black" FontWeight="Bold" Click="Button2_Click" >
@@ -499,7 +502,7 @@
                         </Style>
                     </Button.Style>
                     <Button.Content>
-                        <Image Source="{DynamicResource ImageSource1Right}" />
+                        <Image Source="{DynamicResource ImageSource1X}" />
                     </Button.Content>
                 </Button>
                 <Button x:Name="justify2" Grid.Column="3" Grid.Row="0" Width="25" Height="25"  HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="{x:Null}" FontSize="16" FontFamily="Arial Black" FontWeight="Bold" Click="Button2_Click" >
@@ -523,7 +526,7 @@
                         </Style>
                     </Button.Style>
                     <Button.Content>
-                        <Image Source="{DynamicResource ImageSource1Justify}" />
+                        <Image Source="{DynamicResource ImageSource1X}" />
                     </Button.Content>
                 </Button>
 
@@ -548,7 +551,7 @@
                         </Style>
                     </Button.Style>
                     <Button.Content>
-                        <Image Source="Images/flowDir.png" />
+                        <Image Source="{DynamicResource ImageSource1X}" />
                     </Button.Content>
                 </Button>
             </Grid>

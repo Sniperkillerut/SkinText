@@ -139,9 +139,8 @@
             </ControlTemplate.Triggers>
         </ControlTemplate>
 
-
         <local:ShowMessageCommand x:Key="MessageCommand" />
-        
+        <BitmapImage x:Key="ImageSource1X" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="Resources\X.png"/>
     </Window.Resources>
     <Grid x:Name="grid" SnapsToDevicePixels="True" UseLayoutRounding="True" >
         <Grid.ColumnDefinitions>
@@ -158,49 +157,96 @@
         <DockPanel Grid.Column="1" Grid.Row="1" x:Name="panel" ClipToBounds="True" RenderTransformOrigin="0.5,0.5" MouseLeave="Panel_MouseLeave">
             <Menu x:Name="menu" IsMainMenu="True" DockPanel.Dock="Top" PreviewMouseDown="Menu_MouseDown">
                 <MenuItem Header="_File" Template="{DynamicResource MenuItemControlTemplate1}">
-                    <MenuItem Header="_New..." Click="New_Click" Template="{DynamicResource MenuItemControlTemplate2}" />
+                    <MenuItem Header="_New..." Click="New_Click" Template="{DynamicResource MenuItemControlTemplate2}" >
+                        <MenuItem.Icon>
+                            <Image Source="{DynamicResource ImageSource1X}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
                     <Separator />
-                    <MenuItem Header="_Open..." Click="Open_Click" Template="{DynamicResource MenuItemControlTemplate2}" />
+                    <MenuItem Header="_Open..." Click="Open_Click" Template="{DynamicResource MenuItemControlTemplate2}" >
+                        <MenuItem.Icon>
+                            <Image Source="{DynamicResource ImageSource1X}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
                     <Separator />
-                    <MenuItem Header="_Save" Click="Save_Click" Template="{DynamicResource MenuItemControlTemplate2}" />
-                    <MenuItem Header="_Save As..." Click="Save_as_Click" Template="{DynamicResource MenuItemControlTemplate2}"/>
+                    <MenuItem Header="_Save" Click="Save_Click" Template="{DynamicResource MenuItemControlTemplate2}" >
+                        <MenuItem.Icon>
+                            <Image Source="{DynamicResource ImageSource1X}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_Save As..." Click="Save_as_Click" Template="{DynamicResource MenuItemControlTemplate2}">
+                        <MenuItem.Icon>
+                            <Image Source="{DynamicResource ImageSource1X}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
                     <Separator />
-                    <MenuItem Header="_Exit" Click="Exit_Click" Template="{DynamicResource MenuItemControlTemplate2}" />
+                    <MenuItem Header="_Exit" Click="Exit_Click" Template="{DynamicResource MenuItemControlTemplate2}" >
+                        <MenuItem.Icon>
+                            <Image Source="{DynamicResource ImageSource1X}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
                 <MenuItem Header="_Edit" Template="{DynamicResource MenuItemControlTemplate1}">
                     <MenuItem Header="_Cut" Command="Cut" Template="{DynamicResource MenuItemControlTemplate2}">
                         <MenuItem.Icon>
-                            <Image Source="Images/cut.png" />
+                            <Image Source="{DynamicResource ImageSource1X}" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_Copy" Command="Copy" Template="{DynamicResource MenuItemControlTemplate2}">
                         <MenuItem.Icon>
-                            <Image Source="Images/copy.png" />
+                            <Image Source="{DynamicResource ImageSource1X}" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_Paste" Command="Paste" Template="{DynamicResource MenuItemControlTemplate2}">
                         <MenuItem.Icon>
-                            <Image Source="Images/paste.png" />
+                            <Image Source="{DynamicResource ImageSource1X}" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
                     <MenuItem Header="_Undo" Command="Undo" Template="{DynamicResource MenuItemControlTemplate2}">
+                        <MenuItem.Icon>
+                            <Image Source="{DynamicResource ImageSource1X}" />
+                        </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_Redo" Command="Redo" Template="{DynamicResource MenuItemControlTemplate2}">
+                        <MenuItem.Icon>
+                            <Image Source="{DynamicResource ImageSource1X}" />
+                        </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
                     <MenuItem Header="Open Character _Map" Template="{DynamicResource MenuItemControlTemplate2}" Click="CharMap_Click">
+                        <MenuItem.Icon>
+                            <Image Source="{DynamicResource ImageSource1X}" />
+                        </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_Font Properties" Template="{DynamicResource MenuItemControlTemplate2}" Click="Font_Click">
+                        <MenuItem.Icon>
+                            <Image Source="{DynamicResource ImageSource1X}" />
+                        </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_Window Configuration" Template="{DynamicResource MenuItemControlTemplate2}" Click="Config_Click">
+                        <MenuItem.Icon>
+                            <Image Source="{DynamicResource ImageSource1X}" />
+                        </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="_Help" Template="{DynamicResource MenuItemControlTemplate1}">
-                    <MenuItem Header="About SkinText" Template="{DynamicResource MenuItemControlTemplate2}" Click="About_Click"></MenuItem>
-                    <MenuItem Header="Reset to defaults" Template="{DynamicResource MenuItemControlTemplate2}" Click="Resettodefaults_Click"></MenuItem>
+                    <MenuItem Header="About SkinText" Template="{DynamicResource MenuItemControlTemplate2}" Click="About_Click">
+                        <MenuItem.Icon>
+                            <Image Source="{DynamicResource ImageSource1X}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Reset to defaults" Template="{DynamicResource MenuItemControlTemplate2}" Click="Resettodefaults_Click">
+                        <MenuItem.Icon>
+                            <Image Source="{DynamicResource ImageSource1X}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
                     <Separator/>
-                    <MenuItem Header="Donate" Template="{DynamicResource MenuItemControlTemplate2}" Click="Donate_Click"></MenuItem>
+                    <MenuItem Header="Donate" Template="{DynamicResource MenuItemControlTemplate2}" Click="Donate_Click">
+                        <MenuItem.Icon>
+                            <Image Source="{DynamicResource ImageSource1X}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
                 <MenuItem x:Name="MenuFileName" Header="Name" Template="{DynamicResource MenuItemControlTemplate1}">
                 </MenuItem>
