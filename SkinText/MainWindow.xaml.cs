@@ -203,6 +203,16 @@ namespace SkinText
         }
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
+            this.Close();
+        }
+        private void Exit_program()
+        {
+            FontConf.Close();
+            config.Close();
+            SaveConfig();
+        }
+        private void window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
             if (fileChanged)
             {
                 switch (MessageBox.Show("There are unsaved Changes to: " + filepath + "\r\nDo you want to save?", "Save Changes?", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation, MessageBoxResult.Cancel))
@@ -220,7 +230,7 @@ namespace SkinText
                         }
                     case MessageBoxResult.Cancel:
                         {
-                            //do nothing
+                            e.Cancel = true;
                             break;
                         }
                     default: break;
@@ -230,13 +240,6 @@ namespace SkinText
             {
                 Exit_program();
             }
-        }
-        private void Exit_program()
-        {
-            FontConf.Close();
-            config.Close();
-            SaveConfig();
-            this.Close();
         }
         private void Config_Click(object sender, RoutedEventArgs e)
         {
@@ -407,7 +410,6 @@ namespace SkinText
             {
                 // The appdata folders dont exist
                 //can be first open, let default values
-                //throw;
             }
         }
         private void ReadConfigLine(string[] line)
@@ -542,7 +544,6 @@ namespace SkinText
                                                 range.Load(fStream, System.Windows.DataFormats.Xaml);
                                                 break;
                                             }
-
                                         case (".XAMLP"):
                                             {
                                                 range.Load(fStream, System.Windows.DataFormats.XamlPackage);
@@ -771,6 +772,16 @@ namespace SkinText
                             break;
                             #endregion
                         }
+                    case "FLIP_RTB":
+                        {
+                            string[] pos = line[1].Split(',');
+                            if (double.TryParse(pos[0], out double x) && double.TryParse(pos[1], out double y))
+                            {
+                                config.FlipXButton.IsChecked = (x < 0);
+                                config.FlipYButton.IsChecked = (y < 0);
+                            }
+                            break;
+                        }
                     default: break;
                 }
             }
@@ -890,6 +901,9 @@ namespace SkinText
                     writer.WriteLine(data);
                     //ResizeVisible
                     data = "resize_visible = " + config.ResizeVisible.IsChecked.Value.ToString();
+                    writer.WriteLine(data);
+                    //Render transform flip
+                    data = "flip_rtb = " + ((System.Windows.Media.ScaleTransform)rtb.RenderTransform).ScaleX.ToString() + " , " + ((System.Windows.Media.ScaleTransform)rtb.RenderTransform).ScaleY.ToString();
                     writer.WriteLine(data);
                 }
                 
@@ -1284,14 +1298,14 @@ namespace SkinText
                         {
                             FontConf.fontSizeSlider.Value = (double)selectionTextRange.GetPropertyValue(TextElement.FontSizeProperty);
                         }
-
-                        fontConf.lineHeightSlider.Value = FontConf.fontSizeSlider.Value;
-                        if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(Block.LineHeightProperty)))
+                                                
+                        if ((!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(Block.LineHeightProperty))) && (!double.IsNaN((double)selectionTextRange.GetPropertyValue(Block.LineHeightProperty))))
                         {
-                            if (!double.IsNaN((double)selectionTextRange.GetPropertyValue(Block.LineHeightProperty)))
-                            {
                                 fontConf.lineHeightSlider.Value = (double)selectionTextRange.GetPropertyValue(Block.LineHeightProperty);
-                            }
+                        }
+                        else
+                        {
+                            fontConf.lineHeightSlider.Value = FontConf.fontSizeSlider.Value;
                         }
 
                         if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(TextElement.FontFamilyProperty)))
@@ -1537,6 +1551,8 @@ namespace SkinText
             var hyperlink = (Hyperlink)sender;
             Process.Start(hyperlink.NavigateUri.ToString());
         }
+
+        
     }
     public class ShowMessageCommand : ICommand
     {
