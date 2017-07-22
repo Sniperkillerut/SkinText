@@ -124,7 +124,6 @@ namespace SkinText
             par.splitter3.Background = brush;
             par.splitter4.Background = brush;
         }
-
         public ImageSource BitmapFromUri(Uri source)
         {
             //TODO: move to library class
@@ -136,7 +135,6 @@ namespace SkinText
             bitmap.EndInit();
             return bitmap;
         }
-
         public void ImageClear()
         {
             par.backgroundimg.Source = null;
@@ -145,7 +143,6 @@ namespace SkinText
             XamlAnimatedGif.AnimationBehavior.SetSourceStream(par.backgroundimg, null);
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
         }
-
         public void LoadImage(string imagepath)
         {
             if (File.Exists(imagepath))
@@ -173,7 +170,6 @@ namespace SkinText
                 uri = null;
             }
         }
-
         private void Imagedir_Click(object sender, RoutedEventArgs e)
         {
             //openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
@@ -319,18 +315,14 @@ namespace SkinText
                 par.window.ResizeMode = ResizeMode.NoResize;
             }
         }
-
         private void GifMethodRAM_Checked(object sender, RoutedEventArgs e)
         {
             par.GifMethod = "RAM";
         }
-
         private void GifMethodCPU_Checked(object sender, RoutedEventArgs e)
         {
             par.GifMethod = "CPU";
         }
-
-
         private void FlipXButton_Checked(object sender, RoutedEventArgs e)
         {
             double x = 1;
