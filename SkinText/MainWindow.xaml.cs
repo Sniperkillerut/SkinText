@@ -43,83 +43,418 @@ namespace SkinText
             InitializeComponent();
         }
         ///////////////////////////////////////////////////
-        private void New_Click(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            if (fileChanged)
+            config = new WindowConfig(this);
+            FontConf = new FontConfig(this);
+            Load_default();
+            AppDataPath = ((App)Application.Current).GAppPath;
+            #region get FileName test
+            /*
+            string fileNameTest1 = window.GetType().Assembly.Lo‌​cation;
+            string fileNameTest2 = AppDomain.CurrentDomain.FriendlyName;
+            string fileNameTest3 = Environment.GetCommandLineArgs()[0];
+            string fileNameTest4 = Assembly.GetEntryAssembly().Location;
+            string fileNameTest5 = Assembly.GetEntryAssembly().CodeBase;
+            string fileNameTest6 = Assembly.GetExecutingAssembly().ManifestModule.Name;
+            //string fileNameTest7 = Assembly.GetExecutingAssembly().GetName().Name;
+            string fileNameTest8 = Assembly.GetExecutingAssembly().GetName().CodeBase;
+            //string fileNameTest9 = Path.GetFileName(fileNameTest8);
+            //string fileNameTest10 = Path.GetFileNameWithoutExtension(fileNameTest8);
+            string fileNameTest11 = Process.GetCurrentProcess().ProcessName;
+            //string fileNameTest12 = Process.GetCurrentProcess().MainModule.FileName.Replace(".vshost", "");
+            //If you need the Program name to set up a firewall rule, use:
+            string fileNameTest13 = Process.GetCurrentProcess().MainModule.FileName;
+            //All works when changing exe name except 7
+            /* MessageBox.Show("fileNameTest1: \t" + fileNameTest1 + "\r\n" +
+                            "fileNameTest2: \t" + fileNameTest2 + "\r\n" +
+                            "fileNameTest3: \t" + fileNameTest3 + "\r\n" +
+                            "fileNameTest4: \t" + fileNameTest4 + "\r\n" +
+                            "fileNameTest5: \t" + fileNameTest5 + "\r\n" +
+                            "fileNameTest6: \t" + fileNameTest6 + "\r\n" +
+                           // "fileNameTest7: \t" + fileNameTest7 + "\r\n" +
+                            "fileNameTest8: \t" + fileNameTest8 + "\r\n" +
+                           // "fileNameTest9: \t" + fileNameTest9 + "\r\n" +
+                           // "fileNameTest10: \t" + fileNameTest10 + "\r\n" +
+                            "fileNameTest11: \t" + fileNameTest11 + "\r\n" +
+                           // "fileNameTest12: \t" + fileNameTest12 + "\r\n" +
+                            "fileNameTest13: \t" + fileNameTest13 + "\r\n" +
+                            "");
+          */
+            #endregion
+            ReadConfig();
+            grid.UpdateLayout();
+            FixResizeTextbox();
+
+            //set to false after the initial text_change that occur on first load
+            fileChanged = false;
+        }
+        private void Rtb_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            if (fontConf.Visibility == Visibility.Visible)
             {
-                switch (MessageBox.Show("There are unsaved Changes to: " + filepath + "\r\nDo you want to save?", "Save Changes?", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation, MessageBoxResult.Cancel))
+                try
                 {
-                    case (MessageBoxResult.Yes):
+                    if (rtb.Selection != null && rtb.Selection.Start.Paragraph != null)
+                    {
+                        TextRange selectionTextRange = new TextRange(rtb.Selection.Start, rtb.Selection.End);
+
+                        SolidColorBrush newBrush = null;
+
+                        if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(TextElement.BackgroundProperty)))
                         {
-                            Save(false);
-                            New_File();
-                            break;
+                            newBrush = (SolidColorBrush)selectionTextRange.GetPropertyValue(TextElement.BackgroundProperty);
+                            if (newBrush == null)
+                            {
+                                FontConf.ClrPcker_Bg.SelectedColor = Colors.Transparent;
+                            }
+                            else
+                            {
+                                FontConf.ClrPcker_Bg.SelectedColor = newBrush.Color;
+                            }
                         }
-                    case MessageBoxResult.No:
+
+                        if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(TextElement.ForegroundProperty)))
                         {
-                            New_File();
-                            break;
+                            newBrush = (SolidColorBrush)selectionTextRange.GetPropertyValue(TextElement.ForegroundProperty);
+                            FontConf.ClrPcker_Font.SelectedColor = newBrush.Color;
                         }
-                    case MessageBoxResult.Cancel:
-                        break;
-                    case MessageBoxResult.None:
-                        break;
-                    case MessageBoxResult.OK:
-                        break;
-                    default: break;
+
+
+                        if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(TextElement.FontSizeProperty)))
+                        {
+                            FontConf.fontSizeSlider.Value = (double)selectionTextRange.GetPropertyValue(TextElement.FontSizeProperty);
+                        }
+
+                        if ((!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(Block.LineHeightProperty))) && (!double.IsNaN((double)selectionTextRange.GetPropertyValue(Block.LineHeightProperty))))
+                        {
+                            fontConf.lineHeightSlider.Value = (double)selectionTextRange.GetPropertyValue(Block.LineHeightProperty);
+                        }
+                        else
+                        {
+                            fontConf.lineHeightSlider.Value = FontConf.fontSizeSlider.Value;
+                        }
+
+                        if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(TextElement.FontFamilyProperty)))
+                        {
+                            object fontfamily = selectionTextRange.GetPropertyValue(TextElement.FontFamilyProperty);
+                            FontConf.lstFamily.SelectedItem = fontfamily;
+                        }
+
+                        FamilyTypeface fonttype = new FamilyTypeface();
+                        if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(TextElement.FontStyleProperty)))
+                        {
+                            FontStyle fontsyle = (FontStyle)selectionTextRange.GetPropertyValue(TextElement.FontStyleProperty);
+                            fonttype.Style = fontsyle;
+                        }
+                        if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(TextElement.FontWeightProperty)))
+                        {
+                            FontWeight fontweight = (FontWeight)selectionTextRange.GetPropertyValue(TextElement.FontWeightProperty);
+                            fonttype.Weight = fontweight;
+                        }
+                        if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(TextElement.FontStretchProperty)))
+                        {
+                            FontStretch fontStretch = (FontStretch)selectionTextRange.GetPropertyValue(TextElement.FontStretchProperty);
+                            fonttype.Stretch = fontStretch;
+                        }
+                        FontConf.lstTypefaces.SelectedItem = fonttype;
+
+                        if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(Paragraph.TextAlignmentProperty)))
+                        {
+                            switch (selectionTextRange.GetPropertyValue(Paragraph.TextAlignmentProperty))
+                            {
+                                case (TextAlignment.Left):
+                                    {
+                                        fontConf.leftAlign.IsChecked = true;
+                                        break;
+                                    }
+                                case (TextAlignment.Center):
+                                    {
+                                        fontConf.centerAlign.IsChecked = true;
+                                        break;
+                                    }
+                                case (TextAlignment.Right):
+                                    {
+                                        fontConf.rightAlign.IsChecked = true;
+                                        break;
+                                    }
+                                case (TextAlignment.Justify):
+                                    {
+                                        fontConf.justifyAlign.IsChecked = true;
+                                        break;
+                                    }
+                            }
+                        }
+
+                        if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(Paragraph.FlowDirectionProperty)))
+                        {
+                            //flow direction is working, see examples: https://stackoverflow.com/questions/7045676/wpf-how-does-flowdirection-righttoleft-change-a-string
+                            if (((FlowDirection)selectionTextRange.GetPropertyValue(Paragraph.FlowDirectionProperty)).Equals(FlowDirection.RightToLeft))
+                            {
+                                fontConf.FlowDir.IsChecked = true;
+                            }
+                            else
+                            {
+                                fontConf.FlowDir.IsChecked = false;
+                            }
+                        }
+
+                        if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(Inline.BaselineAlignmentProperty)))
+                        {
+                            switch (selectionTextRange.GetPropertyValue(Inline.BaselineAlignmentProperty))
+                            {
+                                case (BaselineAlignment.Top):
+                                    {
+                                        fontConf.topScript.IsChecked = true;
+                                        break;
+                                    }
+                                case (BaselineAlignment.Superscript):
+                                    {
+                                        fontConf.superscript.IsChecked = true;
+                                        break;
+                                    }
+                                case (BaselineAlignment.TextTop):
+                                    {
+                                        fontConf.texttopScript.IsChecked = true;
+                                        break;
+                                    }
+                                case (BaselineAlignment.Center):
+                                    {
+                                        fontConf.centerScript.IsChecked = true;
+                                        break;
+                                    }
+                                case (BaselineAlignment.Subscript):
+                                    {
+                                        fontConf.subscript.IsChecked = true;
+                                        break;
+                                    }
+                                case (BaselineAlignment.TextBottom):
+                                    {
+                                        fontConf.textbottomScript.IsChecked = true;
+                                        break;
+                                    }
+                                case (BaselineAlignment.Bottom):
+                                    {
+                                        fontConf.bottomScript.IsChecked = true;
+                                        break;
+                                    }
+                                case (BaselineAlignment.Baseline):
+                                    {
+                                        fontConf.baseScript.IsChecked = true;
+                                        break;
+                                    }
+                            }
+                        }
+
+                        if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(Inline.TextDecorationsProperty)))
+                        {
+                            TextDecorationCollection temp = (TextDecorationCollection)selectionTextRange.GetPropertyValue(Inline.TextDecorationsProperty);
+                            //FontConf.textrun.TextDecorations = null;
+                            //FontConf.textrun.TextDecorations = temp.Clone();//this works, but is overriden on textrun.TextDecorations.Clear(); of UpdateStrikethrough in fontConfig 
+                            FontConf.Baseline.IsChecked = false;
+                            FontConf.OverLine.IsChecked = false;
+                            FontConf.Strikethrough.IsChecked = false;
+                            FontConf.Underline.IsChecked = false;
+                            //FontConf.UpdateStrikethrough();
+                            foreach (TextDecoration decor in temp)
+                            {
+                                switch (decor.Location)
+                                {
+                                    case (TextDecorationLocation.Baseline):
+                                        {
+                                            FontConf.Baseline.IsChecked = true;
+                                            break;
+                                        }
+                                    case (TextDecorationLocation.OverLine):
+                                        {
+                                            FontConf.OverLine.IsChecked = true;
+                                            break;
+                                        }
+                                    case (TextDecorationLocation.Strikethrough):
+                                        {
+                                            FontConf.Strikethrough.IsChecked = true;
+                                            break;
+                                        }
+                                    case (TextDecorationLocation.Underline):
+                                        {
+                                            FontConf.Underline.IsChecked = true;
+                                            break;
+                                        }
+                                }
+                            }
+                        }
+                    }
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+            }
+        }
+        private void Rtb_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            //creates a spam on first load, fixed on window_onLoad()
+            if (!fileChanged)
+            {
+                fileChanged = true;
+            }
+        }
+        private void Rtb_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.SystemKey.Equals(Key.LeftAlt) || e.Key.Equals(Key.LeftAlt) || e.SystemKey.Equals(Key.RightAlt) || e.Key.Equals(Key.RightAlt))
+            {
+                //TODO: fix
+                menu.Visibility = Visibility.Visible;
+            }
+        }
+        private void Rtb_MouseMove(object sender, MouseEventArgs e)
+        {
+            Point m = e.GetPosition(rtb);
+            if (m.Y <= 10)
+            {
+                menu.Visibility = Visibility.Visible;
+            }
+            else if (m.Y > 20)
+            {
+                menu.Visibility = Visibility.Collapsed;
+            }
+            if (true)
+            {
+                if (m.X >= panel.ActualWidth - 20)
+                {
+                    rtb.VerticalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Auto;
+                }
+                if ((rtb.Document.PageWidth >= panel.ActualWidth - 20) && (m.Y >= panel.ActualHeight - 20))
+                {
+                    rtb.HorizontalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Auto;
+                }
+                if ((m.X < panel.ActualWidth - 20) && (m.Y < panel.ActualHeight - 20))
+                {
+                    rtb.VerticalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Hidden;
+                    rtb.HorizontalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Hidden;
+                }
+            }
+        }
+        private void Panel_MouseLeave(object sender, MouseEventArgs e)
+        {
+            rtb.VerticalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Hidden;
+            rtb.HorizontalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Hidden;
+            menu.Visibility = Visibility.Collapsed;
+        }
+        public  void RtbSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (panel.ActualWidth > 21)
+            {
+                rtb.Document.PageWidth = panel.Width - 20;
             }
             else
             {
-                New_File();
+                rtb.Document.PageWidth = 1;
+            }
+            double row0 = grid.RowDefinitions[0].ActualHeight;
+            double row2 = grid.RowDefinitions[2].ActualHeight;
+            double column0 = grid.ColumnDefinitions[0].ActualWidth;
+            double column2 = grid.ColumnDefinitions[2].ActualWidth;
+            corner1.Margin = new Thickness(column0 - BorderSZ, row0 - BorderSZ, 0, 0);
+            corner2.Margin = new Thickness(column0 - BorderSZ, -BorderSZ, 0, row2);
+            corner3.Margin = new Thickness(-BorderSZ, row0 - BorderSZ, column2, 0);
+            corner4.Margin = new Thickness(-BorderSZ, -BorderSZ, column2, row2);
+        }
+        private void Config_Click(object sender, RoutedEventArgs e)
+        {
+            config.Show();
+            FixResizeTextbox();
+        }
+        private void Font_Click(object sender, RoutedEventArgs e)
+        {
+            FontConf.Show();
+        }
+        private void CharMap_Click(object sender, RoutedEventArgs e)
+        {
+            Process process = new Process();
+            try
+            {
+                process.StartInfo.FileName = "charmap";
+                //process.StartInfo.Arguments = arguments;
+                //process.StartInfo.ErrorDialog = true;
+                //process.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
+                process.Start();
+                process.Dispose();
+            }
+            catch (Exception)
+            {
+                process.Dispose();
+            }
+            //process.WaitForExit(1000 * 60 * 5);    // Wait up to five minutes.
+        }
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+        private void About_Click(object sender, RoutedEventArgs e)
+        {
+            string version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            MessageBox.Show("Version: " + version);
+        }
+        private void Donate_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://google.com");
+        }
+        private void Resettodefaults_Click(object sender, RoutedEventArgs e)
+        {
+            SaveChanges(Reset_Defaults, new System.ComponentModel.CancelEventArgs(), "Reset to Defaults");
+        }
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            SaveChanges(Exit_program, e, "Exit");
+        }
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                try
+                {
+                    this.DragMove();
+                }
+                catch (Exception)
+                { }
             }
         }
-        /// <summary>
-        /// <para>filepath = "";</para>
-        /// <para>rtb.Document = new FlowDocument();</para>
-        /// <para>fileChanged = false;</para>
-        /// </summary>
+        [DllImport("user32.dll")]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
+        private void Menu_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            WindowInteropHelper helper = new WindowInteropHelper(window);
+            SendMessage(helper.Handle, 161, 2, 0);
+        }
+        private void Hyperlink_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var hyperlink = (Hyperlink)sender;
+            Process.Start(hyperlink.NavigateUri.ToString());
+        }
+
+        #region Custom Methods
+        private void FixResizeTextbox()
+        {
+            GridLength ad = new GridLength(grid.ColumnDefinitions[0].ActualWidth, GridUnitType.Star);
+            grid.ColumnDefinitions[0].Width = ad;
+            ad = new GridLength(grid.ColumnDefinitions[1].ActualWidth, GridUnitType.Star);
+            grid.ColumnDefinitions[1].Width = ad;
+            ad = new GridLength(grid.ColumnDefinitions[2].ActualWidth, GridUnitType.Star);
+            grid.ColumnDefinitions[2].Width = ad;
+            ad = new GridLength(grid.RowDefinitions[0].ActualHeight, GridUnitType.Star);
+            grid.RowDefinitions[0].Height = ad;
+            ad = new GridLength(grid.RowDefinitions[1].ActualHeight, GridUnitType.Star);
+            grid.RowDefinitions[1].Height = ad;
+            ad = new GridLength(grid.RowDefinitions[2].ActualHeight, GridUnitType.Star);
+            grid.RowDefinitions[2].Height = ad;
+        }
         private void New_File()
         {
             filepath = "";
             MenuFileName.Header = "";
             rtb.Document = new FlowDocument();
             fileChanged = false;
-        }
-        private void Open_Click(object sender, RoutedEventArgs e)
-        {
-            if (fileChanged)
-            {
-                switch (MessageBox.Show("There are unsaved Changes to: " + filepath + "\r\nDo you want to save?", "Save Changes?", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation, MessageBoxResult.Cancel))
-                {
-                    case (MessageBoxResult.Yes):
-                        {
-                            Save(false);
-                            Open_File();
-                            break;
-                        }
-                    case MessageBoxResult.No:
-                        {
-                            Open_File();
-                            break;
-                        }
-                    case MessageBoxResult.Cancel:
-                        {
-                            //do nothing
-                            break;
-                        }
-
-                    case MessageBoxResult.None:
-                        break;
-                    case MessageBoxResult.OK:
-                        break;
-                    default: break;
-                }
-            }
-            else
-            {
-                Open_File();
-            }
         }
         private void Open_File()
         {
@@ -193,191 +528,46 @@ namespace SkinText
                 }
             }
         }
-        private void Save_Click(object sender, RoutedEventArgs e)
-        {
-            Save(false);
-        }
-        private void Save_as_Click(object sender, RoutedEventArgs e)
-        {
-            Save(true);
-        }
-        private void Exit_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
         private void Exit_program()
         {
             FontConf.Close();
             config.Close();
             SaveConfig();
-        }
-        private void window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        }        
+        private void SaveChanges(Action FileFunc, System.ComponentModel.CancelEventArgs e, string txtBoxTitle)
         {
             if (fileChanged)
             {
-                switch (MessageBox.Show("There are unsaved Changes to: " + filepath + "\r\nDo you want to save?", "Save Changes?", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation, MessageBoxResult.Cancel))
+                switch (MessageBox.Show("There are unsaved Changes to: \r\n" + filepath + "\r\nDo you want to save?", txtBoxTitle, MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation, MessageBoxResult.Cancel))
                 {
                     case (MessageBoxResult.Yes):
                         {
                             Save(false);
-                            Exit_program();
+                            FileFunc();
                             break;
                         }
                     case MessageBoxResult.No:
                         {
-                            Exit_program();
+                            FileFunc();
                             break;
                         }
                     case MessageBoxResult.Cancel:
                         {
+                            //do nothing
                             e.Cancel = true;
                             break;
                         }
+                    case MessageBoxResult.None:
+                        break;
+                    case MessageBoxResult.OK:
+                        break;
                     default: break;
                 }
             }
             else
             {
-                Exit_program();
+                FileFunc();
             }
-        }
-        private void Config_Click(object sender, RoutedEventArgs e)
-        {
-            config.Show();
-            FixResizeTextbox(); 
-        }
-        private void Rtb_MouseMove(object sender, MouseEventArgs e)
-        {
-            Point m = e.GetPosition(rtb);
-            if (m.Y <= 10)
-            {
-                menu.Visibility= Visibility.Visible;
-            }
-            else if (m.Y > 20)
-            {
-                menu.Visibility = Visibility.Collapsed;
-            }
-            if (true)
-            {
-                if (m.X >= panel.ActualWidth - 20)
-                {
-                    rtb.VerticalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Auto;
-                }
-                if ((rtb.Document.PageWidth>= panel.ActualWidth - 20) && (m.Y >= panel.ActualHeight - 20))
-                {
-                    rtb.HorizontalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Auto;
-                }
-                if ((m.X < panel.ActualWidth - 20) && (m.Y < panel.ActualHeight - 20))
-                {
-                    rtb.VerticalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Hidden;
-                    rtb.HorizontalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Hidden;
-                }
-            }
-        }
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-            {
-                try
-                {
-                    this.DragMove();
-                }
-                catch (Exception)
-                { }
-            }
-        }
-        public void RtbSizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            if (panel.ActualWidth>21)
-            {
-                rtb.Document.PageWidth = panel.Width-20;
-            }
-            else
-            {
-                rtb.Document.PageWidth = 1;
-            }
-            double row0=grid.RowDefinitions[0].ActualHeight;
-            double row2 = grid.RowDefinitions[2].ActualHeight;
-            double column0 = grid.ColumnDefinitions[0].ActualWidth;
-            double column2 = grid.ColumnDefinitions[2].ActualWidth;
-            corner1.Margin = new Thickness(column0 - BorderSZ   , row0 - BorderSZ   , 0         , 0                 );
-            corner2.Margin = new Thickness(column0 - BorderSZ   , -BorderSZ         , 0         , row2    );
-            corner3.Margin = new Thickness(-BorderSZ            , row0 - BorderSZ   , column2   , 0                 );
-            corner4.Margin = new Thickness(-BorderSZ            , -BorderSZ         , column2   , row2  );
-        }
-        [DllImport("user32.dll")]
-        private static extern IntPtr SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
-        private void Menu_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            WindowInteropHelper helper = new WindowInteropHelper(window);
-            SendMessage(helper.Handle, 161, 2, 0);
-        }
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            config = new WindowConfig(this);
-            FontConf = new FontConfig(this);
-            Load_default();
-            //getPath();
-            AppDataPath = ((App)Application.Current).GAppPath;
-            #region get FileName test
-            /*
-            string fileNameTest1 = window.GetType().Assembly.Lo‌​cation;
-            string fileNameTest2 = AppDomain.CurrentDomain.FriendlyName;
-            string fileNameTest3 = Environment.GetCommandLineArgs()[0];
-            string fileNameTest4 = Assembly.GetEntryAssembly().Location;
-            string fileNameTest5 = Assembly.GetEntryAssembly().CodeBase;
-            string fileNameTest6 = Assembly.GetExecutingAssembly().ManifestModule.Name;
-            //string fileNameTest7 = Assembly.GetExecutingAssembly().GetName().Name;
-            string fileNameTest8 = Assembly.GetExecutingAssembly().GetName().CodeBase;
-            //string fileNameTest9 = Path.GetFileName(fileNameTest8);
-            //string fileNameTest10 = Path.GetFileNameWithoutExtension(fileNameTest8);
-            string fileNameTest11 = Process.GetCurrentProcess().ProcessName;
-            //string fileNameTest12 = Process.GetCurrentProcess().MainModule.FileName.Replace(".vshost", "");
-            //If you need the Program name to set up a firewall rule, use:
-            string fileNameTest13 = Process.GetCurrentProcess().MainModule.FileName;
-            //All works when changing exe name except 7
-            /* MessageBox.Show("fileNameTest1: \t" + fileNameTest1 + "\r\n" +
-                            "fileNameTest2: \t" + fileNameTest2 + "\r\n" +
-                            "fileNameTest3: \t" + fileNameTest3 + "\r\n" +
-                            "fileNameTest4: \t" + fileNameTest4 + "\r\n" +
-                            "fileNameTest5: \t" + fileNameTest5 + "\r\n" +
-                            "fileNameTest6: \t" + fileNameTest6 + "\r\n" +
-                           // "fileNameTest7: \t" + fileNameTest7 + "\r\n" +
-                            "fileNameTest8: \t" + fileNameTest8 + "\r\n" +
-                           // "fileNameTest9: \t" + fileNameTest9 + "\r\n" +
-                           // "fileNameTest10: \t" + fileNameTest10 + "\r\n" +
-                            "fileNameTest11: \t" + fileNameTest11 + "\r\n" +
-                           // "fileNameTest12: \t" + fileNameTest12 + "\r\n" +
-                            "fileNameTest13: \t" + fileNameTest13 + "\r\n" +
-                            "");
-          */
-            #endregion
-            ReadConfig();
-            grid.UpdateLayout();
-            FixResizeTextbox();
-
-            //set to false after the initial text_change that occur on first load
-            fileChanged = false;
-
-            /*
-                textBlock.TextWrapping = TextWrapping.Wrap;
-                textBlock.LineHeight = lineHeight;
-            */
-        }
-        private void FixResizeTextbox()
-        {
-            GridLength ad = new GridLength(grid.ColumnDefinitions[0].ActualWidth, GridUnitType.Star);
-            grid.ColumnDefinitions[0].Width = ad;
-            ad = new GridLength(grid.ColumnDefinitions[1].ActualWidth, GridUnitType.Star);
-            grid.ColumnDefinitions[1].Width = ad;
-            ad = new GridLength(grid.ColumnDefinitions[2].ActualWidth, GridUnitType.Star);
-            grid.ColumnDefinitions[2].Width = ad;
-            ad = new GridLength(grid.RowDefinitions[0].ActualHeight, GridUnitType.Star);
-            grid.RowDefinitions[0].Height = ad;
-            ad = new GridLength(grid.RowDefinitions[1].ActualHeight, GridUnitType.Star);
-            grid.RowDefinitions[1].Height = ad;
-            ad = new GridLength(grid.RowDefinitions[2].ActualHeight, GridUnitType.Star);
-            grid.RowDefinitions[2].Height = ad;
         }
         /// <summary>
         /// <para>Reads the skintext.ini and loads its config</para>
@@ -1002,6 +1192,12 @@ namespace SkinText
             config.ResizeVisible.IsChecked = true;
 
         }
+        private void Reset_Defaults()
+        {
+            Load_default();
+            grid.UpdateLayout();
+            FixResizeTextbox();
+        }
         private void Save(bool saveas)
         {
             if (filepath.Length < 4)
@@ -1252,308 +1448,113 @@ namespace SkinText
             rtb.Focus();
             fileChanged = true;
         }
-        private void Font_Click(object sender, RoutedEventArgs e)
-        {
-            FontConf.Show();
-        }
-        private void Panel_MouseLeave(object sender, MouseEventArgs e)
-        {
-            rtb.VerticalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Hidden;
-            rtb.HorizontalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Hidden;
-            menu.Visibility = Visibility.Collapsed;
-        }
-        private void Rtb_SelectionChanged(object sender, RoutedEventArgs e)
-        {
-            if (fontConf.Visibility==Visibility.Visible)
-            {
-                try
-                {
-                    if (rtb.Selection != null && rtb.Selection.Start.Paragraph != null)
-                    {
-                        TextRange selectionTextRange = new TextRange(rtb.Selection.Start, rtb.Selection.End);
-
-                        SolidColorBrush newBrush = null;
-
-                        if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(TextElement.BackgroundProperty)))
-                        {
-                            newBrush = (SolidColorBrush)selectionTextRange.GetPropertyValue(TextElement.BackgroundProperty);
-                            if (newBrush==null)
-                            {
-                                FontConf.ClrPcker_Bg.SelectedColor = Colors.Transparent;
-                            }
-                            else
-                            {
-                                FontConf.ClrPcker_Bg.SelectedColor = newBrush.Color;
-                            }
-                        }                       
-
-                        if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(TextElement.ForegroundProperty)))
-                        {
-                            newBrush = (SolidColorBrush)selectionTextRange.GetPropertyValue(TextElement.ForegroundProperty);
-                            FontConf.ClrPcker_Font.SelectedColor = newBrush.Color;
-                        }                       
-
-
-                        if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(TextElement.FontSizeProperty)))
-                        {
-                            FontConf.fontSizeSlider.Value = (double)selectionTextRange.GetPropertyValue(TextElement.FontSizeProperty);
-                        }
-                                                
-                        if ((!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(Block.LineHeightProperty))) && (!double.IsNaN((double)selectionTextRange.GetPropertyValue(Block.LineHeightProperty))))
-                        {
-                                fontConf.lineHeightSlider.Value = (double)selectionTextRange.GetPropertyValue(Block.LineHeightProperty);
-                        }
-                        else
-                        {
-                            fontConf.lineHeightSlider.Value = FontConf.fontSizeSlider.Value;
-                        }
-
-                        if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(TextElement.FontFamilyProperty)))
-                        {
-                            object fontfamily= selectionTextRange.GetPropertyValue(TextElement.FontFamilyProperty);
-                            FontConf.lstFamily.SelectedItem = fontfamily;
-                        }
-
-                        FamilyTypeface fonttype = new FamilyTypeface();
-                        if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(TextElement.FontStyleProperty)))
-                        {
-                            FontStyle fontsyle = (FontStyle)selectionTextRange.GetPropertyValue(TextElement.FontStyleProperty);
-                            fonttype.Style = fontsyle;
-                        }
-                        if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(TextElement.FontWeightProperty)))
-                        {
-                            FontWeight fontweight = (FontWeight)selectionTextRange.GetPropertyValue(TextElement.FontWeightProperty);
-                            fonttype.Weight = fontweight;
-                        }
-                        if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(TextElement.FontStretchProperty)))
-                        {
-                            FontStretch fontStretch = (FontStretch)selectionTextRange.GetPropertyValue(TextElement.FontStretchProperty);
-                            fonttype.Stretch = fontStretch;
-                        }
-                        FontConf.lstTypefaces.SelectedItem = fonttype;
-
-                        if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(Paragraph.TextAlignmentProperty)))
-                        {
-                            switch (selectionTextRange.GetPropertyValue(Paragraph.TextAlignmentProperty))
-                            {
-                                case (TextAlignment.Left):
-                                    {
-                                        fontConf.leftAlign.IsChecked = true;
-                                        break;
-                                    }
-                                case (TextAlignment.Center):
-                                    {
-                                        fontConf.centerAlign.IsChecked = true;
-                                        break;
-                                    }
-                                case (TextAlignment.Right):
-                                    {
-                                        fontConf.rightAlign.IsChecked = true;
-                                        break;
-                                    }
-                                case (TextAlignment.Justify):
-                                    {
-                                        fontConf.justifyAlign.IsChecked = true;
-                                        break;
-                                    }
-                            }
-                        }
-
-                        if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(Paragraph.FlowDirectionProperty)))
-                        {
-                            //flow direction is working, see examples: https://stackoverflow.com/questions/7045676/wpf-how-does-flowdirection-righttoleft-change-a-string
-                            if (((FlowDirection)selectionTextRange.GetPropertyValue(Paragraph.FlowDirectionProperty)).Equals(FlowDirection.RightToLeft))
-                            {
-                                fontConf.FlowDir.IsChecked = true;
-                            }
-                            else
-                            {
-                                fontConf.FlowDir.IsChecked = false;
-                            }
-                        }
-
-                        if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(Inline.BaselineAlignmentProperty)))
-                        {
-                            switch (selectionTextRange.GetPropertyValue(Inline.BaselineAlignmentProperty))
-                            {
-                                case (BaselineAlignment.Top):
-                                    {
-                                        fontConf.topScript.IsChecked = true;
-                                        break;
-                                    }
-                                case (BaselineAlignment.Superscript):
-                                    {
-                                        fontConf.superscript.IsChecked = true;
-                                        break;
-                                    }
-                                case (BaselineAlignment.TextTop):
-                                    {
-                                        fontConf.texttopScript.IsChecked = true;
-                                        break;
-                                    }
-                                case (BaselineAlignment.Center):
-                                    {
-                                        fontConf.centerScript.IsChecked = true;
-                                        break;
-                                    }
-                                case (BaselineAlignment.Subscript):
-                                    {
-                                        fontConf.subscript.IsChecked = true;
-                                        break;
-                                    }
-                                case (BaselineAlignment.TextBottom):
-                                    {
-                                        fontConf.textbottomScript.IsChecked = true;
-                                        break;
-                                    }
-                                case (BaselineAlignment.Bottom):
-                                    {
-                                        fontConf.bottomScript.IsChecked = true;
-                                        break;
-                                    }
-                                case (BaselineAlignment.Baseline):
-                                    {
-                                        fontConf.baseScript.IsChecked = true;
-                                        break;
-                                    }
-                            }
-                        }
-
-                        if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(Inline.TextDecorationsProperty)))
-                        {
-                            TextDecorationCollection temp = (TextDecorationCollection)selectionTextRange.GetPropertyValue(Inline.TextDecorationsProperty);
-                            //FontConf.textrun.TextDecorations = null;
-                            //FontConf.textrun.TextDecorations = temp.Clone();//this works, but is overriden on textrun.TextDecorations.Clear(); of UpdateStrikethrough in fontConfig 
-                            FontConf.Baseline.IsChecked = false;
-                            FontConf.OverLine.IsChecked = false;
-                            FontConf.Strikethrough.IsChecked = false;
-                            FontConf.Underline.IsChecked = false;
-                            //FontConf.UpdateStrikethrough();
-                            foreach (TextDecoration decor in temp)
-                            {
-                                switch (decor.Location)
-                                {
-                                    case (TextDecorationLocation.Baseline):
-                                        {
-                                            FontConf.Baseline.IsChecked = true;
-                                            break;
-                                        }
-                                    case (TextDecorationLocation.OverLine):
-                                        {
-                                            FontConf.OverLine.IsChecked = true;
-                                            break;
-                                        }
-                                    case (TextDecorationLocation.Strikethrough):
-                                        {
-                                            FontConf.Strikethrough.IsChecked = true;
-                                            break;
-                                        }
-                                    case (TextDecorationLocation.Underline):
-                                        {
-                                            FontConf.Underline.IsChecked = true;
-                                            break;
-                                        }
-                                }
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString());
-                }
-            }
-        }
-        private void Resettodefaults_Click(object sender, RoutedEventArgs e)
-        {
-            if (fileChanged)
-            {
-                switch (MessageBox.Show("There are unsaved Changes to: " + filepath + "\r\nDo you want to save?", "Save Changes?", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation, MessageBoxResult.Cancel))
-                {
-                    case (MessageBoxResult.Yes):
-                        {
-                            Save(false);
-                            Reset_Defaults();
-                            break;
-                        }
-                    case MessageBoxResult.No:
-                        {
-                            Reset_Defaults();
-                            break;
-                        }
-                    case MessageBoxResult.Cancel:
-                        {
-                            //do nothing
-                            break;
-                        }
-
-                    case MessageBoxResult.None:
-                        break;
-                    case MessageBoxResult.OK:
-                        break;
-                    default: break;
-                }
-            }
-            else
-            {
-                Reset_Defaults();
-            }
-        }
-        private void Reset_Defaults()
-        {
-            Load_default();
-            grid.UpdateLayout();
-            FixResizeTextbox();
-        }
-        private void Donate_Click(object sender, RoutedEventArgs e)
-        {
-            System.Diagnostics.Process.Start("http://google.com");
-        }
-        private void About_Click(object sender, RoutedEventArgs e)
-        {
-            string version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            MessageBox.Show("Version: " + version);
-        }
-        private void Rtb_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.SystemKey.Equals(Key.LeftAlt) || e.Key.Equals(Key.LeftAlt) || e.SystemKey.Equals(Key.RightAlt) || e.Key.Equals(Key.RightAlt))
-            {
-                //TODO: fix
-                menu.Visibility = Visibility.Visible;
-            }
-        }
-        private void CharMap_Click(object sender, RoutedEventArgs e)
-        {
-            Process process = new Process();
-            try
-            {
-            process.StartInfo.FileName = "charmap";
-            //process.StartInfo.Arguments = arguments;
-            //process.StartInfo.ErrorDialog = true;
-            //process.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
-                process.Start();
-                process.Dispose();
-            }
-            catch (Exception)
-            {
-                process.Dispose();
-            }
-            //process.WaitForExit(1000 * 60 * 5);    // Wait up to five minutes.
-        }
-        private void Rtb_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
-        {
-            //creates a spam on first load, fixed on window_onLoad()
-            fileChanged = true; 
-        }
-
-        private void Hyperlink_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            var hyperlink = (Hyperlink)sender;
-            Process.Start(hyperlink.NavigateUri.ToString());
-        }
-
         
+        #endregion
+
+        #region Custom Commands
+
+        private void ExitCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+        private void ExitCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            //Application.Current.Shutdown();
+            this.Close();
+        }
+        private void SaveCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+        private void SaveCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            Save(false);
+        }
+        private void SaveAsCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+        private void SaveAsCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            Save(true);
+        }
+        private void OpenCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+        private void OpenCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            SaveChanges(Open_File, new System.ComponentModel.CancelEventArgs(),"Open File");
+        }
+
+        private void NewCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+        private void NewCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            SaveChanges(New_File, new System.ComponentModel.CancelEventArgs(), "New File");
+        }
+        #endregion
     }
+
+    public static class CustomCommands
+    {
+        public static readonly RoutedUICommand Exit = new RoutedUICommand
+                (
+                        "Exit",
+                        "Exit",
+                        typeof(CustomCommands),
+                        new InputGestureCollection()
+                        {
+                            new KeyGesture(Key.F4, ModifierKeys.Alt)
+                        }
+                );
+        public static readonly RoutedUICommand Save = new RoutedUICommand
+                (
+                        "Save",
+                        "Save",
+                        typeof(CustomCommands),
+                        new InputGestureCollection()
+                        {
+                            new KeyGesture(Key.S, ModifierKeys.Control)
+                        }
+                );
+        public static readonly RoutedUICommand SaveAs = new RoutedUICommand
+                (
+                        "SaveAs",
+                        "SaveAs",
+                        typeof(CustomCommands),
+                        new InputGestureCollection()
+                        {
+                            new KeyGesture(Key.S, ModifierKeys.Control | ModifierKeys.Shift)
+                        }
+                );
+        public static readonly RoutedUICommand Open = new RoutedUICommand
+                (
+                        "Open",
+                        "Open",
+                        typeof(CustomCommands),
+                        new InputGestureCollection()
+                        {
+                            new KeyGesture(Key.O, ModifierKeys.Control)
+                        }
+                );
+        public static readonly RoutedUICommand New = new RoutedUICommand
+                (
+                        "New",
+                        "New",
+                        typeof(CustomCommands),
+                        new InputGestureCollection()
+                        {
+                            new KeyGesture(Key.N, ModifierKeys.Control)
+                        }
+                );
+        //Define more commands here, just like the one above
+    }
+
+
+
     public class ShowMessageCommand : ICommand
     {
         public void Execute(object parameter)

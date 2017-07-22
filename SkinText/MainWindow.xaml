@@ -7,7 +7,14 @@
         xmlns:tb="http://www.hardcodet.net/taskbar"
         xmlns:local="clr-namespace:SkinText"
         mc:Ignorable="d"
-        Title="SkinText" Height="350" MinHeight="20"  Width="525" MinWidth="110" AllowsTransparency="True" Background="Transparent" WindowStyle="None" MouseDown="Window_MouseDown" ResizeMode="CanResizeWithGrip" Loaded="Window_Loaded" Closing="window_Closing">
+        Title="SkinText" Height="350" MinHeight="20"  Width="525" MinWidth="110" AllowsTransparency="True" Background="Transparent" WindowStyle="None" MouseDown="Window_MouseDown" ResizeMode="CanResizeWithGrip" Loaded="Window_Loaded" Closing="Window_Closing">
+    <Window.CommandBindings>
+        <CommandBinding Command="local:CustomCommands.Exit" CanExecute="ExitCommand_CanExecute" Executed="ExitCommand_Executed" />
+        <CommandBinding Command="local:CustomCommands.Save" CanExecute="SaveCommand_CanExecute" Executed="SaveCommand_Executed" />
+        <CommandBinding Command="local:CustomCommands.SaveAs" CanExecute="SaveAsCommand_CanExecute" Executed="SaveAsCommand_Executed" />
+        <CommandBinding Command="local:CustomCommands.Open" CanExecute="OpenCommand_CanExecute" Executed="OpenCommand_Executed" />
+        <CommandBinding Command="local:CustomCommands.New" CanExecute="NewCommand_CanExecute" Executed="NewCommand_Executed" />
+    </Window.CommandBindings>
     <Window.Resources>
         <LinearGradientBrush x:Key="DarkBrush" StartPoint="0.5,0" EndPoint="0.5,1">
             <GradientBrush.GradientStops>
@@ -138,7 +145,6 @@
                 </MultiTrigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
-
         <local:ShowMessageCommand x:Key="MessageCommand" />
         <BitmapImage x:Key="ImageSource1X" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="Resources\X.png"/>
     </Window.Resources>
@@ -157,30 +163,30 @@
         <DockPanel Grid.Column="1" Grid.Row="1" x:Name="panel" ClipToBounds="True" RenderTransformOrigin="0.5,0.5" MouseLeave="Panel_MouseLeave">
             <Menu x:Name="menu" IsMainMenu="True" DockPanel.Dock="Top" PreviewMouseDown="Menu_MouseDown">
                 <MenuItem Header="_File" Template="{DynamicResource MenuItemControlTemplate1}">
-                    <MenuItem Header="_New..." Click="New_Click" Template="{DynamicResource MenuItemControlTemplate2}" >
+                    <MenuItem Header="_New..." Command="local:CustomCommands.New" Template="{DynamicResource MenuItemControlTemplate2}" >
                         <MenuItem.Icon>
                             <Image Source="{DynamicResource ImageSource1X}" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Header="_Open..." Click="Open_Click" Template="{DynamicResource MenuItemControlTemplate2}" >
+                    <MenuItem Header="_Open..." Command="local:CustomCommands.Open" Template="{DynamicResource MenuItemControlTemplate2}" >
                         <MenuItem.Icon>
                             <Image Source="{DynamicResource ImageSource1X}" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Header="_Save" Click="Save_Click" Template="{DynamicResource MenuItemControlTemplate2}" >
+                    <MenuItem Header="_Save" Command="local:CustomCommands.Save" Template="{DynamicResource MenuItemControlTemplate2}" >
                         <MenuItem.Icon>
                             <Image Source="{DynamicResource ImageSource1X}" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_Save As..." Click="Save_as_Click" Template="{DynamicResource MenuItemControlTemplate2}">
+                    <MenuItem Header="_Save As..." Command="local:CustomCommands.SaveAs" Template="{DynamicResource MenuItemControlTemplate2}">
                         <MenuItem.Icon>
                             <Image Source="{DynamicResource ImageSource1X}" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Header="_Exit" Click="Exit_Click" Template="{DynamicResource MenuItemControlTemplate2}" >
+                    <MenuItem Header="_Exit" Command="local:CustomCommands.Exit" Template="{DynamicResource MenuItemControlTemplate2}" >
                         <MenuItem.Icon>
                             <Image Source="{DynamicResource ImageSource1X}" />
                         </MenuItem.Icon>
