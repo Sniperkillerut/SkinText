@@ -1101,7 +1101,7 @@ namespace SkinText
                 }
             }
         }
-        public void TextFormat(Brush foreColor,Brush backgroundColor,FontFamily fontFamily,double fontSize,TextDecorationCollection decor,FontStyle fontStyle,FontWeight fontWeight, TextAlignment textalign, FlowDirection flow, BaselineAlignment basealign)
+        public void TextFormat(Brush foreColor,Brush backgroundColor,FontFamily fontFamily,double fontSize,TextDecorationCollection decor,FontStyle fontStyle,FontWeight fontWeight, TextAlignment textalign, FlowDirection flow, BaselineAlignment basealign, double lineHeight)
         {
             if (backgroundColor != null)
             {
@@ -1158,8 +1158,8 @@ namespace SkinText
 
                         rtb.Document.Blocks.Add(p);// worked!
                         p.Inlines.Add(newRun);
-                        //curParagraph.LineHeight = lineHeight;
                         p.TextAlignment = textalign;
+                        p.LineHeight = lineHeight;
                         // Reset the cursor into the new block. 
                         // If we don't do this, the font properties will default again when you start typing.
                         rtb.CaretPosition = newRun.ElementStart;
@@ -1202,7 +1202,7 @@ namespace SkinText
                             curParagraph.Inlines.Add(textlink);*/
 
                             curParagraph.Inlines.Add(newRun);
-                            //curParagraph.LineHeight = lineHeight;
+                            curParagraph.LineHeight = lineHeight;
                             curParagraph.TextAlignment = textalign;
                             // Reset the cursor into the new block. 
                             // If we don't do this, the font properties will default again when you start typing.
@@ -1227,6 +1227,7 @@ namespace SkinText
                     //selectionTextRange.ApplyPropertyValue(Paragraph.LineHeightProperty, lineHeight);
                     selectionTextRange.ApplyPropertyValue(Paragraph.TextAlignmentProperty, textalign);
                     selectionTextRange.ApplyPropertyValue(Paragraph.FlowDirectionProperty, flow);
+                    selectionTextRange.ApplyPropertyValue(Paragraph.LineHeightProperty, lineHeight);
 
                     selectionTextRange.ApplyPropertyValue(Inline.BaselineAlignmentProperty, basealign);
                                         
@@ -1249,71 +1250,204 @@ namespace SkinText
         }
         private void Rtb_SelectionChanged(object sender, RoutedEventArgs e)
         {
-            try
+            if (fontConf.Visibility==Visibility.Visible)
             {
-                if (rtb.Selection != null && rtb.Selection.Start.Paragraph != null)
+                try
                 {
-                    TextRange selectionTextRange = new TextRange(rtb.Selection.Start, rtb.Selection.End);
-                    SolidColorBrush newBrush = (SolidColorBrush)selectionTextRange.GetPropertyValue(TextElement.ForegroundProperty);
-                    FontConf.ClrPcker_Font.SelectedColor = newBrush.Color;
-                    newBrush = (SolidColorBrush)selectionTextRange.GetPropertyValue(TextElement.BackgroundProperty);
-                    if (null == newBrush)
+                    if (rtb.Selection != null && rtb.Selection.Start.Paragraph != null)
                     {
-                        FontConf.ClrPcker_Bg.SelectedColor = Colors.Transparent;
-                    }
-                    else
-                    {
-                        FontConf.ClrPcker_Bg.SelectedColor = newBrush.Color;
-                    }
-                    FontConf.fontSizeSlider.Value = (double)selectionTextRange.GetPropertyValue(TextElement.FontSizeProperty);
-                    object fontfamily= selectionTextRange.GetPropertyValue(TextElement.FontFamilyProperty);
-                    FontConf.lstFamily.SelectedItem = fontfamily;
-                    FontStyle fontsyle = (FontStyle)selectionTextRange.GetPropertyValue(TextElement.FontStyleProperty);
-                    FontWeight fontweight = (FontWeight)selectionTextRange.GetPropertyValue(TextElement.FontWeightProperty);
-                    FontStretch fontStretch = (FontStretch)selectionTextRange.GetPropertyValue(TextElement.FontStretchProperty);
-                    FamilyTypeface fonttype = new FamilyTypeface()
-                    {
-                        Style = fontsyle,
-                        Weight = fontweight,
-                        Stretch = fontStretch
-                    };
-                    FontConf.lstTypefaces.SelectedItem = fonttype;
-                    FontConf.txtSampleText.Selection.Start.Paragraph.TextAlignment = (TextAlignment)selectionTextRange.GetPropertyValue(Paragraph.TextAlignmentProperty);
-                    //flow direction is working, see examples: https://stackoverflow.com/questions/7045676/wpf-how-does-flowdirection-righttoleft-change-a-string
-                    FontConf.txtSampleText.FlowDirection = (FlowDirection)selectionTextRange.GetPropertyValue(Paragraph.FlowDirectionProperty);
-                    TextDecorationCollection temp = (TextDecorationCollection)selectionTextRange.GetPropertyValue(Inline.TextDecorationsProperty);
-                    FontConf.textrun.TextDecorations = null;
-                    FontConf.textrun.TextDecorations = temp.Clone();//this works, but is overriden on textrun.TextDecorations.Clear(); of UpdateStrikethrough in fontConfig 
-                    FontConf.Baseline.IsChecked = false;
-                    FontConf.OverLine.IsChecked = false;
-                    FontConf.Strikethrough.IsChecked = false;
-                    FontConf.Underline.IsChecked = false;
-                    FontConf.UpdateStrikethrough();                    
-                    /*not working*/
-                    //TODO: Fix decorators
-                    foreach (TextDecoration decor in temp)
-                    {
-                        if (decor.Location.Equals(TextDecorationLocation.Baseline))
+                        TextRange selectionTextRange = new TextRange(rtb.Selection.Start, rtb.Selection.End);
+
+                        SolidColorBrush newBrush = null;
+
+                        if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(TextElement.BackgroundProperty)))
                         {
-                            FontConf.Baseline.IsChecked = true;
+                            newBrush = (SolidColorBrush)selectionTextRange.GetPropertyValue(TextElement.BackgroundProperty);
+                            if (newBrush==null)
+                            {
+                                FontConf.ClrPcker_Bg.SelectedColor = Colors.Transparent;
+                            }
+                            else
+                            {
+                                FontConf.ClrPcker_Bg.SelectedColor = newBrush.Color;
+                            }
+                        }                       
+
+                        if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(TextElement.ForegroundProperty)))
+                        {
+                            newBrush = (SolidColorBrush)selectionTextRange.GetPropertyValue(TextElement.ForegroundProperty);
+                            FontConf.ClrPcker_Font.SelectedColor = newBrush.Color;
+                        }                       
+
+
+                        if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(TextElement.FontSizeProperty)))
+                        {
+                            FontConf.fontSizeSlider.Value = (double)selectionTextRange.GetPropertyValue(TextElement.FontSizeProperty);
                         }
-                        if (decor.Location.Equals(TextDecorationLocation.OverLine))
+
+                        fontConf.lineHeightSlider.Value = FontConf.fontSizeSlider.Value;
+                        if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(Block.LineHeightProperty)))
                         {
-                            FontConf.OverLine.IsChecked = true;
+                            if (!double.IsNaN((double)selectionTextRange.GetPropertyValue(Block.LineHeightProperty)))
+                            {
+                                fontConf.lineHeightSlider.Value = (double)selectionTextRange.GetPropertyValue(Block.LineHeightProperty);
+                            }
                         }
-                        if (decor.Location.Equals(TextDecorationLocation.Strikethrough))
+
+                        if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(TextElement.FontFamilyProperty)))
                         {
-                            FontConf.Strikethrough.IsChecked = true;
+                            object fontfamily= selectionTextRange.GetPropertyValue(TextElement.FontFamilyProperty);
+                            FontConf.lstFamily.SelectedItem = fontfamily;
                         }
-                        if (decor.Location.Equals(TextDecorationLocation.Underline))
+
+                        FamilyTypeface fonttype = new FamilyTypeface();
+                        if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(TextElement.FontStyleProperty)))
                         {
-                            FontConf.Underline.IsChecked = true;
+                            FontStyle fontsyle = (FontStyle)selectionTextRange.GetPropertyValue(TextElement.FontStyleProperty);
+                            fonttype.Style = fontsyle;
+                        }
+                        if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(TextElement.FontWeightProperty)))
+                        {
+                            FontWeight fontweight = (FontWeight)selectionTextRange.GetPropertyValue(TextElement.FontWeightProperty);
+                            fonttype.Weight = fontweight;
+                        }
+                        if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(TextElement.FontStretchProperty)))
+                        {
+                            FontStretch fontStretch = (FontStretch)selectionTextRange.GetPropertyValue(TextElement.FontStretchProperty);
+                            fonttype.Stretch = fontStretch;
+                        }
+                        FontConf.lstTypefaces.SelectedItem = fonttype;
+
+                        if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(Paragraph.TextAlignmentProperty)))
+                        {
+                            switch (selectionTextRange.GetPropertyValue(Paragraph.TextAlignmentProperty))
+                            {
+                                case (TextAlignment.Left):
+                                    {
+                                        fontConf.leftAlign.IsChecked = true;
+                                        break;
+                                    }
+                                case (TextAlignment.Center):
+                                    {
+                                        fontConf.centerAlign.IsChecked = true;
+                                        break;
+                                    }
+                                case (TextAlignment.Right):
+                                    {
+                                        fontConf.rightAlign.IsChecked = true;
+                                        break;
+                                    }
+                                case (TextAlignment.Justify):
+                                    {
+                                        fontConf.justifyAlign.IsChecked = true;
+                                        break;
+                                    }
+                            }
+                        }
+
+                        if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(Paragraph.FlowDirectionProperty)))
+                        {
+                            //flow direction is working, see examples: https://stackoverflow.com/questions/7045676/wpf-how-does-flowdirection-righttoleft-change-a-string
+                            if (((FlowDirection)selectionTextRange.GetPropertyValue(Paragraph.FlowDirectionProperty)).Equals(FlowDirection.RightToLeft))
+                            {
+                                fontConf.FlowDir.IsChecked = true;
+                            }
+                            else
+                            {
+                                fontConf.FlowDir.IsChecked = false;
+                            }
+                        }
+
+                        if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(Inline.BaselineAlignmentProperty)))
+                        {
+                            switch (selectionTextRange.GetPropertyValue(Inline.BaselineAlignmentProperty))
+                            {
+                                case (BaselineAlignment.Top):
+                                    {
+                                        fontConf.topScript.IsChecked = true;
+                                        break;
+                                    }
+                                case (BaselineAlignment.Superscript):
+                                    {
+                                        fontConf.superscript.IsChecked = true;
+                                        break;
+                                    }
+                                case (BaselineAlignment.TextTop):
+                                    {
+                                        fontConf.texttopScript.IsChecked = true;
+                                        break;
+                                    }
+                                case (BaselineAlignment.Center):
+                                    {
+                                        fontConf.centerScript.IsChecked = true;
+                                        break;
+                                    }
+                                case (BaselineAlignment.Subscript):
+                                    {
+                                        fontConf.subscript.IsChecked = true;
+                                        break;
+                                    }
+                                case (BaselineAlignment.TextBottom):
+                                    {
+                                        fontConf.textbottomScript.IsChecked = true;
+                                        break;
+                                    }
+                                case (BaselineAlignment.Bottom):
+                                    {
+                                        fontConf.bottomScript.IsChecked = true;
+                                        break;
+                                    }
+                                case (BaselineAlignment.Baseline):
+                                    {
+                                        fontConf.baseScript.IsChecked = true;
+                                        break;
+                                    }
+                            }
+                        }
+
+                        if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(Inline.TextDecorationsProperty)))
+                        {
+                            TextDecorationCollection temp = (TextDecorationCollection)selectionTextRange.GetPropertyValue(Inline.TextDecorationsProperty);
+                            //FontConf.textrun.TextDecorations = null;
+                            //FontConf.textrun.TextDecorations = temp.Clone();//this works, but is overriden on textrun.TextDecorations.Clear(); of UpdateStrikethrough in fontConfig 
+                            FontConf.Baseline.IsChecked = false;
+                            FontConf.OverLine.IsChecked = false;
+                            FontConf.Strikethrough.IsChecked = false;
+                            FontConf.Underline.IsChecked = false;
+                            //FontConf.UpdateStrikethrough();
+                            foreach (TextDecoration decor in temp)
+                            {
+                                switch (decor.Location)
+                                {
+                                    case (TextDecorationLocation.Baseline):
+                                        {
+                                            FontConf.Baseline.IsChecked = true;
+                                            break;
+                                        }
+                                    case (TextDecorationLocation.OverLine):
+                                        {
+                                            FontConf.OverLine.IsChecked = true;
+                                            break;
+                                        }
+                                    case (TextDecorationLocation.Strikethrough):
+                                        {
+                                            FontConf.Strikethrough.IsChecked = true;
+                                            break;
+                                        }
+                                    case (TextDecorationLocation.Underline):
+                                        {
+                                            FontConf.Underline.IsChecked = true;
+                                            break;
+                                        }
+                                }
+                            }
                         }
                     }
                 }
-            }
-            catch (Exception)
-            {
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
             }
         }
         private void Resettodefaults_Click(object sender, RoutedEventArgs e)

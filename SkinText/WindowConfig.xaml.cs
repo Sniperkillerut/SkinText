@@ -329,6 +329,22 @@ namespace SkinText
         {
             par.GifMethod = "CPU";
         }
-        
+
+
+        private void FlipXButton_Checked(object sender, RoutedEventArgs e)
+        {
+            double x = 1;
+            double y = 1;
+            if (FlipXButton.IsChecked.Value)
+            {
+                x = -1;
+            }
+            if (FlipYButton.IsChecked.Value)
+            {
+                y = -1;
+            }
+            ScaleTransform scaleTransform1 = new ScaleTransform(x, y);
+            par.FontConf.txtSampleText.RenderTransform = par.rtb.RenderTransform = scaleTransform1;
+        }
     }
 }

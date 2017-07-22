@@ -93,30 +93,25 @@ namespace SkinText
             {
                 textrun.TextDecorations = new TextDecorationCollection();
             }
-            par.TextFormat(textrun.Foreground, textrun.Background, textrun.FontFamily, textrun.FontSize, textrun.TextDecorations, textrun.FontStyle, textrun.FontWeight, txtSampleText.Selection.Start.Paragraph.TextAlignment, txtSampleText.FlowDirection, textrun.BaselineAlignment);
+            par.TextFormat(textrun.Foreground, textrun.Background, textrun.FontFamily, textrun.FontSize, textrun.TextDecorations, textrun.FontStyle, textrun.FontWeight, txtSampleText.Selection.Start.Paragraph.TextAlignment, txtSampleText.FlowDirection, textrun.BaselineAlignment, textpar.LineHeight);
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void FontSizeText_KeyUp(object sender, KeyEventArgs e)
         {
-            if (left.Equals(sender))
+            if (e.SystemKey.Equals(Key.Return) || e.Key.Equals(Key.Return) || e.SystemKey.Equals(Key.Enter) || e.Key.Equals(Key.Enter))
             {
-                txtSampleText.Selection.Start.Paragraph.TextAlignment = TextAlignment.Left;
-            }
-            if (center.Equals(sender))
-            {
-                txtSampleText.Selection.Start.Paragraph.TextAlignment = TextAlignment.Center;
-            }
-            if (right.Equals(sender))
-            {
-                txtSampleText.Selection.Start.Paragraph.TextAlignment = TextAlignment.Right;
-            }
-            if (justify.Equals(sender))
-            {
-                txtSampleText.Selection.Start.Paragraph.TextAlignment = TextAlignment.Justify;
+                fontSizeSlider.Focus();
             }
         }
-        private void Flowdir_Click(object sender, RoutedEventArgs e)
+        private void LineHeightText_KeyUp(object sender, KeyEventArgs e)
         {
-            if(txtSampleText.FlowDirection == FlowDirection.LeftToRight)
+            if (e.SystemKey.Equals(Key.Return) || e.Key.Equals(Key.Return) || e.SystemKey.Equals(Key.Enter) || e.Key.Equals(Key.Enter))
+            {
+                fontSizeSlider.Focus();
+            }
+        }
+        private void FlowDir_Checked(object sender, RoutedEventArgs e)
+        {
+            if (FlowDir.IsChecked.Value)
             {
                 txtSampleText.FlowDirection = FlowDirection.RightToLeft;
             }
@@ -125,37 +120,101 @@ namespace SkinText
                 txtSampleText.FlowDirection = FlowDirection.LeftToRight;
             }
         }
-
-        private void Button2_Click(object sender, RoutedEventArgs e)
+        private void Superscript_Checked(object sender, RoutedEventArgs e)
         {
-            if (subscript.Equals(sender))
+            try
             {
-                textrun.BaselineAlignment = BaselineAlignment.Subscript;
+                System.Windows.Controls.RadioButton btn = sender as System.Windows.Controls.RadioButton;
+                if (btn != null && btn.IsChecked.Value)
+                {
+                    switch (btn.Name)
+                    {
+                        case "topScript":
+                            {
+                                textrun.BaselineAlignment = BaselineAlignment.Top;
+                                break;
+                            }
+                        case "superscript":
+                            {
+                                textrun.BaselineAlignment = BaselineAlignment.Subscript;
+                                break;
+                            }
+                        case "texttopScript":
+                            {
+                                textrun.BaselineAlignment = BaselineAlignment.TextTop;
+                                break;
+                            }
+                        case "centerScript":
+                            {
+                                textrun.BaselineAlignment = BaselineAlignment.Center;
+                                break;
+                            }
+                        case "subscript":
+                            {
+                                textrun.BaselineAlignment = BaselineAlignment.Subscript;
+                                break;
+                            }
+                        case "textbottomScript":
+                            {
+                                textrun.BaselineAlignment = BaselineAlignment.TextBottom;
+                                break;
+                            }
+                        case "bottomScript":
+                            {
+                                textrun.BaselineAlignment = BaselineAlignment.Bottom;
+                                break;
+                            }
+                        case "baseScript":
+                            {
+                                textrun.BaselineAlignment = BaselineAlignment.Baseline;
+                                break;
+                            }
+                    }
+                }
             }
-            if (superscript.Equals(sender))
+            catch (Exception)
             {
-                textrun.BaselineAlignment = BaselineAlignment.Superscript;
+                //throw;
             }
-            if (right2.Equals(sender))
+        }
+        private void Align_Checked(object sender, RoutedEventArgs e)
+        {
+            try
             {
-                textrun.BaselineAlignment = BaselineAlignment.TextTop;
+                System.Windows.Controls.RadioButton btn = sender as System.Windows.Controls.RadioButton;
+                if (btn != null && btn.IsChecked.Value)
+                {
+                    switch (btn.Name)
+                    {
+                        case "leftAlign":
+                            {
+                                txtSampleText.Selection.Start.Paragraph.TextAlignment = TextAlignment.Left;
+                                break;
+                            }
+                        case "centerAlign":
+                            {
+                                txtSampleText.Selection.Start.Paragraph.TextAlignment = TextAlignment.Center;
+                                break;
+                            }
+                        case "rightAlign":
+                            {
+                                txtSampleText.Selection.Start.Paragraph.TextAlignment = TextAlignment.Right;
+                                break;
+                            }
+                        case "justifyAlign":
+                            {
+                                txtSampleText.Selection.Start.Paragraph.TextAlignment = TextAlignment.Justify;
+                                break;
+                            }
+                    }
+                }
             }
-            if (justify2.Equals(sender))
+            catch (Exception)
             {
-                textrun.BaselineAlignment = BaselineAlignment.Top;
-            }
-            if (flowdir2.Equals(sender))
-            {
-                textrun.BaselineAlignment = BaselineAlignment.TextBottom;
+                //throw;
             }
         }
 
-        private void fontSizeText_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.SystemKey.Equals(Key.Return) || e.Key.Equals(Key.Return) || e.SystemKey.Equals(Key.Enter) || e.Key.Equals(Key.Enter))
-            {
-                fontSizeSlider.Focus();
-            }
-        }
+        
     }
 }

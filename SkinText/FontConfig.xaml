@@ -47,38 +47,17 @@
             <RowDefinition Height="97*" />
             <RowDefinition Height="97*" />
         </Grid.RowDefinitions>
-        <Button x:Name="CloseButt" Grid.Column="2" Grid.Row="0" Width="25" Height="25" HorizontalAlignment="Right" VerticalAlignment="Top" Click="CloseButt_Click" BorderBrush="{x:Null}" FontSize="16" FontFamily="Arial Black" FontWeight="Bold" >
-            <Button.Style>
-                <Style TargetType="{x:Type Button}">
-                    <Setter Property="Background" Value="#602C2C2C"/>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type Button}">
-                                <Border Background="{TemplateBinding Background}">
-                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="#60606060"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
-            <Button.Content>
-                <TextBlock Text="X" Foreground="#FFE6E6E6"/>
-            </Button.Content>
+        <Button x:Name="CloseButt" Grid.Column="2" Grid.Row="0" Click="CloseButt_Click" Style="{DynamicResource ButtonsStyle}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalAlignment="Right" Width="{Binding ActualHeight, Mode=OneWay, RelativeSource={RelativeSource Self}}" VerticalAlignment="Stretch" >
+            <TextBlock Text="X"/>
         </Button>
         <Label Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" Height="28" Margin="50,0" Width="50">
             <Label.Content>
-                <TextBlock Text="FONT" FontSize="14.667" FontFamily="Tahoma" Foreground="#FFE6E6E6" FontWeight="Bold"/>
+                <TextBlock Text="FONT" Style="{DynamicResource ToolTipTextStyle}" />
             </Label.Content>
         </Label>
         <Label Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Height="28" Margin="0" Width="102" VerticalAlignment="Top">
             <Label.Content>
-                <TextBlock Text="Font Family:" FontSize="14.667" FontFamily="Tahoma" Foreground="#FFE6E6E6" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <TextBlock Text="Font Family:" Style="{DynamicResource ToolTipTextStyle}" />
             </Label.Content>
         </Label>
 
@@ -112,50 +91,69 @@
                     </Setter>
                 </Style>
             </ListBox.Resources>
-            
+
         </ListBox>
 
         <Grid Grid.Column="0" Grid.Row="4" Grid.RowSpan="2" Margin="20,0,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
+                <RowDefinition Height="10" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="2" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="10" />
             </Grid.RowDefinitions>
             <Label Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" Height="28" Margin="0" Width="102" VerticalAlignment="Top">
                 <Label.Content>
-                    <TextBlock Text="Effects:" FontSize="14.667" FontFamily="Tahoma" Foreground="#FFE6E6E6" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBlock Text="Effects:" Style="{DynamicResource ToolTipTextStyle}" />
                 </Label.Content>
             </Label>
-            <CheckBox Grid.Row="1" VerticalAlignment="Center" x:Name="OverLine"  Checked="Strikethrough_Checked" Unchecked="Strikethrough_Checked">
+            <CheckBox Grid.Row="2" VerticalAlignment="Center" x:Name="OverLine"  Checked="Strikethrough_Checked" Unchecked="Strikethrough_Checked" VerticalContentAlignment="Center">
                 <CheckBox.Content>
-                    <TextBlock Text="OverLine:" TextDecorations="OverLine"  FontSize="14.667" FontFamily="Tahoma" Foreground="#FFE6E6E6" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBlock Text="OverLine:" TextDecorations="OverLine"  Style="{DynamicResource ToolTipTextStyle}"/>
+                </CheckBox.Content>
+            </CheckBox>
+            <CheckBox Grid.Row="3" VerticalAlignment="Center" x:Name="Strikethrough"  Checked="Strikethrough_Checked" Unchecked="Strikethrough_Checked" VerticalContentAlignment="Center">
+                <CheckBox.Content>
+                    <TextBlock Text="Strikethrough:" TextDecorations="Strikethrough"  Style="{DynamicResource ToolTipTextStyle}"/>
+                </CheckBox.Content>
+            </CheckBox>
+            <CheckBox Grid.Row="4" VerticalAlignment="Center" x:Name="Baseline"  Checked="Strikethrough_Checked" Unchecked="Strikethrough_Checked" VerticalContentAlignment="Center">
+                <CheckBox.Content>
+                    <TextBlock Text="Baseline:" TextDecorations="Baseline"  Style="{DynamicResource ToolTipTextStyle}"/>
+                </CheckBox.Content>
+            </CheckBox>
+            <CheckBox Grid.Row="5" VerticalAlignment="Center" x:Name="Underline" Checked="Strikethrough_Checked" Unchecked="Strikethrough_Checked" VerticalContentAlignment="Center">
+                <CheckBox.Content>
+                    <TextBlock Text="Underline:" TextDecorations="Underline"  Style="{DynamicResource ToolTipTextStyle}"/>
                 </CheckBox.Content>
             </CheckBox>
 
-            <CheckBox Grid.Row="2" VerticalAlignment="Center" x:Name="Strikethrough"  Checked="Strikethrough_Checked" Unchecked="Strikethrough_Checked">
+            <Border Grid.Row="6" Background="#FFE6E6E6"></Border>
+
+            <CheckBox Grid.Row="7" VerticalAlignment="Center" x:Name="FlowDir" Checked="FlowDir_Checked" Unchecked="FlowDir_Checked" VerticalContentAlignment="Center">
                 <CheckBox.Content>
-                    <TextBlock Text="Strikethrough:" TextDecorations="Strikethrough"  FontSize="14.667" FontFamily="Tahoma" Foreground="#FFE6E6E6" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBlock Text="Flow: right to left" Style="{DynamicResource ToolTipTextStyle}"/>
                 </CheckBox.Content>
+                <CheckBox.ToolTip>
+                    <ToolTip Style="{DynamicResource ToolTipStyle}">
+                        <Border Style="{DynamicResource ToolTipBorderStyle}">
+                            <TextBlock Text="Text Flow Direction: 2+2=4" Style="{DynamicResource ToolTipTextStyle}"/>
+                        </Border>
+                    </ToolTip>
+                </CheckBox.ToolTip>
             </CheckBox>
-            <CheckBox Grid.Row="3" VerticalAlignment="Center" x:Name="Baseline"  Checked="Strikethrough_Checked" Unchecked="Strikethrough_Checked">
-                <CheckBox.Content>
-                    <TextBlock Text="Baseline:" TextDecorations="Baseline"  FontSize="14.667" FontFamily="Tahoma" Foreground="#FFE6E6E6" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                </CheckBox.Content>
-            </CheckBox>
-            <CheckBox Grid.Row="4" VerticalAlignment="Center" x:Name="Underline" Checked="Strikethrough_Checked" Unchecked="Strikethrough_Checked">
-                <CheckBox.Content>
-                    <TextBlock Text="Underline:" TextDecorations="Underline"  FontSize="14.667" FontFamily="Tahoma" Foreground="#FFE6E6E6" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                </CheckBox.Content>
-            </CheckBox>
+
+
 
         </Grid>
 
         <Label Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Height="28" Margin="0" Width="102" VerticalAlignment="Top">
             <Label.Content>
-                <TextBlock Text="Font Style:" FontSize="14.667" FontFamily="Tahoma" Foreground="#FFE6E6E6" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <TextBlock Text="Font Style:" Style="{DynamicResource ToolTipTextStyle}"/>
             </Label.Content>
         </Label>
 
@@ -200,25 +198,145 @@
             </Grid.RowDefinitions>
             <Label Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" Height="28" Margin="0" Width="102" VerticalAlignment="Top">
                 <Label.Content>
-                    <TextBlock Text="Font Color:" FontSize="14.667" FontFamily="Tahoma" Foreground="#FFE6E6E6" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBlock Text="Font Color:" Style="{DynamicResource ToolTipTextStyle}"/>
                 </Label.Content>
             </Label>
 
             <xctk:ColorPicker Name="ClrPcker_Font" Grid.Column="0" Grid.Row="1" SelectedColorChanged="ClrPcker_Font_SelectedColorChanged" Background="{x:Null}" BorderBrush="{x:Null}" ShowDropDownButton="False" SelectedColor="Black" AvailableColorsSortingMode="HueSaturationBrightness" ShowRecentColors="True" UsingAlphaChannel="False" ShowStandardColors="False" />
 
 
-            <Label Grid.Column="0" Grid.Row="3" Height="28" Margin="0" HorizontalAlignment="Center">
+            <Label Grid.Column="0" Grid.Row="2" Height="28" Margin="0" HorizontalAlignment="Center">
                 <Label.Content>
-                    <TextBlock Text="Font Background:" FontSize="14.667" FontFamily="Tahoma" Foreground="#FFE6E6E6" FontWeight="Bold" VerticalAlignment="Center"/>
+                    <TextBlock Text="Font Background:" Style="{DynamicResource ToolTipTextStyle}" VerticalAlignment="Center"/>
                 </Label.Content>
             </Label>
-            <xctk:ColorPicker Name="ClrPcker_Bg" Grid.Column="0" Grid.Row="4" SelectedColorChanged="ClrPcker_Bg_SelectedColorChanged" Background="{x:Null}" BorderBrush="{x:Null}" ShowDropDownButton="False" SelectedColor="White" ShowRecentColors="True" ShowStandardColors="True" UsingAlphaChannel="False" AvailableColorsSortingMode="HueSaturationBrightness" />
+            <xctk:ColorPicker Name="ClrPcker_Bg" Grid.Column="0" Grid.Row="3" SelectedColorChanged="ClrPcker_Bg_SelectedColorChanged" Background="{x:Null}" BorderBrush="{x:Null}" ShowDropDownButton="False" SelectedColor="White" ShowRecentColors="True" ShowStandardColors="True" UsingAlphaChannel="False" AvailableColorsSortingMode="HueSaturationBrightness" />
 
+
+            <Grid Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Grid.RowSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <RadioButton x:Name="topScript" Grid.Column="0" Grid.Row="0" Width="25" Height="25" Checked="Superscript_Checked" 
+                             Style="{DynamicResource RadioButtonsStyle}">
+                    <RadioButton.Content>
+                        <Image Source="{DynamicResource ImageSource1X}" />
+                    </RadioButton.Content>
+                    <RadioButton.ToolTip>
+                        <ToolTip Style="{DynamicResource ToolTipStyle}">
+                            <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                <TextBlock Text="Top: A baseline that is aligned to the upper edge of the containing box." Style="{DynamicResource ToolTipTextStyle}"/>
+                            </Border>
+                        </ToolTip>
+                    </RadioButton.ToolTip>
+                </RadioButton>
+                <RadioButton x:Name="superscript" Grid.Column="1" Grid.Row="0" Width="25" Height="25" Checked="Superscript_Checked" 
+                             Style="{DynamicResource RadioButtonsStyle}">
+                    <RadioButton.Content>
+                        <Image Source="{DynamicResource ImageSource1SuperScript}" />
+                    </RadioButton.Content>
+                    <RadioButton.ToolTip>
+                        <ToolTip Style="{DynamicResource ToolTipStyle}">
+                            <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                <TextBlock Text="SuperScript: A baseline that is aligned at the superscript position of the containing box." Style="{DynamicResource ToolTipTextStyle}"/>
+                            </Border>
+                        </ToolTip>
+                    </RadioButton.ToolTip>
+                </RadioButton>
+                <RadioButton x:Name="texttopScript" Grid.Column="2" Grid.Row="0" Width="25" Height="25" Checked="Superscript_Checked" 
+                             Style="{DynamicResource RadioButtonsStyle}">
+                    <RadioButton.Content>
+                        <Image Source="{DynamicResource ImageSource1X}" />
+                    </RadioButton.Content>
+                    <RadioButton.ToolTip>
+                        <ToolTip Style="{DynamicResource ToolTipStyle}">
+                            <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                <TextBlock Text="TextTop: A baseline that is aligned at the upper edge of the text baseline." Style="{DynamicResource ToolTipTextStyle}"/>
+                            </Border>
+                        </ToolTip>
+                    </RadioButton.ToolTip>
+                </RadioButton>
+                <RadioButton x:Name="centerScript" Grid.Column="3" Grid.Row="0" Width="25" Height="25" Checked="Superscript_Checked" 
+                             Style="{DynamicResource RadioButtonsStyle}">
+                    <RadioButton.Content>
+                        <Image Source="{DynamicResource ImageSource1X}" />
+                    </RadioButton.Content>
+                    <RadioButton.ToolTip>
+                        <ToolTip Style="{DynamicResource ToolTipStyle}">
+                            <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                <TextBlock Text="Center: A baseline that is aligned to the center of the containing box." Style="{DynamicResource ToolTipTextStyle}"/>
+                            </Border>
+                        </ToolTip>
+                    </RadioButton.ToolTip>
+                </RadioButton>
+
+
+                <RadioButton x:Name="subscript" Grid.Column="0" Grid.Row="1" Width="25" Height="25" Checked="Superscript_Checked" 
+                             Style="{DynamicResource RadioButtonsStyle}">
+                    <RadioButton.Content>
+                        <Image Source="{DynamicResource ImageSource1SubScript}" />
+                    </RadioButton.Content>
+                    <RadioButton.ToolTip>
+                        <ToolTip Style="{DynamicResource ToolTipStyle}">
+                            <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                <TextBlock Text="SubScript: A baseline that is aligned at the subscript position of the containing box." Style="{DynamicResource ToolTipTextStyle}"/>
+                            </Border>
+                        </ToolTip>
+                    </RadioButton.ToolTip>
+                </RadioButton>
+                <RadioButton x:Name="textbottomScript" Grid.Column="1" Grid.Row="1" Width="25" Height="25" Checked="Superscript_Checked" 
+                             Style="{DynamicResource RadioButtonsStyle}">
+                    <RadioButton.Content>
+                        <Image Source="{DynamicResource ImageSource1X}" />
+                    </RadioButton.Content>
+                    <RadioButton.ToolTip>
+                        <ToolTip Style="{DynamicResource ToolTipStyle}">
+                            <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                <TextBlock Text="TextBottom: A baseline that is aligned at the lower edge of the text baseline." Style="{DynamicResource ToolTipTextStyle}"/>
+                            </Border>
+                        </ToolTip>
+                    </RadioButton.ToolTip>
+                </RadioButton>
+                <RadioButton x:Name="bottomScript" Grid.Column="2" Grid.Row="1" Width="25" Height="25" Checked="Superscript_Checked" 
+                             Style="{DynamicResource RadioButtonsStyle}">
+                    <RadioButton.Content>
+                        <Image Source="{DynamicResource ImageSource1X}" />
+                    </RadioButton.Content>
+                    <RadioButton.ToolTip>
+                        <ToolTip Style="{DynamicResource ToolTipStyle}">
+                            <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                <TextBlock Text="Bottom: A baseline that is aligned at the lower edge of the containing box." Style="{DynamicResource ToolTipTextStyle}"/>
+                            </Border>
+                        </ToolTip>
+                    </RadioButton.ToolTip>
+                </RadioButton>
+                <RadioButton x:Name="baseScript" Grid.Column="3" Grid.Row="1" Width="25" Height="25" Checked="Superscript_Checked" IsChecked="True"
+                    Style="{DynamicResource RadioButtonsStyle}">
+                    <RadioButton.Content>
+                        <Image Source="{DynamicResource ImageSource1X}" />
+                    </RadioButton.Content>
+                    <RadioButton.ToolTip>
+                        <ToolTip Style="{DynamicResource ToolTipStyle}">
+                            <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                <TextBlock Text="Baseline: A baseline that is aligned at the actual baseline of the containing box.(Default)" Style="{DynamicResource ToolTipTextStyle}"/>
+                            </Border>
+                        </ToolTip>
+                    </RadioButton.ToolTip>
+                </RadioButton>
+            </Grid>
         </Grid>
 
         <Label Grid.Column="3" Grid.Row="1" HorizontalAlignment="Center" Height="28" Margin="0" Width="102" VerticalAlignment="Center">
             <Label.Content>
-                <TextBlock Text="Font Sample:" FontSize="14.667" FontFamily="Tahoma" Foreground="#FFE6E6E6" FontWeight="Bold" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Text="Font Sample:" Style="{DynamicResource ToolTipTextStyle}" />
             </Label.Content>
         </Label>
 
@@ -228,7 +346,7 @@
                          FontWeight="{Binding SelectedItem.Weight, ElementName=lstTypefaces}" 
                          FontStretch="{Binding SelectedItem.Stretch, ElementName=lstTypefaces}" 
                          FontStyle="{Binding SelectedItem.Style, ElementName=lstTypefaces}" 
-                         Background="#FFFFFFF7" Margin="5" BorderBrush="#FFE6E6E6">
+                         Background="#FFFFFFF7" Margin="5" BorderBrush="#FFE6E6E6" IsDocumentEnabled="True" AcceptsTab="True" RenderTransformOrigin="0.5,0.5">
             <RichTextBox.Resources>
                 <Style TargetType="RichTextBox">
                     <Setter Property="Template">
@@ -247,7 +365,7 @@
                 </Style>
             </RichTextBox.Resources>
             <FlowDocument LineStackingStrategy="BlockLineHeight">
-                <Paragraph TextAlignment="Center">
+                <Paragraph TextAlignment="Center" x:Name="textpar" LineHeight="{Binding Value, ElementName=lineHeightSlider}">
                     <Run x:Name="textrun" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."/>
                 </Paragraph>
             </FlowDocument>
@@ -260,6 +378,8 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="5" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -267,7 +387,7 @@
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Height="28" Margin="0" Width="102" VerticalAlignment="Top">
                 <Label.Content>
-                    <TextBlock Text="Font Size:" FontSize="14.667" FontFamily="Tahoma" Foreground="#FFE6E6E6" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBlock Text="Font Size:" Style="{DynamicResource ToolTipTextStyle}"/>
                 </Label.Content>
             </Label>
             <Grid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
@@ -288,11 +408,17 @@
                          HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch"
                          Margin="0,5,5,5" MaxLength="10" MaxLines="1"
                          IsUndoEnabled="False"
-                         Text="{Binding Value, ElementName=fontSizeSlider}" KeyUp="fontSizeText_KeyUp" />
+                         Text="{Binding Value, ElementName=fontSizeSlider}" KeyUp="FontSizeText_KeyUp" />
             </Grid>
-            
 
-            <Grid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="1">
+
+
+            <Label Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" Height="28" Margin="0" Width="102" VerticalAlignment="Top">
+                <Label.Content>
+                    <TextBlock Text="Line Height:" Style="{DynamicResource ToolTipTextStyle}"/>
+                </Label.Content>
+            </Label>
+            <Grid Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -300,310 +426,91 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="left" Grid.Column="0" Grid.Row="0" Width="25" Height="25"  HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="{x:Null}" FontSize="16" FontFamily="Arial Black" FontWeight="Bold" Click="Button_Click" >
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}">
-                            <Setter Property="Background" Value="#602C2C2C"/>
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type Button}">
-                                        <Border Background="{TemplateBinding Background}">
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#60606060"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                    <Button.Content>
+                <Slider Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" x:Name="lineHeightSlider" 
+                		Maximum="100" Value="18" 
+                        Minimum="1"
+                		SmallChange="0.5" LargeChange="2" Margin="5,0" 
+                        AutoToolTipPlacement ="TopLeft" Height="24" VerticalAlignment="Center" IsMoveToPointEnabled="True" IsSnapToTickEnabled="True" TickFrequency="0.5" />
+                <TextBox Grid.Column="4" Grid.Row="0" x:Name="lineHeightText"
+                         AutoWordSelection="True"
+                         HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch"
+                         Margin="0,5,5,5" MaxLength="10" MaxLines="1"
+                         IsUndoEnabled="False"
+                         Text="{Binding Value, ElementName=lineHeightSlider}" KeyUp="LineHeightText_KeyUp" />
+            </Grid>
+
+            <Grid Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Grid.RowSpan="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <RadioButton x:Name="leftAlign" Grid.Column="0" Grid.Row="0" Width="25" Height="25" Checked="Align_Checked" 
+                         Style="{DynamicResource RadioButtonsStyle}">
+                    <RadioButton.Content>
                         <Image Source="{DynamicResource ImageSource1Left}" />
-                    </Button.Content>
-                </Button>
-                <Button x:Name="center" Grid.Column="1" Grid.Row="0" Width="25" Height="25"  HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="{x:Null}" FontSize="16" FontFamily="Arial Black" FontWeight="Bold" Click="Button_Click" >
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}">
-                            <Setter Property="Background" Value="#602C2C2C"/>
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type Button}">
-                                        <Border Background="{TemplateBinding Background}">
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#60606060"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                    <Button.Content>
+                    </RadioButton.Content>
+                    <RadioButton.ToolTip>
+                        <ToolTip Style="{DynamicResource ToolTipStyle}">
+                            <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                <TextBlock Text="Align Left" Style="{DynamicResource ToolTipTextStyle}"/>
+                            </Border>
+                        </ToolTip>
+                    </RadioButton.ToolTip>
+                </RadioButton>
+                <RadioButton x:Name="centerAlign" Grid.Column="1" Grid.Row="0" Width="25" Height="25" Checked="Align_Checked" IsChecked="True"
+                        Style="{DynamicResource RadioButtonsStyle}" >
+                    <RadioButton.Content>
                         <Image Source="{DynamicResource ImageSource1Center}" />
-                    </Button.Content>
-                </Button>
-                <Button x:Name="right" Grid.Column="2" Grid.Row="0" Width="25" Height="25"  HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="{x:Null}" FontSize="16" FontFamily="Arial Black" FontWeight="Bold" Click="Button_Click" >
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}">
-                            <Setter Property="Background" Value="#602C2C2C"/>
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type Button}">
-                                        <Border Background="{TemplateBinding Background}">
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#60606060"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                    <Button.Content>
+                    </RadioButton.Content>
+                    <RadioButton.ToolTip>
+                        <ToolTip Style="{DynamicResource ToolTipStyle}">
+                            <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                <TextBlock Text="Align Center" Style="{DynamicResource ToolTipTextStyle}"/>
+                            </Border>
+                        </ToolTip>
+                    </RadioButton.ToolTip>
+                </RadioButton>
+                <RadioButton x:Name="rightAlign" Grid.Column="2" Grid.Row="0" Width="25" Height="25" Checked="Align_Checked" 
+                        Style="{DynamicResource RadioButtonsStyle}" >
+                    <RadioButton.Content>
                         <Image Source="{DynamicResource ImageSource1Right}" />
-                    </Button.Content>
-                </Button>
-                <Button x:Name="justify" Grid.Column="3" Grid.Row="0" Width="25" Height="25"  HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="{x:Null}" FontSize="16" FontFamily="Arial Black" FontWeight="Bold" Click="Button_Click" >
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}">
-                            <Setter Property="Background" Value="#602C2C2C"/>
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type Button}">
-                                        <Border Background="{TemplateBinding Background}">
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#60606060"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                    <Button.Content>
+                    </RadioButton.Content>
+                    <RadioButton.ToolTip>
+                        <ToolTip Style="{DynamicResource ToolTipStyle}">
+                            <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                <TextBlock Text="Align Right" Style="{DynamicResource ToolTipTextStyle}"/>
+                            </Border>
+                        </ToolTip>
+                    </RadioButton.ToolTip>
+                </RadioButton>
+                <RadioButton x:Name="justifyAlign" Grid.Column="3" Grid.Row="0" Width="25" Height="25" Checked="Align_Checked" 
+                        Style="{DynamicResource RadioButtonsStyle}" >
+                    <RadioButton.Content>
                         <Image Source="{DynamicResource ImageSource1Justify}" />
-                    </Button.Content>
-                </Button>
-
-                <Button x:Name="flowdir" Grid.Column="4" Grid.Row="0" Width="25" Height="25"  HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="{x:Null}" FontSize="16" FontFamily="Arial Black" FontWeight="Bold" Click="Flowdir_Click" >
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}">
-                            <Setter Property="Background" Value="#602C2C2C"/>
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type Button}">
-                                        <Border Background="{TemplateBinding Background}">
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#60606060"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                    <Button.Content>
-                        <Image Source="{DynamicResource ImageSource1X}" />
-                    </Button.Content>
-                </Button>
+                    </RadioButton.Content>
+                    <RadioButton.ToolTip>
+                        <ToolTip Style="{DynamicResource ToolTipStyle}">
+                            <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                <TextBlock Text="Justify" Style="{DynamicResource ToolTipTextStyle}"/>
+                            </Border>
+                        </ToolTip>
+                    </RadioButton.ToolTip>
+                </RadioButton>
             </Grid>
 
 
-
-            <Grid Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Grid.RowSpan="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Button x:Name="subscript" Grid.Column="0" Grid.Row="0" Width="25" Height="25"  HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="{x:Null}" FontSize="16" FontFamily="Arial Black" FontWeight="Bold" Click="Button2_Click" >
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}">
-                            <Setter Property="Background" Value="#602C2C2C"/>
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type Button}">
-                                        <Border Background="{TemplateBinding Background}">
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#60606060"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                    <Button.Content>
-                        <Image Source="{DynamicResource ImageSource1SubScript}" />
-                    </Button.Content>
-                </Button>
-                <Button x:Name="superscript" Grid.Column="1" Grid.Row="0" Width="25" Height="25"  HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="{x:Null}" FontSize="16" FontFamily="Arial Black" FontWeight="Bold" Click="Button2_Click" >
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}">
-                            <Setter Property="Background" Value="#602C2C2C"/>
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type Button}">
-                                        <Border Background="{TemplateBinding Background}">
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#60606060"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                    <Button.Content>
-                        <Image Source="{DynamicResource ImageSource1SuperScript}" />
-                    </Button.Content>
-                </Button>
-                <Button x:Name="right2" Grid.Column="2" Grid.Row="0" Width="25" Height="25"  HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="{x:Null}" FontSize="16" FontFamily="Arial Black" FontWeight="Bold" Click="Button2_Click" >
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}">
-                            <Setter Property="Background" Value="#602C2C2C"/>
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type Button}">
-                                        <Border Background="{TemplateBinding Background}">
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#60606060"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                    <Button.Content>
-                        <Image Source="{DynamicResource ImageSource1X}" />
-                    </Button.Content>
-                </Button>
-                <Button x:Name="justify2" Grid.Column="3" Grid.Row="0" Width="25" Height="25"  HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="{x:Null}" FontSize="16" FontFamily="Arial Black" FontWeight="Bold" Click="Button2_Click" >
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}">
-                            <Setter Property="Background" Value="#602C2C2C"/>
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type Button}">
-                                        <Border Background="{TemplateBinding Background}">
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#60606060"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                    <Button.Content>
-                        <Image Source="{DynamicResource ImageSource1X}" />
-                    </Button.Content>
-                </Button>
-
-                <Button x:Name="flowdir2" Grid.Column="4" Grid.Row="0" Width="25" Height="25"  HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="{x:Null}" FontSize="16" FontFamily="Arial Black" FontWeight="Bold" Click="Button2_Click" >
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}">
-                            <Setter Property="Background" Value="#602C2C2C"/>
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type Button}">
-                                        <Border Background="{TemplateBinding Background}">
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#60606060"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                    <Button.Content>
-                        <Image Source="{DynamicResource ImageSource1X}" />
-                    </Button.Content>
-                </Button>
-            </Grid>
-
-
-
-            <Button  Grid.Column="0" Grid.Row="4" Grid.RowSpan="2" Width="70" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="{x:Null}" FontSize="16" FontFamily="Arial Black" FontWeight="Bold" Click="Apply_Click" >
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}">
-                        <Setter Property="Background" Value="#602C2C2C"/>
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type Button}">
-                                    <Border Background="{TemplateBinding Background}">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#60606060"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
+            <Button  Grid.Column="0" Grid.Row="5" Grid.RowSpan="2" Click="Apply_Click"
+                     Style="{DynamicResource ButtonsStyle}" Width="70" Height="40" >
                 <Button.Content>
-                    <TextBlock Text="Apply" Foreground="#FFE6E6E6"/>
+                    <TextBlock Text="Apply"/>
                 </Button.Content>
             </Button>
-            <Button  Grid.Column="1" Grid.Row="4" Grid.RowSpan="2" Width="70" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="{x:Null}" FontSize="16" FontFamily="Arial Black" FontWeight="Bold" Click="CloseButt_Click" >
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}">
-                        <Setter Property="Background" Value="#602C2C2C"/>
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type Button}">
-                                    <Border Background="{TemplateBinding Background}">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#60606060"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
+            <Button  Grid.Column="1" Grid.Row="5" Grid.RowSpan="2" Click="CloseButt_Click" Width="70" Height="40"
+                     Style="{DynamicResource ButtonsStyle}" >
                 <Button.Content>
-                    <TextBlock Text="Cancel" Foreground="#FFE6E6E6"/>
+                    <TextBlock Text="Cancel"/>
                 </Button.Content>
             </Button>
         </Grid>

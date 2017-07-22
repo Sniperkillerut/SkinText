@@ -265,7 +265,7 @@
                 HorizontalScrollBarVisibility="Auto"
                 VerticalScrollBarVisibility="Auto"
                 SizeChanged="RtbSizeChanged" SelectionChanged="Rtb_SelectionChanged" IsDocumentEnabled="True" KeyUp="Rtb_KeyUp" TextChanged="Rtb_TextChanged"
-                IsInactiveSelectionHighlightEnabled="True"   
+                IsInactiveSelectionHighlightEnabled="True" RenderTransformOrigin="0.5,0.5"   
                 >
                 <FlowDocument LineStackingStrategy="BlockLineHeight"/>
                 <RichTextBox.Resources>
