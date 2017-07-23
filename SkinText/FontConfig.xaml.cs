@@ -68,8 +68,11 @@ namespace SkinText
                 SolidColorBrush brush = new SolidColorBrush(ClrPcker_Font.SelectedColor.Value);
                 textrun.Foreground = brush;
             }
+            catch (System.NullReferenceException)
+            {}
             catch (Exception)
             {
+                throw;
             }
         }
         private void ClrPcker_Bg_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
@@ -83,8 +86,11 @@ namespace SkinText
                 }
                 textrun.Background = brush;
             }
+            catch (System.NullReferenceException)
+            {}
             catch (Exception)
             {
+               throw;
             }
         }
         private void Apply_Click(object sender, RoutedEventArgs e)
@@ -110,7 +116,7 @@ namespace SkinText
         {
             try
             {
-                System.Windows.Controls.RadioButton btn = sender as System.Windows.Controls.RadioButton;
+                System.Windows.Controls.RadioButton btn = (System.Windows.Controls.RadioButton)sender;
                 if (btn != null && btn.IsChecked.Value)
                 {
                     switch (btn.Name)
@@ -158,16 +164,18 @@ namespace SkinText
                     }
                 }
             }
+            catch (System.NullReferenceException)
+            {}
             catch (Exception)
             {
-                //throw;
+                throw;
             }
         }
         private void Align_Checked(object sender, RoutedEventArgs e)
         {
             try
             {
-                System.Windows.Controls.RadioButton btn = sender as System.Windows.Controls.RadioButton;
+                System.Windows.Controls.RadioButton btn = (System.Windows.Controls.RadioButton) sender ;
                 if (btn != null && btn.IsChecked.Value)
                 {
                     switch (btn.Name)
@@ -197,7 +205,7 @@ namespace SkinText
             }
             catch (Exception)
             {
-                //throw;
+                throw;
             }
         }
 

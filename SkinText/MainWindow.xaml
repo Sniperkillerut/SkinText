@@ -161,7 +161,7 @@
         </Grid.RowDefinitions>
         <Image x:Name="backgroundimg" Grid.ColumnSpan="3" Grid.RowSpan="3" Stretch="Fill" VerticalAlignment="Top" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5"/>
         <DockPanel Grid.Column="1" Grid.Row="1" x:Name="panel" ClipToBounds="True" RenderTransformOrigin="0.5,0.5" MouseLeave="Panel_MouseLeave">
-            <Menu x:Name="menu" IsMainMenu="True" DockPanel.Dock="Top" PreviewMouseDown="Menu_MouseDown">
+            <Menu x:Name="menu" IsMainMenu="True" DockPanel.Dock="Top" PreviewMouseDown="Menu_PreviewMouseDown">
                 <MenuItem Header="_File" Template="{StaticResource MenuItemControlTemplate1}">
                     <MenuItem Header="_New..." Command="local:CustomCommands.New" Template="{StaticResource MenuItemControlTemplate2}" >
                         <MenuItem.Icon>

@@ -18,9 +18,7 @@ using XamlAnimatedGif;
 
 namespace SkinText
 {
-    /// <summary>
-    /// Lógica de interacción para MainWindow.xaml
-    /// </summary>
+   
     public partial class MainWindow : Window
     {
         private string filepath ;
@@ -48,7 +46,8 @@ namespace SkinText
             config = new WindowConfig(this);
             FontConf = new FontConfig(this);
             Load_default();
-            AppDataPath = ((App)Application.Current).GAppPath;
+            //AppDataPath = ((App)Application.Current).GAppPath;
+            AppDataPath = App.GAppPath;
             #region get FileName test
             /*
             string fileNameTest1 = window.GetType().Assembly.Lo‌​cation;
@@ -285,9 +284,9 @@ namespace SkinText
                         }
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    MessageBox.Show(ex.ToString());
+                    throw;
                 }
             }
         }
@@ -384,7 +383,7 @@ namespace SkinText
                 process.Start();
             }
             catch (Exception)
-            {}
+            { throw; }
             finally
             {
                 process.Dispose();
@@ -414,23 +413,24 @@ namespace SkinText
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
+            if (Mouse.LeftButton == MouseButtonState.Pressed)
             {
                 try
                 {
                     this.DragMove();
                 }
+                catch (System.InvalidOperationException)
+                {
+                    //dragdrop with only leftclick
+                    //dragdrop must be with pressed click
+                }
                 catch (Exception)
-                { }
+                {
+                    throw;
+                }
             }
         }
-        [DllImport("user32.dll")]
-        private static extern IntPtr SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
-        private void Menu_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            WindowInteropHelper helper = new WindowInteropHelper(window);
-            SendMessage(helper.Handle, 161, 2, 0);
-        }
+
         private void Hyperlink_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var hyperlink = (Hyperlink)sender;
@@ -540,6 +540,7 @@ namespace SkinText
                     filepath = "";
                     MenuFileName.Header = "";
                     MessageBox.Show("Failed to Open File:\r\n" + filepath, "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
+                    throw;
                 }
             }
         }
@@ -611,10 +612,12 @@ namespace SkinText
                     //reader.Close();
                 }
             }
+            catch (System.IndexOutOfRangeException) { }
             catch (System.Exception)
             {
                 // The appdata folders dont exist
                 //can be first open, let default values
+                throw;
             }
         }
         private void ReadConfigLine(string[] line)
@@ -622,7 +625,7 @@ namespace SkinText
             try
             {
                 switch (line[0])
-                {
+                {//TODO: Change var names to use less variables? CA1809
                     case "WINDOW_POSITION":
                         {
                             #region position
@@ -873,7 +876,7 @@ namespace SkinText
                                     config.ClrPcker_Background2.SelectedColor = (Color)ColorConverter.ConvertFromString("#85949494");
                                     Imagepath = "";
                                 }
-                                //throw;
+                                throw;
                             }
                             break;
                             #endregion
@@ -1002,7 +1005,7 @@ namespace SkinText
                     default: break;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -1051,7 +1054,7 @@ namespace SkinText
                         data = "file = " + filepath;
                         writer.WriteLine(data);
                     }
-                    catch (Exception) { }
+                    catch (Exception) { throw; }
                     //resize_enabled
                     data = "resize_enabled = " + config.resizecheck.IsChecked.Value.ToString();
                     writer.WriteLine(data);
@@ -1091,7 +1094,7 @@ namespace SkinText
                         data = "bg_image = " + Imagepath;
                         writer.WriteLine(data);
                     }
-                    catch (Exception) { }
+                    catch (Exception) { throw; }
                     //image_opacity
                     data = "image_opacity = " + config.imageopacityslider.Value;
                     writer.WriteLine(data);
@@ -1120,10 +1123,10 @@ namespace SkinText
                     data = "resize_visible = " + config.ResizeVisible.IsChecked.Value.ToString();
                     writer.WriteLine(data);
                     //Render transform flip
-                    data = "flip_rtb = " + ((System.Windows.Media.ScaleTransform)rtb.RenderTransform).ScaleX.ToString() + " , " + ((System.Windows.Media.ScaleTransform)rtb.RenderTransform).ScaleY.ToString();
+                    data = "flip_rtb = " + ((System.Windows.Media.ScaleTransform)rtb.RenderTransform).ScaleX.ToString(System.Globalization.CultureInfo.CurrentCulture) + " , " + ((System.Windows.Media.ScaleTransform)rtb.RenderTransform).ScaleY.ToString(System.Globalization.CultureInfo.CurrentCulture);
                     writer.WriteLine(data);
                     //Line Wrap
-                    data = "line_wrap" + LineWrapMenuItem.IsChecked.ToString();
+                    data = "line_wrap = " + LineWrapMenuItem.IsChecked.ToString();
                     writer.WriteLine(data);
                 }
                 
@@ -1144,6 +1147,7 @@ namespace SkinText
             }
             catch (Exception)
             {
+                throw;
             }
             finally
             {
@@ -1238,109 +1242,64 @@ namespace SkinText
             }
             if (saveas)
             {
-                try
+                SaveFileDialog savedialog = new SaveFileDialog()
                 {
-                    SaveFileDialog savedialog = new SaveFileDialog()
-                    {
-                        CreatePrompt = true,
-                        OverwritePrompt = true,
-                        CheckPathExists = true,
-                        ValidateNames = true,
-                        RestoreDirectory = true,
-                        FileName = "Notes",
-                        Filter = "XAML Package (*.xamlp)|*.xamlp|Rich Text File (*.rtf)|*.rtf|XAML File (*.xaml)|*.xaml|Text file (*.txt)|*.txt",
-                        DefaultExt = ".xamlp"
-                    };
-                    if (savedialog.ShowDialog() == true)
-                    {
-                        filepath = savedialog.FileName;
-                        MenuFileName.Header = Path.GetFileName(filepath);
-                        TextRange t = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
-                        using (FileStream file = new FileStream(filepath, FileMode.Create) ){ 
-                            switch(Path.GetExtension(filepath).ToUpperInvariant())
-                            {
-                                case (".RTF"):
-                                    {
-                                        t.Save(file, System.Windows.DataFormats.Rtf);
-                                        break;
-                                    }
-                                case (".TXT"):
-                                    {
-                                        t.Save(file, System.Windows.DataFormats.Text);
-                                        break;
-                                    }
-                                case (".XAML"):
-                                    {
-                                        t.Save(file, System.Windows.DataFormats.Xaml);
-                                        break;
-                                    }
-
-                                case (".XAMLP"):
-                                    {
-                                        t.Save(file, System.Windows.DataFormats.XamlPackage);
-                                        break;
-                                    }
-                                default:
-                                    {
-                                        throw new Exception();
-                                        //break;
-                                    }
-                            }
-                            fileChanged = false;
-                            SaveConfig();
-                        }
-                    }
+                    CreatePrompt = true,
+                    OverwritePrompt = true,
+                    CheckPathExists = true,
+                    ValidateNames = true,
+                    RestoreDirectory = true,
+                    FileName = "Notes",
+                    Filter = "XAML Package (*.xamlp)|*.xamlp|Rich Text File (*.rtf)|*.rtf|XAML File (*.xaml)|*.xaml|Text file (*.txt)|*.txt",
+                    DefaultExt = ".xamlp"
+                };
+                if (savedialog.ShowDialog() == true)
+                {
+                    filepath = savedialog.FileName;
+                    MenuFileName.Header = Path.GetFileName(filepath);
                 }
-                catch (Exception ex)
+            }            
+            try
+            {
+                TextRange t = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
+                using (FileStream file = new FileStream(filepath, FileMode.Create))
                 {
-                    MessageBox.Show("Failed to Write File", "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
+                    switch (Path.GetExtension(filepath).ToUpperInvariant())
+                    {
+                        case (".RTF"):
+                            {
+                                t.Save(file, System.Windows.DataFormats.Rtf);
+                                break;
+                            }
+                        case (".TXT"):
+                            {
+                                t.Save(file, System.Windows.DataFormats.Text);
+                                break;
+                            }
+                        case (".XAML"):
+                            {
+                                t.Save(file, System.Windows.DataFormats.Xaml);
+                                break;
+                            }
+
+                        case (".XAMLP"):
+                            {
+                                t.Save(file, System.Windows.DataFormats.XamlPackage);
+                                break;
+                            }
+                        default:
+                            {
+                                throw new FileFormatException();
+                            }
+                    }
+                    fileChanged = false;
+                    SaveConfig();
                 }
             }
-            else
+            catch (Exception)
             {
-                try
-                {
-                    TextRange t = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
-                    using (FileStream file = new FileStream(filepath, FileMode.Create))
-                    {
-                        switch (Path.GetExtension(filepath).ToUpperInvariant())
-                        {
-                            case (".RTF"):
-                                {
-                                    t.Save(file, System.Windows.DataFormats.Rtf);
-                                    break;
-                                }
-                            case (".TXT"):
-                                {
-                                    t.Save(file, System.Windows.DataFormats.Text);
-                                    break;
-                                }
-                            case (".XAML"):
-                                {
-                                    t.Save(file, System.Windows.DataFormats.Xaml);
-                                    break;
-                                }
-
-                            case (".XAMLP"):
-                                {
-                                    t.Save(file, System.Windows.DataFormats.XamlPackage);
-                                    break;
-                                }
-                            default:
-                                {
-                                    throw new Exception();
-                                    //break;
-                                }
-                        }
-                        fileChanged = false;
-                        SaveConfig();
-                        //file.Close();
-                    }
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Failed to Write File", "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
-                }
+                MessageBox.Show("Failed to Write File", "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
+                throw;
             }
         }
         public void TextFormat(Brush foreColor,Brush backgroundColor,FontFamily fontFamily,double fontSize,TextDecorationCollection decor,FontStyle fontStyle,FontWeight fontWeight, TextAlignment textalign, FlowDirection flow, BaselineAlignment basealign, double lineHeight)
@@ -1528,6 +1487,14 @@ namespace SkinText
             SaveChanges(New_File, new System.ComponentModel.CancelEventArgs(), "New File");
         }
         #endregion
+
+        private void Menu_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            WindowInteropHelper helper = new WindowInteropHelper(window);
+            IntPtr wparam = new IntPtr(2);
+            IntPtr lparam = new IntPtr(0);
+            NativeMethods.SendMessage(helper.Handle, 161, wparam, lparam);
+        }
     }
 
     public static class CustomCommands
@@ -1614,5 +1581,11 @@ namespace SkinText
             return true;
         }
         public event EventHandler CanExecuteChanged;
+    }
+
+    internal static class NativeMethods
+    {
+        [DllImport("user32.dll")]
+        public static extern IntPtr SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);
     }
 }

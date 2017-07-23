@@ -11,7 +11,7 @@ namespace SkinText
     /// </summary>
     public partial class App : Application
     {
-        public string GAppPath
+        public static string GAppPath
         {
             get
             {
@@ -43,7 +43,7 @@ namespace SkinText
                 return path;
             }
         }
-        private void FirstRun(string path)
+        private static void FirstRun(string path)
         {
             try
             {
@@ -56,6 +56,7 @@ namespace SkinText
             catch (Exception)
             {
                 MessageBox.Show("Error creating Initial Config", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                throw;
             }
         }
 
@@ -120,7 +121,9 @@ namespace SkinText
                     catch (Exception)
                     {
                         MessageBox.Show("Could Not complete config", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        throw;
                     }
+                    throw;
                 }
             }
             if (!File.Exists(path + "\\" + curFileName))
@@ -148,7 +151,9 @@ namespace SkinText
                     catch (Exception)
                     {
                         MessageBox.Show("Detected a missing file and could not fix it, file associations will not work", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        throw;
                     }
+                    throw;
                 }
             }
             else
@@ -220,7 +225,8 @@ namespace SkinText
                 }
                 catch (Exception)
                 {
-                   // MessageBox.Show(ex.ToString());
+                    // MessageBox.Show(ex.ToString());
+                    throw;
                 }
             }
 

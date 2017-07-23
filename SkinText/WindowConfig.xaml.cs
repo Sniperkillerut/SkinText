@@ -73,6 +73,7 @@ namespace SkinText
             }
             catch (Exception)
             {
+                throw;
             }
         }
         private void SlValue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -124,7 +125,7 @@ namespace SkinText
             par.splitter3.Background = brush;
             par.splitter4.Background = brush;
         }
-        public ImageSource BitmapFromUri(Uri source)
+        public static ImageSource BitmapFromUri(Uri source)
         {
             //TODO: move to library class
             var bitmap = new BitmapImage();
@@ -207,6 +208,7 @@ namespace SkinText
                     MessageBox.Show(ex.ToString());
                     ImageClear();
                     ClrPcker_Background2.SelectedColor = (Color)ColorConverter.ConvertFromString("#85949494");
+                    throw;
                     //MessageBox.Show("Background image failed to load, try another image or try again later", "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
                 }
             }
