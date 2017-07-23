@@ -95,20 +95,6 @@ namespace SkinText
             }
             par.TextFormat(textrun.Foreground, textrun.Background, textrun.FontFamily, textrun.FontSize, textrun.TextDecorations, textrun.FontStyle, textrun.FontWeight, txtSampleText.Selection.Start.Paragraph.TextAlignment, txtSampleText.FlowDirection, textrun.BaselineAlignment, textpar.LineHeight);
         }
-        private void FontSizeText_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.SystemKey.Equals(Key.Return) || e.Key.Equals(Key.Return) || e.SystemKey.Equals(Key.Enter) || e.Key.Equals(Key.Enter))
-            {
-                fontSizeSlider.Focus();
-            }
-        }
-        private void LineHeightText_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.SystemKey.Equals(Key.Return) || e.Key.Equals(Key.Return) || e.SystemKey.Equals(Key.Enter) || e.Key.Equals(Key.Enter))
-            {
-                fontSizeSlider.Focus();
-            }
-        }
         private void FlowDir_Checked(object sender, RoutedEventArgs e)
         {
             if (FlowDir.IsChecked.Value)
@@ -213,6 +199,11 @@ namespace SkinText
             {
                 //throw;
             }
+        }
+
+        private void FontSzLineSz_Click(object sender, RoutedEventArgs e)
+        {
+            lineHeightSlider.Value = fontSizeSlider.Value;
         }
     }
 }

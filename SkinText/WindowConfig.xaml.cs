@@ -37,7 +37,7 @@ namespace SkinText
             {
                 par.Imagepath = "";
             }
-            imagedir.Content = "Change Background";
+            //imagedir.Content = "Change Background";
             //imagedir.Content = par.imagepath.Substring(par.imagepath.LastIndexOf("\\") + 1);
             //imagedir.ToolTip = par.imagepath;
 

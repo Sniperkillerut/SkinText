@@ -343,14 +343,17 @@ namespace SkinText
         }
         public  void RtbSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (panel.ActualWidth > 21)
+            /*if (!LineWrapMenuItem.IsChecked)
             {
-                rtb.Document.PageWidth = panel.Width - 20;
-            }
-            else
-            {
-                rtb.Document.PageWidth = 1;
-            }
+                if (panel.ActualWidth > 21)
+                {
+                    rtb.Document.PageWidth = panel.Width - 20;
+                }
+                else
+                {
+                    rtb.Document.PageWidth = Double.NaN;
+                }
+            }*/
             double row0 = grid.RowDefinitions[0].ActualHeight;
             double row2 = grid.RowDefinitions[2].ActualHeight;
             double column0 = grid.ColumnDefinitions[0].ActualWidth;
@@ -379,9 +382,10 @@ namespace SkinText
                 //process.StartInfo.ErrorDialog = true;
                 //process.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
                 process.Start();
-                process.Dispose();
             }
             catch (Exception)
+            {}
+            finally
             {
                 process.Dispose();
             }
@@ -431,6 +435,17 @@ namespace SkinText
         {
             var hyperlink = (Hyperlink)sender;
             Process.Start(hyperlink.NavigateUri.ToString());
+        }
+        private void LineWrapMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (!LineWrapMenuItem.IsChecked)
+            {
+                rtb.Document.PageWidth = 1000;
+            }
+            else
+            {
+                rtb.Document.PageWidth = Double.NaN;
+            }
         }
 
         #region Custom Methods
@@ -964,6 +979,7 @@ namespace SkinText
                         }
                     case "FLIP_RTB":
                         {
+                            #region flip rich text box (rendertransform)
                             string[] pos = line[1].Split(',');
                             if (double.TryParse(pos[0], out double x) && double.TryParse(pos[1], out double y))
                             {
@@ -971,6 +987,17 @@ namespace SkinText
                                 config.FlipYButton.IsChecked = (y < 0);
                             }
                             break;
+                            #endregion
+                        }
+                    case "LINE_WRAP":
+                        {
+                            #region  Line Wrapping (Default on)
+                            if (bool.TryParse(line[1], out bool tcheck))
+                            {
+                                LineWrapMenuItem.IsChecked = tcheck;
+                            }
+                            break;
+                            #endregion
                         }
                     default: break;
                 }
@@ -1095,6 +1122,9 @@ namespace SkinText
                     //Render transform flip
                     data = "flip_rtb = " + ((System.Windows.Media.ScaleTransform)rtb.RenderTransform).ScaleX.ToString() + " , " + ((System.Windows.Media.ScaleTransform)rtb.RenderTransform).ScaleY.ToString();
                     writer.WriteLine(data);
+                    //Line Wrap
+                    data = "line_wrap" + LineWrapMenuItem.IsChecked.ToString();
+                    writer.WriteLine(data);
                 }
                 
                 //FileInfo info;
@@ -1162,8 +1192,7 @@ namespace SkinText
 
             //rotation angle
             config.slValue.Value = 0;
-
-
+            
             //no file
             filepath = "";
             MenuFileName.Header = "";
@@ -1190,7 +1219,10 @@ namespace SkinText
             config.taskbarvisible.IsChecked = true;
             config.NotificationVisible.IsChecked = true;
             config.ResizeVisible.IsChecked = true;
+            config.FlipXButton.IsChecked = false;
+            config.FlipYButton.IsChecked = false;
 
+            LineWrapMenuItem.IsChecked = true;
         }
         private void Reset_Defaults()
         {
@@ -1554,7 +1586,7 @@ namespace SkinText
     }
 
 
-
+    //for TaskbarIcon
     public class ShowMessageCommand : ICommand
     {
         public void Execute(object parameter)
@@ -1577,12 +1609,10 @@ namespace SkinText
                 
             }
         }
-
         public bool CanExecute(object parameter)
         {
             return true;
         }
-
         public event EventHandler CanExecuteChanged;
     }
 }
