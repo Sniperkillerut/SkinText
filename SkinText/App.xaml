@@ -80,7 +80,6 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-
         <Style x:Key="ToggleButtonsStyle" TargetType="{x:Type ToggleButton}">
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="FontFamily" Value="Arial Black"/>
@@ -110,5 +109,6 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <BitmapImage x:Key="ImageSource1X" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="Resources\X.png"/>
     </Application.Resources>
 </Application>
