@@ -10,9 +10,6 @@ using XamlAnimatedGif;
 
 namespace SkinText
 {
-    /// <summary>
-    /// Lógica de interacción para WindowConfig.xaml
-    /// </summary>
     public partial class WindowConfig : Window
     {
         private MainWindow par;
@@ -128,6 +125,7 @@ namespace SkinText
         public static ImageSource BitmapFromUri(Uri source)
         {
             //TODO: move to library class
+            //throws System.NotSupportedException but must be catched in LoadImage
             var bitmap = new BitmapImage();
             bitmap.BeginInit();
             bitmap.UriSource = source;
@@ -138,6 +136,7 @@ namespace SkinText
         }
         public void ImageClear()
         {
+            par.Imagepath = "";
             par.backgroundimg.Source = null;
             WpfAnimatedGif.ImageBehavior.SetAnimatedSource(par.backgroundimg, null);
             XamlAnimatedGif.AnimationBehavior.SetSourceUri(par.backgroundimg, null);
@@ -146,29 +145,44 @@ namespace SkinText
         }
         public void LoadImage(string imagepath)
         {
-            if (File.Exists(imagepath))
+            try
             {
-                var uri = new Uri(imagepath);
-                if (Path.GetExtension(imagepath).ToUpperInvariant() == ".GIF")
+                if (File.Exists(imagepath))
                 {
-                    if (par.GifMethod == "RAM")
+                    var uri = new Uri(imagepath);
+                    if (Path.GetExtension(imagepath).ToUpperInvariant() == ".GIF")
                     {
-                        ImageSource bitmap = BitmapFromUri(uri);
-                        ImageBehavior.SetAnimatedSource(par.backgroundimg, bitmap);
-                        bitmap = null;
+                        if (par.GifMethod == "RAM")
+                        {
+                            ImageSource bitmap = BitmapFromUri(uri);
+                            ImageBehavior.SetAnimatedSource(par.backgroundimg, bitmap);
+                            bitmap = null;
+                        }
+                        else
+                        {//CpuMethod
+                            AnimationBehavior.SetSourceUri(par.backgroundimg, uri);
+                        }
                     }
                     else
-                    {//CpuMethod
-                        AnimationBehavior.SetSourceUri(par.backgroundimg, uri);
+                    {//default (no gif animation)
+                        ImageSource bitmap = BitmapFromUri(uri);
+                        par.backgroundimg.Source = bitmap;
+                        bitmap = null;
                     }
+                    uri = null;
                 }
-                else
-                {//default (no gif animation)
-                    ImageSource bitmap = BitmapFromUri(uri);
-                    par.backgroundimg.Source = bitmap;
-                    bitmap = null;
+            }
+            catch (System.NotSupportedException)
+            {
+                if (par.window.Background.ToString() == Colors.Transparent.ToString())
+                {
+                    ClrPcker_Background2.SelectedColor = (Color)ColorConverter.ConvertFromString("#85949494");
                 }
-                uri = null;
+                ImageClear();
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
         private void Imagedir_Click(object sender, RoutedEventArgs e)
@@ -195,27 +209,20 @@ namespace SkinText
                         File.Delete(par.Imagepath);
                     }
                     File.Copy(imagepath, newImagePath,true);
-
                     LoadImage(newImagePath);
-
                     //imagedir.Content = newImagePath.Substring(newImagePath.LastIndexOf("\\")+1);
                     //imagedir.ToolTip = newImagePath;
                     par.Imagepath = newImagePath;
                     ClrPcker_Background2.SelectedColor = Colors.Transparent;
                 }
-                catch (Exception ex)
+                catch (Exception )
                 {
-                    MessageBox.Show(ex.ToString());
-                    ImageClear();
-                    ClrPcker_Background2.SelectedColor = (Color)ColorConverter.ConvertFromString("#85949494");
                     throw;
-                    //MessageBox.Show("Background image failed to load, try another image or try again later", "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
                 }
             }
             else
             {
                 ImageClear();
-                par.Imagepath = "";
                 //imagedir.Content = par.imagepath.Substring(par.imagepath.LastIndexOf("\\") + 1);
                 //imagedir.ToolTip = par.imagepath;
                 ClrPcker_Background2.SelectedColor = (Color)ColorConverter.ConvertFromString("#85949494");

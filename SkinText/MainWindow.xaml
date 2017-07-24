@@ -59,8 +59,6 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-
-
                     <ContentPresenter ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" Grid.Column="1" ContentStringFormat="{TemplateBinding HeaderStringFormat}" ContentSource="Header" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                     <Popup x:Name="PART_Popup"  AllowsTransparency="True" Focusable="False" IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}" PopupAnimation="{StaticResource {x:Static SystemParameters.MenuPopupAnimationKey}}" Placement="Bottom" HorizontalOffset="-2">
                         <Border x:Name="SubMenuBorder" BorderBrush="#70595959" BorderThickness="1" Background="#603A3A3A" Padding="2">
@@ -80,13 +78,11 @@
                 <Trigger Property="IsSuspendingPopupAnimation" Value="True">
                     <Setter Property="PopupAnimation" TargetName="PART_Popup" Value="None"/>
                 </Trigger>
-
                 <Trigger Property="IsHighlighted" Value="True">
                     <Setter Property="Background" TargetName="templateRoot" Value="{StaticResource DarkBrush}"/>
                     <Setter Property="BorderBrush" TargetName="templateRoot" Value="#2C2C2C"/>
                     <Setter Property="BorderThickness" TargetName="templateRoot" Value="1"></Setter>
                 </Trigger>
-
                 <Trigger Property="CanContentScroll" SourceName="SubMenuScrollViewer" Value="False">
                     <Setter Property="Canvas.Top" TargetName="OpaqueRect" Value="{Binding VerticalOffset, ElementName=SubMenuScrollViewer}"/>
                     <Setter Property="Canvas.Left" TargetName="OpaqueRect" Value="{Binding HorizontalOffset, ElementName=SubMenuScrollViewer}"/>
@@ -286,6 +282,14 @@
                         <EventSetter Event="MouseLeftButtonDown" Handler="Hyperlink_MouseLeftButtonDown"/>
                     </Style>
                 </RichTextBox.Resources>
+                <RichTextBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleY="1" ScaleX="1"/>
+                        <SkewTransform AngleY="0" AngleX="0"/>
+                        <RotateTransform Angle="0"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </RichTextBox.RenderTransform>
             </RichTextBox>
         </DockPanel>
         <GridSplitter x:Name= "splitter1" Grid.Column="0" Grid.Row="1" Width="5" Height="auto" HorizontalAlignment="Right" VerticalAlignment="Stretch" Margin="0" Visibility="Visible" Background="#997E7E7E"/>
@@ -323,7 +327,6 @@
                 </TransformGroup>
             </Ellipse.RenderTransform>
         </Ellipse>
-
         <tb:TaskbarIcon x:Name="MyNotifyIcon"
                         IconSource="/Resources/icon_01.ico"
                         ToolTipText="SkinText"

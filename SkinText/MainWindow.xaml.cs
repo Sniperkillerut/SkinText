@@ -1,24 +1,18 @@
-﻿using Hardcodet.Wpf.TaskbarNotification;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
-using System.Threading;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using XamlAnimatedGif;
 
 namespace SkinText
 {
-   
     public partial class MainWindow : Window
     {
         private string filepath ;
@@ -37,10 +31,9 @@ namespace SkinText
         public FontConfig FontConf { get => fontConf; set => fontConf = value; }
 
         public MainWindow()
-        { 
+        {
             InitializeComponent();
         }
-        ///////////////////////////////////////////////////
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             config = new WindowConfig(this);
@@ -249,7 +242,7 @@ namespace SkinText
                         {
                             TextDecorationCollection temp = (TextDecorationCollection)selectionTextRange.GetPropertyValue(Inline.TextDecorationsProperty);
                             //FontConf.textrun.TextDecorations = null;
-                            //FontConf.textrun.TextDecorations = temp.Clone();//this works, but is overriden on textrun.TextDecorations.Clear(); of UpdateStrikethrough in fontConfig 
+                            //FontConf.textrun.TextDecorations = temp.Clone();//this works, but is overriden on textrun.TextDecorations.Clear(); of UpdateStrikethrough in fontConfig
                             FontConf.Baseline.IsChecked = false;
                             FontConf.OverLine.IsChecked = false;
                             FontConf.Strikethrough.IsChecked = false;
@@ -430,7 +423,6 @@ namespace SkinText
                 }
             }
         }
-
         private void Hyperlink_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var hyperlink = (Hyperlink)sender;
@@ -451,40 +443,40 @@ namespace SkinText
         #region Custom Methods
         private void FixResizeTextbox()
         {
-            GridLength ad = new GridLength(grid.ColumnDefinitions[0].ActualWidth, GridUnitType.Star);
-            grid.ColumnDefinitions[0].Width = ad;
-            ad = new GridLength(grid.ColumnDefinitions[1].ActualWidth, GridUnitType.Star);
-            grid.ColumnDefinitions[1].Width = ad;
-            ad = new GridLength(grid.ColumnDefinitions[2].ActualWidth, GridUnitType.Star);
-            grid.ColumnDefinitions[2].Width = ad;
-            ad = new GridLength(grid.RowDefinitions[0].ActualHeight, GridUnitType.Star);
-            grid.RowDefinitions[0].Height = ad;
-            ad = new GridLength(grid.RowDefinitions[1].ActualHeight, GridUnitType.Star);
-            grid.RowDefinitions[1].Height = ad;
-            ad = new GridLength(grid.RowDefinitions[2].ActualHeight, GridUnitType.Star);
-            grid.RowDefinitions[2].Height = ad;
+            GridLength ad                      = new GridLength(grid.ColumnDefinitions[0].ActualWidth, GridUnitType.Star);
+            grid.ColumnDefinitions[0].Width    = ad;
+            ad                                 = new GridLength(grid.ColumnDefinitions[1].ActualWidth, GridUnitType.Star);
+            grid.ColumnDefinitions[1].Width    = ad;
+            ad                                 = new GridLength(grid.ColumnDefinitions[2].ActualWidth, GridUnitType.Star);
+            grid.ColumnDefinitions[2].Width    = ad;
+            ad                                 = new GridLength(grid.RowDefinitions   [0].ActualHeight, GridUnitType.Star);
+            grid.RowDefinitions   [0].Height   = ad;
+            ad                                 = new GridLength(grid.RowDefinitions   [1].ActualHeight, GridUnitType.Star);
+            grid.RowDefinitions   [1].Height   = ad;
+            ad                                 = new GridLength(grid.RowDefinitions   [2].ActualHeight, GridUnitType.Star);
+            grid.RowDefinitions   [2].Height   = ad;
         }
         private void New_File()
         {
-            filepath = "";
+            filepath            = "";
             MenuFileName.Header = "";
-            rtb.Document = new FlowDocument();
-            fileChanged = false;
+            rtb.Document        = new FlowDocument();
+            fileChanged         = false;
         }
         private void Open_File()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog()
             {
-                Multiselect = false,
-                CheckFileExists = true,
-                CheckPathExists = true,
-                ValidateNames = true,
+                Multiselect      = false,
+                CheckFileExists  = true,
+                CheckPathExists  = true,
+                ValidateNames    = true,
                 RestoreDirectory = true,
-                Filter = "Text files (*.txt, *.rtf, *.xaml, *.xamlp) | *.txt; *.rtf; *.xaml; *.xamlp"
+                Filter           = "Text files (*.txt, *.rtf, *.xaml, *.xamlp) | *.txt; *.rtf; *.xaml; *.xamlp"
             };
             if (openFileDialog.ShowDialog() == true)
             {
-                filepath = openFileDialog.FileName;
+                filepath            = openFileDialog.FileName;
                 MenuFileName.Header = Path.GetFileName(filepath);
                 try
                 {
@@ -522,17 +514,8 @@ namespace SkinText
                                     break;
                                 }
                         }
-                        /*
-                        using (MemoryStream rtfMemoryStream = new MemoryStream())
-                        {
-                            rtfMemoryStream.Seek(0, SeekOrigin.Begin);
-                            fStream.Seek(0, SeekOrigin.Begin);
-                            fStream.CopyTo(rtfMemoryStream);
-                            range.Load(rtfMemoryStream, DataFormats.Rtf);
-                        }*/
                         fileChanged = false;
                         SaveConfig();
-                        //fStream.Close();
                     }
                 }
                 catch (Exception)
@@ -549,7 +532,7 @@ namespace SkinText
             FontConf.Close();
             config.Close();
             SaveConfig();
-        }        
+        }
         private void SaveChanges(Action FileFunc, System.ComponentModel.CancelEventArgs e, string txtBoxTitle)
         {
             if (fileChanged)
@@ -594,25 +577,31 @@ namespace SkinText
         {
             try
             {
-                using (StreamReader reader = new StreamReader(AppDataPath + @"\skintext.ini", System.Text.Encoding.UTF8))
+                if (File.Exists(AppDataPath + @"\skintext.ini"))
                 {
-                    string currentLine;
-                    string[] line;
-                    while ((currentLine = reader.ReadLine()) != null)
-                    {
-                        line = currentLine.Split('=');
-                        line[0] = line[0].Trim();
-                        line[0] = line[0].ToUpperInvariant();
-                        if (!String.IsNullOrEmpty(line[0]))
+                    using (StreamReader reader = new StreamReader(AppDataPath + @"\skintext.ini", System.Text.Encoding.UTF8))
+                    {//throws System.IO.FileNotFoundException
+                        string currentLine;
+                        string[] line;
+                        while ((currentLine = reader.ReadLine()) != null)
                         {
-                            line[1] = line[1].Trim();
+                            line = currentLine.Split('=');
+                            line[0] = line[0].Trim();
+                            line[0] = line[0].ToUpperInvariant();
+                            try
+                            {
+                                if (!String.IsNullOrEmpty(line[0]))
+                                {
+                                    line[1] = line[1].Trim();
+                                    ReadConfigLine(line);
+                                }
+                            }
+                            catch (System.IndexOutOfRangeException) { }
                         }
-                        ReadConfigLine(line);
+                        //reader.Close();
                     }
-                    //reader.Close();
                 }
             }
-            catch (System.IndexOutOfRangeException) { }
             catch (System.Exception)
             {
                 // The appdata folders dont exist
@@ -624,16 +613,23 @@ namespace SkinText
         {
             try
             {
+                double double1;
+                double double2;
+                bool bool1;
+                string string1;
+                string[] array;
+
                 switch (line[0])
-                {//TODO: Change var names to use less variables? CA1809
+                {//Changed var names to use less variables CA1809
                     case "WINDOW_POSITION":
                         {
                             #region position
-                            string[] pos = line[1].Split(',');
-                            if (double.TryParse(pos[0], out double top) && double.TryParse(pos[1], out double left))
+                            array = line[1].Split(',');
+                            if (double.TryParse(array[0], out double1) && //top
+                                double.TryParse(array[1], out double2))   //left
                             {
-                                window.Top = top;
-                                window.Left = left;
+                                window.Top = double1;
+                                window.Left = double2;
                             }
                             break;
                             #endregion
@@ -641,16 +637,17 @@ namespace SkinText
                     case "WINDOW_SIZE":
                         {
                             #region size
-                            string[] wsize = line[1].Split(',');
-                            if (double.TryParse(wsize[0], out double wwidth) && double.TryParse(wsize[1], out double wheight))
+                            array = line[1].Split(',');
+                            if (double.TryParse(array[0], out double1) && //window width
+                                double.TryParse(array[1], out double2))   //window height
                             {
-                                if (wwidth > window.MinWidth && wwidth < window.MaxWidth)
+                                if (double1 > window.MinWidth && double1 < window.MaxWidth)
                                 {
-                                    window.Width = wwidth;
+                                    window.Width = double1;
                                 }
-                                if (wheight > window.MinHeight && wheight < window.MaxHeight)
+                                if (double2 > window.MinHeight && double2 < window.MaxHeight)
                                 {
-                                    window.Height = wheight;
+                                    window.Height = double2;
                                 }
                             }
                             break;
@@ -659,11 +656,11 @@ namespace SkinText
                     case "BORDER_SIZE":
                         {
                             #region border size
-                            if (int.TryParse(line[1], out int bsize))
+                            if (int.TryParse(line[1], out int int1)) //border size
                             {
-                                if (bsize <= config.bordersize.Maximum && bsize > 0)
+                                if (int1 <= config.bordersize.Maximum && int1 > 0)
                                 {
-                                    config.bordersize.Value = BorderSZ = bsize;
+                                    config.bordersize.Value = BorderSZ = int1;
                                 }
                             }
                             break;
@@ -672,33 +669,38 @@ namespace SkinText
                     case "TEXT_SIZE":
                         {
                             #region text_size
-                            string[] tsize = line[1].Split(',');
-                            if (double.TryParse(tsize[0], out double twidth0) && double.TryParse(tsize[1], out double twidth1) && double.TryParse(tsize[2], out double twidth2) && double.TryParse(tsize[3], out double theight0) && double.TryParse(tsize[4], out double theight1) && double.TryParse(tsize[5], out double theight2))
+                            array = line[1].Split(',');
+                            if (double.TryParse(array[0], out double1)  && //column 0 width
+                                double.TryParse(array[1], out double2) &&  //column 1 width
+                                double.TryParse(array[2], out double double3) &&  //column 2 width
+                                double.TryParse(array[3], out double double4) &&  //row 0 height
+                                double.TryParse(array[4], out double double5) &&  //row 1 height
+                                double.TryParse(array[5], out double double6))    //row 2 height
                             {
-                                if (twidth0 >= 0)
+                                if (double1 >= 0)
                                 {
-                                    GridLength gl = new GridLength(twidth0, GridUnitType.Star);
+                                    GridLength gl = new GridLength(double1, GridUnitType.Star);
                                     grid.ColumnDefinitions[0].Width = gl;
                                 }
-                                if (twidth2 >= 0)
+                                if (double3 >= 0)
                                 {
-                                    GridLength gl = new GridLength(twidth2, GridUnitType.Star);
+                                    GridLength gl = new GridLength(double3, GridUnitType.Star);
                                     grid.ColumnDefinitions[2].Width = gl;
                                 }
-                                if (theight0 >= 0)
+                                if (double4 >= 0)
                                 {
-                                    GridLength gl = new GridLength(theight0, GridUnitType.Star);
+                                    GridLength gl = new GridLength(double4, GridUnitType.Star);
                                     grid.RowDefinitions[0].Height = gl;
                                 }
-                                if (theight2 >= 0)
+                                if (double6 >= 0)
                                 {
-                                    GridLength gl = new GridLength(theight2, GridUnitType.Star);
+                                    GridLength gl = new GridLength(double6, GridUnitType.Star);
                                     grid.RowDefinitions[2].Height = gl;
                                 }
                                 ////////////////////////
-                                if ((twidth1 < window.Width - (BorderSZ * 2 + 1)) && (twidth1 >= grid.ColumnDefinitions[1].MinWidth))
+                                if ((double2 < window.Width - (BorderSZ * 2 + 1)) && (double2 >= grid.ColumnDefinitions[1].MinWidth))
                                 {
-                                    GridLength tw = new GridLength(twidth1);
+                                    GridLength tw = new GridLength(double2);
                                     grid.ColumnDefinitions[1].Width = tw;
                                 }
                                 else
@@ -706,9 +708,9 @@ namespace SkinText
                                     GridLength tw = new GridLength(window.Width - (BorderSZ * 2 + 1));
                                     grid.ColumnDefinitions[1].Width = tw;
                                 }
-                                if ((theight1 < window.Height - (BorderSZ * 2 + 1)) && (theight1 >= grid.RowDefinitions[1].MinHeight))
+                                if ((double5 < window.Height - (BorderSZ * 2 + 1)) && (double5 >= grid.RowDefinitions[1].MinHeight))
                                 {
-                                    GridLength th = new GridLength(theight1);
+                                    GridLength th = new GridLength(double5);
                                     grid.RowDefinitions[1].Height = th;
                                 }
                                 else
@@ -723,19 +725,19 @@ namespace SkinText
                     case "FILE":
                         {
                             #region file
-                            string fileName = line[1].Trim();
+                            string1 = line[1].Trim(); //fileName
                             TextRange range;
                             FileStream fStream;
-                            if (!fileName.Contains("\\") && !String.IsNullOrEmpty(fileName))
+                            if (!string1.Contains("\\") && !String.IsNullOrEmpty(string1))
                             {
-                                fileName = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + fileName;
+                                string1 = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + string1;
                             }
-                            if (File.Exists(fileName))
+                            if (File.Exists(string1))
                             {
                                 range = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
-                                using (fStream = new FileStream(fileName, FileMode.OpenOrCreate))
+                                using (fStream = new FileStream(string1, FileMode.OpenOrCreate))
                                 {
-                                    switch (Path.GetExtension(fileName).ToUpperInvariant())
+                                    switch (Path.GetExtension(string1).ToUpperInvariant())
                                     {
                                         case (".RTF"):
                                             {
@@ -763,7 +765,7 @@ namespace SkinText
                                                 break;
                                             }
                                     }
-                                    filepath = fileName;
+                                    filepath = string1;
                                     MenuFileName.Header = Path.GetFileName(filepath);
                                     fileChanged = false;
                                     //fStream.Close();
@@ -771,9 +773,9 @@ namespace SkinText
                             }
                             else
                             {
-                                if (!String.IsNullOrEmpty(fileName))
+                                if (!String.IsNullOrEmpty(string1))
                                 {
-                                    MessageBox.Show("Failed to Open File:\r\n " + fileName, "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
+                                    MessageBox.Show("Failed to Open File:\r\n " + string1, "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
                                 }
                             }
                             break;
@@ -782,9 +784,9 @@ namespace SkinText
                     case "RESIZE_ENABLED":
                         {
                             #region border show
-                            if (bool.TryParse(line[1], out bool rcheck))
+                            if (bool.TryParse(line[1], out bool1)) //resize checked
                             {
-                                config.resizecheck.IsChecked = rcheck;
+                                config.resizecheck.IsChecked = bool1;
                             }
                             break;
                             #endregion
@@ -792,35 +794,46 @@ namespace SkinText
                     case "BORDER_COLOR":
                         {
                             #region border color
-                            Color bcolor = (Color)ColorConverter.ConvertFromString(line[1]);
-                            config.ClrPcker_Background.SelectedColor = bcolor;
+                            try
+                            {
+                                config.ClrPcker_Background.SelectedColor = (Color)ColorConverter.ConvertFromString(line[1]);
+                            }
+                            catch (System.FormatException)
+                            {}
                             break;
                             #endregion
                         }
                     case "WINDOW_COLOR":
                         {
                             #region window color
-                            Color wcolor = (Color)ColorConverter.ConvertFromString(line[1]);
-                            config.ClrPcker_Background2.SelectedColor = wcolor;
+                            try
+                            {
+                                config.ClrPcker_Background2.SelectedColor = (Color)ColorConverter.ConvertFromString(line[1]); ;
+                            }
+                            catch (System.FormatException)
+                            { }
                             break;
                             #endregion
                         }
                     case "TEXT_BG_COLOR":
                         {
                             #region text bg color
-                            Color tcolor = (Color)ColorConverter.ConvertFromString(line[1]);
-                            config.ClrPcker_Background3.SelectedColor = tcolor;
+                            try {
+                                config.ClrPcker_Background3.SelectedColor = (Color)ColorConverter.ConvertFromString(line[1]);
+                            }
+                            catch (System.FormatException)
+                            {}
                             break;
                             #endregion
                         }
                     case "ROTATION":
                         {
                             #region rotation
-                            if (double.TryParse(line[1], out double angle))
+                            if (double.TryParse(line[1], out double1)) //angle
                             {
-                                if (angle < 361 && angle > -1)
+                                if (double1 < 361 && double1 > -1)
                                 {
-                                    config.slValue.Value = angle;
+                                    config.slValue.Value = double1;
                                 }
                             }
                             break;
@@ -829,17 +842,17 @@ namespace SkinText
                     case "GIFMETHOD":
                         {
                             #region gifMethod
-                            string method = line[1].Trim().ToUpperInvariant();
-                            if (method != "RAM")
+                            string1 = line[1].Trim().ToUpperInvariant();//method
+                            if (string1 != "RAM")
                             {
-                                method = "CPU";
+                                string1 = "CPU";
                                 config.GifMethodCPU.IsChecked = true;
                             }
                             else
                             {
                                 config.GifMethodRAM.IsChecked = true;
                             }
-                            GifMethod = method;
+                            GifMethod = string1;
                             break;
                             #endregion
                         }
@@ -871,11 +884,6 @@ namespace SkinText
                             }
                             catch (Exception)
                             {
-                                if (window.Background.ToString() == Colors.Transparent.ToString())
-                                {
-                                    config.ClrPcker_Background2.SelectedColor = (Color)ColorConverter.ConvertFromString("#85949494");
-                                    Imagepath = "";
-                                }
                                 throw;
                             }
                             break;
@@ -884,11 +892,11 @@ namespace SkinText
                     case "IMAGE_OPACITY":
                         {
                             #region image opcatity
-                            if (double.TryParse(line[1], out double ival))
+                            if (double.TryParse(line[1], out double1))
                             {
-                                if (ival < 101 && ival > -1)
+                                if (double1 < 101 && double1 > -1)
                                 {
-                                    config.imageopacityslider.Value = ival;
+                                    config.imageopacityslider.Value = double1;
                                 }
                             }
                             break;
@@ -897,11 +905,11 @@ namespace SkinText
                     case "TEXT_OPACITY":
                         {
                             #region text opcatity
-                            if (double.TryParse(line[1], out double tval))
+                            if (double.TryParse(line[1], out double1))
                             {
-                                if (tval < 101 && tval > -1)
+                                if (double1 < 101 && double1 > -1)
                                 {
-                                    config.textopacityslider.Value = tval;
+                                    config.textopacityslider.Value = double1;
                                 }
                             }
                             break;
@@ -910,11 +918,11 @@ namespace SkinText
                     case "WINDOW_OPACITY":
                         {
                             #region window opcatity
-                            if (double.TryParse(line[1], out double wval))
+                            if (double.TryParse(line[1], out double1))
                             {
-                                if (wval < 101 && wval > -1)
+                                if (double1 < 101 && double1 > -1)
                                 {
-                                    config.windowopacityslider.Value = wval;
+                                    config.windowopacityslider.Value = double1;
                                 }
                             }
                             break;
@@ -923,9 +931,9 @@ namespace SkinText
                     case "READ_ONLY":
                         {
                             #region read only
-                            if (bool.TryParse(line[1], out bool rocheck))
+                            if (bool.TryParse(line[1], out bool1))
                             {
-                                config.@readonly.IsChecked = rocheck;
+                                config.@readonly.IsChecked = bool1;
                             }
                             break;
                             #endregion
@@ -933,9 +941,9 @@ namespace SkinText
                     case "SPELL_CHECK":
                         {
                             #region spellcheck
-                            if (bool.TryParse(line[1], out bool scheck))
+                            if (bool.TryParse(line[1], out bool1))
                             {
-                                config.spellcheck.IsChecked = scheck;
+                                config.spellcheck.IsChecked = bool1;
                             }
                             break;
                             #endregion
@@ -943,9 +951,9 @@ namespace SkinText
                     case "ALWAYS_ON_TOP":
                         {
                             #region  always on top
-                            if (bool.TryParse(line[1], out bool acheck))
+                            if (bool.TryParse(line[1], out bool1))
                             {
-                                config.allwaysontop.IsChecked = acheck;
+                                config.allwaysontop.IsChecked = bool1;
                             }
                             break;
                             #endregion
@@ -953,9 +961,9 @@ namespace SkinText
                     case "TASKBAR_ICON":
                         {
                             #region  taskbar icon
-                            if (bool.TryParse(line[1], out bool tcheck))
+                            if (bool.TryParse(line[1], out bool1))
                             {
-                                config.taskbarvisible.IsChecked = tcheck;
+                                config.taskbarvisible.IsChecked = bool1;
                             }
                             break;
                             #endregion
@@ -963,9 +971,9 @@ namespace SkinText
                     case "NOTIFICATION_ICON":
                         {
                             #region  notification icon
-                            if (bool.TryParse(line[1], out bool tcheck))
+                            if (bool.TryParse(line[1], out bool1))
                             {
-                                config.NotificationVisible.IsChecked = tcheck;
+                                config.NotificationVisible.IsChecked = bool1;
                             }
                             break;
                             #endregion
@@ -973,9 +981,9 @@ namespace SkinText
                     case "RESIZE_VISIBLE":
                         {
                             #region  resize visible
-                            if (bool.TryParse(line[1], out bool tcheck))
+                            if (bool.TryParse(line[1], out bool1))
                             {
-                                config.ResizeVisible.IsChecked = tcheck;
+                                config.ResizeVisible.IsChecked = bool1;
                             }
                             break;
                             #endregion
@@ -983,11 +991,12 @@ namespace SkinText
                     case "FLIP_RTB":
                         {
                             #region flip rich text box (rendertransform)
-                            string[] pos = line[1].Split(',');
-                            if (double.TryParse(pos[0], out double x) && double.TryParse(pos[1], out double y))
+                            array = line[1].Split(',');
+                            if (double.TryParse(array[0], out double1) && // X
+                                double.TryParse(array[1], out double2))   // Y
                             {
-                                config.FlipXButton.IsChecked = (x < 0);
-                                config.FlipYButton.IsChecked = (y < 0);
+                                config.FlipXButton.IsChecked = (double1 < 0);
+                                config.FlipYButton.IsChecked = (double2 < 0);
                             }
                             break;
                             #endregion
@@ -995,9 +1004,9 @@ namespace SkinText
                     case "LINE_WRAP":
                         {
                             #region  Line Wrapping (Default on)
-                            if (bool.TryParse(line[1], out bool tcheck))
+                            if (bool.TryParse(line[1], out bool1))
                             {
-                                LineWrapMenuItem.IsChecked = tcheck;
+                                LineWrapMenuItem.IsChecked = bool1;
                             }
                             break;
                             #endregion
@@ -1010,7 +1019,7 @@ namespace SkinText
                 throw;
             }
         }
-        public void SaveConfig()
+        public  void SaveConfig()
         {
             //had to do this: https://msdn.microsoft.com/library/ms182334.aspx
             FileStream fs = null;
@@ -1033,7 +1042,7 @@ namespace SkinText
                     //text_size
                     data = "text_size = " + grid.ColumnDefinitions[0].ActualWidth.ToString(System.Globalization.CultureInfo.InvariantCulture) + " , " + grid.ColumnDefinitions[1].ActualWidth.ToString(System.Globalization.CultureInfo.InvariantCulture) + " , " + grid.ColumnDefinitions[2].ActualWidth.ToString(System.Globalization.CultureInfo.InvariantCulture) + " , " + grid.RowDefinitions[0].ActualHeight.ToString(System.Globalization.CultureInfo.InvariantCulture) + " , " + grid.RowDefinitions[1].ActualHeight.ToString(System.Globalization.CultureInfo.InvariantCulture) + " , " + grid.RowDefinitions[2].ActualHeight.ToString(System.Globalization.CultureInfo.InvariantCulture);
                     writer.WriteLine(data);
-                    //filetry 
+                    //filetry
                     try
                     {
                         /*int index = filepath.LastIndexOf("\\");
@@ -1123,13 +1132,17 @@ namespace SkinText
                     data = "resize_visible = " + config.ResizeVisible.IsChecked.Value.ToString();
                     writer.WriteLine(data);
                     //Render transform flip
-                    data = "flip_rtb = " + ((System.Windows.Media.ScaleTransform)rtb.RenderTransform).ScaleX.ToString(System.Globalization.CultureInfo.CurrentCulture) + " , " + ((System.Windows.Media.ScaleTransform)rtb.RenderTransform).ScaleY.ToString(System.Globalization.CultureInfo.CurrentCulture);
+                    string x = config.FlipXButton.IsChecked.Value ? "-1" : "1" ;
+                    string y = config.FlipYButton.IsChecked.Value ? "-1" : "1";
+                    //string y = rtb.RenderTransform.Value.M22.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                    //string y =((System.Windows.Media.ScaleTransform)rtb.RenderTransform).ScaleY.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                    data = "flip_rtb = " + x + " , " + y;
                     writer.WriteLine(data);
                     //Line Wrap
                     data = "line_wrap = " + LineWrapMenuItem.IsChecked.ToString();
                     writer.WriteLine(data);
                 }
-                
+
                 //FileInfo info;
                 //info = new FileInfo("skintext.ini");
                 //info.Attributes = FileAttributes.Hidden;
@@ -1138,31 +1151,32 @@ namespace SkinText
                  * Skin install config
                  * Same file?, other file?
                  * probably other is best
-                 * 
+                 *
                     SkinName = Circuitous
                     SkinAuthor = Col-Darby
                     SkinVersion = 1.0
                     SkinTextVer = 1.3.0.560
                  */
             }
-            catch (Exception)
+            catch (Exception )
             {
                 throw;
             }
             finally
             {
-                if (fs != null)
+                fs?.Dispose();
+                /*if (fs != null)
                 {
                     fs.Dispose();
-                }
+                }*/
             }
         }
-        private void Load_default() 
+        private void Load_default()
         {
             //window size
             window.Width = 525;
             window.Height = 350;
-            
+
             //Window position
             double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
             double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
@@ -1170,7 +1184,7 @@ namespace SkinText
             double windowHeight = this.Height;
             this.Left = (screenWidth / 2) - (windowWidth / 2);
             this.Top = (screenHeight / 2) - (windowHeight / 2);
-            
+
             //border size
             config.bordersize.Value = BorderSZ = 5;//default value due to text size dependency
 
@@ -1183,12 +1197,12 @@ namespace SkinText
             //and copies to config.ClrPcker_Background.SelectedColor on its Window_Loaded()
             Color bcolor = (Color)ColorConverter.ConvertFromString("#997E7E7E");
             config.ClrPcker_Background.SelectedColor = bcolor;
-            
+
             //window color
             //transparent by default in xaml
             //and copies to config.ClrPcker_Background2.SelectedColor on its Window_Loaded()
             config.ClrPcker_Background2.SelectedColor = Colors.Transparent;
-            
+
             //text bg color
             //transparent by default in xaml
             //and copies to config.ClrPcker_Background3.SelectedColor on its Window_Loaded()
@@ -1196,7 +1210,7 @@ namespace SkinText
 
             //rotation angle
             config.slValue.Value = 0;
-            
+
             //no file
             filepath = "";
             MenuFileName.Header = "";
@@ -1208,13 +1222,12 @@ namespace SkinText
             //change bg to something visible (overwrites default window color)
             config.ImageClear();
             config.ClrPcker_Background2.SelectedColor = (Color)ColorConverter.ConvertFromString("#85949494");
-            Imagepath = "";
 
             //opacity
             config.imageopacityslider.Value = 100;
             config.windowopacityslider.Value = 100;
             config.textopacityslider.Value = 100;
-            
+
             //checkboxes
             config.resizecheck.IsChecked = true;
             config.@readonly.IsChecked = false;
@@ -1258,7 +1271,7 @@ namespace SkinText
                     filepath = savedialog.FileName;
                     MenuFileName.Header = Path.GetFileName(filepath);
                 }
-            }            
+            }
             try
             {
                 TextRange t = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
@@ -1302,14 +1315,11 @@ namespace SkinText
                 throw;
             }
         }
-        public void TextFormat(Brush foreColor,Brush backgroundColor,FontFamily fontFamily,double fontSize,TextDecorationCollection decor,FontStyle fontStyle,FontWeight fontWeight, TextAlignment textalign, FlowDirection flow, BaselineAlignment basealign, double lineHeight)
+        public  void TextFormat(Brush foreColor,Brush backgroundColor,FontFamily fontFamily,double fontSize,TextDecorationCollection decor,FontStyle fontStyle,FontWeight fontWeight, TextAlignment textalign, FlowDirection flow, BaselineAlignment basealign, double lineHeight)
         {
-            if (backgroundColor != null)
+            if ((backgroundColor != null) && (backgroundColor.Equals(Brushes.Transparent)))
             {
-                if (backgroundColor.Equals(Brushes.Transparent))
-                {
-                    backgroundColor = null;
-                }
+                backgroundColor = null;
             }
             // Make sure we have a selection. Should have one even if there is no text selected.
             if (rtb.Selection != null)
@@ -1361,7 +1371,7 @@ namespace SkinText
                         p.Inlines.Add(newRun);
                         p.TextAlignment = textalign;
                         p.LineHeight = lineHeight;
-                        // Reset the cursor into the new block. 
+                        // Reset the cursor into the new block.
                         // If we don't do this, the font properties will default again when you start typing.
                         rtb.CaretPosition = newRun.ElementStart;
 
@@ -1405,7 +1415,7 @@ namespace SkinText
                             curParagraph.Inlines.Add(newRun);
                             curParagraph.LineHeight = lineHeight;
                             curParagraph.TextAlignment = textalign;
-                            // Reset the cursor into the new block. 
+                            // Reset the cursor into the new block.
                             // If we don't do this, the font properties will default again when you start typing.
                             rtb.CaretPosition = newRun.ElementStart;
                         }
@@ -1425,13 +1435,10 @@ namespace SkinText
                     {
                         selectionTextRange.ApplyPropertyValue(Inline.TextDecorationsProperty, decor.Clone());
                     }
-                    //selectionTextRange.ApplyPropertyValue(Paragraph.LineHeightProperty, lineHeight);
                     selectionTextRange.ApplyPropertyValue(Paragraph.TextAlignmentProperty, textalign);
                     selectionTextRange.ApplyPropertyValue(Paragraph.FlowDirectionProperty, flow);
                     selectionTextRange.ApplyPropertyValue(Paragraph.LineHeightProperty, lineHeight);
-
                     selectionTextRange.ApplyPropertyValue(Inline.BaselineAlignmentProperty, basealign);
-                                        
                 }
             }
             //rtb.Document.LineHeight = lineHeight;
@@ -1439,11 +1446,9 @@ namespace SkinText
             rtb.Focus();
             fileChanged = true;
         }
-        
         #endregion
 
         #region Custom Commands
-
         private void ExitCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
@@ -1477,7 +1482,6 @@ namespace SkinText
         {
             SaveChanges(Open_File, new System.ComponentModel.CancelEventArgs(),"Open File");
         }
-
         private void NewCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
@@ -1552,7 +1556,6 @@ namespace SkinText
         //Define more commands here, just like the one above
     }
 
-
     //for TaskbarIcon
     public class ShowMessageCommand : ICommand
     {
@@ -1573,7 +1576,7 @@ namespace SkinText
                         item.Hide();
                     }
                 }
-                
+
             }
         }
         public bool CanExecute(object parameter)

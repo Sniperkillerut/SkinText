@@ -5,9 +5,6 @@ using System.Windows.Media;
 
 namespace SkinText
 {
-    /// <summary>
-    /// Lógica de interacción para FontConfig.xaml
-    /// </summary>
     public partial class FontConfig : Window
     {
         private MainWindow par;
