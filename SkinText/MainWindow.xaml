@@ -7,7 +7,7 @@
         xmlns:tb="http://www.hardcodet.net/taskbar"
         xmlns:local="clr-namespace:SkinText"
         mc:Ignorable="d"
-        Title="SkinText" Height="350" MinHeight="20"  Width="525" MinWidth="110" AllowsTransparency="True" Background="Transparent" WindowStyle="None" MouseDown="Window_MouseDown" ResizeMode="CanResizeWithGrip" Loaded="Window_Loaded" Closing="Window_Closing">
+        Title="SkinText" Height="350" MinHeight="20"  Width="525" MinWidth="110" AllowsTransparency="True" Background="#85949494" WindowStyle="None" MouseDown="Window_MouseDown" ResizeMode="CanResizeWithGrip" Loaded="Window_Loaded" Closing="Window_Closing">
     <Window.CommandBindings>
         <CommandBinding Command="local:CustomCommands.Exit" CanExecute="ExitCommand_CanExecute" Executed="ExitCommand_Executed" />
         <CommandBinding Command="local:CustomCommands.Save" CanExecute="SaveCommand_CanExecute" Executed="SaveCommand_Executed" />
@@ -48,11 +48,11 @@
             </Setter>
         </Style>
         <ControlTemplate x:Key="MenuItemControlTemplate1" TargetType="{x:Type MenuItem}">
-            <Border x:Name="templateRoot" 
-                BorderBrush="#00535353" 
-                CornerRadius="3" 
-                BorderThickness="1" 
-                Background="{TemplateBinding Background}" 
+            <Border x:Name="templateRoot"
+                BorderBrush="#00535353"
+                CornerRadius="3"
+                BorderThickness="1"
+                Background="{TemplateBinding Background}"
                 SnapsToDevicePixels="True">
                 <Grid VerticalAlignment="Center">
                     <Grid.ColumnDefinitions>
@@ -270,7 +270,7 @@
                 HorizontalScrollBarVisibility="Auto"
                 VerticalScrollBarVisibility="Auto"
                 SizeChanged="RtbSizeChanged" SelectionChanged="Rtb_SelectionChanged" IsDocumentEnabled="True" KeyUp="Rtb_KeyUp" TextChanged="Rtb_TextChanged"
-                IsInactiveSelectionHighlightEnabled="True" RenderTransformOrigin="0.5,0.5"   
+                IsInactiveSelectionHighlightEnabled="True" RenderTransformOrigin="0.5,0.5"
                 >
                 <FlowDocument LineStackingStrategy="BlockLineHeight"/>
                 <RichTextBox.Resources>

@@ -7,15 +7,9 @@ namespace SkinText
 {
     public partial class FontConfig : Window
     {
-        private MainWindow par;
-        public FontConfig(MainWindow own)
+        public FontConfig()
         {
             InitializeComponent();
-            par = own;
-        }
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            txtSampleText.Background = par.panel.Background;
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -25,7 +19,7 @@ namespace SkinText
         private void CloseButt_Click(object sender, RoutedEventArgs e)
         {
             this.Hide();
-            par.SaveConfig();
+            CustomMethods.SaveConfig(CustomMethods.AppDataPath + @"\skintext.ini");
         }
         public void UpdateStrikethrough()
         {
@@ -89,14 +83,6 @@ namespace SkinText
             {
                throw;
             }
-        }
-        private void Apply_Click(object sender, RoutedEventArgs e)
-        {
-            if (textrun.TextDecorations == null)
-            {
-                textrun.TextDecorations = new TextDecorationCollection();
-            }
-            par.TextFormat(textrun.Foreground, textrun.Background, textrun.FontFamily, textrun.FontSize, textrun.TextDecorations, textrun.FontStyle, textrun.FontWeight, txtSampleText.Selection.Start.Paragraph.TextAlignment, txtSampleText.FlowDirection, textrun.BaselineAlignment, textpar.LineHeight);
         }
         private void FlowDir_Checked(object sender, RoutedEventArgs e)
         {
@@ -205,10 +191,18 @@ namespace SkinText
                 throw;
             }
         }
-
         private void FontSzLineSz_Click(object sender, RoutedEventArgs e)
         {
             lineHeightSlider.Value = fontSizeSlider.Value;
+        }
+
+        private void Apply_Click(object sender, RoutedEventArgs e)
+        {
+            if (textrun.TextDecorations == null)
+            {
+                textrun.TextDecorations = new TextDecorationCollection();
+            }
+            CustomMethods.TextFormat(textrun.Foreground, textrun.Background, textrun.FontFamily, textrun.FontSize, textrun.TextDecorations, textrun.FontStyle, textrun.FontWeight, txtSampleText.Selection.Start.Paragraph.TextAlignment, txtSampleText.FlowDirection, textrun.BaselineAlignment, textpar.LineHeight);
         }
     }
 }

@@ -24,9 +24,8 @@
         Background="#C03A3A3A"
         BorderBrush="#997E7E7E"
         BorderThickness="2"
-        Padding="5" 
-        MouseDown="Window_MouseDown"
-        Loaded="Window_Loaded">
+        Padding="5"
+        MouseDown="Window_MouseDown">
     <Window.Resources>
         <BitmapImage x:Key="ImageSource1FlipH" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="Resources\FlipH.png"/>
         <BitmapImage x:Key="ImageSource1FlipV" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="Resources\FlipV.png"/>
@@ -99,8 +98,8 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="40"/>
             </Grid.ColumnDefinitions>
-            <Slider Grid.Column="0" Grid.Row= "3" x:Name="bordersize" Maximum="20" Minimum="1" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" ValueChanged="Bordersize_ValueChanged" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center"/>
-            <xctk:DecimalUpDown Grid.Column="1" Grid.Row="0" 
+            <Slider Grid.Column="0" Grid.Row= "3" x:Name="bordersize" Maximum="20" Minimum="1" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" ValueChanged="Bordersize_ValueChanged" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center" IsMoveToPointEnabled="True"/>
+            <xctk:DecimalUpDown Grid.Column="1" Grid.Row="0"
                                 FormatString="G" ClipValueToMinMax="True" TextAlignment="Center"
                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" Margin="0,5,5,5"
                                 Minimum="{Binding Minimum, ElementName=bordersize}"
@@ -118,7 +117,7 @@
             </Label.ToolTip>
             <TextBlock Text="Resize border Color: " Style="{StaticResource ToolTipTextStyle}"/>
         </Label>
-        <xctk:ColorPicker x:Name="ClrPcker_Background" Grid.Column="1" Grid.Row="4" SelectedColorChanged="ClrPcker_Background_SelectedColorChanged" ShowStandardColors="False" Background="{x:Null}" BorderBrush="{x:Null}" ShowDropDownButton="False"/>
+        <xctk:ColorPicker x:Name="ClrPcker_BorderBackground" Grid.Column="1" Grid.Row="4" SelectedColorChanged="ClrPcker_BorderBackground_SelectedColorChanged" ShowStandardColors="False" Background="{x:Null}" BorderBrush="{x:Null}" ShowDropDownButton="False"/>
         <Label Grid.Column="0" Grid.Row="5">
             <Label.ToolTip>
                 <ToolTip Style="{StaticResource ToolTipStyle}">
@@ -134,8 +133,8 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="40"/>
             </Grid.ColumnDefinitions>
-            <Slider Grid.Column="0"  Minimum="0" Maximum="359" TickFrequency="1" IsSnapToTickEnabled="True" x:Name="slValue" SmallChange="1" Margin="10,0,10,0" ValueChanged="SlValue_ValueChanged" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center"/>
-            <xctk:DecimalUpDown Grid.Column="1" Grid.Row="0" 
+            <Slider Grid.Column="0"  Minimum="0" Maximum="359" TickFrequency="1" IsSnapToTickEnabled="True" x:Name="slValue" SmallChange="1" Margin="10,0,10,0" ValueChanged="SlValue_ValueChanged" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center" IsMoveToPointEnabled="True"/>
+            <xctk:DecimalUpDown Grid.Column="1" Grid.Row="0"
                                 FormatString="G" ClipValueToMinMax="True" TextAlignment="Center"
                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" Margin="0,5,5,5"
                                 Minimum="{Binding Minimum, ElementName=slValue}"
@@ -175,7 +174,7 @@
             </Label.ToolTip>
             <TextBlock Text="Window Color: " Style="{StaticResource ToolTipTextStyle}"/>
         </Label>
-        <xctk:ColorPicker x:Name="ClrPcker_Background2" Grid.Column="1" Grid.Row="7" SelectedColorChanged="ClrPcker_Background2_SelectedColorChanged" Background="{x:Null}" BorderBrush="{x:Null}" ShowDropDownButton="False"/>
+        <xctk:ColorPicker x:Name="ClrPcker_WindowBackground" Grid.Column="1" Grid.Row="7" SelectedColorChanged="ClrPcker_WindowBackground_SelectedColorChanged" Background="{x:Null}" BorderBrush="{x:Null}" ShowDropDownButton="False"/>
         <Label Grid.Column="0" Grid.Row="8">
             <Label.ToolTip>
                 <ToolTip Style="{StaticResource ToolTipStyle}">
@@ -186,7 +185,7 @@
             </Label.ToolTip>
             <TextBlock Text="Text Bg Color: " Style="{StaticResource ToolTipTextStyle}"/>
         </Label>
-        <xctk:ColorPicker x:Name="ClrPcker_Background3" Grid.Column="1" Grid.Row="8" SelectedColorChanged="ClrPcker_Background3_SelectedColorChanged" Background="{x:Null}" BorderBrush="{x:Null}" ShowDropDownButton="False"/>
+        <xctk:ColorPicker x:Name="ClrPcker_RTB_Background" Grid.Column="1" Grid.Row="8" SelectedColorChanged="ClrPcker_RTB_Background_SelectedColorChanged" Background="{x:Null}" BorderBrush="{x:Null}" ShowDropDownButton="False"/>
 
         <Label Grid.Column="0" Grid.Row="9">
             <Label.ToolTip>
@@ -203,8 +202,8 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="40"/>
             </Grid.ColumnDefinitions>
-            <Slider Grid.Column="0" Minimum="0" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center" x:Name="imageopacityslider" ValueChanged="Imageopacityslider_ValueChanged"/>
-            <xctk:DecimalUpDown Grid.Column="1" Grid.Row="0" 
+            <Slider Grid.Column="0" Minimum="0" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center" x:Name="imageopacityslider" ValueChanged="Imageopacityslider_ValueChanged" IsMoveToPointEnabled="True"/>
+            <xctk:DecimalUpDown Grid.Column="1" Grid.Row="0"
                                 FormatString="G" ClipValueToMinMax="True" TextAlignment="Center"
                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" Margin="0,5,5,5"
                                 Minimum="{Binding Minimum, ElementName=imageopacityslider}"
@@ -227,8 +226,8 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="40"/>
         </Grid.ColumnDefinitions>
-        <Slider Grid.Column="0" Minimum="0" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center"  x:Name="textopacityslider" ValueChanged="TextOpacityslider_ValueChanged"/>
-        <xctk:DecimalUpDown Grid.Column="1" Grid.Row="0" 
+            <Slider Grid.Column="0" Minimum="0" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center"  x:Name="textopacityslider" ValueChanged="TextOpacityslider_ValueChanged" IsMoveToPointEnabled="True"/>
+        <xctk:DecimalUpDown Grid.Column="1" Grid.Row="0"
                                 FormatString="G" ClipValueToMinMax="True" TextAlignment="Center"
                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" Margin="0,5,5,5"
                                 Minimum="{Binding Minimum, ElementName=textopacityslider}"
@@ -251,8 +250,8 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="40"/>
             </Grid.ColumnDefinitions>
-            <Slider Grid.Column="0" Minimum="0" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center" x:Name="windowopacityslider" ValueChanged="WindowOpacityslider_ValueChanged"/>
-            <xctk:DecimalUpDown Grid.Column="1" Grid.Row="0" 
+            <Slider Grid.Column="0" Minimum="0" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center" x:Name="windowopacityslider" ValueChanged="WindowOpacityslider_ValueChanged" IsMoveToPointEnabled="True"/>
+            <xctk:DecimalUpDown Grid.Column="1" Grid.Row="0"
                                 FormatString="G" ClipValueToMinMax="True" TextAlignment="Center"
                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" Margin="0,5,5,5"
                                 Minimum="{Binding Minimum, ElementName=windowopacityslider}"
@@ -270,7 +269,7 @@
             </Label.ToolTip>
             <TextBlock Text="Read Only: " Style="{StaticResource ToolTipTextStyle}"/>
         </Label>
-        <CheckBox x:Name="readonly" Grid.Column="1" Grid.Row="12" VerticalAlignment="Center" Margin="10,0,10,0" Checked="Readonly_Checked" Unchecked="Readonly_Checked" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center">
+        <CheckBox x:Name="readOnlyCheck" Grid.Column="1" Grid.Row="12" VerticalAlignment="Center" Margin="10,0,10,0" Checked="ReadOnlyCheck_Checked" Unchecked="ReadOnlyCheck_Checked" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center">
             <CheckBox.ToolTip>
                 <ToolTip Style="{StaticResource ToolTipStyle}">
                     <Border Style="{StaticResource ToolTipBorderStyle}">
@@ -302,17 +301,17 @@
             <Label.ToolTip>
                 <ToolTip Style="{StaticResource ToolTipStyle}">
                     <Border Style="{StaticResource ToolTipBorderStyle}">
-                        <TextBlock Text="Allways show SkinText" Style="{StaticResource ToolTipTextStyle}"/>
+                        <TextBlock Text="Always show SkinText" Style="{StaticResource ToolTipTextStyle}"/>
                     </Border>
                 </ToolTip>
             </Label.ToolTip>
-            <TextBlock Text="Allways on Top:" Style="{StaticResource ToolTipTextStyle}"/>
+            <TextBlock Text="Always on Top:" Style="{StaticResource ToolTipTextStyle}"/>
         </Label>
-        <CheckBox x:Name="allwaysontop" Grid.Column="1" Grid.Row="14" Margin="10,0" Checked="Allwaysontop_Unchecked" Unchecked="Allwaysontop_Unchecked" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" VerticalAlignment="Center">
+        <CheckBox x:Name="alwaysontop" Grid.Column="1" Grid.Row="14" Margin="10,0" Checked="Alwaysontop_Unchecked" Unchecked="Alwaysontop_Unchecked" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" VerticalAlignment="Center">
             <CheckBox.ToolTip>
                 <ToolTip Style="{StaticResource ToolTipStyle}">
                     <Border Style="{StaticResource ToolTipBorderStyle}">
-                        <TextBlock Text="Allways show SkinText" Style="{StaticResource ToolTipTextStyle}"/>
+                        <TextBlock Text="Always show SkinText" Style="{StaticResource ToolTipTextStyle}"/>
                     </Border>
                 </ToolTip>
             </CheckBox.ToolTip>

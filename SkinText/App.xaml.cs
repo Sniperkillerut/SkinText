@@ -83,15 +83,16 @@ namespace SkinText
             // Create main application window, starting minimized if specified
             if (firstRun)
             {
-                MainWindow mainWindow = new MainWindow();
+                //MainWindow mainWindow = new MainWindow();
                 FirstRun(path);
-                mainWindow.Close();
+                //mainWindow.Close();
+                //this.Shutdown();
             }
             if (Update)
             {
 
             }
-            
+
             string curFileNamePath = Process.GetCurrentProcess().MainModule.FileName;
             string curFileName = Path.GetFileName(curFileNamePath);
             if (!Directory.Exists(path))
