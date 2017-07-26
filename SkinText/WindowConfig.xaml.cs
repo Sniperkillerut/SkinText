@@ -90,15 +90,6 @@ namespace SkinText
         {
             CustomMethods.WindowVisibleResize(ResizeVisible.IsChecked.Value);
         }
-
-        private void GifMethodRAM_Checked(object sender, RoutedEventArgs e)
-        {
-            CustomMethods.GifMethod = "RAM";
-        }
-        private void GifMethodCPU_Checked(object sender, RoutedEventArgs e)
-        {
-            CustomMethods.GifMethod = "CPU";
-        }
         private void FlipXButton_Checked(object sender, RoutedEventArgs e)
         {
             CustomMethods.RtbFlip(FlipXButton.IsChecked.Value, FlipYButton.IsChecked.Value);

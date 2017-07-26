@@ -388,7 +388,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <RadioButton x:Name="GifMethodRAM" Grid.Column="0" Width="70" Height="23" Checked="GifMethodRAM_Checked"
+            <RadioButton x:Name="GifMethodRAM" Grid.Column="0" Width="70" Height="23"
                          Style="{StaticResource RadioButtonsStyle}">
                 <RadioButton.Content>
                     <TextBlock Text="RAM" Style="{StaticResource ToolTipTextStyle}"/>
@@ -401,7 +401,7 @@
                     </ToolTip>
                 </RadioButton.ToolTip>
             </RadioButton>
-            <RadioButton x:Name="GifMethodCPU" Grid.Column="1" Width="70" Height="23" IsChecked="True" Checked="GifMethodCPU_Checked"
+            <RadioButton x:Name="GifMethodCPU" Grid.Column="1" Width="70" Height="23" IsChecked="True"
                          Style="{StaticResource RadioButtonsStyle}">
                 <RadioButton.Content>
                     <TextBlock Text="CPU" Style="{StaticResource ToolTipTextStyle}"/>

@@ -16,11 +16,9 @@ namespace SkinText
 
         private static string filepath;
         private static bool fileChanged = false;
-        private static string gifMethod = "CPU";
         private static string appDataPath;
         private static string imagepath;
 
-        public static string GifMethod { get => gifMethod; set => gifMethod = value; }
         public static string AppDataPath { get => appDataPath; set => appDataPath = value; }
         public static string Imagepath { get => imagepath; set => imagepath = value; }
         public static string Filepath { get => filepath; set => filepath = value; }
@@ -401,19 +399,12 @@ namespace SkinText
                             }
                             break;
                         }
-                    case "GIFMETHOD":
+                    case "GIF_USES_RAM":
                         {//GIF rendering method
-                            string1 = line[1].Trim().ToUpperInvariant();//method
-                            if (string1 != "RAM")
-                            {
-                                string1 = "CPU";
-                                MainW.WinConfig.GifMethodCPU.IsChecked = true;
+                            if (bool.TryParse(line[1], out bool1))
+                            {// true = RAM //DEFAULT = false (Use CPU)
+                                MainW.WinConfig.GifMethodRAM.IsChecked = bool1;
                             }
-                            else
-                            {
-                                MainW.WinConfig.GifMethodRAM.IsChecked = true;
-                            }
-                            GifMethod = string1;
                             break;
                         }
                     case "BG_IMAGE":
@@ -612,7 +603,7 @@ namespace SkinText
                     data = "rotation = " + MainW.WinConfig.slValue.Value.ToString(System.Globalization.CultureInfo.InvariantCulture);
                     writer.WriteLine(data);
                     //GIF Method
-                    data = "gifMethod = " + GifMethod;
+                    data = "gif_uses_ram = " + mainW.WinConfig.GifMethodRAM.IsChecked.Value.ToString();
                     writer.WriteLine(data);
                     //bg_image (always after GIF method)
                     #region relative Path (Disabled)
@@ -712,74 +703,68 @@ namespace SkinText
         public static void LoadDefault()
         {
             //window size
-            MainW.window.Width = 525;
-            MainW.window.Height = 350;
+                MainW.window.Width  = 525;
+                MainW.window.Height = 350;
 
             //Window position
-            double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
-            double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
-            double windowWidth = MainW.Width;
-            double windowHeight = MainW.Height;
-            MainW.Left = (screenWidth / 2) - (windowWidth / 2);
-            MainW.Top = (screenHeight / 2) - (windowHeight / 2);
+                MainW.Left = (SystemParameters.PrimaryScreenWidth  / 2) - (MainW.Width / 2);
+                MainW.Top  = (SystemParameters.PrimaryScreenHeight / 2) - (MainW.Height / 2);
 
             //border size
-            MainW.WinConfig.bordersize.Value = 5;//default value due to RTB size dependency
+                //default value due to RTB size dependency
+                MainW.WinConfig.bordersize.Value = 5;
 
-            //text area size
-            double borderSize = MainW.WinConfig.bordersize.Value;
-            MainW.grid.ColumnDefinitions[1].Width = new GridLength(MainW.window.Width - (borderSize * 2 + 1));
-            MainW.grid.RowDefinitions[1].Height = new GridLength(MainW.window.Height - (borderSize * 2 + 1));
-            MainW.grid.ColumnDefinitions[0].Width = new GridLength(borderSize, GridUnitType.Star);
-            MainW.grid.ColumnDefinitions[2].Width = new GridLength(borderSize, GridUnitType.Star);
-            MainW.grid.RowDefinitions[0].Height = new GridLength(borderSize, GridUnitType.Star);
-            MainW.grid.RowDefinitions[2].Height = new GridLength(borderSize, GridUnitType.Star);
+            //RTB size
+                double borderSize                        = MainW.WinConfig.bordersize.Value;
+                MainW.grid.ColumnDefinitions[1].Width    = new GridLength(MainW.window.Width  - (borderSize * 2 + 1));
+                MainW.grid.RowDefinitions   [1].Height   = new GridLength(MainW.window.Height - (borderSize * 2 + 1));
+                MainW.grid.ColumnDefinitions[0].Width    = new GridLength(borderSize, GridUnitType.Star);
+                MainW.grid.ColumnDefinitions[2].Width    = new GridLength(borderSize, GridUnitType.Star);
+                MainW.grid.RowDefinitions   [0].Height   = new GridLength(borderSize, GridUnitType.Star);
+                MainW.grid.RowDefinitions   [2].Height   = new GridLength(borderSize, GridUnitType.Star);
 
             //border color
-            //#997E7E7E by default in xaml
-            //and copies to config.ClrPcker_Background.SelectedColor on its Window_Loaded()
-            MainW.WinConfig.ClrPcker_BorderBackground.SelectedColor = (Color)ColorConverter.ConvertFromString("#997E7E7E");
+                //#997E7E7E by default in xaml
+                MainW.WinConfig.ClrPcker_BorderBackground.SelectedColor = (Color)ColorConverter.ConvertFromString("#997E7E7E");
 
             //window color
-            //transparent by default in xaml
-            //and copies to config.ClrPcker_Background2.SelectedColor on its Window_Loaded()
-            MainW.WinConfig.ClrPcker_WindowBackground.SelectedColor = Colors.Transparent;
+                //#85949494 by default in xaml
+                //but ImageClear() will set the default bg color if color is transparent
+                MainW.WinConfig.ClrPcker_WindowBackground.SelectedColor = (Color)ColorConverter.ConvertFromString("#85949494");
 
             //text bg color
-            MainW.WinConfig.ClrPcker_WindowBackground.SelectedColor = (Color)ColorConverter.ConvertFromString("#85949494");
+                MainW.WinConfig.ClrPcker_RTB_Background.SelectedColor = Colors.Transparent;
 
             //rotation angle
-            MainW.WinConfig.slValue.Value = 0;
+                MainW.WinConfig.slValue.Value = 0;
 
             //no file
-            Filepath = "";
-            MainW.MenuFileName.Header = "";
-            FileChanged = false;
+                NewFile();
 
-            //GIF Method
-            GifMethod = "CPU";
-            MainW.WinConfig.GifMethodCPU.IsChecked = true;
+            //gif_uses_ram
+                //Default = false (use CPU)
+                MainW.WinConfig.GifMethodCPU.IsChecked = true;
 
             //BG image clear
-            ImageClear(); // this makes Imagepath = "";
+                //this makes Imagepath = "";
+                ImageClear();
 
             //opacity
-            MainW.WinConfig.imageopacityslider.Value = 100;
-            MainW.WinConfig.windowopacityslider.Value = 100;
-            MainW.WinConfig.textopacityslider.Value = 100;
+                MainW.WinConfig.imageopacityslider .Value = 100;
+                MainW.WinConfig.windowopacityslider.Value = 100;
+                MainW.WinConfig.textopacityslider  .Value = 100;
 
             //checkboxes
-            MainW.WinConfig.resizecheck.IsChecked = true;
-            MainW.WinConfig.readOnlyCheck.IsChecked = false;
-            MainW.WinConfig.spellcheck.IsChecked = false;
-            MainW.WinConfig.alwaysontop.IsChecked = false;
-            MainW.WinConfig.taskbarvisible.IsChecked = true;
-            MainW.WinConfig.NotificationVisible.IsChecked = true;
-            MainW.WinConfig.ResizeVisible.IsChecked = true;
-            MainW.WinConfig.FlipXButton.IsChecked = false;
-            MainW.WinConfig.FlipYButton.IsChecked = false;
-
-            MainW.LineWrapMenuItem.IsChecked = true;
+                MainW.WinConfig       .resizecheck        .IsChecked = true;
+                MainW.WinConfig       .readOnlyCheck      .IsChecked = false;
+                MainW.WinConfig       .spellcheck         .IsChecked = false;
+                MainW.WinConfig       .alwaysontop        .IsChecked = false;
+                MainW.WinConfig       .taskbarvisible     .IsChecked = true;
+                MainW.WinConfig       .NotificationVisible.IsChecked = true;
+                MainW.WinConfig       .ResizeVisible      .IsChecked = true;
+                MainW.WinConfig       .FlipXButton        .IsChecked = false;
+                MainW.WinConfig       .FlipYButton        .IsChecked = false;
+                MainW.LineWrapMenuItem.IsChecked                     = true;
         }
 
         /// <summary>
@@ -1498,15 +1483,15 @@ namespace SkinText
                     Uri uri = new Uri(imagepath);
                     if (Path.GetExtension(imagepath).ToUpperInvariant() == ".GIF")
                     {
-                        if (CustomMethods.GifMethod == "RAM")
-                        {
+                        if (mainW.WinConfig.GifMethodCPU.IsChecked.Value)
+                        {//CPU Method
+                            XamlAnimatedGif.AnimationBehavior.SetSourceUri(mainW.backgroundimg, uri);
+                        }
+                        else
+                        {//RAM Method
                             ImageSource bitmap = BitmapFromUri(uri);
                             WpfAnimatedGif.ImageBehavior.SetAnimatedSource(mainW.backgroundimg, bitmap);
                             bitmap = null;
-                        }
-                        else
-                        {//CpuMethod
-                            XamlAnimatedGif.AnimationBehavior.SetSourceUri(mainW.backgroundimg, uri);
                         }
                     }
                     else
@@ -1517,7 +1502,11 @@ namespace SkinText
                     }
                     //imagedir.Content = newImagePath.Substring(newImagePath.LastIndexOf("\\")+1);
                     //imagedir.ToolTip = newImagePath;
-                    MainW.WinConfig.ClrPcker_WindowBackground.SelectedColor = Colors.Transparent;
+                    if (MainW.WinConfig.ClrPcker_WindowBackground.SelectedColor.Value.A==255)
+                    {
+                        MainW.WinConfig.ClrPcker_WindowBackground.SelectedColor = Color.Subtract(MainW.WinConfig.ClrPcker_WindowBackground.SelectedColor.Value,Color.FromArgb(155,0,0,0));
+                    }
+                    //MainW.WinConfig.ClrPcker_WindowBackground.SelectedColor = Colors.Transparent;
                     uri = null;
                     Imagepath = imagepath; //set Global Imagepath
                 }
