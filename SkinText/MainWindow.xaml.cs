@@ -25,7 +25,14 @@ namespace SkinText
             WinConfig = new WindowConfig();
             FontConf = new FontConfig();
             //AppDataPath = ((App)Application.Current).GAppPath;
-            CustomMethods.AppDataPath = App.GAppPath;
+            //read FrostHive/SkinText/default.ini
+            //check what skin to use and load FrostHive/SkinText/SKIN01/skintext.ini
+            //skin information saved in FrostHive/SkinText/SKIN01/skin.ini
+            CustomMethods.AppDataPath = CustomMethods.GAppPath;
+
+            CustomMethods.GetSkin();
+
+
             //CustomMethods.AppDataPath = App.GAppPath+@"\skinfolder";
             CustomMethods.LoadDefault();
             #region get FileName test
@@ -61,7 +68,7 @@ namespace SkinText
                             "");
           */
             #endregion
-            CustomMethods.ReadConfig(CustomMethods.AppDataPath + @"\skintext.ini");
+            CustomMethods.ReadConfig();
             grid.UpdateLayout();
             CustomMethods.FixResizeTextBox();
             //set to false after the initial text_change that occur on first load
@@ -115,8 +122,11 @@ namespace SkinText
                 }
             }
         }
-        public  void RtbSizeChanged(object sender, SizeChangedEventArgs e)
+        private void RtbSizeChanged(object sender, SizeChangedEventArgs e)
         {
+            //called upon creation of the rtb
+            //and on update when reading a file
+            //and on mouseover (as the scrollbars or menu will change the size)
             CustomMethods.RtbSizeChanged();
         }
         private void Panel_MouseLeave(object sender, MouseEventArgs e)
@@ -173,6 +183,7 @@ namespace SkinText
         {
             CustomMethods.SaveChanges(CustomMethods.ExitProgram, e, "Exit");
         }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (Mouse.LeftButton == MouseButtonState.Pressed)
@@ -181,21 +192,23 @@ namespace SkinText
                 {
                     this.DragMove();
                 }
-                catch (System.InvalidOperationException)
-                {
+                catch (Exception ex) {
+                    #if DEBUG
+                    MessageBox.Show(ex.ToString());
+                    //throw;
+                    #endif
+                    //System.InvalidOperationException
                     //dragdrop with only leftclick
                     //dragdrop must be with pressed click
-                }
-                catch (Exception)
-                {
-                    throw;
                 }
             }
         }
         private void Hyperlink_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var hyperlink = (Hyperlink)sender;
-            Process.Start(hyperlink.NavigateUri.ToString());
+            Hyperlink hyperlink = (Hyperlink)sender;
+            if (hyperlink.NavigateUri != null) {
+                Process.Start(hyperlink.NavigateUri.ToString());
+            }
         }
         private void LineWrapMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -205,7 +218,7 @@ namespace SkinText
             }
             else
             {
-                rtb.Document.PageWidth = Double.NaN;
+                rtb.Document.PageWidth = double.NaN;
             }
         }
         private void Menu_PreviewMouseDown(object sender, MouseButtonEventArgs e)
@@ -215,7 +228,6 @@ namespace SkinText
             IntPtr lparam = new IntPtr(0);
             NativeMethods.SendMessage(helper.Handle, 161, wparam, lparam);
         }
-
 
         #region Custom Commands
         // Check Custom Commands class

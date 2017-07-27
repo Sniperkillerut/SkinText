@@ -13,7 +13,7 @@ namespace SkinText
             //MessageBox.Show(parameter.ToString());
             foreach (Window item in Application.Current.Windows)
             {
-                if (item.Title.Equals("SkinText"))
+                if (item.Title.Equals(nameof(SkinText)))
                 {
                     if (item.Visibility == Visibility.Hidden)
                     {
@@ -34,7 +34,9 @@ namespace SkinText
         public event EventHandler CanExecuteChanged
         {
             add { throw new NotSupportedException(); }
+            #pragma warning disable RECS0029 // Warns about property or indexer setters and event adders or removers that do not use the value parameter
             remove { }
+            #pragma warning restore RECS0029 // Warns about property or indexer setters and event adders or removers that do not use the value parameter
         }
     }
 }

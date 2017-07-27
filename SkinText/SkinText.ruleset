@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="Microsoft All Rules" Description="This rule set contains all rules. Running this rule set may result in a large number of warnings being reported. Use this rule set to get a comprehensive picture of all issues in your code. This can help you decide which of the more focused rule sets are most appropriate to run for your projects." ToolsVersion="15.0">
+  <Localization ResourceAssembly="Microsoft.VisualStudio.CodeAnalysis.RuleSets.Strings.dll" ResourceBaseName="Microsoft.VisualStudio.CodeAnalysis.RuleSets.Strings.Localized">
+    <Name Resource="AllRules_Name" />
+    <Description Resource="AllRules_Description" />
+  </Localization>
+  <IncludeAll Action="Warning" />
+  <Rules AnalyzerId="CodeCracker.CSharp" RuleNamespace="CodeCracker.CSharp">
+    <Rule Id="CC0001" Action="Hidden" />
+    <Rule Id="CC0015" Action="Hidden" />
+    <Rule Id="CC0038" Action="Info" />
+    <Rule Id="CC0044" Action="Info" />
+    <Rule Id="CC0045" Action="Hidden" />
+    <Rule Id="CC0046" Action="Hidden" />
+    <Rule Id="CC0071" Action="Info" />
+    <Rule Id="CC0073" Action="Info" />
+    <Rule Id="CC0091" Action="Hidden" />
+    <Rule Id="CC0105" Action="Hidden" />
+  </Rules>
+  <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp.EditorFeatures" RuleNamespace="Microsoft.CodeAnalysis.CSharp.EditorFeatures">
+    <Rule Id="IDE0032" Action="Info" />
+  </Rules>
+  <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp.Features" RuleNamespace="Microsoft.CodeAnalysis.CSharp.Features">
+    <Rule Id="IDE0001" Action="Info" />
+    <Rule Id="IDE0002" Action="Info" />
+    <Rule Id="IDE0003" Action="Info" />
+    <Rule Id="IDE0004" Action="Info" />
+    <Rule Id="IDE0005" Action="Info" />
+    <Rule Id="IDE0007" Action="Info" />
+    <Rule Id="IDE0008" Action="Info" />
+    <Rule Id="IDE0009" Action="Info" />
+    <Rule Id="IDE0011" Action="Info" />
+    <Rule Id="IDE0012" Action="Info" />
+    <Rule Id="IDE0013" Action="Info" />
+    <Rule Id="IDE0014" Action="Info" />
+    <Rule Id="IDE0015" Action="Info" />
+    <Rule Id="IDE0016" Action="Info" />
+    <Rule Id="IDE0017" Action="Info" />
+    <Rule Id="IDE0018" Action="Info" />
+    <Rule Id="IDE0019" Action="Info" />
+    <Rule Id="IDE0020" Action="Info" />
+    <Rule Id="IDE0021" Action="Info" />
+    <Rule Id="IDE0022" Action="Info" />
+    <Rule Id="IDE0023" Action="Info" />
+    <Rule Id="IDE0024" Action="Info" />
+    <Rule Id="IDE0025" Action="Info" />
+    <Rule Id="IDE0026" Action="Info" />
+    <Rule Id="IDE0027" Action="Info" />
+    <Rule Id="IDE0028" Action="Info" />
+    <Rule Id="IDE0029" Action="Info" />
+    <Rule Id="IDE0030" Action="Info" />
+    <Rule Id="IDE0031" Action="Info" />
+    <Rule Id="IDE1005" Action="Info" />
+    <Rule Id="IDE1006" Action="Info" />
+  </Rules>
+  <Rules AnalyzerId="Microsoft.CodeAnalysis.Features" RuleNamespace="Microsoft.CodeAnalysis.Features">
+    <Rule Id="IDE0010" Action="Info" />
+    <Rule Id="IDE0033" Action="Info" />
+  </Rules>
+  <Rules AnalyzerId="RefactoringEssentials" RuleNamespace="RefactoringEssentials">
+    <Rule Id="RECS0008" Action="Info" />
+    <Rule Id="RECS0069" Action="Info" />
+    <Rule Id="RECS0070" Action="Info" />
+    <Rule Id="RECS0072" Action="Info" />
+    <Rule Id="RECS0073" Action="Info" />
+    <Rule Id="RECS0074" Action="Info" />
+    <Rule Id="RECS0075" Action="Info" />
+    <Rule Id="RECS0076" Action="Info" />
+    <Rule Id="RECS0078" Action="Info" />
+    <Rule Id="RECS0079" Action="Info" />
+    <Rule Id="RECS0100" Action="Info" />
+    <Rule Id="RECS0101" Action="Info" />
+    <Rule Id="RECS0103" Action="Info" />
+    <Rule Id="RECS0106" Action="Info" />
+    <Rule Id="RECS0109" Action="Info" />
+    <Rule Id="RECS0113" Action="Info" />
+    <Rule Id="RECS0121" Action="Info" />
+    <Rule Id="RECS0123" Action="Info" />
+    <Rule Id="RECS0128" Action="Info" />
+    <Rule Id="RECS0129" Action="Info" />
+    <Rule Id="RECS0134" Action="Info" />
+    <Rule Id="RECS0138" Action="Info" />
+    <Rule Id="RECS0140" Action="Info" />
+    <Rule Id="RECS0141" Action="Info" />
+    <Rule Id="RECS0144" Action="Info" />
+    <Rule Id="RECS0147" Action="Info" />
+    <Rule Id="RECS0158" Action="Info" />
+    <Rule Id="RECS0164" Action="Info" />
+  </Rules>
+</RuleSet>

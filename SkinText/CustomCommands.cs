@@ -2,8 +2,8 @@
 
 namespace SkinText
 {
-    public static class CustomCommands
-    {
+    public static class CustomCommands {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes")]
         public static readonly RoutedUICommand Exit = new RoutedUICommand
                 (
                         "Exit",
@@ -14,6 +14,7 @@ namespace SkinText
                             new KeyGesture(Key.F4, ModifierKeys.Alt)
                         }
                 );
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes")]
         public static readonly RoutedUICommand Save = new RoutedUICommand
                 (
                         "Save",
@@ -24,6 +25,7 @@ namespace SkinText
                             new KeyGesture(Key.S, ModifierKeys.Control)
                         }
                 );
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes")]
         public static readonly RoutedUICommand SaveAs = new RoutedUICommand
                 (
                         "SaveAs",
@@ -34,6 +36,7 @@ namespace SkinText
                             new KeyGesture(Key.S, ModifierKeys.Control | ModifierKeys.Shift)
                         }
                 );
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes")]
         public static readonly RoutedUICommand Open = new RoutedUICommand
                 (
                         "Open",
@@ -44,6 +47,7 @@ namespace SkinText
                             new KeyGesture(Key.O, ModifierKeys.Control)
                         }
                 );
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes")]
         public static readonly RoutedUICommand New = new RoutedUICommand
                 (
                         "New",

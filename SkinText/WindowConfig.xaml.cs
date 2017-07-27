@@ -19,7 +19,7 @@ namespace SkinText
         private void CloseButt_Click(object sender, RoutedEventArgs e)
         {
             this.Hide();
-            CustomMethods.SaveConfig(CustomMethods.AppDataPath + @"\skintext.ini");
+            CustomMethods.SaveConfig();
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
