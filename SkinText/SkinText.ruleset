@@ -17,13 +17,16 @@
     <Rule Id="CC0091" Action="Hidden" />
     <Rule Id="CC0105" Action="Hidden" />
   </Rules>
+  <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp" RuleNamespace="Microsoft.CodeAnalysis.CSharp">
+    <Rule Id="CS8020" Action="Info" />
+  </Rules>
   <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp.EditorFeatures" RuleNamespace="Microsoft.CodeAnalysis.CSharp.EditorFeatures">
     <Rule Id="IDE0032" Action="Info" />
   </Rules>
   <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp.Features" RuleNamespace="Microsoft.CodeAnalysis.CSharp.Features">
     <Rule Id="IDE0001" Action="Info" />
     <Rule Id="IDE0002" Action="Info" />
-    <Rule Id="IDE0003" Action="Info" />
+    <Rule Id="IDE0003" Action="None" />
     <Rule Id="IDE0004" Action="Info" />
     <Rule Id="IDE0005" Action="Info" />
     <Rule Id="IDE0007" Action="Info" />
@@ -39,8 +42,6 @@
     <Rule Id="IDE0018" Action="Info" />
     <Rule Id="IDE0019" Action="Info" />
     <Rule Id="IDE0020" Action="Info" />
-    <Rule Id="IDE0021" Action="Info" />
-    <Rule Id="IDE0022" Action="Info" />
     <Rule Id="IDE0023" Action="Info" />
     <Rule Id="IDE0024" Action="Info" />
     <Rule Id="IDE0025" Action="Info" />
@@ -54,7 +55,6 @@
     <Rule Id="IDE1006" Action="Info" />
   </Rules>
   <Rules AnalyzerId="Microsoft.CodeAnalysis.Features" RuleNamespace="Microsoft.CodeAnalysis.Features">
-    <Rule Id="IDE0010" Action="Info" />
     <Rule Id="IDE0033" Action="Info" />
   </Rules>
   <Rules AnalyzerId="RefactoringEssentials" RuleNamespace="RefactoringEssentials">
@@ -68,6 +68,7 @@
     <Rule Id="RECS0076" Action="Info" />
     <Rule Id="RECS0078" Action="Info" />
     <Rule Id="RECS0079" Action="Info" />
+    <Rule Id="RECS0094" Action="Info" />
     <Rule Id="RECS0100" Action="Info" />
     <Rule Id="RECS0101" Action="Info" />
     <Rule Id="RECS0103" Action="Info" />
@@ -77,7 +78,6 @@
     <Rule Id="RECS0121" Action="Info" />
     <Rule Id="RECS0123" Action="Info" />
     <Rule Id="RECS0128" Action="Info" />
-    <Rule Id="RECS0129" Action="Info" />
     <Rule Id="RECS0134" Action="Info" />
     <Rule Id="RECS0138" Action="Info" />
     <Rule Id="RECS0140" Action="Info" />

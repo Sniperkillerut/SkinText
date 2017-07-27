@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Reflection;
 using System.Windows;
 
-namespace SkinText
-{
+namespace SkinText {
     /// <summary>
     /// Lógica de interacción para App.xaml
     /// </summary>

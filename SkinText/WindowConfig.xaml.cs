@@ -1,15 +1,8 @@
-﻿using Microsoft.Win32;
-using System;
-using System.IO;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using WpfAnimatedGif;
-using XamlAnimatedGif;
 
-namespace SkinText
-{
+namespace SkinText {
     public partial class WindowConfig : Window
     {
         public WindowConfig()
@@ -23,8 +16,9 @@ namespace SkinText
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
+            if (e.ChangedButton == MouseButton.Left) {
                 this.DragMove();
+            }
         }
         private void Bordersize_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {

@@ -27,10 +27,8 @@ namespace SkinText
                 }
             }
         }
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
+        public bool CanExecute(object parameter) => true;
+
         public event EventHandler CanExecuteChanged
         {
             add { throw new NotSupportedException(); }

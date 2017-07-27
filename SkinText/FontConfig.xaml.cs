@@ -13,8 +13,9 @@ namespace SkinText
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
+            if (e.ChangedButton == MouseButton.Left) {
                 this.DragMove();
+            }
         }
         private void CloseButt_Click(object sender, RoutedEventArgs e)
         {

@@ -150,23 +150,23 @@ namespace SkinText {
                     using (FileStream fStream = new FileStream(pathToFile, FileMode.OpenOrCreate)) {
                         switch (Path.GetExtension(pathToFile).ToUpperInvariant()) {
                             case (".RTF"): {
-                                    range.Load(fStream, System.Windows.DataFormats.Rtf);
+                                    range.Load(fStream, DataFormats.Rtf);
                                     break;
                                 }
                             case (".TXT"): {
-                                    range.Load(fStream, System.Windows.DataFormats.Text);
+                                    range.Load(fStream, DataFormats.Text);
                                     break;
                                 }
                             case (".XAML"): {
-                                    range.Load(fStream, System.Windows.DataFormats.Xaml);
+                                    range.Load(fStream, DataFormats.Xaml);
                                     break;
                                 }
                             case (".XAMLP"): {
-                                    range.Load(fStream, System.Windows.DataFormats.XamlPackage);
+                                    range.Load(fStream, DataFormats.XamlPackage);
                                     break;
                                 }
                             default: {//TODO: if no format open as txt, or should throw error?
-                                    range.Load(fStream, System.Windows.DataFormats.Text);
+                                    range.Load(fStream, DataFormats.Text);
                                     break;
                                 }
                         }
@@ -231,7 +231,6 @@ namespace SkinText {
                                 }
                                 break;
                             }
-                        default: break;
                     }
                 }
                 else {
@@ -366,7 +365,7 @@ namespace SkinText {
                         case "FILE": {
                                 string1 = line[1].Trim(); //fileName
                                 if (!string1.Contains("\\") && !string.IsNullOrEmpty(string1)) {//if is a relative path, use current .exe path to find it //not necesary as it will never be relative, but for historical pruposes
-                                    string1 = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + string1;
+                                    string1 = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + string1;
                                 }
                                 ReadFile(string1); //this sets Global Filepath
                                 break;
@@ -408,7 +407,7 @@ namespace SkinText {
                         case "BG_IMAGE": {//(always after GIF method)
                                 string1 = line[1].Trim();
                                 if (!string1.Contains("\\") && !string.IsNullOrEmpty(string1)) {//if is a relative path, use current .exe path to find it //not necesary as it will never be relative, but for historical pruposes
-                                    string1 = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + string1;
+                                    string1 = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + string1;
                                 }
                                 LoadImage(string1);//this sets Global Imagepath
                                 break;
@@ -489,7 +488,6 @@ namespace SkinText {
                                 }
                                 break;
                             }
-                        default: break;
                     }
                 }
                 catch (Exception ex) {
@@ -627,8 +625,9 @@ namespace SkinText {
                     //Render transform flip
                     string x = MainW.WinConfig.FlipXButton.IsChecked.Value.ToString();
                     string y = MainW.WinConfig.FlipYButton.IsChecked.Value.ToString();
-                    //string y = rtb.RenderTransform.Value.M22.ToString(System.Globalization.CultureInfo.InvariantCulture);
-                    //string y =((System.Windows.Media.ScaleTransform)rtb.RenderTransform).ScaleY.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                    //two methods for getting the variables:
+                    //method 1 string y = rtb.RenderTransform.Value.M22.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                    //method 2 string y =((System.Windows.Media.ScaleTransform)rtb.RenderTransform).ScaleY.ToString(System.Globalization.CultureInfo.InvariantCulture);
                     data = "flip_rtb = " + x + " , " + y;
                     writer.WriteLine(data);
                     //Line Wrap
@@ -784,20 +783,20 @@ namespace SkinText {
                 using (FileStream file = new FileStream(Filepath, FileMode.Create)) {
                     switch (Path.GetExtension(Filepath).ToUpperInvariant()) {
                         case (".RTF"): {
-                                t.Save(file, System.Windows.DataFormats.Rtf);
+                                t.Save(file, DataFormats.Rtf);
                                 break;
                             }
                         case (".TXT"): {
-                                t.Save(file, System.Windows.DataFormats.Text);
+                                t.Save(file, DataFormats.Text);
                                 break;
                             }
                         case (".XAML"): {
-                                t.Save(file, System.Windows.DataFormats.Xaml);
+                                t.Save(file, DataFormats.Xaml);
                                 break;
                             }
 
                         case (".XAMLP"): {//TODO: change extension to skintext and register it to open with defaults
-                                t.Save(file, System.Windows.DataFormats.XamlPackage);
+                                t.Save(file, DataFormats.XamlPackage);
                                 break;
                             }
                         default: {
@@ -870,7 +869,7 @@ namespace SkinText {
                             FontWeight = fontWeight,
                             FlowDirection = flow,
                             BaselineAlignment = basealign,
-                            TextDecorations = null,
+                            TextDecorations = null
                         };
                         if (decor != null) {
                             newRun.TextDecorations = decor.Clone();
@@ -888,8 +887,8 @@ namespace SkinText {
                         // Get current position of cursor
                         TextPointer curCaret = MainW.rtb.CaretPosition;
                         // Get the current block object that the cursor is in
-                        Block curBlock = MainW.rtb.Document.Blocks.FirstOrDefault(
-predicate: x => x.ContentStart.CompareTo(curCaret) == -1 && x.ContentEnd.CompareTo(curCaret) == 1);
+                        Block curBlock = MainW.rtb.Document.Blocks.FirstOrDefault(x => x.ContentStart.CompareTo(curCaret) == -1 &&
+                                                                                       x.ContentEnd.CompareTo(curCaret) == 1);
                         if (curBlock != null) {
                             Paragraph curParagraph = curBlock as Paragraph;
                             // Create a new run object with the font properties, and add it to the current block
