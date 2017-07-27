@@ -1,8 +1,9 @@
 ﻿using System.Windows.Input;
 
-namespace SkinText
-{
+namespace SkinText {
+
     public static class CustomCommands {
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes")]
         public static readonly RoutedUICommand Exit = new RoutedUICommand
                 (
@@ -14,6 +15,7 @@ namespace SkinText
                             new KeyGesture(Key.F4, ModifierKeys.Alt)
                         }
                 );
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes")]
         public static readonly RoutedUICommand Save = new RoutedUICommand
                 (
@@ -25,6 +27,7 @@ namespace SkinText
                             new KeyGesture(Key.S, ModifierKeys.Control)
                         }
                 );
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes")]
         public static readonly RoutedUICommand SaveAs = new RoutedUICommand
                 (
@@ -36,6 +39,7 @@ namespace SkinText
                             new KeyGesture(Key.S, ModifierKeys.Control | ModifierKeys.Shift)
                         }
                 );
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes")]
         public static readonly RoutedUICommand Open = new RoutedUICommand
                 (
@@ -47,6 +51,7 @@ namespace SkinText
                             new KeyGesture(Key.O, ModifierKeys.Control)
                         }
                 );
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes")]
         public static readonly RoutedUICommand New = new RoutedUICommand
                 (
@@ -58,6 +63,7 @@ namespace SkinText
                             new KeyGesture(Key.N, ModifierKeys.Control)
                         }
                 );
+
         //Define more commands here, just like the one above
     }
 }

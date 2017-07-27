@@ -6,81 +6,81 @@
              StartupUri="MainWindow.xaml" Startup="Application_Startup">
     <Application.Resources>
 
-        <Style x:Key="ToolTipStyle" TargetType="{x:Type ToolTip}" >
-            <Setter Property="Background"       Value="Transparent"/>
-            <Setter Property="BorderBrush"      Value="Transparent" />
-            <Setter Property="BorderThickness"  Value="0" />
-            <Setter Property="VerticalOffset"   Value="-10" />
+        <Style x:Key="ToolTipStyle" TargetType="{x:Type ToolTip}">
+            <Setter Property="Background"              Value="Transparent" />
+            <Setter Property="BorderBrush"             Value="Transparent" />
+            <Setter Property="BorderThickness"         Value="0" />
+            <Setter Property="VerticalOffset"          Value="-10" />
         </Style>
         <Style x:Key="ToolTipBorderStyle" TargetType="{x:Type Border}">
-            <Setter Property="Background"       Value="#C03A3A3A"/>
-            <Setter Property="BorderBrush"      Value="#997E7E7E" />
-            <Setter Property="BorderThickness"  Value="2" />
-            <Setter Property="CornerRadius"     Value="3" />
-            <Setter Property="Padding"          Value="5" />
+            <Setter Property="Background"              Value="#C03A3A3A" />
+            <Setter Property="BorderBrush"             Value="#997E7E7E" />
+            <Setter Property="BorderThickness"         Value="2" />
+            <Setter Property="CornerRadius"            Value="3" />
+            <Setter Property="Padding"                 Value="5" />
         </Style>
         <Style x:Key="ToolTipTextStyle" TargetType="{x:Type TextBlock}">
-            <Setter Property="FontSize"     Value="14.667"/>
-            <Setter Property="FontFamily"   Value="Tahoma" />
-            <Setter Property="Foreground"   Value="#FFE6E6E6" />
-            <Setter Property="FontWeight"   Value="Bold" />
-            <Setter Property="HorizontalAlignment"   Value="Center" />
-            <Setter Property="VerticalAlignment"   Value="Top" />
+            <Setter Property="FontSize"                Value="14.667" />
+            <Setter Property="FontFamily"              Value="Tahoma" />
+            <Setter Property="Foreground"              Value="#FFE6E6E6" />
+            <Setter Property="FontWeight"              Value="Bold" />
+            <Setter Property="HorizontalAlignment"     Value="Center" />
+            <Setter Property="VerticalAlignment"       Value="Top" />
         </Style>
         <Style x:Key="ButtonsStyle" TargetType="{x:Type Button}">
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="FontFamily" Value="Arial Black"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Background" Value="#602C2C2C"/>
-            <Setter Property="Foreground" Value="#FFE6E6E6"/>
-            <Setter Property="BorderBrush" Value="{x:Null}"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize"                Value="16" />
+            <Setter Property="FontFamily"              Value="Arial Black" />
+            <Setter Property="FontWeight"              Value="Bold" />
+            <Setter Property="Background"              Value="#602C2C2C" />
+            <Setter Property="Foreground"              Value="#FFE6E6E6" />
+            <Setter Property="BorderBrush"             Value="{x:Null}" />
+            <Setter Property="HorizontalAlignment"     Value="Center" />
+            <Setter Property="VerticalAlignment"       Value="Center" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Border Background="{TemplateBinding Background}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#60606060"/>
+                <Trigger Property="IsMouseOver"        Value="True">
+                    <Setter Property="Background"      Value="#60606060" />
                 </Trigger>
             </Style.Triggers>
         </Style>
         <Style x:Key="ToggleButtonsStyle" TargetType="{x:Type ToggleButton}">
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="FontFamily" Value="Arial Black"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Background" Value="#602C2C2C"/>
-            <Setter Property="Foreground" Value="#FFE6E6E6"/>
-            <Setter Property="BorderBrush" Value="{x:Null}"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize"                Value="16" />
+            <Setter Property="FontFamily"              Value="Arial Black" />
+            <Setter Property="FontWeight"              Value="Bold" />
+            <Setter Property="Background"              Value="#602C2C2C" />
+            <Setter Property="Foreground"              Value="#FFE6E6E6" />
+            <Setter Property="BorderBrush"             Value="{x:Null}" />
+            <Setter Property="HorizontalAlignment"     Value="Center" />
+            <Setter Property="VerticalAlignment"       Value="Center" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ToggleButton}">
                         <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#60606060"/>
+                <Trigger Property="IsMouseOver"        Value="True">
+                    <Setter Property="Background"      Value="#60606060" />
                 </Trigger>
-                <Trigger Property="IsChecked" Value="True">
-                    <Setter Property="Background" Value="#FF606060"/>
-                    <Setter Property="BorderBrush" Value="#FFE6E6E6"/>
-                    <Setter Property="BorderThickness" Value="1"/>
+                <Trigger Property="IsChecked"          Value="True">
+                    <Setter Property="Background"      Value="#FF606060" />
+                    <Setter Property="BorderBrush"     Value="#FFE6E6E6" />
+                    <Setter Property="BorderThickness" Value="1" />
                 </Trigger>
             </Style.Triggers>
         </Style>
         <Style x:Key="RadioButtonsStyle" TargetType="RadioButton" BasedOn="{StaticResource ToggleButtonsStyle}" />
-        <BitmapImage x:Key="ImageSource1X" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="Resources\X.png"/>
+        <BitmapImage x:Key="ImageSource1X" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="Resources\X.png" />
     </Application.Resources>
 </Application>

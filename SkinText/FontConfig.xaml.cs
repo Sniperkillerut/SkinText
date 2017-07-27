@@ -3,154 +3,130 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace SkinText
-{
-    public partial class FontConfig : Window
-    {
-        public FontConfig()
-        {
+namespace SkinText {
+
+    public partial class FontConfig : Window {
+
+        public FontConfig() {
             InitializeComponent();
         }
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
-        {
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e) {
             if (e.ChangedButton == MouseButton.Left) {
                 this.DragMove();
             }
         }
-        private void CloseButt_Click(object sender, RoutedEventArgs e)
-        {
+
+        private void CloseButt_Click(object sender, RoutedEventArgs e) {
             this.Hide();
             CustomMethods.SaveConfig();
         }
-        public void UpdateStrikethrough()
-        {
-            if (textrun.TextDecorations != null)
-            {
-               textrun.TextDecorations.Clear();
+
+        public void UpdateStrikethrough() {
+            if (textrun.TextDecorations != null) {
+                textrun.TextDecorations.Clear();
             }
-            else
-            {
+            else {
                 textrun.TextDecorations = new TextDecorationCollection();
             }
-            if (OverLine.IsChecked.Value)
-            {
+            if (OverLine.IsChecked.Value) {
                 textrun.TextDecorations.Add(TextDecorations.OverLine);
             }
-            if (Strikethrough.IsChecked.Value)
-            {
+            if (Strikethrough.IsChecked.Value) {
                 textrun.TextDecorations.Add(TextDecorations.Strikethrough);
             }
-            if (Baseline.IsChecked.Value)
-            {
+            if (Baseline.IsChecked.Value) {
                 textrun.TextDecorations.Add(TextDecorations.Baseline);
             }
-            if (Underline.IsChecked.Value)
-            {
+            if (Underline.IsChecked.Value) {
                 textrun.TextDecorations.Add(TextDecorations.Underline);
             }
         }
-        private void Strikethrough_Checked(object sender, RoutedEventArgs e)
-        {
+
+        private void Strikethrough_Checked(object sender, RoutedEventArgs e) {
             UpdateStrikethrough();
         }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        private void ClrPcker_Font_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
-        {
-            try
-            {
-                if (textrun!= null) {
+        private void ClrPcker_Font_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
+            try {
+                if (textrun != null) {
                     textrun.Foreground = new SolidColorBrush(ClrPcker_Font.SelectedColor.Value);
                 }
             }
-            catch (Exception ex)
-            {
-                #if DEBUG
-                    MessageBox.Show(ex.ToString());
-                    //throw;
-                #endif
+            catch (Exception ex) {
+#if DEBUG
+                MessageBox.Show(ex.ToString());
+                //throw;
+#endif
             }
         }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        private void ClrPcker_Bg_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
-        {
-            try
-            {
+        private void ClrPcker_Bg_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
+            try {
                 if (textrun != null) {
                     SolidColorBrush brush = new SolidColorBrush(ClrPcker_Bg.SelectedColor.Value);
-                    if (brush.Color.A<255)
-                    {
-                        brush =  Brushes.Transparent;
+                    if (brush.Color.A < 255) {
+                        brush = Brushes.Transparent;
                     }
                     textrun.Background = brush;
                     ClrPcker_Bg.SelectedColor = brush.Color;
                 }
             }
             catch (Exception ex) {
-                #if DEBUG
-                    MessageBox.Show(ex.ToString());
-                    //throw;
-                #endif
+#if DEBUG
+                MessageBox.Show(ex.ToString());
+                //throw;
+#endif
             }
         }
-        private void FlowDir_Checked(object sender, RoutedEventArgs e)
-        {
-            if (FlowDir.IsChecked.Value)
-            {
+
+        private void FlowDir_Checked(object sender, RoutedEventArgs e) {
+            if (FlowDir.IsChecked.Value) {
                 txtSampleText.FlowDirection = FlowDirection.RightToLeft;
             }
-            else
-            {
+            else {
                 txtSampleText.FlowDirection = FlowDirection.LeftToRight;
             }
         }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        private void Superscript_Checked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
+        private void Superscript_Checked(object sender, RoutedEventArgs e) {
+            try {
                 if (textrun != null) {
                     System.Windows.Controls.RadioButton btn = (System.Windows.Controls.RadioButton)sender;
-                    if (btn != null && btn.IsChecked.Value)
-                    {
-                        switch (btn.Name)
-                        {
-                            case nameof(topScript):
-                                {
+                    if (btn != null && btn.IsChecked.Value) {
+                        switch (btn.Name) {
+                            case nameof(topScript): {
                                     textrun.BaselineAlignment = BaselineAlignment.Top;
                                     break;
                                 }
-                            case nameof(superscript):
-                                {
+                            case nameof(superscript): {
                                     textrun.BaselineAlignment = BaselineAlignment.Subscript;
                                     break;
                                 }
-                            case nameof(texttopScript):
-                                {
+                            case nameof(texttopScript): {
                                     textrun.BaselineAlignment = BaselineAlignment.TextTop;
                                     break;
                                 }
-                            case nameof(centerScript):
-                                {
+                            case nameof(centerScript): {
                                     textrun.BaselineAlignment = BaselineAlignment.Center;
                                     break;
                                 }
-                            case nameof(subscript):
-                                {
+                            case nameof(subscript): {
                                     textrun.BaselineAlignment = BaselineAlignment.Subscript;
                                     break;
                                 }
-                            case nameof(textbottomScript):
-                                {
+                            case nameof(textbottomScript): {
                                     textrun.BaselineAlignment = BaselineAlignment.TextBottom;
                                     break;
                                 }
-                            case nameof(bottomScript):
-                                {
+                            case nameof(bottomScript): {
                                     textrun.BaselineAlignment = BaselineAlignment.Bottom;
                                     break;
                                 }
-                            case nameof(baseScript):
-                                {
+                            case nameof(baseScript): {
                                     textrun.BaselineAlignment = BaselineAlignment.Baseline;
                                     break;
                                 }
@@ -159,39 +135,32 @@ namespace SkinText
                 }
             }
             catch (Exception ex) {
-                #if DEBUG
+#if DEBUG
                 MessageBox.Show(ex.ToString());
                 //throw;
-                #endif
+#endif
             }
         }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        private void Align_Checked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                System.Windows.Controls.RadioButton btn = (System.Windows.Controls.RadioButton) sender ;
-                if (btn != null && btn.IsChecked.Value)
-                {
-                    switch (btn.Name)
-                    {
-                        case nameof(leftAlign):
-                            {
+        private void Align_Checked(object sender, RoutedEventArgs e) {
+            try {
+                System.Windows.Controls.RadioButton btn = (System.Windows.Controls.RadioButton)sender;
+                if (btn != null && btn.IsChecked.Value) {
+                    switch (btn.Name) {
+                        case nameof(leftAlign): {
                                 txtSampleText.Selection.Start.Paragraph.TextAlignment = TextAlignment.Left;
                                 break;
                             }
-                        case nameof(centerAlign):
-                            {
+                        case nameof(centerAlign): {
                                 txtSampleText.Selection.Start.Paragraph.TextAlignment = TextAlignment.Center;
                                 break;
                             }
-                        case nameof(rightAlign):
-                            {
+                        case nameof(rightAlign): {
                                 txtSampleText.Selection.Start.Paragraph.TextAlignment = TextAlignment.Right;
                                 break;
                             }
-                        case nameof(justifyAlign):
-                            {
+                        case nameof(justifyAlign): {
                                 txtSampleText.Selection.Start.Paragraph.TextAlignment = TextAlignment.Justify;
                                 break;
                             }
@@ -199,21 +168,19 @@ namespace SkinText
                 }
             }
             catch (Exception ex) {
-                #if DEBUG
+#if DEBUG
                 MessageBox.Show(ex.ToString());
                 //throw;
-                #endif
+#endif
             }
         }
-        private void FontSzLineSz_Click(object sender, RoutedEventArgs e)
-        {
+
+        private void FontSzLineSz_Click(object sender, RoutedEventArgs e) {
             lineHeightSlider.Value = fontSizeSlider.Value;
         }
 
-        private void Apply_Click(object sender, RoutedEventArgs e)
-        {
-            if (textrun.TextDecorations == null)
-            {
+        private void Apply_Click(object sender, RoutedEventArgs e) {
+            if (textrun.TextDecorations == null) {
                 textrun.TextDecorations = new TextDecorationCollection();
             }
             CustomMethods.TextFormat(textrun.Foreground, textrun.Background, textrun.FontFamily, textrun.FontSize, textrun.TextDecorations, textrun.FontStyle, textrun.FontWeight, txtSampleText.Selection.Start.Paragraph.TextAlignment, txtSampleText.FlowDirection, textrun.BaselineAlignment, textpar.LineHeight);

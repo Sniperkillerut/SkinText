@@ -8,22 +8,23 @@ using System.Windows.Documents;
 using System.Windows.Media;
 
 namespace SkinText {
+
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling")]
     public static class CustomMethods {
         private static MainWindow mainW;
 
         private static string filepath;
-        private static bool fileChanged;
+        private static bool   fileChanged;
         private static string appDataPath;
         private static string currentSkin;
         private static string imagepath;
 
         public static string AppDataPath { get => appDataPath; set => appDataPath = value; }
         public static string CurrentSkin { get => currentSkin; set => currentSkin = value; }
-        public static string Imagepath { get => imagepath; set => imagepath = value; }
-        public static string Filepath { get => filepath; set => filepath = value; }
-        public static bool FileChanged { get => fileChanged; set => fileChanged = value; }
-        public static MainWindow MainW { get => mainW; set => mainW = value; }
+        public static string Imagepath   { get => imagepath  ; set => imagepath   = value; }
+        public static string Filepath    { get => filepath   ; set => filepath    = value; }
+        public static bool   FileChanged { get => fileChanged; set => fileChanged = value; }
+        public static MainWindow MainW   { get => mainW      ; set => mainW       = value; }
 
         public static string GAppPath {
             get {
@@ -35,14 +36,14 @@ namespace SkinText {
                 // Get the .EXE assembly
                 assm = Assembly.GetEntryAssembly();
                 // Get a 'Type' of the AssemblyCompanyAttribute
-                at = typeof(AssemblyCompanyAttribute);
+                at  = typeof(AssemblyCompanyAttribute);
                 at2 = typeof(AssemblyTitleAttribute);
                 // Get a collection of custom attributes from the .EXE assembly
-                r = assm.GetCustomAttributes(at, false);
+                r  = assm.GetCustomAttributes(at, false);
                 r2 = assm.GetCustomAttributes(at2, false);
                 // Get the Company Attribute
-                AssemblyCompanyAttribute ct = ((AssemblyCompanyAttribute)(r[0]));
-                AssemblyTitleAttribute ct2 = ((AssemblyTitleAttribute)(r2[0]));
+                AssemblyCompanyAttribute ct  = ((AssemblyCompanyAttribute)(r[0]));
+                AssemblyTitleAttribute   ct2 = ((AssemblyTitleAttribute)(r2[0]));
                 // Build the User App Data Path
                 string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
                 //path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
@@ -55,7 +56,6 @@ namespace SkinText {
             }
         }
 
-
         /// <summary>
         /// Reads Config.ini and sets wich skin to use
         /// </summary>
@@ -63,7 +63,7 @@ namespace SkinText {
         public static void GetSkin() {
             CurrentSkin = @"\Default";
             try {
-                if (File.Exists(AppDataPath+@"\config.ini")) {
+                if (File.Exists(AppDataPath + @"\config.ini")) {
                     using (StreamReader reader = new StreamReader(AppDataPath + @"\config.ini", System.Text.Encoding.UTF8)) {
                         string currentLine;
                         string[] line;
@@ -72,10 +72,10 @@ namespace SkinText {
                             line[0] = line[0].Trim();
                             line[0] = line[0].ToUpperInvariant();
                             if (!string.IsNullOrEmpty(line[0]) && !string.IsNullOrEmpty(line[1])) {
-                                line[1] = line[1].Trim();
-                                if (!string.IsNullOrWhiteSpace(line[1])) {
-                                    if (line[0] == "SKIN") {
-                                        CurrentSkin = @"\"+line[1];
+                                if (line[0] == "SKIN") {
+                                    line[1] = line[1].Trim();
+                                    if (!string.IsNullOrWhiteSpace(line[1])) {
+                                        CurrentSkin = @"\" + line[1];//A Folder
                                     }
                                 }
                             }
@@ -87,8 +87,8 @@ namespace SkinText {
                 // The appdata folders dont exist
                 //can be first open, let default values
                 #if DEBUG
-                MessageBox.Show(ex.ToString());
-                //throw;
+                    MessageBox.Show(ex.ToString());
+                    //throw;
                 #endif
             }
         }
@@ -99,12 +99,12 @@ namespace SkinText {
         /// otherwise it uses static values</para>
         /// </summary>
         public static void FixResizeTextBox() {
-            MainW.grid.ColumnDefinitions[0].Width = new GridLength(MainW.grid.ColumnDefinitions[0].ActualWidth, GridUnitType.Star);
-            MainW.grid.ColumnDefinitions[1].Width = new GridLength(MainW.grid.ColumnDefinitions[1].ActualWidth, GridUnitType.Star);
-            MainW.grid.ColumnDefinitions[2].Width = new GridLength(MainW.grid.ColumnDefinitions[2].ActualWidth, GridUnitType.Star);
-            MainW.grid.RowDefinitions[0].Height = new GridLength(MainW.grid.RowDefinitions[0].ActualHeight, GridUnitType.Star);
-            MainW.grid.RowDefinitions[1].Height = new GridLength(MainW.grid.RowDefinitions[1].ActualHeight, GridUnitType.Star);
-            MainW.grid.RowDefinitions[2].Height = new GridLength(MainW.grid.RowDefinitions[2].ActualHeight, GridUnitType.Star);
+            MainW.grid.ColumnDefinitions[0].Width  = new GridLength(MainW.grid.ColumnDefinitions[0].ActualWidth,  GridUnitType.Star);
+            MainW.grid.ColumnDefinitions[1].Width  = new GridLength(MainW.grid.ColumnDefinitions[1].ActualWidth,  GridUnitType.Star);
+            MainW.grid.ColumnDefinitions[2].Width  = new GridLength(MainW.grid.ColumnDefinitions[2].ActualWidth,  GridUnitType.Star);
+            MainW.grid.RowDefinitions   [0].Height = new GridLength(MainW.grid.RowDefinitions   [0].ActualHeight, GridUnitType.Star);
+            MainW.grid.RowDefinitions   [1].Height = new GridLength(MainW.grid.RowDefinitions   [1].ActualHeight, GridUnitType.Star);
+            MainW.grid.RowDefinitions   [2].Height = new GridLength(MainW.grid.RowDefinitions   [2].ActualHeight, GridUnitType.Star);
         }
 
         /// <summary>
@@ -112,10 +112,10 @@ namespace SkinText {
         /// Called from <see cref="MainWindow.NewCommand_Executed"/>
         /// </summary>
         public static void NewFile() {
-            Filepath = "";
+            Filepath                  = "";
             MainW.MenuFileName.Header = "";
-            MainW.rtb.Document = new FlowDocument();
-            FileChanged = false;
+            MainW.rtb.Document        = new FlowDocument();
+            FileChanged               = false;
         }
 
         /// <summary>
@@ -124,12 +124,12 @@ namespace SkinText {
         /// </summary>
         public static void OpenFile() {
             OpenFileDialog openFileDialog = new OpenFileDialog() {
-                Multiselect = false,
-                CheckFileExists = true,
-                CheckPathExists = true,
-                ValidateNames = true,
-                RestoreDirectory = true,
-                Filter = "Text files (*.txt, *.rtf, *.xaml, *.xamlp) | *.txt; *.rtf; *.xaml; *.xamlp"
+                Multiselect               = false,
+                CheckFileExists           = true,
+                CheckPathExists           = true,
+                ValidateNames             = true,
+                RestoreDirectory          = true,
+                Filter                    = "Text files (*.txt, *.rtf, *.xaml, *.xamlp) | *.txt; *.rtf; *.xaml; *.xamlp"
             };
             if (openFileDialog.ShowDialog() == true) {
                 ReadFile(openFileDialog.FileName);
@@ -185,10 +185,10 @@ namespace SkinText {
                     MessageBox.Show("Failed to Open File:\r\n " + pathToFile, "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
                 }
                 NewFile();
-#if DEBUG
-                MessageBox.Show(ex.ToString());
-                throw;
-#endif
+                #if DEBUG
+                    MessageBox.Show(ex.ToString());
+                    //throw;
+                #endif
             }
         }
 
@@ -197,7 +197,7 @@ namespace SkinText {
         /// Called from <see cref="MainWindow.Window_Closing"/>
         /// </summary>
         public static void ExitProgram() {
-            MainW.FontConf.Close();
+            MainW.FontConf .Close();
             MainW.WinConfig.Close();
             SaveConfig();
         }
@@ -261,7 +261,6 @@ namespace SkinText {
                                 }
                             }
                         }
-                        //reader.Close();
                     }
                 }
             }
@@ -269,8 +268,8 @@ namespace SkinText {
                 // The appdata folders dont exist
                 //can be first open, let default values
                 #if DEBUG
-                MessageBox.Show(ex.ToString());
-                //throw;
+                    MessageBox.Show(ex.ToString());
+                    //throw;
                 #endif
             }
         }
@@ -285,19 +284,18 @@ namespace SkinText {
         public static void ReadConfigLine(string[] line) {
             if (line != null) {
                 try {
-                    double double1;
-                    double double2;
-                    bool bool1;
-                    string string1;
+                    double   double1;
+                    double   double2;
+                    bool     bool1;
+                    string   string1;
                     string[] array;
-
                     switch (line[0]) {//Changed var names to use less variables CA1809
                         case "WINDOW_POSITION": {
                                 array = line[1].Split(',');
                                 if (double.TryParse(array[0], out double1) && //top
                                     double.TryParse(array[1], out double2))   //left
                                 {
-                                    MainW.window.Top = double1;
+                                    MainW.window.Top  = double1;
                                     MainW.window.Left = double2;
                                 }
                                 break;
@@ -307,8 +305,8 @@ namespace SkinText {
                                 if (double.TryParse(array[0], out double1) && //window width
                                     double.TryParse(array[1], out double2))   //window height
                                 {
-                                    if (double1 > MainW.window.MinWidth && double1 < MainW.window.MaxWidth) {
-                                        MainW.window.Width = double1;
+                                    if (double1 > MainW.window.MinWidth  && double1 < MainW.window.MaxWidth) {
+                                        MainW.window.Width  = double1;
                                     }
                                     if (double2 > MainW.window.MinHeight && double2 < MainW.window.MaxHeight) {
                                         MainW.window.Height = double2;
@@ -327,8 +325,8 @@ namespace SkinText {
                             }
                         case "TEXT_SIZE": {
                                 array = line[1].Split(',');
-                                if (double.TryParse(array[0], out double1) && //column 0 width
-                                    double.TryParse(array[1], out double2) &&  //column 1 width
+                                if (double.TryParse(array[0], out        double1) &&  //column 0 width
+                                    double.TryParse(array[1], out        double2) &&  //column 1 width
                                     double.TryParse(array[2], out double double3) &&  //column 2 width
                                     double.TryParse(array[3], out double double4) &&  //row 0 height
                                     double.TryParse(array[4], out double double5) &&  //row 1 height
@@ -492,10 +490,10 @@ namespace SkinText {
                 }
                 catch (Exception ex) {
                     //System.FormatException catched from BORDER_COLOR, WINDOW_COLOR, TEXT_BG_COLOR
-#if DEBUG
-                    MessageBox.Show(ex.ToString());
-                    //throw;
-#endif
+                    #if DEBUG
+                        MessageBox.Show(ex.ToString());
+                        //throw;
+                    #endif
                 }
             }
         }
@@ -503,7 +501,7 @@ namespace SkinText {
         /// <summary>
         /// Saves SkinText config into SkinText.ini in /appdata
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+                                                    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public static void SaveConfig() {// had to do this: https://msdn.microsoft.com/library/ms182334.aspx
             FileStream fs = null;
             try {
@@ -524,15 +522,17 @@ namespace SkinText {
                     writer.WriteLine(data);
                     //text_size
                     data = "text_size = " +
-                        MainW.grid.ColumnDefinitions[0].ActualWidth.ToString(System.Globalization.CultureInfo.InvariantCulture) + " , " +
-                        MainW.grid.ColumnDefinitions[1].ActualWidth.ToString(System.Globalization.CultureInfo.InvariantCulture) + " , " +
-                        MainW.grid.ColumnDefinitions[2].ActualWidth.ToString(System.Globalization.CultureInfo.InvariantCulture) + " , " +
-                        MainW.grid.RowDefinitions[0].ActualHeight.ToString(System.Globalization.CultureInfo.InvariantCulture) + " , " +
-                        MainW.grid.RowDefinitions[1].ActualHeight.ToString(System.Globalization.CultureInfo.InvariantCulture) + " , " +
-                        MainW.grid.RowDefinitions[2].ActualHeight.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                        MainW.grid.ColumnDefinitions[0].ActualWidth .ToString(System.Globalization.CultureInfo.InvariantCulture) + " , " +
+                        MainW.grid.ColumnDefinitions[1].ActualWidth .ToString(System.Globalization.CultureInfo.InvariantCulture) + " , " +
+                        MainW.grid.ColumnDefinitions[2].ActualWidth .ToString(System.Globalization.CultureInfo.InvariantCulture) + " , " +
+                        MainW.grid.RowDefinitions   [0].ActualHeight.ToString(System.Globalization.CultureInfo.InvariantCulture) + " , " +
+                        MainW.grid.RowDefinitions   [1].ActualHeight.ToString(System.Globalization.CultureInfo.InvariantCulture) + " , " +
+                        MainW.grid.RowDefinitions   [2].ActualHeight.ToString(System.Globalization.CultureInfo.InvariantCulture);
                     writer.WriteLine(data);
                     //filetry
+
                     #region relative Path (Disabled)
+
                     /*
                         //To store as relative Path
                         int index = filepath.LastIndexOf("\\");
@@ -551,7 +551,9 @@ namespace SkinText {
                             filepath = filepath.Substring(index + 1);
                         }
                     */
-                    #endregion
+
+                    #endregion relative Path (Disabled)
+
                     data = "file = " + Filepath;
                     writer.WriteLine(data);
                     //resize_enabled
@@ -573,7 +575,9 @@ namespace SkinText {
                     data = "gif_uses_ram = " + mainW.WinConfig.GifMethodRAM.IsChecked.Value.ToString();
                     writer.WriteLine(data);
                     //bg_image (always after GIF method)
+
                     #region relative Path (Disabled)
+
                     /*
                         //To store as relative Path
                         int index = imagepath.LastIndexOf("\\");
@@ -592,7 +596,9 @@ namespace SkinText {
                             imagepath = imagepath.Substring(index + 1);
                         }
                     */
-                    #endregion
+
+                    #endregion relative Path (Disabled)
+
                     data = "bg_image = " + Imagepath;
                     writer.WriteLine(data);
                     //image_opacity
@@ -652,10 +658,10 @@ namespace SkinText {
                     */
             }
             catch (Exception ex) {
-                #if DEBUG
+#if DEBUG
                 MessageBox.Show(ex.ToString());
                 //throw;
-                #endif
+#endif
             }
             finally {
                 fs?.Dispose();
@@ -668,25 +674,25 @@ namespace SkinText {
         /// </summary>
         public static void LoadDefault() {
             //window size
-            MainW.window.Width = 525;
+            MainW.window.Width  = 525;
             MainW.window.Height = 350;
 
             //Window position
-            MainW.Left = (SystemParameters.PrimaryScreenWidth / 2) - (MainW.Width / 2);
-            MainW.Top = (SystemParameters.PrimaryScreenHeight / 2) - (MainW.Height / 2);
+            MainW.Left = (SystemParameters.PrimaryScreenWidth  / 2) - (MainW.Width  / 2);
+            MainW.Top  = (SystemParameters.PrimaryScreenHeight / 2) - (MainW.Height / 2);
 
             //border size
             //default value due to RTB size dependency
             MainW.WinConfig.bordersize.Value = 5;
 
             //RTB size
-            double borderSize = MainW.WinConfig.bordersize.Value;
-            MainW.grid.ColumnDefinitions[1].Width = new GridLength(MainW.window.Width - (borderSize * 2 + 1));
-            MainW.grid.RowDefinitions[1].Height = new GridLength(MainW.window.Height - (borderSize * 2 + 1));
-            MainW.grid.ColumnDefinitions[0].Width = new GridLength(borderSize, GridUnitType.Star);
-            MainW.grid.ColumnDefinitions[2].Width = new GridLength(borderSize, GridUnitType.Star);
-            MainW.grid.RowDefinitions[0].Height = new GridLength(borderSize, GridUnitType.Star);
-            MainW.grid.RowDefinitions[2].Height = new GridLength(borderSize, GridUnitType.Star);
+            double borderSize                      = MainW.WinConfig.bordersize.Value;
+            MainW.grid.ColumnDefinitions[1].Width  = new GridLength(MainW.window.Width -  (borderSize * 2 + 1));
+            MainW.grid.RowDefinitions   [1].Height = new GridLength(MainW.window.Height - (borderSize * 2 + 1));
+            MainW.grid.ColumnDefinitions[0].Width  = new GridLength(borderSize, GridUnitType.Star);
+            MainW.grid.ColumnDefinitions[2].Width  = new GridLength(borderSize, GridUnitType.Star);
+            MainW.grid.RowDefinitions   [0].Height = new GridLength(borderSize, GridUnitType.Star);
+            MainW.grid.RowDefinitions   [2].Height = new GridLength(borderSize, GridUnitType.Star);
 
             //border color
             //#997E7E7E by default in xaml
@@ -715,21 +721,21 @@ namespace SkinText {
             ImageClear();
 
             //opacity
-            MainW.WinConfig.imageopacityslider.Value = 100;
+            MainW.WinConfig.imageopacityslider .Value = 100;
             MainW.WinConfig.windowopacityslider.Value = 100;
-            MainW.WinConfig.textopacityslider.Value = 100;
+            MainW.WinConfig.textopacityslider  .Value = 100;
 
             //checkboxes
-            MainW.WinConfig.resizecheck.IsChecked = true;
-            MainW.WinConfig.readOnlyCheck.IsChecked = false;
-            MainW.WinConfig.spellcheck.IsChecked = false;
-            MainW.WinConfig.alwaysontop.IsChecked = false;
-            MainW.WinConfig.taskbarvisible.IsChecked = true;
+            MainW.WinConfig.resizecheck        .IsChecked = true;
+            MainW.WinConfig.readOnlyCheck      .IsChecked = false;
+            MainW.WinConfig.spellcheck         .IsChecked = false;
+            MainW.WinConfig.alwaysontop        .IsChecked = false;
+            MainW.WinConfig.taskbarvisible     .IsChecked = true;
             MainW.WinConfig.NotificationVisible.IsChecked = true;
-            MainW.WinConfig.ResizeVisible.IsChecked = true;
-            MainW.WinConfig.FlipXButton.IsChecked = false;
-            MainW.WinConfig.FlipYButton.IsChecked = false;
-            MainW.LineWrapMenuItem.IsChecked = true;
+            MainW.WinConfig.ResizeVisible      .IsChecked = true;
+            MainW.WinConfig.FlipXButton        .IsChecked = false;
+            MainW.WinConfig.FlipYButton        .IsChecked = false;
+            MainW.          LineWrapMenuItem   .IsChecked = true;
         }
 
         /// <summary>
@@ -757,13 +763,13 @@ namespace SkinText {
             }
             if (saveas) {
                 SaveFileDialog savedialog = new SaveFileDialog() {
-                    CreatePrompt = true,
-                    OverwritePrompt = true,
-                    CheckPathExists = true,
-                    ValidateNames = true,
+                    CreatePrompt     = true,
+                    OverwritePrompt  = true,
+                    CheckPathExists  = true,
+                    ValidateNames    = true,
                     RestoreDirectory = true,
-                    Filter = "XAML Package (*.xamlp)|*.xamlp|Rich Text File (*.rtf)|*.rtf|XAML File (*.xaml)|*.xaml|Text file (*.txt)|*.txt",
-                    DefaultExt = ".xamlp"
+                    Filter           = "XAML Package (*.xamlp)|*.xamlp|Rich Text File (*.rtf)|*.rtf|XAML File (*.xaml)|*.xaml|Text file (*.txt)|*.txt",
+                    DefaultExt       = ".xamlp"
                 };
                 if (Filepath.Length < 4) {//checks for complete filenames instead of just .rtf or .xaml //should be "" becouse it is validate in other places too but just in case
                     savedialog.FileName = "Notes";
@@ -809,10 +815,10 @@ namespace SkinText {
             }
             catch (Exception ex) {
                 MessageBox.Show("Failed to Write File", "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
-                #if DEBUG
+#if DEBUG
                 MessageBox.Show(ex.ToString());
                 //throw;
-                #endif
+#endif
             }
         }
 
@@ -861,15 +867,15 @@ namespace SkinText {
                         Paragraph p = new Paragraph();
                         // Create a new run object with the font properties, and add it to the current block
                         Run newRun = new Run() {
-                            Foreground = foreColor,
-                            Background = backgroundColor,
-                            FontFamily = fontFamily,
-                            FontSize = fontSize,
-                            FontStyle = fontStyle,
-                            FontWeight = fontWeight,
-                            FlowDirection = flow,
+                            Foreground        = foreColor,
+                            Background        = backgroundColor,
+                            FontFamily        = fontFamily,
+                            FontSize          = fontSize,
+                            FontStyle         = fontStyle,
+                            FontWeight        = fontWeight,
+                            FlowDirection     = flow,
                             BaselineAlignment = basealign,
-                            TextDecorations = null
+                            TextDecorations   = null
                         };
                         if (decor != null) {
                             newRun.TextDecorations = decor.Clone();
@@ -877,31 +883,30 @@ namespace SkinText {
                         MainW.rtb.Document.Blocks.Add(p);// worked!
                         p.Inlines.Add(newRun);
                         p.TextAlignment = textalign;
-                        p.LineHeight = lineHeight;
+                        p.LineHeight    = lineHeight;
                         // Reset the cursor into the new block.
                         // If we don't do this, the font properties will default again when you start typing.
                         MainW.rtb.CaretPosition = newRun.ElementStart;
-
                     }
                     else {   //not an empty textbox
                         // Get current position of cursor
                         TextPointer curCaret = MainW.rtb.CaretPosition;
                         // Get the current block object that the cursor is in
                         Block curBlock = MainW.rtb.Document.Blocks.FirstOrDefault(x => x.ContentStart.CompareTo(curCaret) == -1 &&
-                                                                                       x.ContentEnd.CompareTo(curCaret) == 1);
+                                                                                       x.ContentEnd  .CompareTo(curCaret) == 1);
                         if (curBlock != null) {
                             Paragraph curParagraph = curBlock as Paragraph;
                             // Create a new run object with the font properties, and add it to the current block
                             Run newRun = new Run() {
-                                Foreground = foreColor,
-                                Background = backgroundColor,
-                                FontFamily = fontFamily,
-                                FontSize = fontSize,
-                                FontStyle = fontStyle,
-                                FontWeight = fontWeight,
-                                FlowDirection = flow,
+                                Foreground        = foreColor,
+                                Background        = backgroundColor,
+                                FontFamily        = fontFamily,
+                                FontSize          = fontSize,
+                                FontStyle         = fontStyle,
+                                FontWeight        = fontWeight,
+                                FlowDirection     = flow,
                                 BaselineAlignment = basealign,
-                                TextDecorations = null
+                                TextDecorations   = null
                             };
                             if (decor != null) {
                                 newRun.TextDecorations = decor.Clone();
@@ -925,20 +930,20 @@ namespace SkinText {
                 else // There is selected text, so change the font properties of the selection
                 {
                     TextRange selectionTextRange = new TextRange(MainW.rtb.Selection.Start, MainW.rtb.Selection.End);
-                    selectionTextRange.ApplyPropertyValue(TextElement.ForegroundProperty, foreColor);
-                    selectionTextRange.ApplyPropertyValue(TextElement.BackgroundProperty, backgroundColor);
-                    selectionTextRange.ApplyPropertyValue(TextElement.FontFamilyProperty, fontFamily);
-                    selectionTextRange.ApplyPropertyValue(TextElement.FontSizeProperty, fontSize);
-                    selectionTextRange.ApplyPropertyValue(TextElement.FontStyleProperty, fontStyle);
-                    selectionTextRange.ApplyPropertyValue(TextElement.FontWeightProperty, fontWeight);
-                    selectionTextRange.ApplyPropertyValue(Inline.TextDecorationsProperty, null);
+                    selectionTextRange.ApplyPropertyValue(TextElement.ForegroundProperty    , foreColor);
+                    selectionTextRange.ApplyPropertyValue(TextElement.BackgroundProperty    , backgroundColor);
+                    selectionTextRange.ApplyPropertyValue(TextElement.FontFamilyProperty    , fontFamily);
+                    selectionTextRange.ApplyPropertyValue(TextElement.FontSizeProperty      , fontSize);
+                    selectionTextRange.ApplyPropertyValue(TextElement.FontStyleProperty     , fontStyle);
+                    selectionTextRange.ApplyPropertyValue(TextElement.FontWeightProperty    , fontWeight);
+                    selectionTextRange.ApplyPropertyValue(Inline.TextDecorationsProperty    , null);
                     if (decor != null) {
                         selectionTextRange.ApplyPropertyValue(Inline.TextDecorationsProperty, decor.Clone());
                     }
-                    selectionTextRange.ApplyPropertyValue(Block.TextAlignmentProperty, textalign);
-                    selectionTextRange.ApplyPropertyValue(Block.FlowDirectionProperty, flow);
-                    selectionTextRange.ApplyPropertyValue(Block.LineHeightProperty, lineHeight);
-                    selectionTextRange.ApplyPropertyValue(Inline.BaselineAlignmentProperty, basealign);
+                    selectionTextRange.ApplyPropertyValue(Block.TextAlignmentProperty       , textalign);
+                    selectionTextRange.ApplyPropertyValue(Block.FlowDirectionProperty       , flow);
+                    selectionTextRange.ApplyPropertyValue(Block.LineHeightProperty          , lineHeight);
+                    selectionTextRange.ApplyPropertyValue(Inline.BaselineAlignmentProperty  , basealign);
                 }
             }
             // Reset the focus onto the richtextbox after selecting the font in a toolbar etc
@@ -954,21 +959,22 @@ namespace SkinText {
         public static void RtbSizeChanged() {
             try {
                 if (MainW?.WinConfig != null) {
-                    double borderSize = MainW.WinConfig.bordersize.Value;
-                    double row0 = MainW.grid.RowDefinitions[0].ActualHeight;
-                    double row2 = MainW.grid.RowDefinitions[2].ActualHeight;
-                    double column0 = MainW.grid.ColumnDefinitions[0].ActualWidth;
-                    double column2 = MainW.grid.ColumnDefinitions[2].ActualWidth;
-                    MainW.corner1.Margin = new Thickness(column0 - borderSize, row0 - borderSize, 0, 0);
-                    MainW.corner2.Margin = new Thickness(column0 - borderSize, -borderSize, 0, row2);
-                    MainW.corner3.Margin = new Thickness(-borderSize, row0 - borderSize, column2, 0);
-                    MainW.corner4.Margin = new Thickness(-borderSize, -borderSize, column2, row2);
+
+                    double borderSize    = MainW.WinConfig.bordersize.Value;
+                    double row0          = MainW.grid.RowDefinitions   [0].ActualHeight;
+                    double row2          = MainW.grid.RowDefinitions   [2].ActualHeight;
+                    double column0       = MainW.grid.ColumnDefinitions[0].ActualWidth;
+                    double column2       = MainW.grid.ColumnDefinitions[2].ActualWidth;
+                    MainW.corner1.Margin = new Thickness(column0 - borderSize, row0 - borderSize, 0      , 0   );
+                    MainW.corner2.Margin = new Thickness(column0 - borderSize, -borderSize      , 0      , row2);
+                    MainW.corner3.Margin = new Thickness(-borderSize         , row0 - borderSize, column2, 0   );
+                    MainW.corner4.Margin = new Thickness(-borderSize         , -borderSize      , column2, row2);
                 }
             }
             catch (Exception ex) {
                 #if DEBUG
-                MessageBox.Show(ex.ToString());
-                //throw;
+                    MessageBox.Show(ex.ToString());
+                    //throw;
                 #endif
             }
         }
@@ -999,7 +1005,6 @@ namespace SkinText {
                             newBrush = (SolidColorBrush)selectionTextRange.GetPropertyValue(TextElement.ForegroundProperty);
                             MainW.FontConf.ClrPcker_Font.SelectedColor = newBrush.Color;
                         }
-
 
                         if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(TextElement.FontSizeProperty))) {
                             MainW.FontConf.fontSizeSlider.Value = (double)selectionTextRange.GetPropertyValue(TextElement.FontSizeProperty);
@@ -1135,10 +1140,10 @@ namespace SkinText {
                     }
                 }
                 catch (Exception ex) {
-                    #if DEBUG
+#if DEBUG
                     MessageBox.Show(ex.ToString());
                     //throw;
-                    #endif
+#endif
                 }
             }
         }
@@ -1150,13 +1155,13 @@ namespace SkinText {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public static void RtbBorderSize(double borderSize) {
             try {
-                mainW.corner1.Width = mainW.corner1.Height = borderSize * 2;
-                mainW.corner2.Width = mainW.corner2.Height = borderSize * 2;
-                mainW.corner3.Width = mainW.corner3.Height = borderSize * 2;
-                mainW.corner4.Width = mainW.corner4.Height = borderSize * 2;
-                mainW.splitter1.Width = borderSize;
+                mainW.corner1.Width    = mainW.corner1.Height = borderSize * 2;
+                mainW.corner2.Width    = mainW.corner2.Height = borderSize * 2;
+                mainW.corner3.Width    = mainW.corner3.Height = borderSize * 2;
+                mainW.corner4.Width    = mainW.corner4.Height = borderSize * 2;
+                mainW.splitter1.Width  = borderSize;
                 mainW.splitter2.Height = borderSize;
-                mainW.splitter3.Width = borderSize;
+                mainW.splitter3.Width  = borderSize;
                 mainW.splitter4.Height = borderSize;
                 //mainW.RtbSizeChanged(null, null);
                 RtbSizeChanged();
@@ -1175,10 +1180,10 @@ namespace SkinText {
         /// </summary>
         /// <param name="angle"></param>
         public static void RtbRotate(double angle) {
-            RotateTransform rotateTransform = new RotateTransform(angle);
-            mainW.grid.RenderTransformOrigin = new Point(0.5, 0.5);
-            mainW.grid.RenderTransform = rotateTransform;
-            rotateTransform = new RotateTransform(-angle);
+            RotateTransform rotateTransform     = new RotateTransform(angle);
+            mainW.grid.RenderTransformOrigin    = new Point(0.5, 0.5);
+            mainW.grid.RenderTransform          = rotateTransform;
+            rotateTransform                     = new RotateTransform(-angle);
             mainW.backgroundimg.RenderTransform = rotateTransform;
         }
 
@@ -1195,7 +1200,7 @@ namespace SkinText {
         }
 
         /// <summary>
-        /// Hides/shows the <see cref="MainWindow.rtb"/> resize borders
+        /// Hides/shows the <see cref          ="MainWindow.rtb"/> resize borders
         /// </summary>
         /// <param name="hide"></param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
@@ -1206,20 +1211,20 @@ namespace SkinText {
                 * but I dont know if checking for hide? every line would hit perfomance so leaving as is
                 */
                 if (hide) {
-                    mainW.corner1.Visibility = Visibility.Visible;
-                    mainW.corner2.Visibility = Visibility.Visible;
-                    mainW.corner3.Visibility = Visibility.Visible;
-                    mainW.corner4.Visibility = Visibility.Visible;
+                    mainW.corner1.Visibility   = Visibility.Visible;
+                    mainW.corner2.Visibility   = Visibility.Visible;
+                    mainW.corner3.Visibility   = Visibility.Visible;
+                    mainW.corner4.Visibility   = Visibility.Visible;
                     mainW.splitter1.Visibility = Visibility.Visible;
                     mainW.splitter2.Visibility = Visibility.Visible;
                     mainW.splitter3.Visibility = Visibility.Visible;
                     mainW.splitter4.Visibility = Visibility.Visible;
                 }
                 else {
-                    mainW.corner1.Visibility = Visibility.Collapsed;
-                    mainW.corner2.Visibility = Visibility.Collapsed;
-                    mainW.corner3.Visibility = Visibility.Collapsed;
-                    mainW.corner4.Visibility = Visibility.Collapsed;
+                    mainW.corner1.Visibility   = Visibility.Collapsed;
+                    mainW.corner2.Visibility   = Visibility.Collapsed;
+                    mainW.corner3.Visibility   = Visibility.Collapsed;
+                    mainW.corner4.Visibility   = Visibility.Collapsed;
                     mainW.splitter1.Visibility = Visibility.Collapsed;
                     mainW.splitter2.Visibility = Visibility.Collapsed;
                     mainW.splitter3.Visibility = Visibility.Collapsed;
@@ -1241,10 +1246,10 @@ namespace SkinText {
         public static void RtbBorderColor(Brush brush) {
             if (brush != null) {
                 brush.Freeze();
-                mainW.corner1.Fill = brush;
-                mainW.corner2.Fill = brush;
-                mainW.corner3.Fill = brush;
-                mainW.corner4.Fill = brush;
+                mainW.corner1.Fill         = brush;
+                mainW.corner2.Fill         = brush;
+                mainW.corner3.Fill         = brush;
+                mainW.corner4.Fill         = brush;
                 mainW.splitter1.Background = brush;
                 mainW.splitter2.Background = brush;
                 mainW.splitter3.Background = brush;
@@ -1287,8 +1292,8 @@ namespace SkinText {
             //throws System.NotSupportedException but must be catched in LoadImage
             System.Windows.Media.Imaging.BitmapImage bitmap = new System.Windows.Media.Imaging.BitmapImage();
             bitmap.BeginInit();
-            bitmap.UriSource = source;
-            bitmap.CacheOption = System.Windows.Media.Imaging.BitmapCacheOption.OnLoad;
+            bitmap.UriSource     = source;
+            bitmap.CacheOption   = System.Windows.Media.Imaging.BitmapCacheOption  .OnLoad;
             bitmap.CreateOptions = System.Windows.Media.Imaging.BitmapCreateOptions.IgnoreImageCache;
             bitmap.EndInit();
             return bitmap;
@@ -1301,9 +1306,9 @@ namespace SkinText {
         public static void ImageClear() {
             Imagepath = "";
             mainW.backgroundimg.Source = null;
-            WpfAnimatedGif.ImageBehavior.SetAnimatedSource(mainW.backgroundimg, null);
-            XamlAnimatedGif.AnimationBehavior.SetSourceUri(mainW.backgroundimg, null);
-            XamlAnimatedGif.AnimationBehavior.SetSourceStream(mainW.backgroundimg, null);
+            WpfAnimatedGif .ImageBehavior    .SetAnimatedSource(mainW.backgroundimg, null);
+            XamlAnimatedGif.AnimationBehavior.SetSourceUri     (mainW.backgroundimg, null);
+            XamlAnimatedGif.AnimationBehavior.SetSourceStream  (mainW.backgroundimg, null);
             if (mainW.window.Background.ToString() == Colors.Transparent.ToString()) {
                 MainW.WinConfig.ClrPcker_WindowBackground.SelectedColor = (Color)ColorConverter.ConvertFromString("#85949494");
             }
@@ -1316,12 +1321,12 @@ namespace SkinText {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public static void OpenImage() {
             OpenFileDialog openFileDialog = new OpenFileDialog() {
-                Multiselect = false,
-                CheckFileExists = true,
-                CheckPathExists = true,
-                ValidateNames = true,
+                Multiselect      = false,
+                CheckFileExists  = true,
+                CheckPathExists  = true,
+                ValidateNames    = true,
                 RestoreDirectory = true,
-                Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png, *.gif) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png; *.gif"
+                Filter           = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png, *.gif) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png; *.gif"
             };
             //openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             if (openFileDialog.ShowDialog() == true) {
@@ -1337,10 +1342,10 @@ namespace SkinText {
                     LoadImage(newImagePath);
                 }
                 catch (Exception ex) {
-                    #if DEBUG
+#if DEBUG
                     MessageBox.Show(ex.ToString());
                     //throw;
-                    #endif
+#endif
                 }
             }
             else {
@@ -1392,10 +1397,10 @@ namespace SkinText {
                     MessageBox.Show("Failed to Load Image:\r\n " + imagepath, "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
                 }
                 ImageClear();
-                #if DEBUG
+#if DEBUG
                 MessageBox.Show(ex.ToString());
                 //throw;
-                #endif
+#endif
             }
         }
 
@@ -1428,8 +1433,8 @@ namespace SkinText {
         /// </summary>
         /// <param name="readOnly"></param>
         public static void RtbReadOnly(bool readOnly) {
-            mainW.rtb.IsReadOnly = readOnly;
-            mainW.rtb.IsReadOnlyCaretVisible = !readOnly;
+            mainW.rtb.IsReadOnly                          = readOnly;
+            mainW.rtb.IsReadOnlyCaretVisible              = !readOnly;
             mainW.rtb.IsInactiveSelectionHighlightEnabled = !readOnly;
         }
 
@@ -1473,6 +1478,5 @@ namespace SkinText {
         public static void WindowVisibleResize(bool visible) {
             mainW.window.ResizeMode = visible ? ResizeMode.CanResizeWithGrip : ResizeMode.NoResize;
         }
-
     }
 }
