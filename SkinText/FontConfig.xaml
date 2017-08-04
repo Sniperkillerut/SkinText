@@ -6,8 +6,19 @@
         xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="FontConfig" Height="450" Width="580" MinWidth="580" MinHeight="450" MaxWidth="580" MaxHeight="450" WindowStyle="None" SnapsToDevicePixels="True" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True" WindowStartupLocation="CenterOwner" AllowsTransparency="True" Background="#C03A3A3A" MouseDown="Window_MouseDown">
+        Title="FontConfig"
+        Height="450" Width="580"
+        MinWidth="580" MinHeight="450"
+        MaxWidth="580" MaxHeight="450"
+        WindowStyle="None" SnapsToDevicePixels="True"
+        ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True"
+        WindowStartupLocation="CenterOwner" AllowsTransparency="True"
+        Background="{DynamicResource BackgroundColorBrush}"
+        BorderBrush="{DynamicResource BorderColorBrush}"
+        BorderThickness="2"
+        MouseDown="Window_MouseDown">
     <Window.Resources>
+
         <DataTemplate x:Key="fontFamilyData">
             <TextBlock Text="{Binding Source}" FontFamily="{Binding Source}" FontSize="14" />
         </DataTemplate>
@@ -46,51 +57,21 @@
             <RowDefinition Height="97*" />
             <RowDefinition Height="97*" />
         </Grid.RowDefinitions>
-        <Button x:Name="CloseButt" Grid.Column="2" Grid.Row="0" Click="CloseButt_Click" Style="{StaticResource ButtonsStyle}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalAlignment="Right" Width="{Binding ActualHeight, Mode=OneWay, RelativeSource={RelativeSource Self}}" VerticalAlignment="Stretch">
+        <Button x:Name="CloseButt" Grid.Column="2" Grid.Row="0" Click="CloseButt_Click" Style="{DynamicResource ButtonsStyle}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalAlignment="Right" Width="{Binding ActualHeight, Mode=OneWay, RelativeSource={RelativeSource Self}}" VerticalAlignment="Stretch">
             <TextBlock Text="X" />
         </Button>
         <Label Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" Height="28" Margin="50,0" Width="50">
             <Label.Content>
-                <TextBlock Text="FONT" Style="{StaticResource ToolTipTextStyle}" />
+                <TextBlock Text="FONT" Style="{DynamicResource ToolTipTextStyle}" />
             </Label.Content>
         </Label>
         <Label Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Height="28" Margin="0" Width="102" VerticalAlignment="Top">
             <Label.Content>
-                <TextBlock Text="Font Family:" Style="{StaticResource ToolTipTextStyle}" />
+                <TextBlock Text="Font Family:" Style="{DynamicResource ToolTipTextStyle}" />
             </Label.Content>
         </Label>
 
-        <ListBox Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" x:Name="lstFamily"
-                     ItemsSource="{Binding}" ItemTemplate="{StaticResource fontFamilyData}"
-                     Margin="5" Foreground="#FFE6E6E6" FontFamily="Tahoma" Background="#AA606060" FontWeight="Bold" BorderBrush="{x:Null}">
-            <ListBox.Resources>
-                <Style TargetType="ListBoxItem">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="ListBoxItem">
-                                <Border Name="Border" Padding="1" SnapsToDevicePixels="true" BorderThickness="1">
-                                    <ContentPresenter />
-                                </Border>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="true">
-                                        <Setter TargetName="Border" Property="Background" Value="#20FFFFFF">
-                                        </Setter>
-                                        <Setter TargetName="Border" Property="BorderBrush" Value="#90FFFFFF">
-                                        </Setter>
-                                    </Trigger>
-                                    <Trigger Property="IsSelected" Value="true">
-                                        <Setter TargetName="Border" Property="Background" Value="#40FFFFFF">
-                                        </Setter>
-                                        <Setter TargetName="Border" Property="BorderBrush" Value="#FFFFFF">
-                                        </Setter>
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </ListBox.Resources>
-        </ListBox>
+        <ListBox x:Name="lstFamily" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" ItemsSource="{Binding}" ItemTemplate="{StaticResource fontFamilyData}" Style="{DynamicResource ListBoxStyle}"/>
 
         <Grid Grid.Column="0" Grid.Row="4" Grid.RowSpan="2" Margin="20,0,0,0">
             <Grid.RowDefinitions>
@@ -106,40 +87,40 @@
             </Grid.RowDefinitions>
             <Label Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" Height="28" Margin="0" Width="102" VerticalAlignment="Top">
                 <Label.Content>
-                    <TextBlock Text="Effects:" Style="{StaticResource ToolTipTextStyle}" />
+                    <TextBlock Text="Effects:" Style="{DynamicResource ToolTipTextStyle}" />
                 </Label.Content>
             </Label>
             <CheckBox Grid.Row="2" VerticalAlignment="Center" x:Name="OverLine"  Checked="Strikethrough_Checked" Unchecked="Strikethrough_Checked" VerticalContentAlignment="Center">
                 <CheckBox.Content>
-                    <TextBlock Text="OverLine:" TextDecorations="OverLine"  Style="{StaticResource ToolTipTextStyle}" />
+                    <TextBlock Text="OverLine:" TextDecorations="OverLine"  Style="{DynamicResource ToolTipTextStyle}" />
                 </CheckBox.Content>
             </CheckBox>
             <CheckBox Grid.Row="3" VerticalAlignment="Center" x:Name="Strikethrough"  Checked="Strikethrough_Checked" Unchecked="Strikethrough_Checked" VerticalContentAlignment="Center">
                 <CheckBox.Content>
-                    <TextBlock Text="Strikethrough:" TextDecorations="Strikethrough"  Style="{StaticResource ToolTipTextStyle}" />
+                    <TextBlock Text="Strikethrough:" TextDecorations="Strikethrough"  Style="{DynamicResource ToolTipTextStyle}" />
                 </CheckBox.Content>
             </CheckBox>
             <CheckBox Grid.Row="4" VerticalAlignment="Center" x:Name="Baseline"  Checked="Strikethrough_Checked" Unchecked="Strikethrough_Checked" VerticalContentAlignment="Center">
                 <CheckBox.Content>
-                    <TextBlock Text="Baseline:" TextDecorations="Baseline"  Style="{StaticResource ToolTipTextStyle}" />
+                    <TextBlock Text="Baseline:" TextDecorations="Baseline"  Style="{DynamicResource ToolTipTextStyle}" />
                 </CheckBox.Content>
             </CheckBox>
             <CheckBox Grid.Row="5" VerticalAlignment="Center" x:Name="Underline" Checked="Strikethrough_Checked" Unchecked="Strikethrough_Checked" VerticalContentAlignment="Center">
                 <CheckBox.Content>
-                    <TextBlock Text="Underline:" TextDecorations="Underline"  Style="{StaticResource ToolTipTextStyle}" />
+                    <TextBlock Text="Underline:" TextDecorations="Underline"  Style="{DynamicResource ToolTipTextStyle}" />
                 </CheckBox.Content>
             </CheckBox>
 
-            <Border Grid.Row="6" Background="#FFE6E6E6"></Border>
+            <Border Grid.Row="6" Background="{DynamicResource TextColorBrush}"></Border>
 
             <CheckBox Grid.Row="7" VerticalAlignment="Center" x:Name="FlowDir" Checked="FlowDir_Checked" Unchecked="FlowDir_Checked" VerticalContentAlignment="Center">
                 <CheckBox.Content>
-                    <TextBlock Text="Flow: right to left" Style="{StaticResource ToolTipTextStyle}" />
+                    <TextBlock Text="Flow: right to left" Style="{DynamicResource ToolTipTextStyle}" />
                 </CheckBox.Content>
                 <CheckBox.ToolTip>
-                    <ToolTip Style="{StaticResource ToolTipStyle}">
-                        <Border Style="{StaticResource ToolTipBorderStyle}">
-                            <TextBlock Text="Text Flow Direction: 2+2=4" Style="{StaticResource ToolTipTextStyle}" />
+                    <ToolTip Style="{DynamicResource ToolTipStyle}">
+                        <Border Style="{DynamicResource ToolTipBorderStyle}">
+                            <TextBlock Text="Text Flow Direction" Style="{DynamicResource ToolTipTextStyle}" />
                         </Border>
                     </ToolTip>
                 </CheckBox.ToolTip>
@@ -148,39 +129,12 @@
 
         <Label Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Height="28" Margin="0" Width="102" VerticalAlignment="Top">
             <Label.Content>
-                <TextBlock Text="Font Style:" Style="{StaticResource ToolTipTextStyle}" />
+                <TextBlock Text="Font Style:" Style="{DynamicResource ToolTipTextStyle}" />
             </Label.Content>
         </Label>
 
-        <ListBox x:Name="lstTypefaces" Grid.Row="2" Grid.Column="1" Grid.RowSpan="2" ItemsSource="{Binding FamilyTypefaces}" Margin="5" Background="#AA606060" Foreground="#FFE6E6E6" FontFamily="Tahoma" BorderBrush="{x:Null}">
-            <ListBox.Resources>
-                <Style TargetType="ListBoxItem">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="ListBoxItem">
-                                <Border Name="Border" Padding="1" SnapsToDevicePixels="true" BorderThickness="1">
-                                    <ContentPresenter />
-                                </Border>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="true">
-                                        <Setter TargetName="Border" Property="Background" Value="#20FFFFFF">
-                                        </Setter>
-                                        <Setter TargetName="Border" Property="BorderBrush" Value="#90FFFFFF">
-                                        </Setter>
-                                    </Trigger>
-                                    <Trigger Property="IsSelected" Value="true">
-                                        <Setter TargetName="Border" Property="Background" Value="#40FFFFFF">
-                                        </Setter>
-                                        <Setter TargetName="Border" Property="BorderBrush" Value="#FFFFFF">
-                                        </Setter>
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </ListBox.Resources>
-        </ListBox>
+        <ListBox x:Name="lstTypefaces" Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" ItemsSource="{Binding FamilyTypefaces}" Style="{DynamicResource ListBoxStyle}"/>
+
 
         <Grid Grid.Column="1" Grid.Row="4" Grid.RowSpan="2">
             <Grid.RowDefinitions>
@@ -193,7 +147,7 @@
             </Grid.RowDefinitions>
             <Label Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" Height="28" Margin="0" Width="102" VerticalAlignment="Top">
                 <Label.Content>
-                    <TextBlock Text="Font Color:" Style="{StaticResource ToolTipTextStyle}" />
+                    <TextBlock Text="Font Color:" Style="{DynamicResource ToolTipTextStyle}" />
                 </Label.Content>
             </Label>
 
@@ -201,7 +155,7 @@
 
             <Label Grid.Column="0" Grid.Row="2" Height="28" Margin="0" HorizontalAlignment="Center">
                 <Label.Content>
-                    <TextBlock Text="Font Background:" Style="{StaticResource ToolTipTextStyle}" VerticalAlignment="Center" />
+                    <TextBlock Text="Font Background:" Style="{DynamicResource ToolTipTextStyle}" VerticalAlignment="Center" />
                 </Label.Content>
             </Label>
             <xctk:ColorPicker Name="ClrPcker_Bg" Grid.Column="0" Grid.Row="3" SelectedColorChanged="ClrPcker_Bg_SelectedColorChanged" Background="{x:Null}" BorderBrush="{x:Null}" ShowDropDownButton="False" SelectedColor="White" ShowRecentColors="True" ShowStandardColors="True" UsingAlphaChannel="False" AvailableColorsSortingMode="HueSaturationBrightness" />
@@ -219,106 +173,106 @@
                 </Grid.RowDefinitions>
 
                 <RadioButton x:Name="topScript" Grid.Column="0" Grid.Row="0" Width="25" Height="25" Checked="Superscript_Checked"
-                             Style="{StaticResource RadioButtonsStyle}">
+                             Style="{DynamicResource RadioButtonsStyle}">
                     <RadioButton.Content>
-                        <Image Source="{StaticResource ImageSource1X}" />
+                        <Image Source="{DynamicResource ImageSource1X}" />
                     </RadioButton.Content>
                     <RadioButton.ToolTip>
-                        <ToolTip Style="{StaticResource ToolTipStyle}">
-                            <Border Style="{StaticResource ToolTipBorderStyle}">
-                                <TextBlock Text="Top: A baseline that is aligned to the upper edge of the containing box." Style="{StaticResource ToolTipTextStyle}" />
+                        <ToolTip Style="{DynamicResource ToolTipStyle}">
+                            <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                <TextBlock Text="Top: A baseline that is aligned to the upper edge of the containing box." Style="{DynamicResource ToolTipTextStyle}" />
                             </Border>
                         </ToolTip>
                     </RadioButton.ToolTip>
                 </RadioButton>
                 <RadioButton x:Name="superscript" Grid.Column="1" Grid.Row="0" Width="25" Height="25" Checked="Superscript_Checked"
-                             Style="{StaticResource RadioButtonsStyle}">
+                             Style="{DynamicResource RadioButtonsStyle}">
                     <RadioButton.Content>
-                        <Image Source="{StaticResource ImageSource1SuperScript}" />
+                        <Image Source="{DynamicResource ImageSource1SuperScript}" />
                     </RadioButton.Content>
                     <RadioButton.ToolTip>
-                        <ToolTip Style="{StaticResource ToolTipStyle}">
-                            <Border Style="{StaticResource ToolTipBorderStyle}">
-                                <TextBlock Text="SuperScript: A baseline that is aligned at the superscript position of the containing box." Style="{StaticResource ToolTipTextStyle}" />
+                        <ToolTip Style="{DynamicResource ToolTipStyle}">
+                            <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                <TextBlock Text="SuperScript: A baseline that is aligned at the superscript position of the containing box." Style="{DynamicResource ToolTipTextStyle}" />
                             </Border>
                         </ToolTip>
                     </RadioButton.ToolTip>
                 </RadioButton>
                 <RadioButton x:Name="texttopScript" Grid.Column="2" Grid.Row="0" Width="25" Height="25" Checked="Superscript_Checked"
-                             Style="{StaticResource RadioButtonsStyle}">
+                             Style="{DynamicResource RadioButtonsStyle}">
                     <RadioButton.Content>
-                        <Image Source="{StaticResource ImageSource1X}" />
+                        <Image Source="{DynamicResource ImageSource1X}" />
                     </RadioButton.Content>
                     <RadioButton.ToolTip>
-                        <ToolTip Style="{StaticResource ToolTipStyle}">
-                            <Border Style="{StaticResource ToolTipBorderStyle}">
-                                <TextBlock Text="TextTop: A baseline that is aligned at the upper edge of the text baseline." Style="{StaticResource ToolTipTextStyle}" />
+                        <ToolTip Style="{DynamicResource ToolTipStyle}">
+                            <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                <TextBlock Text="TextTop: A baseline that is aligned at the upper edge of the text baseline." Style="{DynamicResource ToolTipTextStyle}" />
                             </Border>
                         </ToolTip>
                     </RadioButton.ToolTip>
                 </RadioButton>
                 <RadioButton x:Name="centerScript" Grid.Column="3" Grid.Row="0" Width="25" Height="25" Checked="Superscript_Checked"
-                             Style="{StaticResource RadioButtonsStyle}">
+                             Style="{DynamicResource RadioButtonsStyle}">
                     <RadioButton.Content>
-                        <Image Source="{StaticResource ImageSource1X}" />
+                        <Image Source="{DynamicResource ImageSource1X}" />
                     </RadioButton.Content>
                     <RadioButton.ToolTip>
-                        <ToolTip Style="{StaticResource ToolTipStyle}">
-                            <Border Style="{StaticResource ToolTipBorderStyle}">
-                                <TextBlock Text="Center: A baseline that is aligned to the center of the containing box." Style="{StaticResource ToolTipTextStyle}" />
+                        <ToolTip Style="{DynamicResource ToolTipStyle}">
+                            <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                <TextBlock Text="Center: A baseline that is aligned to the center of the containing box." Style="{DynamicResource ToolTipTextStyle}" />
                             </Border>
                         </ToolTip>
                     </RadioButton.ToolTip>
                 </RadioButton>
 
                 <RadioButton x:Name="subscript" Grid.Column="0" Grid.Row="1" Width="25" Height="25" Checked="Superscript_Checked"
-                             Style="{StaticResource RadioButtonsStyle}">
+                             Style="{DynamicResource RadioButtonsStyle}">
                     <RadioButton.Content>
-                        <Image Source="{StaticResource ImageSource1SubScript}" />
+                        <Image Source="{DynamicResource ImageSource1SubScript}" />
                     </RadioButton.Content>
                     <RadioButton.ToolTip>
-                        <ToolTip Style="{StaticResource ToolTipStyle}">
-                            <Border Style="{StaticResource ToolTipBorderStyle}">
-                                <TextBlock Text="SubScript: A baseline that is aligned at the subscript position of the containing box." Style="{StaticResource ToolTipTextStyle}" />
+                        <ToolTip Style="{DynamicResource ToolTipStyle}">
+                            <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                <TextBlock Text="SubScript: A baseline that is aligned at the subscript position of the containing box." Style="{DynamicResource ToolTipTextStyle}" />
                             </Border>
                         </ToolTip>
                     </RadioButton.ToolTip>
                 </RadioButton>
                 <RadioButton x:Name="textbottomScript" Grid.Column="1" Grid.Row="1" Width="25" Height="25" Checked="Superscript_Checked"
-                             Style="{StaticResource RadioButtonsStyle}">
+                             Style="{DynamicResource RadioButtonsStyle}">
                     <RadioButton.Content>
-                        <Image Source="{StaticResource ImageSource1X}" />
+                        <Image Source="{DynamicResource ImageSource1X}" />
                     </RadioButton.Content>
                     <RadioButton.ToolTip>
-                        <ToolTip Style="{StaticResource ToolTipStyle}">
-                            <Border Style="{StaticResource ToolTipBorderStyle}">
-                                <TextBlock Text="TextBottom: A baseline that is aligned at the lower edge of the text baseline." Style="{StaticResource ToolTipTextStyle}" />
+                        <ToolTip Style="{DynamicResource ToolTipStyle}">
+                            <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                <TextBlock Text="TextBottom: A baseline that is aligned at the lower edge of the text baseline." Style="{DynamicResource ToolTipTextStyle}" />
                             </Border>
                         </ToolTip>
                     </RadioButton.ToolTip>
                 </RadioButton>
                 <RadioButton x:Name="bottomScript" Grid.Column="2" Grid.Row="1" Width="25" Height="25" Checked="Superscript_Checked"
-                             Style="{StaticResource RadioButtonsStyle}">
+                             Style="{DynamicResource RadioButtonsStyle}">
                     <RadioButton.Content>
-                        <Image Source="{StaticResource ImageSource1X}" />
+                        <Image Source="{DynamicResource ImageSource1X}" />
                     </RadioButton.Content>
                     <RadioButton.ToolTip>
-                        <ToolTip Style="{StaticResource ToolTipStyle}">
-                            <Border Style="{StaticResource ToolTipBorderStyle}">
-                                <TextBlock Text="Bottom: A baseline that is aligned at the lower edge of the containing box." Style="{StaticResource ToolTipTextStyle}" />
+                        <ToolTip Style="{DynamicResource ToolTipStyle}">
+                            <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                <TextBlock Text="Bottom: A baseline that is aligned at the lower edge of the containing box." Style="{DynamicResource ToolTipTextStyle}" />
                             </Border>
                         </ToolTip>
                     </RadioButton.ToolTip>
                 </RadioButton>
                 <RadioButton x:Name="baseScript" Grid.Column="3" Grid.Row="1" Width="25" Height="25" Checked="Superscript_Checked" IsChecked="True"
-                    Style="{StaticResource RadioButtonsStyle}">
+                    Style="{DynamicResource RadioButtonsStyle}">
                     <RadioButton.Content>
-                        <Image Source="{StaticResource ImageSource1X}" />
+                        <Image Source="{DynamicResource ImageSource1X}" />
                     </RadioButton.Content>
                     <RadioButton.ToolTip>
-                        <ToolTip Style="{StaticResource ToolTipStyle}">
-                            <Border Style="{StaticResource ToolTipBorderStyle}">
-                                <TextBlock Text="Baseline: A baseline that is aligned at the actual baseline of the containing box.(Default)" Style="{StaticResource ToolTipTextStyle}" />
+                        <ToolTip Style="{DynamicResource ToolTipStyle}">
+                            <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                <TextBlock Text="Baseline: A baseline that is aligned at the actual baseline of the containing box.(Default)" Style="{DynamicResource ToolTipTextStyle}" />
                             </Border>
                         </ToolTip>
                     </RadioButton.ToolTip>
@@ -328,7 +282,7 @@
 
         <Label Grid.Column="3" Grid.Row="1" HorizontalAlignment="Center" Height="28" Margin="0" Width="102" VerticalAlignment="Center">
             <Label.Content>
-                <TextBlock Text="Font Sample:" Style="{StaticResource ToolTipTextStyle}" />
+                <TextBlock Text="Font Sample:" Style="{DynamicResource ToolTipTextStyle}" />
             </Label.Content>
         </Label>
 
@@ -338,14 +292,15 @@
                          FontWeight="{Binding SelectedItem.Weight, ElementName=lstTypefaces}"
                          FontStretch="{Binding SelectedItem.Stretch, ElementName=lstTypefaces}"
                          FontStyle="{Binding SelectedItem.Style, ElementName=lstTypefaces}"
-                         Background="#FFFFFFF7" Margin="5" BorderBrush="#FFE6E6E6" IsDocumentEnabled="True" AcceptsTab="True" RenderTransformOrigin="0.5,0.5">
+                         Background="{DynamicResource RTBBackgroundColorBrush}"
+                         Margin="5" IsDocumentEnabled="True" AcceptsTab="True" RenderTransformOrigin="0.5,0.5">
             <RichTextBox.Resources>
                 <Style TargetType="RichTextBox">
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate>
                                 <Border x:Name="Bd"
-                                        BorderBrush="#FFE6E6E6"
+                                        BorderBrush="{DynamicResource TextColorBrush}"
                                         BorderThickness="{TemplateBinding BorderThickness}"
                                         SnapsToDevicePixels="True"
                                         Background="{TemplateBinding Background}">
@@ -378,7 +333,7 @@
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Height="28" Margin="0" Width="102" VerticalAlignment="Top">
                 <Label.Content>
-                    <TextBlock Text="Font Size:" Style="{StaticResource ToolTipTextStyle}" />
+                    <TextBlock Text="Font Size:" Style="{DynamicResource ToolTipTextStyle}" />
                 </Label.Content>
             </Label>
             <Grid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
@@ -402,18 +357,18 @@
 
             <Label Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" Height="28" Margin="0" Width="102" VerticalAlignment="Top">
                 <Label.Content>
-                    <TextBlock Text="Line Height:" Style="{StaticResource ToolTipTextStyle}" />
+                    <TextBlock Text="Line Height:" Style="{DynamicResource ToolTipTextStyle}" />
                 </Label.Content>
             </Label>
             <Button x:Name="FontSzLineSz" Grid.Column="1" Grid.Row="2" Width="25" Height="25" HorizontalAlignment="Right" Margin="0,0,10,0" Click="FontSzLineSz_Click"
-                        Style="{StaticResource ButtonsStyle}">
+                        Style="{DynamicResource ButtonsStyle}">
                 <Button.Content>
-                    <Image Source="{StaticResource ImageSource1X}" />
+                    <Image Source="{DynamicResource ImageSource1X}" />
                 </Button.Content>
                 <Button.ToolTip>
-                    <ToolTip Style="{StaticResource ToolTipStyle}">
-                        <Border Style="{StaticResource ToolTipBorderStyle}">
-                            <TextBlock Text="Align Center" Style="{StaticResource ToolTipTextStyle}" />
+                    <ToolTip Style="{DynamicResource ToolTipStyle}">
+                        <Border Style="{DynamicResource ToolTipBorderStyle}">
+                            <TextBlock Text="Align Center" Style="{DynamicResource ToolTipTextStyle}" />
                         </Border>
                     </ToolTip>
                 </Button.ToolTip>
@@ -446,53 +401,53 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <RadioButton x:Name="leftAlign" Grid.Column="0" Grid.Row="0" Width="25" Height="25" Checked="Align_Checked"
-                         Style="{StaticResource RadioButtonsStyle}">
+                         Style="{DynamicResource RadioButtonsStyle}">
                     <RadioButton.Content>
-                        <Image Source="{StaticResource ImageSource1Left}" />
+                        <Image Source="{DynamicResource ImageSource1Left}" />
                     </RadioButton.Content>
                     <RadioButton.ToolTip>
-                        <ToolTip Style="{StaticResource ToolTipStyle}">
-                            <Border Style="{StaticResource ToolTipBorderStyle}">
-                                <TextBlock Text="Align Left" Style="{StaticResource ToolTipTextStyle}" />
+                        <ToolTip Style="{DynamicResource ToolTipStyle}">
+                            <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                <TextBlock Text="Align Left" Style="{DynamicResource ToolTipTextStyle}" />
                             </Border>
                         </ToolTip>
                     </RadioButton.ToolTip>
                 </RadioButton>
                 <RadioButton x:Name="centerAlign" Grid.Column="1" Grid.Row="0" Width="25" Height="25" Checked="Align_Checked" IsChecked="True"
-                        Style="{StaticResource RadioButtonsStyle}">
+                        Style="{DynamicResource RadioButtonsStyle}">
                     <RadioButton.Content>
-                        <Image Source="{StaticResource ImageSource1Center}" />
+                        <Image Source="{DynamicResource ImageSource1Center}" />
                     </RadioButton.Content>
                     <RadioButton.ToolTip>
-                        <ToolTip Style="{StaticResource ToolTipStyle}">
-                            <Border Style="{StaticResource ToolTipBorderStyle}">
-                                <TextBlock Text="Align Center" Style="{StaticResource ToolTipTextStyle}" />
+                        <ToolTip Style="{DynamicResource ToolTipStyle}">
+                            <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                <TextBlock Text="Align Center" Style="{DynamicResource ToolTipTextStyle}" />
                             </Border>
                         </ToolTip>
                     </RadioButton.ToolTip>
                 </RadioButton>
                 <RadioButton x:Name="rightAlign" Grid.Column="2" Grid.Row="0" Width="25" Height="25" Checked="Align_Checked"
-                        Style="{StaticResource RadioButtonsStyle}">
+                        Style="{DynamicResource RadioButtonsStyle}">
                     <RadioButton.Content>
-                        <Image Source="{StaticResource ImageSource1Right}" />
+                        <Image Source="{DynamicResource ImageSource1Right}" />
                     </RadioButton.Content>
                     <RadioButton.ToolTip>
-                        <ToolTip Style="{StaticResource ToolTipStyle}">
-                            <Border Style="{StaticResource ToolTipBorderStyle}">
-                                <TextBlock Text="Align Right" Style="{StaticResource ToolTipTextStyle}" />
+                        <ToolTip Style="{DynamicResource ToolTipStyle}">
+                            <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                <TextBlock Text="Align Right" Style="{DynamicResource ToolTipTextStyle}" />
                             </Border>
                         </ToolTip>
                     </RadioButton.ToolTip>
                 </RadioButton>
                 <RadioButton x:Name="justifyAlign" Grid.Column="3" Grid.Row="0" Width="25" Height="25" Checked="Align_Checked"
-                        Style="{StaticResource RadioButtonsStyle}">
+                        Style="{DynamicResource RadioButtonsStyle}">
                     <RadioButton.Content>
-                        <Image Source="{StaticResource ImageSource1Justify}" />
+                        <Image Source="{DynamicResource ImageSource1Justify}" />
                     </RadioButton.Content>
                     <RadioButton.ToolTip>
-                        <ToolTip Style="{StaticResource ToolTipStyle}">
-                            <Border Style="{StaticResource ToolTipBorderStyle}">
-                                <TextBlock Text="Justify" Style="{StaticResource ToolTipTextStyle}" />
+                        <ToolTip Style="{DynamicResource ToolTipStyle}">
+                            <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                <TextBlock Text="Justify" Style="{DynamicResource ToolTipTextStyle}" />
                             </Border>
                         </ToolTip>
                     </RadioButton.ToolTip>
@@ -500,13 +455,13 @@
             </Grid>
 
             <Button  Grid.Column="0" Grid.Row="5" Grid.RowSpan="2" Click="Apply_Click"
-                     Style="{StaticResource ButtonsStyle}" Width="70" Height="40">
+                     Style="{DynamicResource ButtonsStyle}" Width="70" Height="40">
                 <Button.Content>
                     <TextBlock Text="Apply" />
                 </Button.Content>
             </Button>
             <Button  Grid.Column="1" Grid.Row="5" Grid.RowSpan="2" Click="CloseButt_Click" Width="70" Height="40"
-                     Style="{StaticResource ButtonsStyle}">
+                     Style="{DynamicResource ButtonsStyle}">
                 <Button.Content>
                     <TextBlock Text="Cancel" />
                 </Button.Content>

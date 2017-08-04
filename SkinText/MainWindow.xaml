@@ -7,7 +7,12 @@
         xmlns:tb="http://www.hardcodet.net/taskbar"
         xmlns:local="clr-namespace:SkinText"
         mc:Ignorable="d"
-        Title="SkinText" Height="350" MinHeight="20"  Width="525" MinWidth="110" AllowsTransparency="True" Background="#85949494" WindowStyle="None" MouseDown="Window_MouseDown" ResizeMode="CanResizeWithGrip" Loaded="Window_Loaded" Closing="Window_Closing">
+        Title="SkinText"
+        Height="350" MinHeight="20"
+        Width="525" MinWidth="110"
+        AllowsTransparency="True" Background="{DynamicResource MainWindowBackgroundColorBrush}"
+        WindowStyle="None" MouseDown="Window_MouseDown" ResizeMode="CanResizeWithGrip"
+        Loaded="Window_Loaded" Closing="Window_Closing">
     <Window.CommandBindings>
         <CommandBinding Command="local:CustomCommands.Exit" CanExecute="ExitCommand_CanExecute" Executed="ExitCommand_Executed" />
         <CommandBinding Command="local:CustomCommands.Save" CanExecute="SaveCommand_CanExecute" Executed="SaveCommand_Executed" />
@@ -16,132 +21,6 @@
         <CommandBinding Command="local:CustomCommands.New" CanExecute="NewCommand_CanExecute" Executed="NewCommand_Executed" />
     </Window.CommandBindings>
     <Window.Resources>
-        <LinearGradientBrush x:Key="DarkBrush" StartPoint="0.5,0" EndPoint="0.5,1">
-            <GradientBrush.GradientStops>
-                <GradientStopCollection>
-                    <GradientStop Color="#90939393" Offset="0.0" />
-                    <GradientStop Color="#90717171" Offset="0.05" />
-                    <GradientStop Color="#90606060" Offset="1.0" />
-                </GradientStopCollection>
-            </GradientBrush.GradientStops>
-        </LinearGradientBrush>
-        <LinearGradientBrush x:Key="Clicked" StartPoint="0.5,0" EndPoint="0.5,1">
-            <GradientBrush.GradientStops>
-                <GradientStopCollection>
-                    <GradientStop Color="#60363636" Offset="0.0" />
-                    <GradientStop Color="#60393939" Offset="1.0" />
-                </GradientStopCollection>
-            </GradientBrush.GradientStops>
-        </LinearGradientBrush>
-        <Style x:Key="{x:Type Menu}" TargetType="Menu">
-            <Setter Property="OverridesDefaultStyle" Value="True" />
-            <Setter Property="SnapsToDevicePixels" Value="True" />
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Menu">
-                        <Border x:Name="MainMenu" Background="#aa535353">
-                            <StackPanel ClipToBounds="True" Orientation="Horizontal" IsItemsHost="True" />
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <ControlTemplate x:Key="MenuItemControlTemplate1" TargetType="{x:Type MenuItem}">
-            <Border x:Name="templateRoot"
-                BorderBrush="#00535353"
-                CornerRadius="3"
-                BorderThickness="1"
-                Background="{TemplateBinding Background}"
-                SnapsToDevicePixels="True">
-                <Grid VerticalAlignment="Center">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <ContentPresenter ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" Grid.Column="1" ContentStringFormat="{TemplateBinding HeaderStringFormat}" ContentSource="Header" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                    <Popup x:Name="PART_Popup"  AllowsTransparency="True" Focusable="False" IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}" PopupAnimation="{StaticResource {x:Static SystemParameters.MenuPopupAnimationKey}}" Placement="Bottom" HorizontalOffset="-2">
-                        <Border x:Name="SubMenuBorder" BorderBrush="#70595959" BorderThickness="1" Background="#603A3A3A" Padding="2">
-                            <ScrollViewer x:Name="SubMenuScrollViewer" Style="{StaticResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
-                                <Grid RenderOptions.ClearTypeHint="Enabled">
-                                    <Canvas HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="0">
-                                        <Rectangle x:Name="OpaqueRect" Fill="{Binding Background, ElementName=SubMenuBorder}" Height="{Binding ActualHeight, ElementName=SubMenuBorder}" Width="{Binding ActualWidth, ElementName=SubMenuBorder}" />
-                                    </Canvas>
-                                    <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Cycle" Grid.IsSharedSizeScope="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" KeyboardNavigation.TabNavigation="Cycle" />
-                                </Grid>
-                            </ScrollViewer>
-                        </Border>
-                    </Popup>
-                </Grid>
-            </Border>
-            <ControlTemplate.Triggers>
-                <Trigger Property="IsSuspendingPopupAnimation" Value="True">
-                    <Setter Property="PopupAnimation" TargetName="PART_Popup" Value="None" />
-                </Trigger>
-                <Trigger Property="IsHighlighted" Value="True">
-                    <Setter Property="Background" TargetName="templateRoot" Value="{StaticResource DarkBrush}" />
-                    <Setter Property="BorderBrush" TargetName="templateRoot" Value="#2C2C2C" />
-                    <Setter Property="BorderThickness" TargetName="templateRoot" Value="1"></Setter>
-                </Trigger>
-                <Trigger Property="CanContentScroll" SourceName="SubMenuScrollViewer" Value="False">
-                    <Setter Property="Canvas.Top" TargetName="OpaqueRect" Value="{Binding VerticalOffset, ElementName=SubMenuScrollViewer}" />
-                    <Setter Property="Canvas.Left" TargetName="OpaqueRect" Value="{Binding HorizontalOffset, ElementName=SubMenuScrollViewer}" />
-                </Trigger>
-                <Trigger Property="IsKeyboardFocusWithin" Value="True">
-                    <Setter TargetName="templateRoot" Property="Background" Value="{StaticResource Clicked}" />
-                    <Setter Property="Header" Value="Test" />
-                    <Setter Property="BorderBrush" Value="#2C2C2C"></Setter>
-                    <Setter Property="BorderThickness" Value="1"></Setter>
-                </Trigger>
-            </ControlTemplate.Triggers>
-        </ControlTemplate>
-        <ControlTemplate x:Key="MenuItemControlTemplate2" TargetType="{x:Type MenuItem}">
-            <Border x:Name="templateRoot" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
-                <Grid Margin="-1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition MinWidth="22" SharedSizeGroup="MenuItemIconColumnGroup" Width="Auto" />
-                        <ColumnDefinition Width="13" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="30" />
-                        <ColumnDefinition SharedSizeGroup="MenuItemIGTColumnGroup" Width="Auto" />
-                        <ColumnDefinition Width="20" />
-                    </Grid.ColumnDefinitions>
-                    <ContentPresenter x:Name="Icon" Content="{TemplateBinding Icon}" ContentSource="Icon" HorizontalAlignment="Center" Height="16" Margin="3" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center" Width="16" />
-                    <!-- Border x:Name="GlyphPanel" BorderBrush="#FF26A0DA" BorderThickness="1" Background="#3D26A0DA" ClipToBounds="False" HorizontalAlignment="Center" Height="22" Margin="-1,0,0,0" Visibility="Hidden" VerticalAlignment="Center" Width="22"-->
-                    <Border x:Name="GlyphPanel" BorderBrush="#FFE6E6E6" BorderThickness="1" Background="#3DE6E6E6" ClipToBounds="False" HorizontalAlignment="Center" Height="22" Margin="-1,0,0,0" Visibility="Hidden" VerticalAlignment="Center" Width="22">
-                        <Path x:Name="Glyph" Data="F1M10,1.2L4.7,9.1 4.5,9.1 0,5.2 1.3,3.5 4.3,6.1 8.3,0 10,1.2z" Fill="#FFE6E6E6" FlowDirection="LeftToRight" Height="11" Width="10" />
-                    </Border>
-                    <ContentPresenter x:Name="menuHeaderContainer" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" Grid.Column="2" ContentStringFormat="{TemplateBinding HeaderStringFormat}" ContentSource="Header" HorizontalAlignment="Left" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center" />
-                    <TextBlock x:Name="menuGestureText" Grid.Column="4" Margin="{TemplateBinding Padding}" Opacity="0.7" Text="{TemplateBinding InputGestureText}" VerticalAlignment="Center" />
-                </Grid>
-            </Border>
-            <ControlTemplate.Triggers>
-                <Trigger Property="Icon" Value="{x:Null}">
-                    <Setter Property="Visibility" TargetName="Icon" Value="Collapsed" />
-                </Trigger>
-                <Trigger Property="IsChecked" Value="True">
-                    <Setter Property="Visibility" TargetName="GlyphPanel" Value="Visible" />
-                    <Setter Property="Visibility" TargetName="Icon" Value="Collapsed" />
-                </Trigger>
-                <Trigger Property="IsHighlighted" Value="True">
-                    <Setter Property="Background" TargetName="templateRoot" Value="{StaticResource DarkBrush}" />
-                    <Setter Property="BorderBrush" TargetName="templateRoot" Value="#2C2C2C" />
-                    <Setter Property="TextBlock.Foreground" TargetName="menuHeaderContainer" Value="Black" />
-                </Trigger>
-                <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="#FF707070" />
-                    <Setter Property="Fill" TargetName="Glyph" Value="#FF707070" />
-                </Trigger>
-                <MultiTrigger>
-                    <MultiTrigger.Conditions>
-                        <Condition Property="IsHighlighted" Value="True" />
-                        <Condition Property="IsEnabled" Value="False" />
-                    </MultiTrigger.Conditions>
-                    <Setter Property="Background" TargetName="templateRoot" Value="#0A000000" />
-                    <Setter Property="BorderBrush" TargetName="templateRoot" Value="#21000000" />
-                </MultiTrigger>
-            </ControlTemplate.Triggers>
-        </ControlTemplate>
         <local:ShowMessageCommand x:Key="MessageCommand" />
     </Window.Resources>
     <Grid x:Name="grid" SnapsToDevicePixels="True" UseLayoutRounding="True">
@@ -158,106 +37,166 @@
         <Image x:Name="backgroundimg" Grid.ColumnSpan="3" Grid.RowSpan="3" Stretch="Fill" VerticalAlignment="Top" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5" />
         <DockPanel Grid.Column="1" Grid.Row="1" x:Name="panel" ClipToBounds="True" RenderTransformOrigin="0.5,0.5" MouseLeave="Panel_MouseLeave">
             <Menu x:Name="menu" IsMainMenu="True" DockPanel.Dock="Top" PreviewMouseDown="Menu_PreviewMouseDown">
-                <MenuItem Header="_File" Template="{StaticResource MenuItemControlTemplate1}">
-                    <MenuItem Header="_New..." Command="local:CustomCommands.New" Template="{StaticResource MenuItemControlTemplate2}">
+                <MenuItem Header="_File" Template="{DynamicResource MenuItemControlTemplate1}">
+                    <MenuItem Header="_New..." Command="local:CustomCommands.New" Template="{DynamicResource MenuItemControlTemplate2}">
                         <MenuItem.Icon>
-                            <Image Source="{StaticResource ImageSource1X}" />
+                            <Image Source="{DynamicResource ImageSource1X}" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Header="_Open..." Command="local:CustomCommands.Open" Template="{StaticResource MenuItemControlTemplate2}">
+                    <MenuItem Header="_Open..." Command="local:CustomCommands.Open" Template="{DynamicResource MenuItemControlTemplate2}">
                         <MenuItem.Icon>
-                            <Image Source="{StaticResource ImageSource1X}" />
+                            <Image Source="{DynamicResource ImageSource1X}" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Header="_Save" Command="local:CustomCommands.Save" Template="{StaticResource MenuItemControlTemplate2}">
+                    <MenuItem Header="_Save" Command="local:CustomCommands.Save" Template="{DynamicResource MenuItemControlTemplate2}">
                         <MenuItem.Icon>
-                            <Image Source="{StaticResource ImageSource1X}" />
+                            <Image Source="{DynamicResource ImageSource1X}" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_Save As..." Command="local:CustomCommands.SaveAs" Template="{StaticResource MenuItemControlTemplate2}">
+                    <MenuItem Header="_Save As..." Command="local:CustomCommands.SaveAs" Template="{DynamicResource MenuItemControlTemplate2}">
                         <MenuItem.Icon>
-                            <Image Source="{StaticResource ImageSource1X}" />
+                            <Image Source="{DynamicResource ImageSource1X}" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Header="_Exit" Command="local:CustomCommands.Exit" Template="{StaticResource MenuItemControlTemplate2}">
+                    <MenuItem Header="_Exit" Command="local:CustomCommands.Exit" Template="{DynamicResource MenuItemControlTemplate2}">
                         <MenuItem.Icon>
-                            <Image Source="{StaticResource ImageSource1X}" />
+                            <Image Source="{DynamicResource ImageSource1X}" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="_Edit" Template="{StaticResource MenuItemControlTemplate1}">
-                    <MenuItem Header="_Cut" Command="Cut" Template="{StaticResource MenuItemControlTemplate2}">
+                <MenuItem Header="_Edit" Template="{DynamicResource MenuItemControlTemplate1}">
+                    <MenuItem Header="_Cut" Command="Cut" Template="{DynamicResource MenuItemControlTemplate2}">
                         <MenuItem.Icon>
-                            <Image Source="{StaticResource ImageSource1X}" />
+                            <Image Source="{DynamicResource ImageSource1X}" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_Copy" Command="Copy" Template="{StaticResource MenuItemControlTemplate2}">
+                    <MenuItem Header="_Copy" Command="Copy" Template="{DynamicResource MenuItemControlTemplate2}">
                         <MenuItem.Icon>
-                            <Image Source="{StaticResource ImageSource1X}" />
+                            <Image Source="{DynamicResource ImageSource1X}" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_Paste" Command="Paste" Template="{StaticResource MenuItemControlTemplate2}">
+                    <MenuItem Header="_Paste" Command="Paste" Template="{DynamicResource MenuItemControlTemplate2}">
                         <MenuItem.Icon>
-                            <Image Source="{StaticResource ImageSource1X}" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <Separator />
-                    <MenuItem Header="_Undo" Command="Undo" Template="{StaticResource MenuItemControlTemplate2}">
-                        <MenuItem.Icon>
-                            <Image Source="{StaticResource ImageSource1X}" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="_Redo" Command="Redo" Template="{StaticResource MenuItemControlTemplate2}">
-                        <MenuItem.Icon>
-                            <Image Source="{StaticResource ImageSource1X}" />
+                            <Image Source="{DynamicResource ImageSource1X}" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
-                    <MenuItem x:Name="LineWrapMenuItem" Header="Line Wrap" Template="{StaticResource MenuItemControlTemplate2}" Click="LineWrapMenuItem_Click" IsCheckable="true" IsChecked="True">
-                    </MenuItem>
-                    <MenuItem Header="Open Character _Map" Template="{StaticResource MenuItemControlTemplate2}" Click="CharMap_Click">
+                    <MenuItem Header="_Undo" Command="Undo" Template="{DynamicResource MenuItemControlTemplate2}">
                         <MenuItem.Icon>
-                            <Image Source="{StaticResource ImageSource1X}" />
+                            <Image Source="{DynamicResource ImageSource1X}" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_Font Properties" Template="{StaticResource MenuItemControlTemplate2}" Click="Font_Click">
+                    <MenuItem Header="_Redo" Command="Redo" Template="{DynamicResource MenuItemControlTemplate2}">
                         <MenuItem.Icon>
-                            <Image Source="{StaticResource ImageSource1X}" />
+                            <Image Source="{DynamicResource ImageSource1X}" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_Window Configuration" Template="{StaticResource MenuItemControlTemplate2}" Click="Config_Click">
+                    <Separator />
+                    <MenuItem x:Name="LineWrapMenuItem" IsEnabled="False" Header="Line Wrap" Template="{DynamicResource MenuItemControlTemplate2}" Click="LineWrapMenuItem_Click" IsCheckable="true" IsChecked="True">
+                    </MenuItem>
+                    <MenuItem Header="Open Character _Map" Template="{DynamicResource MenuItemControlTemplate2}" Click="CharMap_Click">
                         <MenuItem.Icon>
-                            <Image Source="{StaticResource ImageSource1X}" />
+                            <Image Source="{DynamicResource ImageSource1X}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_Font Properties" Template="{DynamicResource MenuItemControlTemplate2}" Click="Font_Click">
+                        <MenuItem.Icon>
+                            <Image Source="{DynamicResource ImageSource1X}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_Window Configuration" Template="{DynamicResource MenuItemControlTemplate2}" Click="Config_Click">
+                        <MenuItem.Icon>
+                            <Image Source="{DynamicResource ImageSource1X}" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="_Help" Template="{StaticResource MenuItemControlTemplate1}">
-                    <MenuItem Header="About SkinText" Template="{StaticResource MenuItemControlTemplate2}" Click="About_Click">
+                <MenuItem Header="_Help" Template="{DynamicResource MenuItemControlTemplate1}">
+                    <MenuItem Header="About SkinText" Template="{DynamicResource MenuItemControlTemplate2}" Click="About_Click">
                         <MenuItem.Icon>
-                            <Image Source="{StaticResource ImageSource1X}" />
+                            <Image Source="{DynamicResource ImageSource1X}" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Reset to defaults" Template="{StaticResource MenuItemControlTemplate2}" Click="Resettodefaults_Click">
+                    <MenuItem Header="Reset to defaults" Template="{DynamicResource MenuItemControlTemplate2}" Click="Resettodefaults_Click">
                         <MenuItem.Icon>
-                            <Image Source="{StaticResource ImageSource1X}" />
+                            <Image Source="{DynamicResource ImageSource1X}" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Header="Donate" Template="{StaticResource MenuItemControlTemplate2}" Click="Donate_Click">
+                    <MenuItem Header="Donate" Template="{DynamicResource MenuItemControlTemplate2}" Click="Donate_Click">
                         <MenuItem.Icon>
-                            <Image Source="{StaticResource ImageSource1X}" />
+                            <Image Source="{DynamicResource ImageSource1X}" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem x:Name="MenuFileName" Header="Name" Template="{StaticResource MenuItemControlTemplate1}">
+                <MenuItem x:Name="MenuFileName" Header="Name" Template="{DynamicResource MenuItemControlTemplate1}">
                 </MenuItem>
             </Menu>
+            <ToolBarTray x:Name="ToolBar" DockPanel.Dock="Top" >
+                <ToolBar Margin="0" Padding="0" Band="0">
+                    <Button Command="Cut" >
+                        <Button.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="Cut selection to Windows Clipboard." Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </Button.ToolTip>
+                        <Image Source="{DynamicResource ImageSource1X}" Width="22" Height="22"/>
+                    </Button>
+                    <Button>
+                        <Button.ToolTip>
+                        <ToolTip Style="{DynamicResource ToolTipStyle}">
+                            <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                <TextBlock Text="Copy selection to Windows Clipboard." Style="{DynamicResource ToolTipTextStyle}" />
+                            </Border>
+                        </ToolTip>
+                        </Button.ToolTip>
+                        <Image Source="{DynamicResource ImageSource1X}" Width="22" Height="22"/>
+                    </Button>
+                    <Button ToolTip="Paste from Windows Clipboard." >
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{DynamicResource ImageSource1X}" Width="22" Height="22"/>
+                            <TextBlock Style="{DynamicResource ToolTipTextStyle}">Paste</TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button ToolBar.OverflowMode="Always" ToolTip="Paste from Windows Clipboard." >
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{DynamicResource ImageSource1X}" Width="22" Height="22"/>
+                            <TextBlock Style="{DynamicResource ToolTipTextStyle}">Paste</TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Separator />
+                    <Label>
+                        <Label.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="TOOLTIP" Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </Label.ToolTip>
+                        <TextBlock Style="{DynamicResource ToolTipTextStyle}">Font size:</TextBlock>
+                    </Label>
+                    <ComboBox >
+                        <ComboBoxItem>10</ComboBoxItem>
+                        <ComboBoxItem IsSelected="True">12</ComboBoxItem>
+                        <ComboBoxItem>14</ComboBoxItem>
+                        <ComboBoxItem>16</ComboBoxItem>
+                    </ComboBox>
+                    <TextBox HorizontalContentAlignment="Center" VerticalContentAlignment="Center" > SDFFFS</TextBox>
+                </ToolBar>
+                <ToolBar Band="0">
+                    <Button Command="Cut" Content="Cut" />
+                    <Button Command="Copy" Content="Copy" />
+                    <Button Command="Paste" Content="Paste" />
+                </ToolBar>
+
+            </ToolBarTray>
             <RichTextBox
                 x:Name="rtb"
-                Background="Transparent"
+                Background="{DynamicResource RTBBackgroundColorBrush}"
                 MouseMove="Rtb_MouseMove"
                 BorderThickness="0"
                 ScrollViewer.VerticalScrollBarVisibility="Auto"
@@ -274,6 +213,7 @@
                 <RichTextBox.Resources>
                     <Style TargetType="{x:Type Paragraph}">
                         <Setter Property="Margin" Value="0" />
+                        <Setter Property="Padding" Value="0" />
                     </Style>
                     <Style TargetType="Hyperlink">
                         <Setter Property="Cursor" Value="Hand" />
@@ -290,12 +230,12 @@
                 </RichTextBox.RenderTransform>
             </RichTextBox>
         </DockPanel>
-        <GridSplitter x:Name= "splitter1" Grid.Column="0" Grid.Row="1" Width="5" Height="auto" HorizontalAlignment="Right" VerticalAlignment="Stretch" Margin="0" Visibility="Visible" Background="#997E7E7E" />
-        <GridSplitter x:Name= "splitter2" Grid.Column="1" Grid.Row="0" Width="auto" Height="5" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="0" Visibility="Visible" Background="#997E7E7E" />
-        <GridSplitter x:Name= "splitter3" Grid.Column="2" Grid.Row="1" Width="5" Height="auto" HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="0" Visibility="Visible" Background="#997E7E7E" />
-        <GridSplitter x:Name= "splitter4" Grid.Column="1" Grid.Row="2" Width="auto" Height="5" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0" Visibility="Visible" Background="#997E7E7E" />
-        <Ellipse x:Name= "corner1" Grid.Row= "0" Grid.Column= "0" Fill= "#997E7E7E" Width= "10" Height= "10" Margin= "170,112,0,0"></Ellipse>
-        <Ellipse x:Name= "corner2" Grid.Row= "2" Grid.Column= "0" Fill= "#997E7E7E" Width= "10" Height= "10" Margin= "170,-5,0,117" RenderTransformOrigin="0.5,0.5">
+        <GridSplitter x:Name= "splitter1" Grid.Column="0" Grid.Row="1" Width="5" Height="auto" HorizontalAlignment="Right" VerticalAlignment="Stretch" Margin="0" Visibility="Visible" Background="{DynamicResource BorderColorBrush}" />
+        <GridSplitter x:Name= "splitter2" Grid.Column="1" Grid.Row="0" Width="auto" Height="5" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="0" Visibility="Visible" Background="{DynamicResource BorderColorBrush}" />
+        <GridSplitter x:Name= "splitter3" Grid.Column="2" Grid.Row="1" Width="5" Height="auto" HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="0" Visibility="Visible" Background="{DynamicResource BorderColorBrush}" />
+        <GridSplitter x:Name= "splitter4" Grid.Column="1" Grid.Row="2" Width="auto" Height="5" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0" Visibility="Visible" Background="{DynamicResource BorderColorBrush}" />
+        <Ellipse x:Name= "corner1" Grid.Row= "0" Grid.Column= "0" Fill= "{DynamicResource BorderColorBrush}" Width= "10" Height= "10" Margin= "170,112,0,0"></Ellipse>
+        <Ellipse x:Name= "corner2" Grid.Row= "2" Grid.Column= "0" Fill= "{DynamicResource BorderColorBrush}" Width= "10" Height= "10" Margin= "170,-5,0,117" RenderTransformOrigin="0.5,0.5">
             <Ellipse.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform />
@@ -305,7 +245,7 @@
                 </TransformGroup>
             </Ellipse.RenderTransform>
         </Ellipse>
-        <Ellipse x:Name= "corner3" Grid.Row= "0" Grid.Column= "2" Fill= "#997E7E7E" Width= "10" Height= "10" Margin= "-5,112,175,0" RenderTransformOrigin="0.5,0.5">
+        <Ellipse x:Name= "corner3" Grid.Row= "0" Grid.Column= "2" Fill= "{DynamicResource BorderColorBrush}" Width= "10" Height= "10" Margin= "-5,112,175,0" RenderTransformOrigin="0.5,0.5">
             <Ellipse.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform />
@@ -315,7 +255,7 @@
                 </TransformGroup>
             </Ellipse.RenderTransform>
         </Ellipse>
-        <Ellipse x:Name= "corner4" Grid.Row= "2" Grid.Column= "2" Fill= "#997E7E7E" Width= "10" Height= "10" Margin="-5,-5,175,117" RenderTransformOrigin="0.5,0.5">
+        <Ellipse x:Name= "corner4" Grid.Row= "2" Grid.Column= "2" Fill= "{DynamicResource BorderColorBrush}" Width= "10" Height= "10" Margin="-5,-5,175,117" RenderTransformOrigin="0.5,0.5">
             <Ellipse.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform />
@@ -329,18 +269,18 @@
                         IconSource="/Resources/icon_01.ico"
                         ToolTipText="SkinText"
                         MenuActivation="RightClick"
-                        LeftClickCommand="{StaticResource MessageCommand}"
+                        LeftClickCommand="{DynamicResource MessageCommand}"
                         LeftClickCommandParameter="Single left mouse button click."
                         NoLeftClickDelay="True">
             <tb:TaskbarIcon.TrayToolTip>
-                <Border Background="#C03A3A3A"
-                        BorderBrush="#997E7E7E"
+                <Border Background="{DynamicResource BackgroundColorBrush}"
+                        BorderBrush="{DynamicResource BorderColorBrush}"
                         BorderThickness="2"
                         CornerRadius="3"
                         Width="70"
                         Height="30">
                     <!-- use a binding expression rather than fixed text -->
-                    <TextBlock Text="{Binding Path=ToolTipText}" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Tahoma" Foreground="#FFE6E6E6" FontWeight="Bold" />
+                    <TextBlock Text="{Binding Path=ToolTipText}" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Tahoma" Foreground="{DynamicResource TextColorBrush}" FontWeight="Bold" />
                 </Border>
             </tb:TaskbarIcon.TrayToolTip>
             <tb:TaskbarIcon.ContextMenu>
