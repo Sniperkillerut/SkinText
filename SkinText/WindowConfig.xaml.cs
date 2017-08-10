@@ -87,5 +87,9 @@ namespace SkinText {
         private void WindowOpacityslider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
             CustomMethods.WindowOpacity(windowopacityslider.Value / 100);
         }
+
+        private void ImageBlurSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
+            CustomMethods.BlurBgImage(imageBlurSlider.Value);
+        }
     }
 }

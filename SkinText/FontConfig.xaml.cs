@@ -188,5 +188,17 @@ namespace SkinText {
                 }
             }
         }
+
+        private void Cmb_KeyUp(object sender, KeyEventArgs e) {
+            if (!_fontFamily.IsDropDownOpen)
+            {
+                _fontFamily.IsDropDownOpen = true;
+            }
+            System.Windows.Data.CollectionView itemsViewOriginal = (System.Windows.Data.CollectionView)System.Windows.Data.CollectionViewSource.GetDefaultView(_fontFamily.ItemsSource);
+            itemsViewOriginal.Filter = ((o) => {
+
+                return string.IsNullOrEmpty(_fontFamily.Text) || o.ToString().Contains(_fontFamily.Text);
+            });
+        }
     }
 }

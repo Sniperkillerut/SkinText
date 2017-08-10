@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -57,6 +58,8 @@ namespace SkinText {
         private void Config_Click(object sender, RoutedEventArgs e)
         {
             WinConfig.Show();
+
+            EnableBlur(AccentState.ACCENT_ENABLE_BLURBEHIND);
         }
 
         private void AdvancedConfig_Click(object sender, RoutedEventArgs e)
@@ -77,6 +80,7 @@ namespace SkinText {
         private void Font_Click(object sender, RoutedEventArgs e)
         {
             FontConf.Show();
+            EnableBlur(AccentState.ACCENT_INVALID_STATE);
         }
 
         private void Hyperlink_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -282,12 +286,13 @@ namespace SkinText {
 
 
             //Editing things
-            _fontFamily.ItemsSource = System.Windows.Media.Fonts.SystemFontFamilies;
+            //_fontFamily.ItemsSource = System.Windows.Media.Fonts.SystemFontFamilies;
             _fontSize.ItemsSource = FontSizes;
-            _fontFamily.SelectedIndex = 0;
+            //_fontFamily.SelectedIndex = 0;
             _fontSize.SelectedIndex = 23;
             DropDownFontColor.IsEnabled = false;
             DropDownFontBackColor.IsEnabled = false;
+
         }
 
         public double[] FontSizes => new double[] {
@@ -678,14 +683,20 @@ namespace SkinText {
         }
 
         private void _fontFamily_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e) {
-            System.Windows.Media.FontFamily editValue = (System.Windows.Media.FontFamily)e.AddedItems[0];
-            ApplyPropertyValueToSelectedText(TextElement.FontFamilyProperty, editValue);
+            if(e.AddedItems.Count > 0){
+                System.Windows.Media.FontFamily editValue = (System.Windows.Media.FontFamily)e.AddedItems[0];
+                ApplyPropertyValueToSelectedText(TextElement.FontFamilyProperty, editValue);
+            }
         }
         void ApplyPropertyValueToSelectedText(DependencyProperty formattingProperty, object value) {
-            if (value == null){
-                return;
+            if (rtb?.Selection != null)
+            {
+                if (value == null)
+                {
+                    return;
+                }
+                rtb.Selection.ApplyPropertyValue(formattingProperty, value);
             }
-            rtb.Selection.ApplyPropertyValue(formattingProperty, value);
         }
 
         private void UpdateSelectedFontFamily() {
@@ -843,11 +854,12 @@ namespace SkinText {
                     else
                     {//if unchecking
                         TextMarkerStyle markerStyle = ((ListItem)startParagraph.Parent).List.MarkerStyle;
-                        if (markerStyle != TextMarkerStyle.Disc)
+                        if (markerStyle != TextMarkerStyle.Disc && markerStyle != TextMarkerStyle.Box && markerStyle != TextMarkerStyle.Circle && markerStyle != TextMarkerStyle.Square)
                         {
                             EditingCommands.ToggleBullets.Execute(null, rtb);
                         }
                         EditingCommands.ToggleBullets.Execute(null, rtb);
+
                     }
                 }
             }
@@ -860,6 +872,103 @@ namespace SkinText {
                 ((ListItem)startParagraph.Parent).List.MarkerStyle = textMarker;
             }
         }
+        private void Cmb_KeyUp(object sender, KeyEventArgs e) {
+
+            if (!_fontFamily.IsDropDownOpen)
+            {
+                _fontFamily.IsDropDownOpen = true;
+            }
+
+            System.Windows.Data.CollectionView itemsViewOriginal = (System.Windows.Data.CollectionView)System.Windows.Data.CollectionViewSource.GetDefaultView(_fontFamily.ItemsSource);
+
+            itemsViewOriginal.Filter = ((o) =>
+            {
+                /*if (String.IsNullOrEmpty(_fontFamily.Text)) return true;
+                else
+                {
+                    if (((string)o.ToString()).Contains(_fontFamily.Text)) return true;
+                    else return false;
+                }*/
+                //1 line:
+                return string.IsNullOrEmpty(_fontFamily.Text) || o.ToString().Contains(_fontFamily.Text);
+            });
+
+            //itemsViewOriginal.Refresh();
+
+            // if datasource is a DataView, then apply RowFilter as below and replace above logic with below one
+            /*
+             DataView view = (DataView) _fontFamily.ItemsSource;
+             view.RowFilter = ("Name like '*" + _fontFamily.Text + "*'");
+            */
+        }
+
+
+        [DllImport("user32.dll")]
+        internal static extern int SetWindowCompositionAttribute(IntPtr hwnd, ref WindowCompositionAttributeData data);
+
+
+
+        internal void EnableBlur(AccentState acc) {
+            var windowHelper = new WindowInteropHelper(this);
+
+            var accent = new AccentPolicy();
+            accent.AccentState = acc;
+
+            var accentStructSize = Marshal.SizeOf(accent);
+
+            var accentPtr = Marshal.AllocHGlobal(accentStructSize);
+            Marshal.StructureToPtr(accent, accentPtr, false);
+
+            var data = new WindowCompositionAttributeData();
+            data.Attribute = WindowCompositionAttribute.WCA_ACCENT_POLICY;
+            data.SizeOfData = accentStructSize;
+            data.Data = accentPtr;
+
+            SetWindowCompositionAttribute(windowHelper.Handle, ref data);
+
+            Marshal.FreeHGlobal(accentPtr);
+        }
 
     }
+    //Blur test
+
+    internal enum AccentState
+    {
+        ACCENT_DISABLED = 1,
+        ACCENT_ENABLE_GRADIENT = 0,
+        ACCENT_ENABLE_TRANSPARENTGRADIENT = 2,
+        ACCENT_ENABLE_BLURBEHIND = 3,
+        ACCENT_INVALID_STATE = 4
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct AccentPolicy
+    {
+        public AccentState AccentState;
+        public int AccentFlags;
+        public int GradientColor;
+        public int AnimationId;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct WindowCompositionAttributeData
+    {
+        public WindowCompositionAttribute Attribute;
+        public IntPtr Data;
+        public int SizeOfData;
+    }
+
+    internal enum WindowCompositionAttribute
+    {
+        // ...
+        WCA_ACCENT_POLICY = 19
+        // ...
+    }
+
+
+
+
+
+
+    //Blur test
 }

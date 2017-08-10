@@ -1758,5 +1758,14 @@ namespace SkinText {
                 }
             }
         }
+
+
+        public static void BlurBgImage(double blurVal) {
+            var blur = new System.Windows.Media.Effects.BlurEffect();
+            blur.KernelType = System.Windows.Media.Effects.KernelType.Gaussian;
+            blur.Radius = blurVal;
+
+            mainW.backgroundimg.Effect = blur;
+        }
     }
 }

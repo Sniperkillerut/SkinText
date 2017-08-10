@@ -57,6 +57,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="10" />
         </Grid.RowDefinitions>
         <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center">
@@ -205,7 +206,6 @@
                           SelectedColorChanged="ClrPcker_RTB_Background_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle}"
                           DisplayColorAndName="False" ColorMode="ColorPalette"/>
-
         <Label Grid.Column="0" Grid.Row="9">
             <Label.ToolTip>
                 <ToolTip Style="{DynamicResource ToolTipStyle}">
@@ -488,5 +488,6 @@
                 </ToggleButton.ToolTip>
             </ToggleButton>
         </Grid>
+        <Slider Grid.Column="1" Grid.Row="20" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center" x:Name="imageBlurSlider" ValueChanged="ImageBlurSlider_ValueChanged" IsMoveToPointEnabled="True"/>
     </Grid>
 </Window>
