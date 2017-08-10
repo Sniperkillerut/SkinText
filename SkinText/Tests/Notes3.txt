@@ -1,0 +1,23 @@
+TODO:
+fix text background - Done?
+add "do you want to save?" dialog - Done
+show in notification icons - Done
+open character map ß - Done
+add undo /redo - Done
+Alt opens menu - Done
+right click icon for menu - Done (needs skin)
+menu tooltips - Done
+Icon by EdeFex - Done
+Hide Resize Corner - Done
+File Save confirmation shows filepath - Done
+Save/Open xaml, camlp, rtf, txt - Done
+change overline and baseline to super and under script (not working)
+1.	Skin install config
+2.	Add menu Commands (ctrl+s=save)
+3.	allow to skin menu (block menu transparency to a min)
+Tutorial
+Turn all texts into resources for translation
+http://google.comLINK
+https://ar.ikariam.gameforge.com/main/gametour_extended
+ 
+ 

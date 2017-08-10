@@ -1,0 +1,104 @@
+<Section xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xml:space="preserve" TextAlignment="Left" LineHeight="Auto" IsHyphenationEnabled="False" xml:lang="en-us" FlowDirection="LeftToRight" NumberSubstitution.CultureSource="Text" NumberSubstitution.Substitution="AsCulture" FontFamily="Segoe UI" FontStyle="Normal" FontWeight="Normal" FontStretch="Normal" FontSize="12" Foreground="#FF000000" Typography.StandardLigatures="True" Typography.ContextualLigatures="True" Typography.DiscretionaryLigatures="False" Typography.HistoricalLigatures="False" Typography.AnnotationAlternates="0" Typography.ContextualAlternates="True" Typography.HistoricalForms="False" Typography.Kerning="True" Typography.CapitalSpacing="False" Typography.CaseSensitiveForms="False" Typography.StylisticSet1="False" Typography.StylisticSet2="False" Typography.StylisticSet3="False" Typography.StylisticSet4="False" Typography.StylisticSet5="False" Typography.StylisticSet6="False" Typography.StylisticSet7="False" Typography.StylisticSet8="False" Typography.StylisticSet9="False" Typography.StylisticSet10="False" Typography.StylisticSet11="False" Typography.StylisticSet12="False" Typography.StylisticSet13="False" Typography.StylisticSet14="False" Typography.StylisticSet15="False" Typography.StylisticSet16="False" Typography.StylisticSet17="False" Typography.StylisticSet18="False" Typography.StylisticSet19="False" Typography.StylisticSet20="False" Typography.Fraction="Normal" Typography.SlashedZero="False" Typography.MathematicalGreek="False" Typography.EastAsianExpertForms="False" Typography.Variants="Normal" Typography.Capitals="Normal" Typography.NumeralStyle="Normal" Typography.NumeralAlignment="Normal" Typography.EastAsianWidths="Normal" Typography.EastAsianLanguage="Normal" Typography.StandardSwashes="0" Typography.ContextualSwashes="0" Typography.StylisticAlternates="0"><Paragraph TextAlignment="Center" FontFamily="Arial" FontSize="18" Margin="0,0,0,0"><Run> </Run></Paragraph><Paragraph Background="#FF0000FF"><Span FontSize="40"><Run>Baseline:</Run></Span><Span BaselineAlignment="Baseline"><Run>Baseline</Run></Span><Span BaselineAlignment="Top"><Run>Top</Run></Span><Span BaselineAlignment="Bottom"><Run>Bottom</Run></Span><Span BaselineAlignment="Center"><Run>Center</Run></Span></Paragraph><Paragraph Background="#FF008000"><Span FontSize="40"><Run>Baseline:</Run></Span><Span BaselineAlignment="Subscript"><Run>Subscript</Run></Span><Span BaselineAlignment="Baseline"><Run>Baseline</Run></Span><Span BaselineAlignment="Superscript"><Run>Superscript</Run></Span></Paragraph>
+
+<Paragraph LineHeight="60" Background="#FFFFFF00">
+<Span>
+<Run FontSize="40">
+<Run.TextDecorations>
+<TextDecorationCollection xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+<TextDecoration Location="OverLine" />
+<TextDecoration Location="Baseline" />
+</TextDecorationCollection>
+</Run.TextDecorations>
+Baseline:
+</Run>
+</Span>
+<Span BaselineAlignment="Top">
+<Run BaselineAlignment="Top">
+<Run.TextDecorations>
+<TextDecorationCollection xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+<TextDecoration Location="OverLine" />
+<TextDecoration Location="Baseline" />
+</TextDecorationCollection>
+</Run.TextDecorations>
+Top
+</Run>
+</Span>
+<Span BaselineAlignment="TextTop">
+<Run BaselineAlignment="TextTop">
+<Run.TextDecorations>
+<TextDecorationCollection xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+<TextDecoration Location="OverLine" />
+<TextDecoration Location="Baseline" />
+</TextDecorationCollection>
+</Run.TextDecorations>
+TextTop
+</Run>
+</Span>
+<Span BaselineAlignment="Superscript">
+<Run xml:lang="es-es" BaselineAlignment="Superscript">
+<Run.TextDecorations>
+<TextDecorationCollection xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+<TextDecoration Location="OverLine" />
+<TextDecoration Location="Baseline" />
+</TextDecorationCollection>
+</Run.TextDecorations>
+Superscript
+</Run>
+</Span>
+<Span BaselineAlignment="Center">
+<Run xml:lang="es-es" BaselineAlignment="Center">
+<Run.TextDecorations>
+<TextDecorationCollection xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+<TextDecoration Location="OverLine" />
+<TextDecoration Location="Baseline" />
+</TextDecorationCollection>
+</Run.TextDecorations>
+Center
+</Run>
+</Span>
+<Span>
+<Run xml:lang="es-es">
+<Run.TextDecorations>
+<TextDecorationCollection xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+<TextDecoration Location="OverLine" />
+<TextDecoration Location="Baseline" />
+</TextDecorationCollection>
+</Run.TextDecorations>
+Baseline
+</Run>
+</Span>
+<Span BaselineAlignment="Subscript">
+<Run xml:lang="es-es" BaselineAlignment="Subscript">
+<Run.TextDecorations>
+<TextDecorationCollection xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+<TextDecoration Location="OverLine" />
+<TextDecoration Location="Baseline" />
+</TextDecorationCollection>
+</Run.TextDecorations>
+Subscript
+</Run>
+</Span>
+<Span BaselineAlignment="TextBottom">
+<Run BaselineAlignment="TextBottom">
+<Run.TextDecorations>
+<TextDecorationCollection xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+<TextDecoration Location="OverLine" />
+<TextDecoration Location="Baseline" />
+</TextDecorationCollection>
+</Run.TextDecorations>
+TextBottom
+</Run>
+</Span>
+<Span BaselineAlignment="Bottom">
+<Run BaselineAlignment="Bottom">
+<Run.TextDecorations>
+<TextDecorationCollection xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+<TextDecoration Location="OverLine" />
+<TextDecoration Location="Baseline" />
+</TextDecorationCollection>
+</Run.TextDecorations>
+Bottom
+</Run>
+</Span>
+</Paragraph>
+</Section>

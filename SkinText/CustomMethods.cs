@@ -8,16 +8,17 @@ using System.Windows.Documents;
 using System.Windows.Media;
 
 namespace SkinText {
-
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling")]
     public static class CustomMethods {
         private static string appDataPath;
+        private static int autoSaveTimer = 5 * 60 * 1000;
         private static string currentSkin;
         private static bool fileChanged;
         private static string filepath;
         private static string imagepath;
         private static MainWindow mainW;
         public static string AppDataPath { get => appDataPath; set => appDataPath = value; }
+        public static int AutoSaveTimer { get => autoSaveTimer; set => autoSaveTimer = value; }
         public static string CurrentSkin { get => currentSkin; set => currentSkin = value; }
         public static bool FileChanged { get => fileChanged; set => fileChanged = value; }
         public static string Filepath { get => filepath; set => filepath = value; }
@@ -79,6 +80,7 @@ namespace SkinText {
         public static void ExitProgram() {
             MainW.FontConf.Close();
             MainW.WinConfig.Close();
+            MainW.AdvConf.Close();
             SaveConfig();
         }
 
@@ -180,31 +182,71 @@ namespace SkinText {
                 MainW.grid.RowDefinitions[2].Height = new GridLength(borderSize, GridUnitType.Star);
 
             //Colors
-                Application.Current.Resources["BorderColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#997E7E7E"));
-                Application.Current.Resources["BackgroundColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#C03A3A3A"));
-                Application.Current.Resources["ButtonBackgroundColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#602C2C2C"));
-                Application.Current.Resources["ButtonBackgroundMouseOverColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#85949494"));
-                Application.Current.Resources["ButtonBackgroundCheckedColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF606060"));
-                Application.Current.Resources["TextColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFE6E6E6"));
-                //Application.Current.Resources["BorderColorBrush"]
-            //border color
-                //#997E7E7E by default in xaml
-                MainW.WinConfig.ClrPcker_BorderBackground.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("BorderColorBrush")).Color;
-                //MainW.WinConfig.ClrPcker_BorderBackground.SelectedColor = (Color)ColorConverter.ConvertFromString("#997E7E7E");
+            /*Application.Current.Resources["BorderColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#997E7E7E"));
+            Application.Current.Resources["MainWindowBackgroundColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#85949494"));
+            Application.Current.Resources["RTBBackgroundColor"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("Transparent"));
 
-            //window color
-                //#85949494 by default in xaml
-                //but ImageClear() will set the default bg color if color is transparent
-                MainW.WinConfig.ClrPcker_WindowBackground.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("ButtonBackgroundMouseOverColorBrush")).Color;
+        Application.Current.Resources["BackgroundColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#C03A3A3A"));
+        Application.Current.Resources["ButtonBackgroundColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#602C2C2C"));
+        Application.Current.Resources["ButtonFrontColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("##FFE6E6E6"));
+        Application.Current.Resources["ButtonBackgroundMouseOverColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#85949494"));
+        Application.Current.Resources["ButtonBorderMouseOverColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFE6E6E6"));
+        Application.Current.Resources["ButtonBackgroundCheckedColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#607E7E7E"));
+        Application.Current.Resources["ButtonBorderCheckedColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF808080"));
+        Application.Current.Resources["TextColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFE6E6E6"));
+
+        Application.Current.Resources["FontPickBackgroundColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#AA606060"));
+        Application.Current.Resources["FontPickTextColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFE6E6E6"));
+        Application.Current.Resources["FontPickMouseOverBackgroundColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#20FFFFFF"));
+        Application.Current.Resources["FontPickMouseOverBorderColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#90FFFFFF"));
+        Application.Current.Resources["FontPickSelectedBackgroundColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#40FFFFFF"));
+        Application.Current.Resources["FontPickSelectedBorderColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFFFFFF"));
+
+        Application.Current.Resources["MenuBackgroundColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#aa535353"));
+        Application.Current.Resources["MenuItem1BorderColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("Transparent"));
+        Application.Current.Resources["MenuItem2HighlightTextColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("Black"));
+        Application.Current.Resources["MenuItem2HighlightBorderColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#602C2C2C"));
+        Application.Current.Resources["MenuItem2DisabledColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF2C2C2C"));
+            */
+
+
 
             //text bg color
-                MainW.WinConfig.ClrPcker_RTB_Background.SelectedColor = Colors.Transparent;
+
+            //Colors:
+            MainW.WinConfig.ClrPcker_BorderBackground.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("BorderColorBrush")).Color;
+                MainW.WinConfig.ClrPcker_WindowBackground.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("MainWindowBackgroundColorBrush")).Color;
+                MainW.WinConfig.ClrPcker_RTB_Background.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("RTBBackgroundColorBrush")).Color;
+            //Advanced Colors:
+                MainW.AdvConf.ClrPcker_BackgroundColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("BackgroundColorBrush")).Color;
+                MainW.AdvConf.ClrPcker_ButtonBackgroundCheckedColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("ButtonBackgroundCheckedColorBrush")).Color;
+                MainW.AdvConf.ClrPcker_ButtonBackgroundColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("ButtonBackgroundColorBrush")).Color;
+                MainW.AdvConf.ClrPcker_ButtonBackgroundMouseOverColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("ButtonBackgroundMouseOverColorBrush")).Color;
+                MainW.AdvConf.ClrPcker_FontPickBackgroundColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("FontPickBackgroundColorBrush")).Color;
+                MainW.AdvConf.ClrPcker_FontPickMouseOverBackgroundColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("FontPickMouseOverBackgroundColorBrush")).Color;
+                MainW.AdvConf.ClrPcker_FontPickMouseOverBorderColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("FontPickMouseOverBorderColorBrush")).Color;
+                MainW.AdvConf.ClrPcker_FontPickSelectedBackgroundColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("FontPickSelectedBackgroundColorBrush")).Color;
+                MainW.AdvConf.ClrPcker_FontPickSelectedBorderColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("FontPickSelectedBorderColorBrush")).Color;
+                MainW.AdvConf.ClrPcker_MenuBackgroundColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("MenuBackgroundColorBrush")).Color;
+                MainW.AdvConf.ClrPcker_MenuItem1BorderColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("MenuItem1BorderColorBrush")).Color;
+                MainW.AdvConf.ClrPcker_MenuItem2DisabledColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("MenuItem2DisabledColorBrush")).Color;
+                MainW.AdvConf.ClrPcker_MenuItem2HighlightBorderColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("MenuItem2HighlightBorderColorBrush")).Color;
+                MainW.AdvConf.ClrPcker_MenuItem2HighlightTextColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("MenuItem2HighlightTextColorBrush")).Color;
+                MainW.AdvConf.ClrPcker_TextColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("TextColorBrush")).Color;
+                MainW.AdvConf.ClrPcker_FontPickTextColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("FontPickTextColorBrush")).Color;
+                MainW.AdvConf.ClrPcker_ButtonFrontColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("ButtonFrontColorBrush")).Color;
+                MainW.AdvConf.ClrPcker_ButtonBorderMouseOverColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("ButtonBorderMouseOverColorBrush")).Color;
+                MainW.AdvConf.ClrPcker_ButtonBorderCheckedColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("ButtonBorderCheckedColorBrush")).Color;
 
             //rotation angle
-                MainW.WinConfig.slValue.Value = 0;
+            MainW.WinConfig.slValue.Value = 0;
 
             //no file
                 NewFile();
+
+            //Auto Save Timer
+                //TODO: add to load/save config and to windowConf to modify
+                AutoSaveTimer = 5 * 60 * 1000;
 
             //gif_uses_ram
                 //Default = false (use CPU)
@@ -290,8 +332,9 @@ namespace SkinText {
         public static void NewFile() {
             Filepath = "";
             MainW.MenuFileName.Header = "";
-            MainW.rtb.Document = new FlowDocument();
-            MainW.rtb.Document.LineStackingStrategy = LineStackingStrategy.BlockLineHeight;
+            MainW.rtb.Document = new FlowDocument() {
+                LineStackingStrategy = LineStackingStrategy.BlockLineHeight
+            };
             FileChanged = false;
         }
 
@@ -600,6 +643,84 @@ namespace SkinText {
                                 }
                                 break;
                             }
+                            ////////////////////////////////////
+                        case "BACKGROUNDCOLORBRUSH": {
+                                MainW.AdvConf.ClrPcker_BackgroundColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString(line[1]);
+                                break;
+                            }
+                        case "BUTTONBACKGROUNDCHECKEDCOLORBRUSH": {
+                                MainW.AdvConf.ClrPcker_ButtonBackgroundCheckedColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString(line[1]);
+                                break;
+                            }
+                        case "BUTTONBORDERCHECKEDCOLORBRUSH": {
+                                MainW.AdvConf.ClrPcker_ButtonBorderCheckedColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString(line[1]);
+                                break;
+                            }
+                        case "BUTTONBACKGROUNDCOLORBRUSH": {
+                                MainW.AdvConf.ClrPcker_ButtonBackgroundColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString(line[1]);
+                                break;
+                            }
+                        case "ButtonFrontColorBrush": {
+                                MainW.AdvConf.ClrPcker_ButtonFrontColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString(line[1]);
+                                break;
+                            }
+                        case "BUTTONBACKGROUNDMOUSEOVERCOLORBRUSH": {
+                                MainW.AdvConf.ClrPcker_ButtonBackgroundMouseOverColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString(line[1]);
+                                break;
+                            }
+                        case "BUTTONBORDERMOUSEOVERCOLORBRUSH": {
+                                MainW.AdvConf.ClrPcker_ButtonBorderMouseOverColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString(line[1]);
+                                break;
+                            }
+                        case "FONTPICKBACKGROUNDCOLORBRUSH": {
+                                MainW.AdvConf.ClrPcker_FontPickBackgroundColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString(line[1]);
+                                break;
+                            }
+                        case "FONTPICKMOUSEOVERBACKGROUNDCOLORBRUSH": {
+                                MainW.AdvConf.ClrPcker_FontPickMouseOverBackgroundColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString(line[1]);
+                                break;
+                            }
+                        case "FONTPICKMOUSEOVERBORDERCOLORBRUSH": {
+                                MainW.AdvConf.ClrPcker_FontPickMouseOverBorderColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString(line[1]);
+                                break;
+                            }
+                        case "FONTPICKSELECTEDBACKGROUNDCOLORBRUSH": {
+                                MainW.AdvConf.ClrPcker_FontPickSelectedBackgroundColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString(line[1]);
+                                break;
+                            }
+                        case "FONTPICKSELECTEDBORDERCOLORBRUSH": {
+                                MainW.AdvConf.ClrPcker_FontPickSelectedBorderColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString(line[1]);
+                                break;
+                            }
+                        case "MENUBACKGROUNDCOLORBRUSH": {
+                                MainW.AdvConf.ClrPcker_MenuBackgroundColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString(line[1]);
+                                break;
+                            }
+                        case "MENUITEM1BORDERCOLORBRUSH": {
+                                MainW.AdvConf.ClrPcker_MenuItem1BorderColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString(line[1]);
+                                break;
+                            }
+                        case "MENUITEM2DISABLEDCOLORBRUSH": {
+                                MainW.AdvConf.ClrPcker_MenuItem2DisabledColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString(line[1]);
+                                break;
+                            }
+                        case "MENUITEM2HIGHLIGHTBORDERCOLORBRUSH": {
+                                MainW.AdvConf.ClrPcker_MenuItem2HighlightBorderColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString(line[1]);
+                                break;
+                            }
+                        case "MENUITEM2HIGHLIGHTTEXTCOLORBRUSH": {
+                                MainW.AdvConf.ClrPcker_MenuItem2HighlightTextColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString(line[1]);
+                                break;
+                            }
+                        case "TEXTCOLORBRUSH": {
+                                MainW.AdvConf.ClrPcker_TextColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString(line[1]);
+                                break;
+                            }
+                        case "FONTPICKTEXTCOLORBRUSH": {
+                                MainW.AdvConf.ClrPcker_FontPickTextColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString(line[1]);
+                                break;
+                            }
+
                     }
                 }
                 catch (Exception ex) {
@@ -893,7 +1014,7 @@ namespace SkinText {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:No pasar cadenas literal como parámetros localizados", MessageId = "System.Windows.MessageBox.Show(System.String,System.String,System.Windows.MessageBoxButton,System.Windows.MessageBoxImage,System.Windows.MessageBoxResult,System.Windows.MessageBoxOptions)")]
         public static void Save(bool saveas) {
-            if (Filepath.Length < 4) {//checks for complete filenames instead of just .rtf or .xaml //should be "" becouse it is validate in other places too but just in case
+            if (!saveas && Filepath.Length < 4) {//checks for complete filenames instead of just .rtf or .xaml //should be "" because it is validated in other places too but just in case
                 saveas = true;
             }
             if (saveas) {
@@ -940,7 +1061,7 @@ namespace SkinText {
                                 t.Save(file, DataFormats.XamlPackage);
                                 break;
                             }
-                        default: {
+                        default: {//ths should never hapen
                                 throw new FileFormatException();
                             }
                     }
@@ -950,11 +1071,23 @@ namespace SkinText {
             }
             catch (Exception ex) {
                 MessageBox.Show("Failed to Write File", "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
-#if DEBUG
+                #if DEBUG
                 MessageBox.Show(ex.ToString());
                 //throw;
-#endif
+                #endif
             }
+        }
+
+        private static bool _isSaving;
+        public async static System.Threading.Tasks.Task DelayedSaveAsync() {
+            // if already waiting, get out
+            if (_isSaving) {
+                return;
+            }
+            _isSaving = true;
+            await System.Threading.Tasks.Task.Delay(AutoSaveTimer);
+            Save(false);
+            _isSaving = false;
         }
 
         /// <summary>
@@ -1135,6 +1268,50 @@ namespace SkinText {
                     //Line Wrap
                     data = "line_wrap = " + MainW.LineWrapMenuItem.IsChecked.ToString();
                     writer.WriteLine(data);
+
+
+
+                    //////////////////////////////////////
+                    //ADVANCED
+                    data = "BackgroundColorBrush = " + MainW.AdvConf.ClrPcker_BackgroundColorBrush.SelectedColor.ToString();
+                    writer.WriteLine(data);
+                    data = "ButtonBackgroundCheckedColorBrush = " + MainW.AdvConf.ClrPcker_ButtonBackgroundCheckedColorBrush.SelectedColor.ToString();
+                    writer.WriteLine(data);
+                    data = "ButtonBorderCheckedColorBrush = " + MainW.AdvConf.ClrPcker_ButtonBorderCheckedColorBrush.SelectedColor.ToString();
+                    writer.WriteLine(data);
+                    data = "ButtonBackgroundColorBrush = " + MainW.AdvConf.ClrPcker_ButtonBackgroundColorBrush.SelectedColor.ToString();
+                    writer.WriteLine(data);
+                    data = "ButtonFrontColorBrush = " + MainW.AdvConf.ClrPcker_ButtonFrontColorBrush.SelectedColor.ToString();
+                    writer.WriteLine(data);
+                    data = "ButtonBorderMouseOverColorBrush = " + MainW.AdvConf.ClrPcker_ButtonBorderMouseOverColorBrush.SelectedColor.ToString();
+                    writer.WriteLine(data);
+                    data = "ButtonBackgroundMouseOverColorBrush = " + MainW.AdvConf.ClrPcker_ButtonBackgroundMouseOverColorBrush.SelectedColor.ToString();
+                    writer.WriteLine(data);
+                    data = "FontPickBackgroundColorBrush = " + MainW.AdvConf.ClrPcker_FontPickBackgroundColorBrush.SelectedColor.ToString();
+                    writer.WriteLine(data);
+                    data = "FontPickMouseOverBackgroundColorBrush = " + MainW.AdvConf.ClrPcker_FontPickMouseOverBackgroundColorBrush.SelectedColor.ToString();
+                    writer.WriteLine(data);
+                    data = "FontPickMouseOverBorderColorBrush = " + MainW.AdvConf.ClrPcker_FontPickMouseOverBorderColorBrush.SelectedColor.ToString();
+                    writer.WriteLine(data);
+                    data = "FontPickSelectedBackgroundColorBrush = " + MainW.AdvConf.ClrPcker_FontPickSelectedBackgroundColorBrush.SelectedColor.ToString();
+                    writer.WriteLine(data);
+                    data = "FontPickSelectedBorderColorBrush = " + MainW.AdvConf.ClrPcker_FontPickSelectedBorderColorBrush.SelectedColor.ToString();
+                    writer.WriteLine(data);
+                    data = "MenuBackgroundColorBrush = " + MainW.AdvConf.ClrPcker_MenuBackgroundColorBrush.SelectedColor.ToString();
+                    writer.WriteLine(data);
+                    data = "MenuItem1BorderColorBrush = " + MainW.AdvConf.ClrPcker_MenuItem1BorderColorBrush.SelectedColor.ToString();
+                    writer.WriteLine(data);
+                    data = "ClrPcker_MenuItem2DisabledColorBrush = " + MainW.AdvConf.ClrPcker_MenuItem2DisabledColorBrush.SelectedColor.ToString();
+                    writer.WriteLine(data);
+                    data = "MenuItem2HighlightBorderColorBrush = " + MainW.AdvConf.ClrPcker_MenuItem2HighlightBorderColorBrush.SelectedColor.ToString();
+                    writer.WriteLine(data);
+                    data = "MenuItem2HighlightTextColorBrush = " + MainW.AdvConf.ClrPcker_MenuItem2HighlightTextColorBrush.SelectedColor.ToString();
+                    writer.WriteLine(data);
+                    data = "TextColorBrush = " + MainW.AdvConf.ClrPcker_TextColorBrush.SelectedColor.ToString();
+                    writer.WriteLine(data);
+                    data = "FontPickTextColorBrush = " + MainW.AdvConf.ClrPcker_FontPickTextColorBrush.SelectedColor.ToString();
+                    writer.WriteLine(data);
+
                 }
 
                 //to hide file: but exception from FileMode.Create
@@ -1261,9 +1438,19 @@ namespace SkinText {
                             };
                             curParagraph.Inlines.Add(textlink);
                             //TODO: add checkboxes:
-                            //TODO: add expander:
-                            System.Windows.Controls.Expander expander = new System.Windows.Controls.Expander();
                             System.Windows.Controls.CheckBox checkbox = new System.Windows.Controls.CheckBox();
+                            curParagraph.Inlines.Add(checkbox);
+
+                            //TODO: add expander NOT ADDING EXPANDERS, NOT WORTH IT, NOT PRETTY, CANT ADD INLINES, MUST ADD TEXTBOX OR SIMILAR:
+                            System.Windows.Controls.TextBox txtbox = new System.Windows.Controls.TextBox();
+                            System.Windows.Controls.Expander expander = new System.Windows.Controls.Expander();
+                            MainW.rtb.Selection.Start.Paragraph.Inlines.Add(expander);
+                            txtbox.Text = selectionTextRange.Text;
+                            expander.Content = txtbox;
+                            //expander.Content = (Run)MainW.rtb.Selection.Start.Parent;
+                            MainW.rtb.Selection.Text = "";
+
+                            System.Windows.Controls.Expander expander = new System.Windows.Controls.Expander();
                             System.Windows.Controls.StackPanel stackpanel = new System.Windows.Controls.StackPanel();
                             stackpanel.Children.Add(checkbox);
                             expander.Content = stackpanel;
@@ -1285,7 +1472,6 @@ namespace SkinText {
                 else // There is selected text, so change the font properties of the selection
                 {
                     try {
-
                         TextRange selectionTextRange = new TextRange(MainW.rtb.Selection.Start, MainW.rtb.Selection.End);
                         selectionTextRange.ApplyPropertyValue(TextElement.ForegroundProperty, foreColor);
                         selectionTextRange.ApplyPropertyValue(TextElement.BackgroundProperty, backgroundColor);
@@ -1301,13 +1487,14 @@ namespace SkinText {
                         selectionTextRange.ApplyPropertyValue(Block.FlowDirectionProperty, flow);
                         selectionTextRange.ApplyPropertyValue(Block.LineHeightProperty, lineHeight);
                         selectionTextRange.ApplyPropertyValue(Inline.BaselineAlignmentProperty, basealign);
+
                     }
                     catch (Exception ex) {
                         //crashes when changing hyperLink properties
-#if DEBUG
+                        #if DEBUG
                         MessageBox.Show(ex.ToString());
                         //throw;
-#endif
+                        #endif
                     }
                 }
             }
@@ -1459,10 +1646,10 @@ namespace SkinText {
             if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(Block.FlowDirectionProperty))) {
                 //flow direction is working, see examples: https://stackoverflow.com/questions/7045676/wpf-how-does-flowdirection-righttoleft-change-a-string
                 if (((FlowDirection)selectionTextRange.GetPropertyValue(Block.FlowDirectionProperty)).Equals(FlowDirection.RightToLeft)) {
-                    MainW.FontConf.FlowDir.IsChecked = true;
+                    MainW.FontConf.FlowDirRTL.IsChecked = true;
                 }
                 else {
-                    MainW.FontConf.FlowDir.IsChecked = false;
+                    MainW.FontConf.FlowDirRTL.IsChecked = false;
                 }
             }
         }

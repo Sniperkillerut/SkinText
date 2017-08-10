@@ -58,10 +58,10 @@ namespace SkinText {
                 }
             }
             catch (Exception ex) {
-#if DEBUG
+                #if DEBUG
                 MessageBox.Show(ex.ToString());
                 //throw;
-#endif
+                #endif
             }
         }
 
@@ -87,13 +87,14 @@ namespace SkinText {
                     }
                     textrun.Background = brush;
                     ClrPcker_Bg.SelectedColor = brush.Color;
+                    //TODO: is this aplied twice on transparent?
                 }
             }
             catch (Exception ex) {
-#if DEBUG
+                #if DEBUG
                 MessageBox.Show(ex.ToString());
                 //throw;
-#endif
+                #endif
             }
         }
 
@@ -105,19 +106,10 @@ namespace SkinText {
                 }
             }
             catch (Exception ex) {
-#if DEBUG
+                #if DEBUG
                 MessageBox.Show(ex.ToString());
                 //throw;
-#endif
-            }
-        }
-
-        private void FlowDir_Checked(object sender, RoutedEventArgs e) {
-            if (FlowDir.IsChecked.Value) {
-                txtSampleText.FlowDirection = FlowDirection.RightToLeft;
-            }
-            else {
-                txtSampleText.FlowDirection = FlowDirection.LeftToRight;
+                #endif
             }
         }
 
@@ -183,6 +175,17 @@ namespace SkinText {
         private void Window_MouseDown(object sender, MouseButtonEventArgs e) {
             if (e.ChangedButton == MouseButton.Left) {
                 this.DragMove();
+            }
+        }
+
+        private void FlowDirLTR_Checked(object sender, RoutedEventArgs e) {
+            if (txtSampleText !=null) {
+                if (FlowDirLTR.IsChecked.Value) {
+                    txtSampleText.FlowDirection = FlowDirection.LeftToRight;
+                }
+                else {
+                    txtSampleText.FlowDirection = FlowDirection.RightToLeft;
+                }
             }
         }
     }

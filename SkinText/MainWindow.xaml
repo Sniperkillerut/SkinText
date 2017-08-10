@@ -3,13 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:gif="https://github.com/XamlAnimatedGif/XamlAnimatedGif"
         xmlns:tb="http://www.hardcodet.net/taskbar"
         xmlns:local="clr-namespace:SkinText"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="SkinText"
         Height="350" MinHeight="20"
         Width="525" MinWidth="110"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="True"
         AllowsTransparency="True" Background="{DynamicResource MainWindowBackgroundColorBrush}"
         WindowStyle="None" MouseDown="Window_MouseDown" ResizeMode="CanResizeWithGrip"
         Loaded="Window_Loaded" Closing="Window_Closing">
@@ -22,8 +24,9 @@
     </Window.CommandBindings>
     <Window.Resources>
         <local:ShowMessageCommand x:Key="MessageCommand" />
+
     </Window.Resources>
-    <Grid x:Name="grid" SnapsToDevicePixels="True" UseLayoutRounding="True">
+    <Grid x:Name="grid" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="450" MinWidth="110" />
@@ -63,39 +66,75 @@
                     <Separator />
                     <MenuItem Header="_Exit" Command="local:CustomCommands.Exit" Template="{DynamicResource MenuItemControlTemplate2}">
                         <MenuItem.Icon>
-                            <Image Source="{DynamicResource ImageSource1X}" />
+                            <Canvas Width="15" Height="15" Clip="F1 M 0,0L 15,0L 15,15L 0,15L 0,0">
+                                <Path Width="15" Height="15"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="F1 M 26.9166,22.1667L 37.9999,33.25L 49.0832,22.1668L 53.8332,26.9168L 42.7499,38L 53.8332,49.0834L 49.0833,53.8334L 37.9999,42.75L 26.9166,53.8334L 22.1666,49.0833L 33.25,38L 22.1667,26.9167L 26.9166,22.1667 Z "/>
+                            </Canvas>
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="_Edit" Template="{DynamicResource MenuItemControlTemplate1}">
                     <MenuItem Header="_Cut" Command="Cut" Template="{DynamicResource MenuItemControlTemplate2}">
                         <MenuItem.Icon>
-                            <Image Source="{DynamicResource ImageSource1X}" />
+                            <Canvas Width="15" Height="15" Clip="F1 M 0,0L 15,0L 15,20L 0,15L 0,0">
+                                <Path Width="15" Height="15"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M19,3L13,9L15,11L22,4V3M12,12.5A0.5,0.5 0 0,1 11.5,12A0.5,0.5 0 0,1 12,11.5A0.5,0.5 0 0,1 12.5,12A0.5,0.5 0 0,1 12,12.5M6,20A2,2 0 0,1 4,18C4,16.89 4.9,16 6,16A2,2 0 0,1 8,18C8,19.11 7.1,20 6,20M6,8A2,2 0 0,1 4,6C4,4.89 4.9,4 6,4A2,2 0 0,1 8,6C8,7.11 7.1,8 6,8M9.64,7.64C9.87,7.14 10,6.59 10,6A4,4 0 0,0 6,2A4,4 0 0,0 2,6A4,4 0 0,0 6,10C6.59,10 7.14,9.87 7.64,9.64L10,12L7.64,14.36C7.14,14.13 6.59,14 6,14A4,4 0 0,0 2,18A4,4 0 0,0 6,22A4,4 0 0,0 10,18C10,17.41 9.87,16.86 9.64,16.36L12,14L19,21H22V20L9.64,7.64Z"/>
+                            </Canvas>
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_Copy" Command="Copy" Template="{DynamicResource MenuItemControlTemplate2}">
                         <MenuItem.Icon>
-                            <Image Source="{DynamicResource ImageSource1X}" />
+                            <Canvas Width="15" Height="15" Clip="F1 M 0,0L 15,0L 15,20L 0,15L 0,0">
+                                <Path Width="15" Height="15"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"/>
+                            </Canvas>
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_Paste" Command="Paste" Template="{DynamicResource MenuItemControlTemplate2}">
                         <MenuItem.Icon>
-                            <Image Source="{DynamicResource ImageSource1X}" />
+                            <Canvas Width="15" Height="15" Clip="F1 M 0,0L 15,0L 15,20L 0,15L 0,0">
+                                <Path Width="15" Height="15"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M19,20H5V4H7V7H17V4H19M12,2A1,1 0 0,1 13,3A1,1 0 0,1 12,4A1,1 0 0,1 11,3A1,1 0 0,1 12,2M19,2H14.82C14.4,0.84 13.3,0 12,0C10.7,0 9.6,0.84 9.18,2H5A2,2 0 0,0 3,4V20A2,2 0 0,0 5,22H19A2,2 0 0,0 21,20V4A2,2 0 0,0 19,2Z"/>
+                            </Canvas>
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
                     <MenuItem Header="_Undo" Command="Undo" Template="{DynamicResource MenuItemControlTemplate2}">
                         <MenuItem.Icon>
-                            <Image Source="{DynamicResource ImageSource1X}" />
+                            <Canvas Width="15" Height="15" Clip="F1 M 0,0L 15,0L 15,20L 0,15L 0,0">
+                                <Path Width="15" Height="15"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M12.5,8C9.85,8 7.45,9 5.6,10.6L2,7V16H11L7.38,12.38C8.77,11.22 10.54,10.5 12.5,10.5C16.04,10.5 19.05,12.81 20.1,16L22.47,15.22C21.08,11.03 17.15,8 12.5,8Z"/>
+                            </Canvas>
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_Redo" Command="Redo" Template="{DynamicResource MenuItemControlTemplate2}">
                         <MenuItem.Icon>
-                            <Image Source="{DynamicResource ImageSource1X}" />
+                            <Canvas Width="15" Height="15" Clip="F1 M 0,0L 15,0L 15,20L 0,15L 0,0">
+                                <Path Width="15" Height="15"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M18.4,10.6C16.55,9 14.15,8 11.5,8C6.85,8 2.92,11.03 1.54,15.22L3.9,16C4.95,12.81 7.95,10.5 11.5,10.5C13.45,10.5 15.23,11.22 16.62,12.38L13,16H22V7L18.4,10.6Z"/>
+                            </Canvas>
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
-                    <MenuItem x:Name="LineWrapMenuItem" IsEnabled="False" Header="Line Wrap" Template="{DynamicResource MenuItemControlTemplate2}" Click="LineWrapMenuItem_Click" IsCheckable="true" IsChecked="True">
+                    <MenuItem x:Name="LineWrapMenuItem" Header="Line Wrap" Template="{DynamicResource MenuItemControlTemplate2}" Click="LineWrapMenuItem_Click" IsCheckable="true" IsChecked="True">
                     </MenuItem>
                     <MenuItem Header="Open Character _Map" Template="{DynamicResource MenuItemControlTemplate2}" Click="CharMap_Click">
                         <MenuItem.Icon>
@@ -108,6 +147,11 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_Window Configuration" Template="{DynamicResource MenuItemControlTemplate2}" Click="Config_Click">
+                        <MenuItem.Icon>
+                            <Image Source="{DynamicResource ImageSource1X}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_Advanced Configuration" Template="{DynamicResource MenuItemControlTemplate2}" Click="AdvancedConfig_Click">
                         <MenuItem.Icon>
                             <Image Source="{DynamicResource ImageSource1X}" />
                         </MenuItem.Icon>
@@ -134,8 +178,8 @@
                 <MenuItem x:Name="MenuFileName" Header="Name" Template="{DynamicResource MenuItemControlTemplate1}">
                 </MenuItem>
             </Menu>
-            <ToolBarTray x:Name="ToolBar" DockPanel.Dock="Top" >
-                <ToolBar Margin="0" Padding="0" Band="0">
+            <ToolBarTray x:Name="ToolBarTray" DockPanel.Dock="Top" >
+                <ToolBar x:Name="ToolBarClip" Band="2">
                     <Button Command="Cut" >
                         <Button.ToolTip>
                             <ToolTip Style="{DynamicResource ToolTipStyle}">
@@ -144,55 +188,811 @@
                                 </Border>
                             </ToolTip>
                         </Button.ToolTip>
-                        <Image Source="{DynamicResource ImageSource1X}" Width="22" Height="22"/>
+                        <Canvas Width="20" Height="20" Clip="F1 M 0,0L 20,0L 20,20L 0,20L 0,0">
+                            <Path Width="20" Height="20"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M19,3L13,9L15,11L22,4V3M12,12.5A0.5,0.5 0 0,1 11.5,12A0.5,0.5 0 0,1 12,11.5A0.5,0.5 0 0,1 12.5,12A0.5,0.5 0 0,1 12,12.5M6,20A2,2 0 0,1 4,18C4,16.89 4.9,16 6,16A2,2 0 0,1 8,18C8,19.11 7.1,20 6,20M6,8A2,2 0 0,1 4,6C4,4.89 4.9,4 6,4A2,2 0 0,1 8,6C8,7.11 7.1,8 6,8M9.64,7.64C9.87,7.14 10,6.59 10,6A4,4 0 0,0 6,2A4,4 0 0,0 2,6A4,4 0 0,0 6,10C6.59,10 7.14,9.87 7.64,9.64L10,12L7.64,14.36C7.14,14.13 6.59,14 6,14A4,4 0 0,0 2,18A4,4 0 0,0 6,22A4,4 0 0,0 10,18C10,17.41 9.87,16.86 9.64,16.36L12,14L19,21H22V20L9.64,7.64Z"/>
+                        </Canvas>
                     </Button>
-                    <Button>
+                    <Button Command="Copy">
                         <Button.ToolTip>
-                        <ToolTip Style="{DynamicResource ToolTipStyle}">
-                            <Border Style="{DynamicResource ToolTipBorderStyle}">
-                                <TextBlock Text="Copy selection to Windows Clipboard." Style="{DynamicResource ToolTipTextStyle}" />
-                            </Border>
-                        </ToolTip>
-                        </Button.ToolTip>
-                        <Image Source="{DynamicResource ImageSource1X}" Width="22" Height="22"/>
-                    </Button>
-                    <Button ToolTip="Paste from Windows Clipboard." >
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="{DynamicResource ImageSource1X}" Width="22" Height="22"/>
-                            <TextBlock Style="{DynamicResource ToolTipTextStyle}">Paste</TextBlock>
-                        </StackPanel>
-                    </Button>
-                    <Button ToolBar.OverflowMode="Always" ToolTip="Paste from Windows Clipboard." >
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="{DynamicResource ImageSource1X}" Width="22" Height="22"/>
-                            <TextBlock Style="{DynamicResource ToolTipTextStyle}">Paste</TextBlock>
-                        </StackPanel>
-                    </Button>
-                    <Separator />
-                    <Label>
-                        <Label.ToolTip>
                             <ToolTip Style="{DynamicResource ToolTipStyle}">
                                 <Border Style="{DynamicResource ToolTipBorderStyle}">
-                                    <TextBlock Text="TOOLTIP" Style="{DynamicResource ToolTipTextStyle}" />
+                                    <TextBlock Text="Copy selection to Windows Clipboard." Style="{DynamicResource ToolTipTextStyle}" />
                                 </Border>
                             </ToolTip>
-                        </Label.ToolTip>
-                        <TextBlock Style="{DynamicResource ToolTipTextStyle}">Font size:</TextBlock>
-                    </Label>
-                    <ComboBox >
-                        <ComboBoxItem>10</ComboBoxItem>
-                        <ComboBoxItem IsSelected="True">12</ComboBoxItem>
-                        <ComboBoxItem>14</ComboBoxItem>
-                        <ComboBoxItem>16</ComboBoxItem>
+                        </Button.ToolTip>
+                        <Canvas Width="20" Height="20" Clip="F1 M 0,0L 20,0L 20,20L 0,20L 0,0">
+                            <Path Width="20" Height="20"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"/>
+                        </Canvas>
+                    </Button>
+                    <Button Command="Paste" >
+                        <Button.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="Paste from Windows Clipboard." Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </Button.ToolTip>
+                        <Canvas Width="20" Height="20" Clip="F1 M 0,0L 20,0L 20,20L 0,20L 0,0">
+                            <Path Width="20" Height="20"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M19,20H5V4H7V7H17V4H19M12,2A1,1 0 0,1 13,3A1,1 0 0,1 12,4A1,1 0 0,1 11,3A1,1 0 0,1 12,2M19,2H14.82C14.4,0.84 13.3,0 12,0C10.7,0 9.6,0.84 9.18,2H5A2,2 0 0,0 3,4V20A2,2 0 0,0 5,22H19A2,2 0 0,0 21,20V4A2,2 0 0,0 19,2Z"/>
+                        </Canvas>
+                    </Button>
+                    <Separator/>
+                    <Button Command="Undo" >
+                        <Button.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="Undo Last Action." Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </Button.ToolTip>
+                        <Canvas Width="20" Height="20" Clip="F1 M 0,0L 20,0L 20,20L 0,20L 0,0">
+                            <Path Width="20" Height="20"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M12.5,8C9.85,8 7.45,9 5.6,10.6L2,7V16H11L7.38,12.38C8.77,11.22 10.54,10.5 12.5,10.5C16.04,10.5 19.05,12.81 20.1,16L22.47,15.22C21.08,11.03 17.15,8 12.5,8Z"/>
+                        </Canvas>
+                    </Button>
+                    <Button Command="Redo">
+                        <Button.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="Redo Last Action." Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </Button.ToolTip>
+                        <Canvas Width="20" Height="20" Clip="F1 M 0,0L 20,0L 20,20L 0,20L 0,0">
+                            <Path Width="20" Height="20"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M18.4,10.6C16.55,9 14.15,8 11.5,8C6.85,8 2.92,11.03 1.54,15.22L3.9,16C4.95,12.81 7.95,10.5 11.5,10.5C13.45,10.5 15.23,11.22 16.62,12.38L13,16H22V7L18.4,10.6Z"/>
+                        </Canvas>
+                    </Button>
+                </ToolBar>
+                <ToolBar x:Name="ToolBarStyle" Band="1">
+                    <ToggleButton x:Name="_btnBold"
+                        Command="{x:Static EditingCommands.ToggleBold}" CommandTarget="{Binding ElementName=rtb}">
+                        <ToggleButton.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="Bold" FontWeight="Bold" Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </ToggleButton.ToolTip>
+                        <Canvas Width="20" Height="20" Clip="F1 M 0,0L 20,0L 20,20L 0,20L 0,0">
+                            <Path Width="20" Height="20"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M13.5,15.5H10V12.5H13.5A1.5,1.5 0 0,1 15,14A1.5,1.5 0 0,1 13.5,15.5M10,6.5H13A1.5,1.5 0 0,1 14.5,8A1.5,1.5 0 0,1 13,9.5H10M15.6,10.79C16.57,10.11 17.25,9 17.25,8C17.25,5.74 15.5,4 13.25,4H7V18H14.04C16.14,18 17.75,16.3 17.75,14.21C17.75,12.69 16.89,11.39 15.6,10.79Z"/>
+                        </Canvas>
+                    </ToggleButton>
+                    <ToggleButton x:Name="_btnItalic"
+                        Command="{x:Static EditingCommands.ToggleItalic}" CommandTarget="{Binding ElementName=rtb}">
+                        <ToggleButton.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="Italics" FontStyle="Italic" Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </ToggleButton.ToolTip>
+                        <Canvas Width="20" Height="20" Clip="F1 M 0,0L 20,0L 20,20L 0,20L 0,0">
+                            <Path Width="20" Height="20"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M10,4V7H12.21L8.79,15H6V18H14V15H11.79L15.21,7H18V4H10Z"/>
+                        </Canvas>
+                    </ToggleButton>
+                    <Separator/>
+                    <ToggleButton x:Name="_btnOverLine" Click="_btnLine_Clicked">
+                        <ToggleButton.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="OverLine" TextDecorations="OverLine" Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </ToggleButton.ToolTip>
+                        <Canvas Width="20" Height="20" Clip="F1 M 0,0L 20,0L 20,20L 0,20L 0,0">
+                            <Path Width="20" Height="20"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="F1 M 21,19L 55,19L 55,23L 21,23L 21,19 Z M 37.8421,56.9533C 33.356,56.9533 29.7635,55.4776 27.0648,52.5263C 24.366,49.5749 23.0167,45.7357 23.0167,41.0088C 23.0167,35.9276 24.392,31.8748 27.1427,28.8502C 29.8934,25.8256 33.6369,24.3133 38.3733,24.3133C 42.7414,24.3133 46.2606,25.7819 48.931,28.7192C 51.6015,31.6564 52.9367,35.4956 52.9367,40.2367C 52.9367,45.3886 51.5684,49.4627 48.8319,52.459C 46.0953,55.4552 42.4321,56.9533 37.8421,56.9533 Z M 38.1042,27.4867C 34.8411,27.4867 32.1908,28.6979 30.1531,31.1204C 28.1155,33.5429 27.0967,36.7257 27.0967,40.6688C 27.0967,44.6071 28.0895,47.7769 30.0752,50.1781C 32.0609,52.5794 34.6522,53.78 37.8492,53.78C 41.2586,53.78 43.9456,52.6349 45.91,50.3446C 47.8744,48.0543 48.8567,44.8503 48.8567,40.7325C 48.8567,36.5108 47.9028,33.2478 45.995,30.9433C 44.0872,28.6389 41.4569,27.4867 38.1042,27.4867 Z "/>
+                        </Canvas>
+                    </ToggleButton>
+                    <ToggleButton x:Name="_btnStrikethrough" Click="_btnLine_Clicked">
+                        <ToggleButton.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="Strikethrough" TextDecorations="Strikethrough" Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </ToggleButton.ToolTip>
+                        <Canvas Width="20" Height="20" Clip="F1 M 0,0L 20,0L 20,20L 0,20L 0,0">
+                            <Path Width="20" Height="20"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="F1 M 26.45,54.975L 26.45,49.8167C 27.0444,50.3944 27.7556,50.9153 28.5833,51.3792C 29.4111,51.8431 30.2833,52.2333 31.2,52.55C 32.1167,52.8667 33.0375,53.1125 33.9625,53.2875C 34.8875,53.4625 35.7417,53.55 36.525,53.55C 39.2306,53.55 41.25,53.0375 42.5833,52.0125C 43.9167,50.9875 44.5833,49.5139 44.5833,47.5917C 44.5833,46.5917 44.3597,45.7194 43.9125,44.975C 43.4653,44.2306 42.8486,43.5528 42.0625,42.9417C 41.2764,42.3306 40.3458,41.7431 39.2708,41.1792L 36.9541,40L 19,40L 19,36L 30.0803,36C 29.754,35.7361 29.4453,35.4639 29.1542,35.1833C 28.3125,34.3722 27.6514,33.4528 27.1708,32.425C 26.6903,31.3972 26.45,30.1917 26.45,28.8083C 26.45,27.1139 26.8292,25.6403 27.5875,24.3875C 28.3458,23.1347 29.3417,22.1028 30.575,21.2917C 31.8083,20.4806 33.2139,19.8764 34.7917,19.4792C 36.3694,19.082 37.9778,18.8833 39.6167,18.8833C 43.35,18.8833 46.0722,19.375 47.7833,20.3583L 47.7833,25.2833C 45.5667,23.5056 42.7194,22.6167 39.2417,22.6167C 38.2806,22.6167 37.3194,22.7195 36.3583,22.925C 35.3972,23.1306 34.5417,23.4667 33.7917,23.9333C 33.0417,24.4 32.4306,25 31.9583,25.7333C 31.4861,26.4667 31.25,27.3611 31.25,28.4167C 31.25,29.3667 31.4292,30.1875 31.7875,30.8792C 32.1458,31.5708 32.675,32.2014 33.375,32.7708C 34.075,33.3403 34.9278,33.8931 35.9333,34.4292L 39.0304,36L 57,36L 57,40L 45.6737,40C 45.9314,40.2196 46.179,40.4446 46.4167,40.675C 47.3278,41.5583 48.05,42.5347 48.5833,43.6042C 49.1167,44.6736 49.3833,45.9 49.3833,47.2833C 49.3833,49.1167 49.0181,50.6681 48.2875,51.9375C 47.5569,53.2069 46.5722,54.2389 45.3333,55.0333C 44.0944,55.8278 42.6653,56.4014 41.0458,56.7542C 39.4264,57.1069 37.7194,57.2833 35.925,57.2833L 33.7083,57.1292C 32.8306,57.0264 31.9333,56.8764 31.0167,56.6792C 30.1,56.4819 29.2333,56.2375 28.4167,55.9458C 27.6,55.6542 26.9444,55.3306 26.45,54.975 Z "/>
+                        </Canvas>
+                    </ToggleButton>
+                    <ToggleButton x:Name="_btnBaseline" Click="_btnLine_Clicked">
+                        <ToggleButton.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="Baseline" TextDecorations="Baseline" Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </ToggleButton.ToolTip>
+                        <Canvas Width="20" Height="20" Clip="F1 M 0,0L 20,0L 20,20L 0,20L 0,0">
+                            <Path Width="20" Height="20"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M5,18H19V20H5V21M12,15.5H10V12.5H13.5A1.5,1.5 0 0,1 15,14A1.5,1.5 0 0,1 13.5,15.5M10,6.5H13A1.5,1.5 0 0,1 14.5,8A1.5,1.5 0 0,1 13,9.5H10M15.6,10.79C16.57,10.11 17.25,9 17.25,8C17.25,5.74 15.5,4 13.25,4H7V18H14.04C16.14,18 17.75,16.3 17.75,14.21C17.75,12.69 16.89,11.39 15.6,10.79Z"/>
+                        </Canvas>
+                    </ToggleButton>
+                    <ToggleButton x:Name="_btnUnderline" Click="_btnLine_Clicked">
+                        <ToggleButton.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="Underline" TextDecorations="Underline" Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </ToggleButton.ToolTip>
+                        <Canvas Width="20" Height="20" Clip="F1 M 0,0L 20,0L 20,20L 0,20L 0,0">
+                            <Path Width="20" Height="20"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M5,21H19V19H5V21M12,17A6,6 0 0,0 18,11V3H15.5V11A3.5,3.5 0 0,1 12,14.5A3.5,3.5 0 0,1 8.5,11V3H6V11A6,6 0 0,0 12,17Z"/>
+                        </Canvas>
+                    </ToggleButton>
+                </ToolBar>
+                <ToolBar x:Name="ToolBarLine" Band="0">
+                    <RadioButton x:Name="_btnAlignLeft" GroupName="AlignGroup"
+                        Command="{x:Static EditingCommands.AlignLeft}" CommandTarget="{Binding ElementName=rtb}">
+                        <RadioButton.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="Align Left" Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </RadioButton.ToolTip>
+                        <Canvas Width="20" Height="20" Clip="F1 M 0,0L 20,0L 20,20L 0,20L 0,0">
+                            <Path Width="20" Height="20"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M3,3H21V5H3V3M3,7H15V9H3V7M3,11H21V13H3V11M3,15H15V17H3V15M3,19H21V21H3V19Z"/>
+                        </Canvas>
+                    </RadioButton>
+                    <RadioButton x:Name="_btnAlignCenter" GroupName="AlignGroup"
+                        Command="{x:Static EditingCommands.AlignCenter}" CommandTarget="{Binding ElementName=rtb}">
+                        <RadioButton.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="Align Center" Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </RadioButton.ToolTip>
+                        <Canvas Width="20" Height="20" Clip="F1 M 0,0L 20,0L 20,20L 0,20L 0,0">
+                            <Path Width="20" Height="20"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M3,3H21V5H3V3M7,7H17V9H7V7M3,11H21V13H3V11M7,15H17V17H7V15M3,19H21V21H3V19Z"/>
+                        </Canvas>
+                    </RadioButton>
+                    <RadioButton x:Name="_btnAlignRight" GroupName="AlignGroup"
+                        Command="{x:Static EditingCommands.AlignRight}" CommandTarget="{Binding ElementName=rtb}"
+                                 Style="{DynamicResource RadioButtonsStyle}">
+                        <RadioButton.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="Align Right" Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </RadioButton.ToolTip>
+                        <Canvas Width="20" Height="20" Clip="F1 M 0,0L 20,0L 20,20L 0,20L 0,0">
+                            <Path Width="20" Height="20"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M3,3H21V5H3V3M9,7H21V9H9V7M3,11H21V13H3V11M9,15H21V17H9V15M3,19H21V21H3V19Z"/>
+                        </Canvas>
+                    </RadioButton>
+                    <RadioButton x:Name="_btnAlignJustify" GroupName="AlignGroup"
+                        Command="{x:Static EditingCommands.AlignJustify}" CommandTarget="{Binding ElementName=rtb}"
+                                 Style="{DynamicResource RadioButtonsStyle}">
+                        <RadioButton.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="Align Justify" Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </RadioButton.ToolTip>
+                        <Canvas Width="20" Height="20" Clip="F1 M 0,0L 20,0L 20,20L 0,20L 0,0">
+                            <Path Width="20" Height="20"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M3,3H21V5H3V3M3,7H21V9H3V7M3,11H21V13H3V11M3,15H21V17H3V15M3,19H21V21H3V19Z"/>
+                        </Canvas>
+                    </RadioButton>
+                    <Separator/>
+                    <xctk:DropDownButton Style="{DynamicResource DropDownButtonStyle}">
+                        <xctk:DropDownButton.Content>
+                            <Canvas IsHitTestVisible="False" HorizontalAlignment="Left" Margin="3,0,0,0" Width="20" Height="20" Clip="F1 M 0,0L 20,0L 20,20L 0,20L 0,0">
+                                <Path Width="17" Height="17"
+                                Canvas.Left="2" Canvas.Top="1"
+                                Stretch="Uniform"
+                                Fill="{DynamicResource ButtonFrontColorBrush}"
+                                Data="M7,5H21V7H7V5M7,13V11H21V13H7M4,4.5A1.5,1.5 0 0,1 5.5,6A1.5,1.5 0 0,1 4,7.5A1.5,1.5 0 0,1 2.5,6A1.5,1.5 0 0,1 4,4.5M4,10.5A1.5,1.5 0 0,1 5.5,12A1.5,1.5 0 0,1 4,13.5A1.5,1.5 0 0,1 2.5,12A1.5,1.5 0 0,1 4,10.5M7,19V17H21V19H7M4,16.5A1.5,1.5 0 0,1 5.5,18A1.5,1.5 0 0,1 4,19.5A1.5,1.5 0 0,1 2.5,18A1.5,1.5 0 0,1 4,16.5Z"/>
+                            </Canvas>
+                        </xctk:DropDownButton.Content>
+                        <xctk:DropDownButton.DropDownContent>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <ToggleButton x:Name="_btnToggleBox"
+                                              Grid.Column="0" Grid.Row="0"
+                                    Width="45"
+                                    Style="{DynamicResource ToggleButtonsStyle}"
+                                    Click="_btnListType_Click"
+                                    >
+                                    <RichTextBox FontSize="12"
+                                     Margin="0" Padding="0"
+                                     IsReadOnly="True"
+                                     IsHitTestVisible="False"
+                                     Foreground="{DynamicResource ButtonFrontColorBrush}"
+                                     Background="Transparent"
+                                     BorderBrush="{DynamicResource BorderColorBrush}">
+                                        <FlowDocument >
+                                            <List MarkerStyle="Box" Padding="20,0,0,0">
+                                                <ListItem >
+                                                    <Paragraph>A</Paragraph>
+                                                </ListItem>
+                                                <ListItem>
+                                                    <Paragraph>B</Paragraph>
+                                                </ListItem>
+                                                <ListItem>
+                                                    <Paragraph>C</Paragraph>
+                                                </ListItem>
+                                            </List>
+                                        </FlowDocument>
+                                    </RichTextBox>
+                                </ToggleButton>
+                                <ToggleButton x:Name="_btnToggleCircle"
+                                              Grid.Column="1" Grid.Row="0"
+                                    Width="45"
+                                    Style="{DynamicResource ToggleButtonsStyle}"
+                                    Click="_btnListType_Click">
+                                    <RichTextBox FontSize="12"
+                                     Margin="0" Padding="0"
+                                     IsReadOnly="True"
+                                     IsHitTestVisible="False"
+                                     Foreground="{DynamicResource ButtonFrontColorBrush}"
+                                     Background="Transparent"
+                                     BorderBrush="{DynamicResource BorderColorBrush}">
+                                        <FlowDocument >
+                                            <List MarkerStyle="Circle" Padding="20,0,0,0">
+                                                <ListItem >
+                                                    <Paragraph>A</Paragraph>
+                                                </ListItem>
+                                                <ListItem>
+                                                    <Paragraph>B</Paragraph>
+                                                </ListItem>
+                                                <ListItem>
+                                                    <Paragraph>C</Paragraph>
+                                                </ListItem>
+                                            </List>
+                                        </FlowDocument>
+                                    </RichTextBox>
+                                </ToggleButton>
+                                <ToggleButton x:Name="_btnToggleNumbering"
+                                              Grid.Column="2" Grid.Row="0"
+                                    Width="45"
+                                    Style="{DynamicResource ToggleButtonsStyle}"
+                                    Click="_btnListType_Click">
+                                    <RichTextBox FontSize="12"
+                                     Margin="0" Padding="0"
+                                     IsReadOnly="True"
+                                     IsHitTestVisible="False"
+                                     Foreground="{DynamicResource ButtonFrontColorBrush}"
+                                     Background="Transparent"
+                                     BorderBrush="{DynamicResource BorderColorBrush}">
+                                        <FlowDocument >
+                                            <List MarkerStyle="Decimal" Padding="20,0,0,0">
+                                                <ListItem >
+                                                    <Paragraph>A</Paragraph>
+                                                </ListItem>
+                                                <ListItem>
+                                                    <Paragraph>B</Paragraph>
+                                                </ListItem>
+                                                <ListItem>
+                                                    <Paragraph>C</Paragraph>
+                                                </ListItem>
+                                            </List>
+                                        </FlowDocument>
+                                    </RichTextBox>
+                                </ToggleButton>
+                                <ToggleButton x:Name="_btnToggleBullets"
+                                              Grid.Column="0" Grid.Row="1"
+                                    Width="45"
+                                    Style="{DynamicResource ToggleButtonsStyle}"
+                                    Click="_btnListType_Click">
+                                    <RichTextBox FontSize="12"
+                                     Margin="0" Padding="0"
+                                     IsReadOnly="True"
+                                     IsHitTestVisible="False"
+                                     Foreground="{DynamicResource ButtonFrontColorBrush}"
+                                     Background="Transparent"
+                                     BorderBrush="{DynamicResource BorderColorBrush}">
+                                        <FlowDocument >
+                                            <List MarkerStyle="Disc" Padding="20,0,0,0">
+                                                <ListItem >
+                                                    <Paragraph>A</Paragraph>
+                                                </ListItem>
+                                                <ListItem>
+                                                    <Paragraph>B</Paragraph>
+                                                </ListItem>
+                                                <ListItem>
+                                                    <Paragraph>C</Paragraph>
+                                                </ListItem>
+                                            </List>
+                                        </FlowDocument>
+                                    </RichTextBox>
+                                </ToggleButton>
+                                <ToggleButton x:Name="_btnToggleLowerLatin"
+                                              Grid.Column="1" Grid.Row="1"
+                                    Width="45"
+                                    Style="{DynamicResource ToggleButtonsStyle}"
+                                    Click="_btnListType_Click">
+                                    <RichTextBox FontSize="12"
+                                     Margin="0" Padding="0"
+                                     IsReadOnly="True"
+                                     IsHitTestVisible="False"
+                                     Foreground="{DynamicResource ButtonFrontColorBrush}"
+                                     Background="Transparent"
+                                     BorderBrush="{DynamicResource BorderColorBrush}">
+                                        <FlowDocument >
+                                            <List MarkerStyle="LowerLatin" Padding="20,0,0,0">
+                                                <ListItem >
+                                                    <Paragraph>A</Paragraph>
+                                                </ListItem>
+                                                <ListItem>
+                                                    <Paragraph>B</Paragraph>
+                                                </ListItem>
+                                                <ListItem>
+                                                    <Paragraph>C</Paragraph>
+                                                </ListItem>
+                                            </List>
+                                        </FlowDocument>
+                                    </RichTextBox>
+                                </ToggleButton>
+                                <ToggleButton x:Name="_btnToggleLowerRoman"
+                                              Grid.Column="2" Grid.Row="1"
+                                    Width="45"
+                                    Style="{DynamicResource ToggleButtonsStyle}"
+                                    Click="_btnListType_Click">
+                                    <RichTextBox FontSize="12"
+                                     Margin="0" Padding="0"
+                                     IsReadOnly="True"
+                                     IsHitTestVisible="False"
+                                     Foreground="{DynamicResource ButtonFrontColorBrush}"
+                                     Background="Transparent"
+                                     BorderBrush="{DynamicResource BorderColorBrush}">
+                                        <FlowDocument >
+                                            <List MarkerStyle="LowerRoman" Padding="20,0,0,0">
+                                                <ListItem >
+                                                    <Paragraph>A</Paragraph>
+                                                </ListItem>
+                                                <ListItem>
+                                                    <Paragraph>B</Paragraph>
+                                                </ListItem>
+                                                <ListItem>
+                                                    <Paragraph>C</Paragraph>
+                                                </ListItem>
+                                            </List>
+                                        </FlowDocument>
+                                    </RichTextBox>
+                                </ToggleButton>
+                                <ToggleButton x:Name="_btnToggleSquare"
+                                              Grid.Column="0" Grid.Row="2"
+                                    Width="45"
+                                    Style="{DynamicResource ToggleButtonsStyle}"
+                                    Click="_btnListType_Click">
+                                    <RichTextBox FontSize="12"
+                                     Margin="0" Padding="0"
+                                     IsReadOnly="True"
+                                     IsHitTestVisible="False"
+                                     Foreground="{DynamicResource ButtonFrontColorBrush}"
+                                     Background="Transparent"
+                                     BorderBrush="{DynamicResource BorderColorBrush}">
+                                        <FlowDocument >
+                                            <List MarkerStyle="Square" Padding="20,0,0,0">
+                                                <ListItem >
+                                                    <Paragraph>A</Paragraph>
+                                                </ListItem>
+                                                <ListItem>
+                                                    <Paragraph>B</Paragraph>
+                                                </ListItem>
+                                                <ListItem>
+                                                    <Paragraph>C</Paragraph>
+                                                </ListItem>
+                                            </List>
+                                        </FlowDocument>
+                                    </RichTextBox>
+                                </ToggleButton>
+                                <ToggleButton x:Name="_btnToggleUpperLatin"
+                                              Grid.Column="1" Grid.Row="2"
+                                    Width="45"
+                                    Style="{DynamicResource ToggleButtonsStyle}"
+                                    Click="_btnListType_Click">
+                                    <RichTextBox FontSize="12"
+                                     Margin="0" Padding="0"
+                                     IsReadOnly="True"
+                                     IsHitTestVisible="False"
+                                     Foreground="{DynamicResource ButtonFrontColorBrush}"
+                                     Background="Transparent"
+                                     BorderBrush="{DynamicResource BorderColorBrush}">
+                                        <FlowDocument >
+                                            <List MarkerStyle="UpperLatin" Padding="20,0,0,0">
+                                                <ListItem >
+                                                    <Paragraph>A</Paragraph>
+                                                </ListItem>
+                                                <ListItem>
+                                                    <Paragraph>B</Paragraph>
+                                                </ListItem>
+                                                <ListItem>
+                                                    <Paragraph>C</Paragraph>
+                                                </ListItem>
+                                            </List>
+                                        </FlowDocument>
+                                    </RichTextBox>
+                                </ToggleButton>
+                                <ToggleButton x:Name="_btnToggleUpperRoman"
+                                              Grid.Column="2" Grid.Row="2"
+                                    Width="45"
+                                    Style="{DynamicResource ToggleButtonsStyle}"
+                                    Click="_btnListType_Click">
+                                    <RichTextBox FontSize="12"
+                                     Margin="0" Padding="0"
+                                     IsReadOnly="True"
+                                     IsHitTestVisible="False"
+                                     Foreground="{DynamicResource ButtonFrontColorBrush}"
+                                     Background="Transparent"
+                                     BorderBrush="{DynamicResource BorderColorBrush}">
+                                        <FlowDocument >
+                                            <List MarkerStyle="UpperRoman" Padding="20,0,0,0">
+                                                <ListItem >
+                                                    <Paragraph>A</Paragraph>
+                                                </ListItem>
+                                                <ListItem>
+                                                    <Paragraph>B</Paragraph>
+                                                </ListItem>
+                                                <ListItem>
+                                                    <Paragraph>C</Paragraph>
+                                                </ListItem>
+                                            </List>
+                                        </FlowDocument>
+                                    </RichTextBox>
+                                </ToggleButton>
+                            </Grid>
+                        </xctk:DropDownButton.DropDownContent>
+                    </xctk:DropDownButton>
+                    <Separator/>
+                    <Button x:Name="_btnDecreaseIndentation"
+                        Command="{x:Static EditingCommands.DecreaseIndentation}" CommandTarget="{Binding ElementName=rtb}">
+                        <Button.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="Decrease Indentation" Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </Button.ToolTip>
+                        <Canvas Width="20" Height="20" Clip="F1 M 0,0L 20,0L 20,20L 0,20L 0,0">
+                            <Path Width="20" Height="20"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M11,13H21V11H11M11,9H21V7H11M3,3V5H21V3M3,21H21V19H3M3,12L7,16V8M11,17H21V15H11V17Z"/>
+                        </Canvas>
+                    </Button>
+                    <Button x:Name="_btnIncreaseIndentation"
+                        Command="{x:Static EditingCommands.IncreaseIndentation}" CommandTarget="{Binding ElementName=rtb}">
+                        <Button.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="Increase Indentation" Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </Button.ToolTip>
+                        <Canvas Width="20" Height="20" Clip="F1 M 0,0L 20,0L 20,20L 0,20L 0,0">
+                            <Path Width="20" Height="20"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M11,13H21V11H11M11,9H21V7H11M3,3V5H21V3M11,17H21V15H11M3,8V16L7,12M3,21H21V19H3V21Z"/>
+                        </Canvas>
+                    </Button>
+                    <Separator/>
+                    <RadioButton x:Name="_btnFlowDirLTR" Click="_btnFlowDir_Click" IsChecked="True" GroupName="FlowGroup">
+                        <RadioButton.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="Text Flow Direction Left to Right (Default)" Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </RadioButton.ToolTip>
+                        <Canvas Width="20" Height="20" Clip="F1 M 0,0L 20,0L 20,20L 0,20L 0,0">
+                            <Path Width="20" Height="20"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M21,18L17,14V17H5V19H17V22M9,10V15H11V4H13V15H15V4H17V2H9A4,4 0 0,0 5,6A4,4 0 0,0 9,10Z"/>
+                        </Canvas>
+                    </RadioButton>
+                    <RadioButton x:Name="_btnFlowDirRTL" Click="_btnFlowDir_Click" GroupName="FlowGroup">
+                        <RadioButton.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="Text Flow Direction Right to Left" Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </RadioButton.ToolTip>
+                        <Canvas Width="20" Height="20" Clip="F1 M 0,0L 20,0L 20,20L 0,20L 0,0">
+                            <Path Width="20" Height="20"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M8,17V14L4,18L8,22V19H20V17M10,10V15H12V4H14V15H16V4H18V2H10A4,4 0 0,0 6,6A4,4 0 0,0 10,10Z"/>
+                        </Canvas>
+                    </RadioButton>
+                </ToolBar>
+                <ToolBar x:Name="ToolBarBase" Band="1">
+                    <ToggleButton x:Name="_btnTopscript" Click="_btnScript_Clicked">
+                        <ToggleButton.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="Top: A baseline that is aligned to the upper edge of the containing box." Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </ToggleButton.ToolTip>
+                        <Canvas Width="20" Height="20" Clip="F1 M 0,0L 20,0L 20,20L 0,20L 0,0">
+                            <Path Width="20" Height="20"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M8,11H11V21H13V11H16L12,7L8,11M4,3V5H20V3H4Z"/>
+                        </Canvas>
+                    </ToggleButton>
+                    <ToggleButton x:Name="_btnSuperscript" Click="_btnScript_Clicked">
+                        <ToggleButton.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="SuperScript: A baseline that is aligned at the superscript position of the containing box." Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </ToggleButton.ToolTip>
+                        <Canvas Width="20" Height="20" Clip="F1 M 0,0L 20,0L 20,20L 0,20L 0,0">
+                            <Path Width="20" Height="20"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M16,7.41L11.41,12L16,16.59L14.59,18L10,13.41L5.41,18L4,16.59L8.59,12L4,7.41L5.41,6L10,10.59L14.59,6L16,7.41M21.85,9H16.97V8L17.86,7.18C18.62,6.54 19.18,6 19.56,5.55C19.93,5.11 20.12,4.7 20.13,4.32C20.14,4.04 20.05,3.8 19.86,3.62C19.68,3.43 19.39,3.34 19,3.33C18.69,3.34 18.42,3.4 18.16,3.5L17.5,3.89L17.05,2.72C17.32,2.5 17.64,2.33 18.03,2.19C18.42,2.05 18.85,2 19.32,2C20.1,2 20.7,2.2 21.1,2.61C21.5,3 21.72,3.54 21.72,4.18C21.71,4.74 21.53,5.26 21.18,5.73C20.84,6.21 20.42,6.66 19.91,7.09L19.27,7.61V7.63H21.85V9Z"/>
+                        </Canvas>
+                    </ToggleButton>
+                    <ToggleButton x:Name="_btnTextTopscript" Click="_btnScript_Clicked">
+                        <ToggleButton.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="TextTop: A baseline that is aligned at the upper edge of the text baseline." Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </ToggleButton.ToolTip>
+                        <Canvas Width="20" Height="20" Clip="F1 M 0,0L 20,0L 20,20L 0,20L 0,0">
+                            <Path Width="20" Height="20"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M13,15L15.5,17.5L16.92,16.08L12,11.16L7.08,16.08L8.5,17.5L11,15V21H13V15M3,3H21V5H3V3M3,7H13V9H3V7Z"/>
+                        </Canvas>
+                    </ToggleButton>
+                    <ToggleButton x:Name="_btnCentercript" Click="_btnScript_Clicked">
+                        <ToggleButton.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="Center: A baseline that is aligned to the center of the containing box." Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </ToggleButton.ToolTip>
+                        <Canvas Width="20" Height="20" Clip="F1 M 0,0L 20,0L 20,20L 0,20L 0,0">
+                            <Path Width="20" Height="20"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M8,19H11V23H13V19H16L12,15L8,19M16,5H13V1H11V5H8L12,9L16,5M4,11V13H20V11H4Z"/>
+                        </Canvas>
+                    </ToggleButton>
+                    <ToggleButton x:Name="_btnSubscript" Click="_btnScript_Clicked">
+                        <ToggleButton.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="SubScript: A baseline that is aligned at the subscript position of the containing box." Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </ToggleButton.ToolTip>
+                        <Canvas Width="20" Height="20" Clip="F1 M 0,0L 20,0L 20,20L 0,20L 0,0">
+                            <Path Width="20" Height="20"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M16,7.41L11.41,12L16,16.59L14.59,18L10,13.41L5.41,18L4,16.59L8.59,12L4,7.41L5.41,6L10,10.59L14.59,6L16,7.41M21.85,21.03H16.97V20.03L17.86,19.23C18.62,18.58 19.18,18.04 19.56,17.6C19.93,17.16 20.12,16.75 20.13,16.36C20.14,16.08 20.05,15.85 19.86,15.66C19.68,15.5 19.39,15.38 19,15.38C18.69,15.38 18.42,15.44 18.16,15.56L17.5,15.94L17.05,14.77C17.32,14.56 17.64,14.38 18.03,14.24C18.42,14.1 18.85,14 19.32,14C20.1,14.04 20.7,14.25 21.1,14.66C21.5,15.07 21.72,15.59 21.72,16.23C21.71,16.79 21.53,17.31 21.18,17.78C20.84,18.25 20.42,18.7 19.91,19.14L19.27,19.66V19.68H21.85V21.03Z"/>
+                        </Canvas>
+                    </ToggleButton>
+                    <ToggleButton x:Name="_btnTextBottomscript" Click="_btnScript_Clicked">
+                        <ToggleButton.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="TextBottom: A baseline that is aligned at the lower edge of the text baseline." Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </ToggleButton.ToolTip>
+                        <Canvas Width="20" Height="20" Clip="F1 M 0,0L 20,0L 20,20L 0,20L 0,0">
+                            <Path Width="20" Height="20"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M13,9L15.5,6.5L16.92,7.92L12,12.84L7.08,7.92L8.5,6.5L11,9V3H13V9M3,15H21V17H3V15M3,19H13V21H3V19Z"/>
+                        </Canvas>
+                    </ToggleButton>
+                    <ToggleButton x:Name="_btnBottomscript" Click="_btnScript_Clicked">
+                        <ToggleButton.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="Bottom: A baseline that is aligned at the lower edge of the containing box." Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </ToggleButton.ToolTip>
+                        <Canvas Width="20" Height="20" Clip="F1 M 0,0L 20,0L 20,20L 0,20L 0,0">
+                            <Path Width="20" Height="20"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M16,13H13V3H11V13H8L12,17L16,13M4,19V21H20V19H4Z"/>
+                        </Canvas>
+                    </ToggleButton>
+                    <ToggleButton x:Name="_btnBasescript" Click="_btnScript_Clicked" IsChecked="True">
+                        <ToggleButton.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="Baseline: A baseline that is aligned at the actual baseline of the containing box.(Default)" Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </ToggleButton.ToolTip>
+                        <Canvas Width="20" Height="20" Clip="F1 M 0,0L 20,0L 20,20L 0,20L 0,0">
+                            <Path Width="20" Height="20"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M13,4A4,4 0 0,1 17,8A4,4 0 0,1 13,12H11V18H9V4H13M13,10A2,2 0 0,0 15,8A2,2 0 0,0 13,6H11V10H13Z"/>
+                        </Canvas>
+                    </ToggleButton>
+                </ToolBar>
+                <ToolBar x:Name="ToolBarFont" Band="2">
+                    <ComboBox x:Name="_fontFamily" SelectionChanged="_fontFamily_SelectionChanged" >
                     </ComboBox>
-                    <TextBox HorizontalContentAlignment="Center" VerticalContentAlignment="Center" > SDFFFS</TextBox>
-                </ToolBar>
-                <ToolBar Band="0">
-                    <Button Command="Cut" Content="Cut" />
-                    <Button Command="Copy" Content="Copy" />
-                    <Button Command="Paste" Content="Paste" />
-                </ToolBar>
+                    <ComboBox x:Name="_fontSize" SelectionChanged="_fontSize_SelectionChanged" >
+                    </ComboBox>
+                    <Separator />
+                    <Button x:Name="_btnDecreaseFontSize"
+                        Command="{x:Static EditingCommands.DecreaseFontSize}" CommandTarget="{Binding ElementName=rtb}">
+                        <Button.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="Decrease FontSize" Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </Button.ToolTip>
+                        <Canvas Width="20" Height="20" Clip="F1 M 0,0L 20,0L 20,20L 0,20L 0,0">
+                            <Path Width="20" Height="20"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="F1 M 33.6585,44.381L 24.397,44.381L 22.0936,52.9919L 14.5596,52.9919L 24.397,21L 33.9944,21L 42.31,47.4041L 47.7438,29.9832L 54.7237,29.9832L 62.0513,53L 56.2942,53L 54.4794,46.7375L 47.7438,46.7375L 46.0686,53L 36.1538,52.9919L 33.6585,44.381 Z M 25.4527,39.1786L 32.6028,39.1786L 30.5873,32.3811L 29.7355,29.2915L 28.9557,26.2024L 28.8598,26.2024L 28.134,29.3193L 27.3722,32.4615L 25.4527,39.1786 Z M 48.5116,42.954L 53.7116,42.954L 52.2458,38.0104L 51.6264,35.7634L 51.0592,33.5168L 50.9894,33.5168L 50.4616,35.7836L 49.9075,38.0688L 48.5116,42.954 Z M 45,21L 57,21L 51,27L 45,21 Z "/>
+                        </Canvas>
+                    </Button>
+                    <Button x:Name="_btnIncreaseFontSize"
+                        Command="{x:Static EditingCommands.IncreaseFontSize}" CommandTarget="{Binding ElementName=rtb}">
+                        <Button.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="Increase FontSize" Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </Button.ToolTip>
+                        <Canvas Width="20" Height="20" Clip="F1 M 0,0L 20,0L 20,20L 0,20L 0,0">
+                            <Path Width="20" Height="20"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="F1 M 33.6585,44.381L 24.397,44.381L 22.0936,52.9919L 14.5596,52.9919L 24.397,21L 33.9944,21L 42.31,47.4041L 47.7438,29.9832L 54.7237,29.9832L 62.0513,53L 56.2942,53L 54.4794,46.7375L 47.7438,46.7375L 46.0686,53L 36.1538,52.9919L 33.6585,44.381 Z M 25.4527,39.1786L 32.6028,39.1786L 30.5873,32.3811L 29.7355,29.2915L 28.9557,26.2024L 28.8598,26.2024L 28.134,29.3193L 27.3722,32.4615L 25.4527,39.1786 Z M 48.5116,42.954L 53.7116,42.954L 52.2458,38.0104L 51.6264,35.7634L 51.0592,33.5168L 50.9894,33.5168L 50.4616,35.7836L 49.9075,38.0688L 48.5116,42.954 Z M 45,27L 51,21L 57,27L 45,27 Z "/>
+                        </Canvas>
+                    </Button>
+                    <Separator />
+                    <Button x:Name="_btn_importimg" Click="_btn_importimg_Click">
+                        <Button.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="Insert Image" Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </Button.ToolTip>
+                        <Canvas Width="20" Height="20" Clip="F1 M 0,0L 20,0L 20,20L 0,20L 0,0">
+                            <Path Width="20" Height="20"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="F1 M 17,20L 59,20L 59,56L 17,56L 17,20 Z M 20,23L 20,53L 56,53L 56,23L 20,23 Z M 24,51L 30.0833,44.3333L 33.25,47.5L 45.9167,34.8333L 50.6667,39.5833L 54,36L 54,51L 24,51 Z M 30.0833,26.9167C 30.0833,30.4145 27.2478,33.25 23.75,33.25C 23.2033,33.25 22.5061,33.1302 22,33L 22,25L 29.6666,25C 29.7968,25.5061 30.0833,26.3699 30.0833,26.9167 Z "/>
+                        </Canvas>
+                    </Button>
+                    <Grid x:Name="DropDownFontColor">
+                        <xctk:ColorPicker x:Name="ClrPcker_Font"
+                                            SelectedColorChanged="ClrPcker_Font_SelectedColorChanged"
+                                            Width="45"
+                                            Style="{DynamicResource ColorPickerStyle2}"
+                                            UsingAlphaChannel="False"/>
+                        <Canvas IsHitTestVisible="False" HorizontalAlignment="Left" Margin="3,0,0,0" Width="20" Height="20" Clip="F1 M 0,0L 20,0L 20,20L 0,20L 0,0">
+                            <Path Width="17" Height="17"
+                                Canvas.Left="1" Canvas.Top="1"
+                                Stretch="Uniform"
+                                Fill="{DynamicResource ButtonFrontColorBrush}"
+                                Data="M9.62,12L12,5.67L14.37,12M11,3L5.5,17H7.75L8.87,14H15.12L16.25,17H18.5L13,3H11Z"/>
+                        </Canvas>
+                    </Grid>
+                    <Grid x:Name="DropDownFontBackColor">
+                        <xctk:ColorPicker x:Name="ClrPcker_FontBack"
+                                            SelectedColorChanged="ClrPcker_FontBack_SelectedColorChanged"
+                                            Width="45"
+                                            Style="{DynamicResource ColorPickerStyle2}"
+                                            UsingAlphaChannel="False"/>
+                        <Canvas IsHitTestVisible="False" HorizontalAlignment="Left" Margin="3,0,0,0" Width="20" Height="20" Clip="F1 M 0,0L 20,0L 20,20L 0,20L 0,0">
+                            <Path Width="17" Height="17"
+                                Canvas.Left="2" Canvas.Top="1"
+                                Stretch="Uniform"
+                                Fill="{DynamicResource ButtonFrontColorBrush}"
+                                Data="M19,11.5C19,11.5 17,13.67 17,15A2,2 0 0,0 19,17A2,2 0 0,0 21,15C21,13.67 19,11.5 19,11.5M5.21,10L10,5.21L14.79,10M16.56,8.94L7.62,0L6.21,1.41L8.59,3.79L3.44,8.94C2.85,9.5 2.85,10.47 3.44,11.06L8.94,16.56C9.23,16.85 9.62,17 10,17C10.38,17 10.77,16.85 11.06,16.56L16.56,11.06C17.15,10.47 17.15,9.5 16.56,8.94Z"/>
+                        </Canvas>
+                    </Grid>
 
+
+
+
+                </ToolBar>
             </ToolBarTray>
             <RichTextBox
                 x:Name="rtb"

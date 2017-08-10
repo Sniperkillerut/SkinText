@@ -89,6 +89,25 @@
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>SkinTextFirm.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>CODE_ANALYSIS;DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>SkinText.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>SkinText.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Hardcodet.Wpf.TaskbarNotification, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Hardcodet.NotifyIcon.Wpf.1.0.8\lib\net45\Hardcodet.Wpf.TaskbarNotification.dll</HintPath>
@@ -179,6 +198,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AdvancedConfig.xaml.cs">
+      <DependentUpon>AdvancedConfig.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomCommands.cs" />
     <Compile Include="CustomMethods.cs" />
     <Compile Include="FontConfig.xaml.cs">
@@ -190,6 +212,10 @@
     <Compile Include="WindowConfig.xaml.cs">
       <DependentUpon>WindowConfig.xaml</DependentUpon>
     </Compile>
+    <Page Include="AdvancedConfig.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="FontConfig.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -244,12 +270,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Center.png" />
-    <Resource Include="Resources\Right.png" />
-    <Resource Include="Resources\Left.png" />
-    <Resource Include="Resources\Justify.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.5.2 %28x86 y x64%29</ProductName>
@@ -273,15 +293,7 @@
     <Resource Include="Resources\icon_01.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\SubScript.png" />
-    <Resource Include="Resources\SuperScript.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\X.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\FlipH.png" />
-    <Resource Include="Resources\FlipV.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -290,11 +302,11 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Costura.Fody.1.6.2\build\dotnet\Costura.Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Costura.Fody.1.6.2\build\dotnet\Costura.Fody.targets'))" />
     <Error Condition="!Exists('..\packages\Fody.2.1.2\build\netstandard1.0\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.2.1.2\build\netstandard1.0\Fody.targets'))" />
-    <Error Condition="!Exists('..\packages\Brutal.Dev.StrongNameSigner.2.1.3\build\Brutal.Dev.StrongNameSigner.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Brutal.Dev.StrongNameSigner.2.1.3\build\Brutal.Dev.StrongNameSigner.targets'))" />
+    <Error Condition="!Exists('..\packages\StrongNamer.0.0.6\build\StrongNamer.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\StrongNamer.0.0.6\build\StrongNamer.targets'))" />
   </Target>
   <Import Project="..\packages\Costura.Fody.1.6.2\build\dotnet\Costura.Fody.targets" Condition="Exists('..\packages\Costura.Fody.1.6.2\build\dotnet\Costura.Fody.targets')" />
   <Import Project="..\packages\Fody.2.1.2\build\netstandard1.0\Fody.targets" Condition="Exists('..\packages\Fody.2.1.2\build\netstandard1.0\Fody.targets')" />
-  <Import Project="..\packages\Brutal.Dev.StrongNameSigner.2.1.3\build\Brutal.Dev.StrongNameSigner.targets" Condition="Exists('..\packages\Brutal.Dev.StrongNameSigner.2.1.3\build\Brutal.Dev.StrongNameSigner.targets')" />
+  <Import Project="..\packages\StrongNamer.0.0.6\build\StrongNamer.targets" Condition="Exists('..\packages\StrongNamer.0.0.6\build\StrongNamer.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

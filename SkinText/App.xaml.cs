@@ -56,6 +56,7 @@ namespace SkinText {
                 try {
                     Directory.CreateDirectory(path);
                     File.Copy(curFileName, path + "\\" + curFileName);
+                    Directory.CreateDirectory(path+@"\Default");
                     MessageBox.Show("Config complete!", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 catch (Exception ex) {
