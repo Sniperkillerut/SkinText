@@ -103,6 +103,13 @@
             <Setter Property="HorizontalAlignment"     Value="Center" />
             <Setter Property="VerticalAlignment"       Value="Center" />
         </Style>
+        <Style x:Key="LabelStyle" TargetType="{x:Type Label}">
+            <Setter Property="HorizontalAlignment"        Value="Stretch" />
+            <Setter Property="VerticalAlignment"          Value="Stretch" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment"   Value="Center" />
+            <Setter Property="Margin"                     Value="0" />
+        </Style>
         <Style x:Key="ButtonsStyle" TargetType="{x:Type Button}">
             <Setter Property="FontSize"                Value="16" />
             <Setter Property="FontFamily"              Value="Arial Black" />
@@ -651,9 +658,9 @@
             <Setter Property="Background" Value="{x:Null}"/>
             <Setter Property="BorderBrush" Value="{x:Null}"/>
             <Setter Property="ShowDropDownButton" Value="False"/>
-            <Setter Property="DisplayColorAndName" Value="True"/>
             <Setter Property="ShowRecentColors" Value="True"/>
             <Setter Property="AvailableColorsSortingMode" Value="HueSaturationBrightness"/>
+            <Setter Property="DisplayColorAndName" Value="True"/>
             <Setter Property="ColorMode" Value="ColorCanvas"/>
             <Setter Property="UsingAlphaChannel" Value="True"/>
         </Style>
@@ -923,7 +930,7 @@
                                                         <RowDefinition Height="Auto" />
                                                         <RowDefinition />
                                                     </Grid.RowDefinitions>
-                                                    <TextBlock Text="{TemplateBinding AvailableColorsHeader}" Background="AliceBlue" Padding="2" Margin="0,0,0,1" />
+                                                    <TextBlock Text="{TemplateBinding AvailableColorsHeader}" Background="{DynamicResource ButtonBackgroundColorBrush}" Foreground="{DynamicResource ButtonFrontColorBrush}" Padding="2" Margin="0,0,0,1" />
                                                     <ListBox x:Name="PART_AvailableColors"
                                              Grid.Row="1"
                                              ItemsSource="{Binding AvailableColors, RelativeSource={RelativeSource TemplatedParent}}"
@@ -938,7 +945,7 @@
                                                         <RowDefinition Height="Auto" />
                                                         <RowDefinition Height="Auto" />
                                                     </Grid.RowDefinitions>
-                                                    <TextBlock Text="{TemplateBinding StandardColorsHeader}" Background="AliceBlue" Padding="2" Margin="0,1,0,1" />
+                                                    <TextBlock Text="{TemplateBinding StandardColorsHeader}" Background="{DynamicResource ButtonBackgroundColorBrush}" Foreground="{DynamicResource ButtonFrontColorBrush}" Padding="2" Margin="0,1,0,1" />
                                                     <ListBox x:Name="PART_StandardColors"
                                              Grid.Row="1"
                                              ItemsSource="{Binding StandardColors, RelativeSource={RelativeSource TemplatedParent}}"
@@ -953,7 +960,7 @@
                                                         <RowDefinition Height="Auto" />
                                                         <RowDefinition Height="22" />
                                                     </Grid.RowDefinitions>
-                                                    <TextBlock Text="{TemplateBinding RecentColorsHeader}" Background="AliceBlue" Padding="2" Margin="0,1,0,1" />
+                                                    <TextBlock Text="{TemplateBinding RecentColorsHeader}" Background="{DynamicResource ButtonBackgroundColorBrush}" Foreground="{DynamicResource ButtonFrontColorBrush}" Padding="2" Margin="0,1,0,1" />
                                                     <ListBox x:Name="PART_RecentColors"
                                              Grid.Row="1"
                                              ItemsSource="{Binding RecentColors, RelativeSource={RelativeSource TemplatedParent}}"
@@ -977,7 +984,7 @@
                                       Visibility="{TemplateBinding ShowAdvancedButton, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                                         <!-- More Colors Button -->
-                                        <Button x:Name="PART_ColorModeButton" Grid.Row="2" Margin="5" Visibility="{TemplateBinding ShowAdvancedButton, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                        <Button x:Name="PART_ColorModeButton" Grid.Row="2" Margin="5" Visibility="{TemplateBinding ShowAdvancedButton, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource ButtonsStyle}" Width="150"/>
                                     </Grid>
                                 </Border>
                             </Popup>
@@ -1111,14 +1118,16 @@
 
         <DataTemplate DataType="{x:Type FamilyTypeface}">
             <WrapPanel>
-                <TextBlock Text="{Binding Style}"   FontStyle="{Binding Style}" FontWeight="{Binding Weight}" FontStretch="{Binding Stretch}" FontFamily="{Binding SelectedItem, ElementName=lstFamily}" />
-                <TextBlock Text="-"                 FontStyle="{Binding Style}" FontWeight="{Binding Weight}" FontStretch="{Binding Stretch}" FontFamily="{Binding SelectedItem, ElementName=lstFamily}" />
-                <TextBlock Text="{Binding Weight}"  FontStyle="{Binding Style}" FontWeight="{Binding Weight}" FontStretch="{Binding Stretch}" FontFamily="{Binding SelectedItem, ElementName=lstFamily}" />
-                <TextBlock Text="-"                 FontStyle="{Binding Style}" FontWeight="{Binding Weight}" FontStretch="{Binding Stretch}" FontFamily="{Binding SelectedItem, ElementName=lstFamily}" />
-                <TextBlock Text="{Binding Stretch}" FontStyle="{Binding Style}" FontWeight="{Binding Weight}" FontStretch="{Binding Stretch}" FontFamily="{Binding SelectedItem, ElementName=lstFamily}" />
+                <TextBlock Text="{Binding Style}"   FontStyle="{Binding Style}" FontWeight="{Binding Weight}" FontStretch="{Binding Stretch}" FontFamily="{Binding SelectedItem, ElementName=lstFamily, FallbackValue=Arial }" />
+                <TextBlock Text="-"                 FontStyle="{Binding Style}" FontWeight="{Binding Weight}" FontStretch="{Binding Stretch}" FontFamily="{Binding SelectedItem, ElementName=lstFamily, FallbackValue=Arial }" />
+                <TextBlock Text="{Binding Weight}"  FontStyle="{Binding Style}" FontWeight="{Binding Weight}" FontStretch="{Binding Stretch}" FontFamily="{Binding SelectedItem, ElementName=lstFamily, FallbackValue=Arial }" />
+                <TextBlock Text="-"                 FontStyle="{Binding Style}" FontWeight="{Binding Weight}" FontStretch="{Binding Stretch}" FontFamily="{Binding SelectedItem, ElementName=lstFamily, FallbackValue=Arial }" />
+                <TextBlock Text="{Binding Stretch}" FontStyle="{Binding Style}" FontWeight="{Binding Weight}" FontStretch="{Binding Stretch}" FontFamily="{Binding SelectedItem, ElementName=lstFamily, FallbackValue=Arial }" />
             </WrapPanel>
         </DataTemplate>
         <BitmapImage x:Key="ImageSource1X" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="Resources\X.png" />
+        <BitmapImage x:Key="ImageSource1CharMap" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="Resources\CharMap.png" />
+        <BitmapImage x:Key="ImageSource1icon" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="Resources\icon_01.ico" />
         <!--Font Family Area-->
 
 

@@ -8,12 +8,8 @@
         mc:Ignorable="d"
 
         Title="AdvancedConfig"
-        Height="360"
-        Width="680"
-        MinWidth="680"
-        MinHeight="360"
-        MaxWidth="680"
-        MaxHeight="360"
+        Height="380" MinHeight="380" MaxHeight="380"
+        Width="560" MinWidth="560" MaxWidth="560"
         WindowStyle="None"
         SnapsToDevicePixels="True"
         UseLayoutRounding="True"
@@ -30,15 +26,19 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="200" />
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="100" />
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="*" />
             <ColumnDefinition Width="5" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
             <RowDefinition Height="10" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
@@ -51,7 +51,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="10" />
         </Grid.RowDefinitions>
-        <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" HorizontalAlignment="Center">
+        <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="6" Style="{DynamicResource LabelStyle}">
             <TextBlock Text="Advanced Configuration Window" Style="{DynamicResource ToolTipTextStyle}" />
         </Label>
         <Button x:Name="CloseButt" Grid.Column="4" Grid.Row="0" Click="CloseButt_Click" Style="{DynamicResource ButtonsStyle}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalAlignment="Right" Width="{Binding ActualHeight, Mode=OneWay, RelativeSource={RelativeSource Self}}" VerticalAlignment="Stretch">
@@ -63,247 +63,144 @@
                                   Data="F1 M 26.9166,22.1667L 37.9999,33.25L 49.0832,22.1668L 53.8332,26.9168L 42.7499,38L 53.8332,49.0834L 49.0833,53.8334L 37.9999,42.75L 26.9166,53.8334L 22.1666,49.0833L 33.25,38L 22.1667,26.9167L 26.9166,22.1667 Z "/>
             </Canvas>
         </Button>
-        <Label Grid.Column="1" Grid.Row="2">
-            <Label.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Set SkinText Border Color" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </Label.ToolTip>
-            <TextBlock Text="Background: " Style="{DynamicResource ToolTipTextStyle}" />
+
+        <Label Grid.Column="2" Grid.Row="2" Style="{DynamicResource LabelStyle}">
+            <TextBlock Text="Normal" Style="{DynamicResource ToolTipTextStyle}" />
         </Label>
-        <xctk:ColorPicker x:Name="ClrPcker_BackgroundColorBrush"
-                          Grid.Column="2" Grid.Row="2"
-                          SelectedColorChanged="ClrPcker_BackgroundColorBrush_SelectedColorChanged"
-                          Style="{DynamicResource ColorPickerStyle}" />
+        <Label Grid.Column="3" Grid.Row="2" Style="{DynamicResource LabelStyle}">
+            <TextBlock Text="Mouse Over" Style="{DynamicResource ToolTipTextStyle}" />
+        </Label>
+        <Label Grid.Column="4" Grid.Row="2" Style="{DynamicResource LabelStyle}">
+            <TextBlock Text="Selected" Style="{DynamicResource ToolTipTextStyle}" />
+        </Label>
+        <Label Grid.Column="5" Grid.Row="2" Style="{DynamicResource LabelStyle}">
+            <TextBlock Text="Disabled" Style="{DynamicResource ToolTipTextStyle}" />
+        </Label>
 
         <Label Grid.Column="1" Grid.Row="3">
-            <Label.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Set SkinText Border Color" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </Label.ToolTip>
-            <TextBlock Text="ButtonBackground: " Style="{DynamicResource ToolTipTextStyle}" />
+            <TextBlock Text="Windows Background: " Style="{DynamicResource ToolTipTextStyle}" />
         </Label>
-        <xctk:ColorPicker x:Name="ClrPcker_ButtonBackgroundColorBrush"
+        <xctk:ColorPicker x:Name="ClrPcker_BackgroundColorBrush"
                           Grid.Column="2" Grid.Row="3"
-                          SelectedColorChanged="ClrPcker_ButtonBackgroundColorBrush_SelectedColorChanged"
-                          Style="{DynamicResource ColorPickerStyle}"/>
+                          SelectedColorChanged="ClrPcker_BackgroundColorBrush_SelectedColorChanged"
+                          Style="{DynamicResource ColorPickerStyle2}"
+                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
 
         <Label Grid.Column="1" Grid.Row="4">
-            <Label.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Set SkinText Border Color" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </Label.ToolTip>
-            <TextBlock Text="ButtonBackgroundMouseOver: " Style="{DynamicResource ToolTipTextStyle}" />
+            <TextBlock Text="Button Background: " Style="{DynamicResource ToolTipTextStyle}" />
         </Label>
-        <xctk:ColorPicker x:Name="ClrPcker_ButtonBackgroundMouseOverColorBrush"
+        <xctk:ColorPicker x:Name="ClrPcker_ButtonBackgroundColorBrush"
                           Grid.Column="2" Grid.Row="4"
+                          SelectedColorChanged="ClrPcker_ButtonBackgroundColorBrush_SelectedColorChanged"
+                          Style="{DynamicResource ColorPickerStyle2}"
+                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
+        <xctk:ColorPicker x:Name="ClrPcker_ButtonBackgroundMouseOverColorBrush"
+                          Grid.Column="3" Grid.Row="4"
                           SelectedColorChanged="ClrPcker_ButtonBackgroundMouseOverColorBrush_SelectedColorChanged"
-                          Style="{DynamicResource ColorPickerStyle}"/>
-
-        <Label Grid.Column="1" Grid.Row="5">
-            <Label.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Set SkinText Border Color" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </Label.ToolTip>
-            <TextBlock Text="ButtonBackgroundChecked: " Style="{DynamicResource ToolTipTextStyle}" />
-        </Label>
+                          Style="{DynamicResource ColorPickerStyle2}"
+                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
         <xctk:ColorPicker x:Name="ClrPcker_ButtonBackgroundCheckedColorBrush"
-                          Grid.Column="2" Grid.Row="5"
+                          Grid.Column="4" Grid.Row="4"
                           SelectedColorChanged="ClrPcker_ButtonBackgroundCheckedColorBrush_SelectedColorChanged"
-                          Style="{DynamicResource ColorPickerStyle}"/>
-
+                          Style="{DynamicResource ColorPickerStyle2}"
+                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
+        <Label Grid.Column="1" Grid.Row="5">
+            <TextBlock Text="Button Border: " Style="{DynamicResource ToolTipTextStyle}" />
+        </Label>
+        <xctk:ColorPicker x:Name="ClrPcker_ButtonBorderMouseOverColorBrush"
+                          Grid.Column="3" Grid.Row="5"
+                          SelectedColorChanged="ClrPcker_ButtonBorderMouseOverColorBrush_SelectedColorChanged"
+                          Style="{DynamicResource ColorPickerStyle2}"
+                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
+        <xctk:ColorPicker x:Name="ClrPcker_ButtonBorderCheckedColorBrush"
+                          Grid.Column="4" Grid.Row="5"
+                          SelectedColorChanged="ClrPcker_ButtonBorderCheckedColorBrush_SelectedColorChanged"
+                          Style="{DynamicResource ColorPickerStyle2}"
+                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
         <Label Grid.Column="1" Grid.Row="6">
-            <Label.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Set SkinText Border Color" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </Label.ToolTip>
+            <TextBlock Text="Button Text: " Style="{DynamicResource ToolTipTextStyle}" />
+        </Label>
+        <xctk:ColorPicker x:Name="ClrPcker_ButtonFrontColorBrush"
+                          Grid.Column="2" Grid.Row="6"
+                          SelectedColorChanged="ClrPcker_ButtonFrontColorBrush_SelectedColorChanged"
+                          Style="{DynamicResource ColorPickerStyle2}"
+                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
+        <Label Grid.Column="1" Grid.Row="7">
             <TextBlock Text="Text: " Style="{DynamicResource ToolTipTextStyle}" />
         </Label>
         <xctk:ColorPicker x:Name="ClrPcker_TextColorBrush"
-                          Grid.Column="2" Grid.Row="6"
-                          SelectedColorChanged="ClrPcker_TextColorBrush_SelectedColorChanged"
-                          Style="{DynamicResource ColorPickerStyle}"/>
-
-        <Label Grid.Column="1" Grid.Row="7">
-            <Label.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Set SkinText Border Color" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </Label.ToolTip>
-            <TextBlock Text="FontPickBackground: " Style="{DynamicResource ToolTipTextStyle}" />
-        </Label>
-        <xctk:ColorPicker x:Name="ClrPcker_FontPickBackgroundColorBrush"
                           Grid.Column="2" Grid.Row="7"
-                          SelectedColorChanged="ClrPcker_FontPickBackgroundColorBrush_SelectedColorChanged"
-                          Style="{DynamicResource ColorPickerStyle}"/>
+                          SelectedColorChanged="ClrPcker_TextColorBrush_SelectedColorChanged"
+                          Style="{DynamicResource ColorPickerStyle2}"
+                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
 
         <Label Grid.Column="1" Grid.Row="8">
-            <Label.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Set SkinText Border Color" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </Label.ToolTip>
-            <TextBlock Text="FontPickMouseOverBackground: " Style="{DynamicResource ToolTipTextStyle}" />
+            <TextBlock Text="FontPicker Background: " Style="{DynamicResource ToolTipTextStyle}" />
         </Label>
-        <xctk:ColorPicker x:Name="ClrPcker_FontPickMouseOverBackgroundColorBrush"
+        <xctk:ColorPicker x:Name="ClrPcker_FontPickBackgroundColorBrush"
                           Grid.Column="2" Grid.Row="8"
+                          SelectedColorChanged="ClrPcker_FontPickBackgroundColorBrush_SelectedColorChanged"
+                          Style="{DynamicResource ColorPickerStyle2}"
+                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
+        <xctk:ColorPicker x:Name="ClrPcker_FontPickMouseOverBackgroundColorBrush"
+                          Grid.Column="3" Grid.Row="8"
                           SelectedColorChanged="ClrPcker_FontPickMouseOverBackgroundColorBrush_SelectedColorChanged"
-                          Style="{DynamicResource ColorPickerStyle}"/>
-
+                          Style="{DynamicResource ColorPickerStyle2}"
+                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
+        <xctk:ColorPicker x:Name="ClrPcker_FontPickSelectedBackgroundColorBrush"
+                          Grid.Column="4" Grid.Row="8"
+                          SelectedColorChanged="ClrPcker_FontPickSelectedBackgroundColorBrush_SelectedColorChanged"
+                          Style="{DynamicResource ColorPickerStyle2}"
+                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
         <Label Grid.Column="1" Grid.Row="9">
-            <Label.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Set SkinText Border Color" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </Label.ToolTip>
-            <TextBlock Text="FontPickMouseOverBorder: " Style="{DynamicResource ToolTipTextStyle}" />
+            <TextBlock Text="FontPicker Border: " Style="{DynamicResource ToolTipTextStyle}" />
         </Label>
         <xctk:ColorPicker x:Name="ClrPcker_FontPickMouseOverBorderColorBrush"
-                          Grid.Column="2" Grid.Row="9"
+                          Grid.Column="3" Grid.Row="9"
                           SelectedColorChanged="ClrPcker_FontPickMouseOverBorderColorBrush_SelectedColorChanged"
-                          Style="{DynamicResource ColorPickerStyle}"/>
-
-        <Label Grid.Column="1" Grid.Row="10">
-            <Label.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Set SkinText Border Color" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </Label.ToolTip>
-            <TextBlock Text="FontPickSelectedBackground: " Style="{DynamicResource ToolTipTextStyle}" />
-        </Label>
-        <xctk:ColorPicker x:Name="ClrPcker_FontPickSelectedBackgroundColorBrush"
-                          Grid.Column="2" Grid.Row="10"
-                          SelectedColorChanged="ClrPcker_FontPickSelectedBackgroundColorBrush_SelectedColorChanged"
-                          Style="{DynamicResource ColorPickerStyle}"/>
-
-        <Label Grid.Column="3" Grid.Row="2">
-            <Label.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Set SkinText Border Color" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </Label.ToolTip>
-            <TextBlock Text="FontPickSelectedBorder: " Style="{DynamicResource ToolTipTextStyle}" />
-        </Label>
+                          Style="{DynamicResource ColorPickerStyle2}"
+                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
         <xctk:ColorPicker x:Name="ClrPcker_FontPickSelectedBorderColorBrush"
-                          Grid.Column="4" Grid.Row="2"
+                          Grid.Column="4" Grid.Row="9"
                           SelectedColorChanged="ClrPcker_FontPickSelectedBorderColorBrush_SelectedColorChanged"
-                          Style="{DynamicResource ColorPickerStyle}"/>
-
-        <Label Grid.Column="3" Grid.Row="3">
-            <Label.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Set SkinText Border Color" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </Label.ToolTip>
-            <TextBlock Text="MenuBackground: " Style="{DynamicResource ToolTipTextStyle}" />
-        </Label>
-        <xctk:ColorPicker x:Name="ClrPcker_MenuBackgroundColorBrush"
-                          Grid.Column="4" Grid.Row="3"
-                          SelectedColorChanged="ClrPcker_MenuBackgroundColorBrush_SelectedColorChanged"
-                          Style="{DynamicResource ColorPickerStyle}"/>
-
-        <Label Grid.Column="3" Grid.Row="4">
-            <Label.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Set SkinText Border Color" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </Label.ToolTip>
-            <TextBlock Text="MenuItem1Border: " Style="{DynamicResource ToolTipTextStyle}" />
-        </Label>
-        <xctk:ColorPicker x:Name="ClrPcker_MenuItem1BorderColorBrush"
-                          Grid.Column="4" Grid.Row="4"
-                          SelectedColorChanged="ClrPcker_MenuItem1BorderColorBrush_SelectedColorChanged"
-                          Style="{DynamicResource ColorPickerStyle}"/>
-
-        <Label Grid.Column="3" Grid.Row="5">
-            <Label.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Set SkinText Border Color" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </Label.ToolTip>
-            <TextBlock Text="MenuItem2HighlightText: " Style="{DynamicResource ToolTipTextStyle}" />
-        </Label>
-        <xctk:ColorPicker x:Name="ClrPcker_MenuItem2HighlightTextColorBrush"
-                          Grid.Column="4" Grid.Row="5"
-                          SelectedColorChanged="ClrPcker_MenuItem2HighlightTextColorBrush_SelectedColorChanged"
-                          Style="{DynamicResource ColorPickerStyle}"/>
-
-        <Label Grid.Column="3" Grid.Row="6">
-            <Label.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Set SkinText Border Color" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </Label.ToolTip>
-            <TextBlock Text="MenuItem2HighlightBorder: " Style="{DynamicResource ToolTipTextStyle}" />
-        </Label>
-        <xctk:ColorPicker x:Name="ClrPcker_MenuItem2HighlightBorderColorBrush"
-                          Grid.Column="4" Grid.Row="6"
-                          SelectedColorChanged="ClrPcker_MenuItem2HighlightBorderColorBrush_SelectedColorChanged"
-                          Style="{DynamicResource ColorPickerStyle}"/>
-
-        <Label Grid.Column="3" Grid.Row="7">
-            <Label.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Set SkinText Border Color" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </Label.ToolTip>
-            <TextBlock Text="MenuItem2Disabled: " Style="{DynamicResource ToolTipTextStyle}" />
-        </Label>
-        <xctk:ColorPicker x:Name="ClrPcker_MenuItem2DisabledColorBrush"
-                          Grid.Column="4" Grid.Row="7"
-                          SelectedColorChanged="ClrPcker_MenuItem2DisabledColorBrush_SelectedColorChanged"
-                          Style="{DynamicResource ColorPickerStyle}"/>
-
-        <Label Grid.Column="3" Grid.Row="8">
-            <Label.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Set SkinText Border Color" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </Label.ToolTip>
-            <TextBlock Text="FontPickText: " Style="{DynamicResource ToolTipTextStyle}" />
+                          Style="{DynamicResource ColorPickerStyle2}"
+                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
+        <Label Grid.Column="1" Grid.Row="10">
+            <TextBlock Text="FontPicker Text: " Style="{DynamicResource ToolTipTextStyle}" />
         </Label>
         <xctk:ColorPicker x:Name="ClrPcker_FontPickTextColorBrush"
-                          Grid.Column="4" Grid.Row="8"
+                          Grid.Column="2" Grid.Row="10"
                           SelectedColorChanged="ClrPcker_FontPickTextColorBrush_SelectedColorChanged"
-                          Style="{DynamicResource ColorPickerStyle}"/>
+                          Style="{DynamicResource ColorPickerStyle2}"
+                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
+        <Label Grid.Column="1" Grid.Row="11">
+            <TextBlock Text="Menu Background: " Style="{DynamicResource ToolTipTextStyle}" />
+        </Label>
+        <xctk:ColorPicker x:Name="ClrPcker_MenuBackgroundColorBrush"
+                          Grid.Column="2" Grid.Row="11"
+                          SelectedColorChanged="ClrPcker_MenuBackgroundColorBrush_SelectedColorChanged"
+                          Style="{DynamicResource ColorPickerStyle2}"
+                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
 
-        <Label Grid.Column="3" Grid.Row="9">
+        <Label Grid.Column="1" Grid.Row="12">
+            <TextBlock Text="MenuItem1 Border: " Style="{DynamicResource ToolTipTextStyle}" />
+        </Label>
+        <xctk:ColorPicker x:Name="ClrPcker_MenuItem1BorderColorBrush"
+                          Grid.Column="2" Grid.Row="12"
+                          SelectedColorChanged="ClrPcker_MenuItem1BorderColorBrush_SelectedColorChanged"
+                          Style="{DynamicResource ColorPickerStyle2}"
+                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
+
+        <Label Grid.Column="1" Grid.Row="13">
+            <TextBlock Text="MenuItem2 Text: " Style="{DynamicResource ToolTipTextStyle}" />
+        </Label>
+        <xctk:ColorPicker x:Name="ClrPcker_MenuItem2HighlightTextColorBrush"
+                          Grid.Column="3" Grid.Row="13"
+                          SelectedColorChanged="ClrPcker_MenuItem2HighlightTextColorBrush_SelectedColorChanged"
+                          Style="{DynamicResource ColorPickerStyle2}"
+                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
+
+        <Label Grid.Column="1" Grid.Row="14">
             <Label.ToolTip>
                 <ToolTip Style="{DynamicResource ToolTipStyle}">
                     <Border Style="{DynamicResource ToolTipBorderStyle}">
@@ -311,42 +208,25 @@
                     </Border>
                 </ToolTip>
             </Label.ToolTip>
-            <TextBlock Text="ButtonText: " Style="{DynamicResource ToolTipTextStyle}" />
+            <TextBlock Text="MenuItem2 Border: " Style="{DynamicResource ToolTipTextStyle}" />
         </Label>
-        <xctk:ColorPicker x:Name="ClrPcker_ButtonFrontColorBrush"
-                          Grid.Column="4" Grid.Row="9"
-                          SelectedColorChanged="ClrPcker_ButtonFrontColorBrush_SelectedColorChanged"
-                          Style="{DynamicResource ColorPickerStyle}"/>
+        <xctk:ColorPicker x:Name="ClrPcker_MenuItem2HighlightBorderColorBrush"
+                          Grid.Column="3" Grid.Row="14"
+                          SelectedColorChanged="ClrPcker_MenuItem2HighlightBorderColorBrush_SelectedColorChanged"
+                          Style="{DynamicResource ColorPickerStyle2}"
+                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
 
-        <Label Grid.Column="3" Grid.Row="10">
-            <Label.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Set SkinText Border Color" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </Label.ToolTip>
-            <TextBlock Text="ButtonBorderMouseOver: " Style="{DynamicResource ToolTipTextStyle}" />
+        <Label Grid.Column="1" Grid.Row="15">
+            <TextBlock Text="Disabled: " Style="{DynamicResource ToolTipTextStyle}" />
         </Label>
-        <xctk:ColorPicker x:Name="ClrPcker_ButtonBorderMouseOverColorBrush"
-                          Grid.Column="4" Grid.Row="10"
-                          SelectedColorChanged="ClrPcker_ButtonBorderMouseOverColorBrush_SelectedColorChanged"
-                          Style="{DynamicResource ColorPickerStyle}"/>
+        <xctk:ColorPicker x:Name="ClrPcker_MenuItem2DisabledColorBrush"
+                          Grid.Column="2" Grid.Row="15"
+                          SelectedColorChanged="ClrPcker_MenuItem2DisabledColorBrush_SelectedColorChanged"
+                          Style="{DynamicResource ColorPickerStyle2}"
+                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
 
-        <Label Grid.Column="3" Grid.Row="11">
-            <Label.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Set SkinText Border Color" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </Label.ToolTip>
-            <TextBlock Text="ButtonBorderChecked: " Style="{DynamicResource ToolTipTextStyle}" />
-        </Label>
-        <xctk:ColorPicker x:Name="ClrPcker_ButtonBorderCheckedColorBrush"
-                          Grid.Column="4" Grid.Row="11"
-                          SelectedColorChanged="ClrPcker_ButtonBorderCheckedColorBrush_SelectedColorChanged"
-                          Style="{DynamicResource ColorPickerStyle}"/>
+
+
 
 
     </Grid>

@@ -42,12 +42,14 @@
                                   Data="F1 M 26.9166,22.1667L 37.9999,33.25L 49.0832,22.1668L 53.8332,26.9168L 42.7499,38L 53.8332,49.0834L 49.0833,53.8334L 37.9999,42.75L 26.9166,53.8334L 22.1666,49.0833L 33.25,38L 22.1667,26.9167L 26.9166,22.1667 Z "/>
             </Canvas>
         </Button>
-        <Label Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" Height="28" Margin="50,0" Width="50">
+        <Label Grid.Column="1" Grid.Row="0"
+                       Style="{DynamicResource LabelStyle}">
             <Label.Content>
                 <TextBlock Text="FONT" Style="{DynamicResource ToolTipTextStyle}" />
             </Label.Content>
         </Label>
-        <Label Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Height="28" Margin="0" Width="102" VerticalAlignment="Top">
+        <Label Grid.Column="0" Grid.Row="1"
+                       Style="{DynamicResource LabelStyle}">
             <Label.Content>
                 <TextBlock Text="Font Family:" Style="{DynamicResource ToolTipTextStyle}" />
             </Label.Content>
@@ -61,54 +63,54 @@
                  Style="{DynamicResource ListBoxStyle}"
                  IsTextSearchEnabled="False"/>
 
-        <Grid Grid.Column="0" Grid.Row="4" Grid.RowSpan="2" Margin="20,0,0,0">
+        <Grid Grid.Column="0" Grid.Row="4" Grid.RowSpan="2" Margin="0,0,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
-                <RowDefinition Height="10" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="2" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="10" />
             </Grid.RowDefinitions>
-            <Label Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" Height="28" Margin="0" Width="102" VerticalAlignment="Top">
+            <Label Grid.Column="0" Grid.Row="0"
+                       Style="{DynamicResource LabelStyle}">
                 <Label.Content>
                     <TextBlock Text="Effects:" Style="{DynamicResource ToolTipTextStyle}" />
                 </Label.Content>
             </Label>
-            <ComboBox x:Name="_fontFamily" Grid.Row="2"
-                              Style="{DynamicResource ComboBoxStyle}"
-                              DataContext="{StaticResource familyCollection}"
-                              IsTextSearchEnabled="True" IsEditable="True" StaysOpenOnEdit="True" KeyUp="Cmb_KeyUp"
-                              ItemsSource="{Binding}" ItemTemplate="{StaticResource fontFamilyData}">
-            </ComboBox>
-            <ToggleButton Grid.Row="3" HorizontalAlignment="Left"
+            <Grid Grid.Column="0" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <ToggleButton Grid.Column="0"
                       Width="30" Height="30"
                       VerticalAlignment="Center"
                       x:Name="OverLine"
                       VerticalContentAlignment="Center"
                       Checked="Strikethrough_Checked" Unchecked="Strikethrough_Checked"
                        Style="{DynamicResource ToggleButtonsStyle}">
-                <ToggleButton.ToolTip>
-                    <ToolTip Style="{DynamicResource ToolTipStyle}">
-                        <Border Style="{DynamicResource ToolTipBorderStyle}">
-                            <TextBlock Text="OverLine:" TextDecorations="OverLine"  Style="{DynamicResource ToolTipTextStyle}" />
-                        </Border>
-                    </ToolTip>
-                </ToggleButton.ToolTip>
-                <ToggleButton.Content>
-                    <Canvas Width="22" Height="22" Clip="F1 M 0,0L 22,0L 22,22L 0,22L 0,0">
-                        <Path Width="22" Height="22"
+                    <ToggleButton.ToolTip>
+                        <ToolTip Style="{DynamicResource ToolTipStyle}">
+                            <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                <TextBlock Text="OverLine:" TextDecorations="OverLine"  Style="{DynamicResource ToolTipTextStyle}" />
+                            </Border>
+                        </ToolTip>
+                    </ToggleButton.ToolTip>
+                    <ToggleButton.Content>
+                        <Canvas Width="22" Height="22" Clip="F1 M 0,0L 22,0L 22,22L 0,22L 0,0">
+                            <Path Width="22" Height="22"
                                 Canvas.Left="0" Canvas.Top="0"
                                 Stretch="Uniform"
                                 Fill="{DynamicResource ButtonFrontColorBrush}"
                                 Data="F1 M 21,19L 55,19L 55,23L 21,23L 21,19 Z M 37.8421,56.9533C 33.356,56.9533 29.7635,55.4776 27.0648,52.5263C 24.366,49.5749 23.0167,45.7357 23.0167,41.0088C 23.0167,35.9276 24.392,31.8748 27.1427,28.8502C 29.8934,25.8256 33.6369,24.3133 38.3733,24.3133C 42.7414,24.3133 46.2606,25.7819 48.931,28.7192C 51.6015,31.6564 52.9367,35.4956 52.9367,40.2367C 52.9367,45.3886 51.5684,49.4627 48.8319,52.459C 46.0953,55.4552 42.4321,56.9533 37.8421,56.9533 Z M 38.1042,27.4867C 34.8411,27.4867 32.1908,28.6979 30.1531,31.1204C 28.1155,33.5429 27.0967,36.7257 27.0967,40.6688C 27.0967,44.6071 28.0895,47.7769 30.0752,50.1781C 32.0609,52.5794 34.6522,53.78 37.8492,53.78C 41.2586,53.78 43.9456,52.6349 45.91,50.3446C 47.8744,48.0543 48.8567,44.8503 48.8567,40.7325C 48.8567,36.5108 47.9028,33.2478 45.995,30.9433C 44.0872,28.6389 41.4569,27.4867 38.1042,27.4867 Z "/>
-                    </Canvas>
-                </ToggleButton.Content>
-            </ToggleButton>
-            <ToggleButton Grid.Row="3"
+                        </Canvas>
+                    </ToggleButton.Content>
+                </ToggleButton>
+                <ToggleButton Grid.Column="1"
                       Width="30" Height="30"
                       VerticalAlignment="Center"
                       x:Name="Strikethrough"
@@ -130,7 +132,7 @@
                     </Canvas>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton Grid.Row="4"
+                <ToggleButton Grid.Column="2"
                           Width="30" Height="30"
                           VerticalAlignment="Center"
                           x:Name="Baseline"
@@ -153,7 +155,7 @@
                     </Canvas>
                 </ToggleButton.Content>
             </ToggleButton>
-            <ToggleButton Grid.Row="5"
+                <ToggleButton Grid.Column="3"
                           Width="30" Height="30"
                           VerticalAlignment="Center"
                           x:Name="Underline"
@@ -176,385 +178,14 @@
                     </Canvas>
                 </ToggleButton.Content>
             </ToggleButton>
-
-            <Border Grid.Row="6" Background="{DynamicResource TextColorBrush}"></Border>
-            <Grid Grid.Column="0" Grid.Row="7">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-            <RadioButton x:Name="FlowDirLTR" Grid.Column="0" Grid.Row="0" Width="30" Height="30" Checked="FlowDirLTR_Checked" IsChecked="True"
-                             Style="{DynamicResource RadioButtonsStyle}">
-                <RadioButton.Content>
-                    <Canvas Width="22" Height="22" Clip="F1 M 0,0L 22,0L 22,22L 0,22L 0,0">
-                        <Path Width="22" Height="22"
-                                Canvas.Left="0" Canvas.Top="0"
-                                Stretch="Uniform"
-                                Fill="{DynamicResource ButtonFrontColorBrush}"
-                                Data="M21,18L17,14V17H5V19H17V22M9,10V15H11V4H13V15H15V4H17V2H9A4,4 0 0,0 5,6A4,4 0 0,0 9,10Z"/>
-                    </Canvas>
-                </RadioButton.Content>
-                <RadioButton.ToolTip>
-                    <ToolTip Style="{DynamicResource ToolTipStyle}">
-                        <Border Style="{DynamicResource ToolTipBorderStyle}">
-                            <TextBlock Text="Text Flow Direction Left to Right (Default)" Style="{DynamicResource ToolTipTextStyle}" />
-                        </Border>
-                    </ToolTip>
-                </RadioButton.ToolTip>
-            </RadioButton>
-            <RadioButton x:Name="FlowDirRTL" Grid.Column="1" Grid.Row="0" Width="30" Height="30" Checked="FlowDirLTR_Checked"
-                             Style="{DynamicResource RadioButtonsStyle}">
-                <RadioButton.Content>
-                    <Canvas Width="22" Height="22" Clip="F1 M 0,0L 22,0L 22,22L 0,22L 0,0">
-                        <Path Width="22" Height="22"
-                            Canvas.Left="0" Canvas.Top="0"
-                            Stretch="Uniform"
-                            Fill="{DynamicResource ButtonFrontColorBrush}"
-                            Data="M8,17V14L4,18L8,22V19H20V17M10,10V15H12V4H14V15H16V4H18V2H10A4,4 0 0,0 6,6A4,4 0 0,0 10,10Z"/>
-                    </Canvas>
-                </RadioButton.Content>
-                <RadioButton.ToolTip>
-                    <ToolTip Style="{DynamicResource ToolTipStyle}">
-                        <Border Style="{DynamicResource ToolTipBorderStyle}">
-                            <TextBlock Text="Text Flow Direction Right to Left" Style="{DynamicResource ToolTipTextStyle}" />
-                        </Border>
-                    </ToolTip>
-                </RadioButton.ToolTip>
-            </RadioButton>
             </Grid>
-
-        </Grid>
-
-        <Label Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Height="28" Margin="0" Width="102" VerticalAlignment="Top">
-            <Label.Content>
-                <TextBlock Text="Font Style:" Style="{DynamicResource ToolTipTextStyle}" />
-            </Label.Content>
-        </Label>
-
-        <ListBox x:Name="lstTypefaces" Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" ItemsSource="{Binding FamilyTypefaces}" Style="{DynamicResource ListBoxStyle}"/>
-
-
-        <Grid Grid.Column="1" Grid.Row="4" Grid.RowSpan="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Label Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" Height="28" Margin="0" Width="102" VerticalAlignment="Top">
+            <Label Grid.Column="0" Grid.Row="2"
+                       Style="{DynamicResource LabelStyle}">
                 <Label.Content>
-                    <TextBlock Text="Font Color:" Style="{DynamicResource ToolTipTextStyle}" />
+                    <TextBlock Text="Alignment:" Style="{DynamicResource ToolTipTextStyle}" />
                 </Label.Content>
             </Label>
-
-            <xctk:ColorPicker Name="ClrPcker_Font"
-                              Grid.Column="0" Grid.Row="1"
-                              SelectedColorChanged="ClrPcker_Font_SelectedColorChanged"
-                              Style="{DynamicResource ColorPickerStyle}"
-                              DisplayColorAndName="False" ColorMode="ColorPalette" SelectedColor="Black" UsingAlphaChannel="False" ShowStandardColors="False" />
-
-            <Label Grid.Column="0" Grid.Row="2" Height="28" Margin="0" HorizontalAlignment="Center">
-                <Label.Content>
-                    <TextBlock Text="Font Background:" Style="{DynamicResource ToolTipTextStyle}" VerticalAlignment="Center" />
-                </Label.Content>
-            </Label>
-            <xctk:ColorPicker Name="ClrPcker_Bg"
-                              Grid.Column="0" Grid.Row="3"
-                              SelectedColorChanged="ClrPcker_Bg_SelectedColorChanged"
-                              Style="{DynamicResource ColorPickerStyle}"
-                              DisplayColorAndName="False" ColorMode="ColorPalette"
-                              SelectedColor="Transparent" UsingAlphaChannel="False" />
-
-            <Grid Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Grid.RowSpan="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-
-                <RadioButton x:Name="topScript" Grid.Column="0" Grid.Row="0"  Width="30" Height="30" Checked="Superscript_Checked"
-                             Style="{DynamicResource RadioButtonsStyle}">
-                    <RadioButton.Content>
-                        <Canvas Width="22" Height="22" Clip="F1 M 0,0L 22,0L 22,22L 0,22L 0,0">
-                            <Path Width="22" Height="22"
-                                  Canvas.Left="0" Canvas.Top="0"
-                                  Stretch="Uniform"
-                                  Fill="{DynamicResource ButtonFrontColorBrush}"
-                                  Data="M8,11H11V21H13V11H16L12,7L8,11M4,3V5H20V3H4Z"/>
-                        </Canvas>
-                    </RadioButton.Content>
-                    <RadioButton.ToolTip>
-                        <ToolTip Style="{DynamicResource ToolTipStyle}">
-                            <Border Style="{DynamicResource ToolTipBorderStyle}">
-                                <TextBlock Text="Top: A baseline that is aligned to the upper edge of the containing box." Style="{DynamicResource ToolTipTextStyle}" />
-                            </Border>
-                        </ToolTip>
-                    </RadioButton.ToolTip>
-                </RadioButton>
-                <RadioButton x:Name="superscript" Grid.Column="1" Grid.Row="0" Width="30" Height="30" Checked="Superscript_Checked"
-                             Style="{DynamicResource RadioButtonsStyle}">
-                    <RadioButton.Content>
-                        <Canvas Width="22" Height="22" Clip="F1 M 0,0L 22,0L 22,22L 0,22L 0,0">
-                            <Path Width="22" Height="22"
-                                  Canvas.Left="0" Canvas.Top="0"
-                                  Stretch="Uniform"
-                                  Fill="{DynamicResource ButtonFrontColorBrush}"
-                                  Data="M16,7.41L11.41,12L16,16.59L14.59,18L10,13.41L5.41,18L4,16.59L8.59,12L4,7.41L5.41,6L10,10.59L14.59,6L16,7.41M21.85,9H16.97V8L17.86,7.18C18.62,6.54 19.18,6 19.56,5.55C19.93,5.11 20.12,4.7 20.13,4.32C20.14,4.04 20.05,3.8 19.86,3.62C19.68,3.43 19.39,3.34 19,3.33C18.69,3.34 18.42,3.4 18.16,3.5L17.5,3.89L17.05,2.72C17.32,2.5 17.64,2.33 18.03,2.19C18.42,2.05 18.85,2 19.32,2C20.1,2 20.7,2.2 21.1,2.61C21.5,3 21.72,3.54 21.72,4.18C21.71,4.74 21.53,5.26 21.18,5.73C20.84,6.21 20.42,6.66 19.91,7.09L19.27,7.61V7.63H21.85V9Z"/>
-                        </Canvas>
-                    </RadioButton.Content>
-                    <RadioButton.ToolTip>
-                        <ToolTip Style="{DynamicResource ToolTipStyle}">
-                            <Border Style="{DynamicResource ToolTipBorderStyle}">
-                                <TextBlock Text="SuperScript: A baseline that is aligned at the superscript position of the containing box." Style="{DynamicResource ToolTipTextStyle}" />
-                            </Border>
-                        </ToolTip>
-                    </RadioButton.ToolTip>
-                </RadioButton>
-                <RadioButton x:Name="texttopScript" Grid.Column="2" Grid.Row="0" Width="30" Height="30" Checked="Superscript_Checked"
-                             Style="{DynamicResource RadioButtonsStyle}">
-                    <RadioButton.Content>
-                        <Canvas Width="22" Height="22" Clip="F1 M 0,0L 22,0L 22,22L 0,22L 0,0">
-                            <Path Width="22" Height="22"
-                                  Canvas.Left="0" Canvas.Top="0"
-                                  Stretch="Uniform"
-                                  Fill="{DynamicResource ButtonFrontColorBrush}"
-                                  Data="M13,15L15.5,17.5L16.92,16.08L12,11.16L7.08,16.08L8.5,17.5L11,15V21H13V15M3,3H21V5H3V3M3,7H13V9H3V7Z"/>
-                        </Canvas>
-                    </RadioButton.Content>
-                    <RadioButton.ToolTip>
-                        <ToolTip Style="{DynamicResource ToolTipStyle}">
-                            <Border Style="{DynamicResource ToolTipBorderStyle}">
-                                <TextBlock Text="TextTop: A baseline that is aligned at the upper edge of the text baseline." Style="{DynamicResource ToolTipTextStyle}" />
-                            </Border>
-                        </ToolTip>
-                    </RadioButton.ToolTip>
-                </RadioButton>
-                <RadioButton x:Name="centerScript" Grid.Column="3" Grid.Row="0" Width="30" Height="30" Checked="Superscript_Checked"
-                             Style="{DynamicResource RadioButtonsStyle}">
-                    <RadioButton.Content>
-                        <Canvas Width="22" Height="22" Clip="F1 M 0,0L 22,0L 22,22L 0,22L 0,0">
-                            <Path Width="22" Height="22"
-                                  Canvas.Left="0" Canvas.Top="0"
-                                  Stretch="Uniform"
-                                  Fill="{DynamicResource ButtonFrontColorBrush}"
-                                  Data="M8,19H11V23H13V19H16L12,15L8,19M16,5H13V1H11V5H8L12,9L16,5M4,11V13H20V11H4Z"/>
-                        </Canvas>
-                    </RadioButton.Content>
-                    <RadioButton.ToolTip>
-                        <ToolTip Style="{DynamicResource ToolTipStyle}">
-                            <Border Style="{DynamicResource ToolTipBorderStyle}">
-                                <TextBlock Text="Center: A baseline that is aligned to the center of the containing box." Style="{DynamicResource ToolTipTextStyle}" />
-                            </Border>
-                        </ToolTip>
-                    </RadioButton.ToolTip>
-                </RadioButton>
-
-                <RadioButton x:Name="subscript" Grid.Column="0" Grid.Row="1" Width="30" Height="30" Checked="Superscript_Checked"
-                             Style="{DynamicResource RadioButtonsStyle}">
-                    <RadioButton.Content>
-                        <Canvas Width="22" Height="22" Clip="F1 M 0,0L 22,0L 22,22L 0,22L 0,0">
-                            <Path Width="22" Height="22"
-                                  Canvas.Left="0" Canvas.Top="0"
-                                  Stretch="Uniform"
-                                  Fill="{DynamicResource ButtonFrontColorBrush}"
-                                  Data="M16,7.41L11.41,12L16,16.59L14.59,18L10,13.41L5.41,18L4,16.59L8.59,12L4,7.41L5.41,6L10,10.59L14.59,6L16,7.41M21.85,21.03H16.97V20.03L17.86,19.23C18.62,18.58 19.18,18.04 19.56,17.6C19.93,17.16 20.12,16.75 20.13,16.36C20.14,16.08 20.05,15.85 19.86,15.66C19.68,15.5 19.39,15.38 19,15.38C18.69,15.38 18.42,15.44 18.16,15.56L17.5,15.94L17.05,14.77C17.32,14.56 17.64,14.38 18.03,14.24C18.42,14.1 18.85,14 19.32,14C20.1,14.04 20.7,14.25 21.1,14.66C21.5,15.07 21.72,15.59 21.72,16.23C21.71,16.79 21.53,17.31 21.18,17.78C20.84,18.25 20.42,18.7 19.91,19.14L19.27,19.66V19.68H21.85V21.03Z"/>
-                        </Canvas>
-                    </RadioButton.Content>
-                    <RadioButton.ToolTip>
-                        <ToolTip Style="{DynamicResource ToolTipStyle}">
-                            <Border Style="{DynamicResource ToolTipBorderStyle}">
-                                <TextBlock Text="SubScript: A baseline that is aligned at the subscript position of the containing box." Style="{DynamicResource ToolTipTextStyle}" />
-                            </Border>
-                        </ToolTip>
-                    </RadioButton.ToolTip>
-                </RadioButton>
-                <RadioButton x:Name="textbottomScript" Grid.Column="1" Grid.Row="1" Width="30" Height="30" Checked="Superscript_Checked"
-                             Style="{DynamicResource RadioButtonsStyle}">
-                    <RadioButton.Content>
-                        <Canvas Width="22" Height="22" Clip="F1 M 0,0L 22,0L 22,22L 0,22L 0,0">
-                            <Path Width="22" Height="22"
-                                  Canvas.Left="0" Canvas.Top="0"
-                                  Stretch="Uniform"
-                                  Fill="{DynamicResource ButtonFrontColorBrush}"
-                                  Data="M13,9L15.5,6.5L16.92,7.92L12,12.84L7.08,7.92L8.5,6.5L11,9V3H13V9M3,15H21V17H3V15M3,19H13V21H3V19Z"/>
-                        </Canvas>
-                    </RadioButton.Content>
-                    <RadioButton.ToolTip>
-                        <ToolTip Style="{DynamicResource ToolTipStyle}">
-                            <Border Style="{DynamicResource ToolTipBorderStyle}">
-                                <TextBlock Text="TextBottom: A baseline that is aligned at the lower edge of the text baseline." Style="{DynamicResource ToolTipTextStyle}" />
-                            </Border>
-                        </ToolTip>
-                    </RadioButton.ToolTip>
-                </RadioButton>
-                <RadioButton x:Name="bottomScript" Grid.Column="2" Grid.Row="1" Width="30" Height="30" Checked="Superscript_Checked"
-                             Style="{DynamicResource RadioButtonsStyle}">
-                    <RadioButton.Content>
-                        <Canvas Width="22" Height="22" Clip="F1 M 0,0L 22,0L 22,22L 0,22L 0,0">
-                            <Path Width="22" Height="22"
-                                  Canvas.Left="0" Canvas.Top="0"
-                                  Stretch="Uniform"
-                                  Fill="{DynamicResource ButtonFrontColorBrush}"
-                                  Data="M16,13H13V3H11V13H8L12,17L16,13M4,19V21H20V19H4Z"/>
-                        </Canvas>
-                    </RadioButton.Content>
-                    <RadioButton.ToolTip>
-                        <ToolTip Style="{DynamicResource ToolTipStyle}">
-                            <Border Style="{DynamicResource ToolTipBorderStyle}">
-                                <TextBlock Text="Bottom: A baseline that is aligned at the lower edge of the containing box." Style="{DynamicResource ToolTipTextStyle}" />
-                            </Border>
-                        </ToolTip>
-                    </RadioButton.ToolTip>
-                </RadioButton>
-                <RadioButton x:Name="baseScript" Grid.Column="3" Grid.Row="1" Width="30" Height="30" Checked="Superscript_Checked" IsChecked="True"
-                    Style="{DynamicResource RadioButtonsStyle}">
-                    <RadioButton.Content>
-                        <Canvas Width="22" Height="22" Clip="F1 M 0,0L 22,0L 22,22L 0,22L 0,0">
-                            <Path Width="22" Height="22"
-                                  Canvas.Left="0" Canvas.Top="0"
-                                  Stretch="Uniform"
-                                  Fill="{DynamicResource ButtonFrontColorBrush}"
-                                  Data="M13,4A4,4 0 0,1 17,8A4,4 0 0,1 13,12H11V18H9V4H13M13,10A2,2 0 0,0 15,8A2,2 0 0,0 13,6H11V10H13Z"/>
-                        </Canvas>
-                    </RadioButton.Content>
-                    <RadioButton.ToolTip>
-                        <ToolTip Style="{DynamicResource ToolTipStyle}">
-                            <Border Style="{DynamicResource ToolTipBorderStyle}">
-                                <TextBlock Text="Baseline: A baseline that is aligned at the actual baseline of the containing box.(Default)" Style="{DynamicResource ToolTipTextStyle}" />
-                            </Border>
-                        </ToolTip>
-                    </RadioButton.ToolTip>
-                </RadioButton>
-            </Grid>
-        </Grid>
-
-        <Label Grid.Column="3" Grid.Row="1" HorizontalAlignment="Center" Height="28" Margin="0" Width="102" VerticalAlignment="Center">
-            <Label.Content>
-                <TextBlock Text="Font Sample:" Style="{DynamicResource ToolTipTextStyle}" />
-            </Label.Content>
-        </Label>
-
-        <RichTextBox Grid.Column="2" Grid.Row="2" Grid.RowSpan="2" Name="txtSampleText" AcceptsReturn="true"
-                         FontSize="{Binding Value, ElementName=fontSizeSlider}"
-                         FontFamily="{Binding Source, Source={StaticResource familyCollection}}"
-                         FontWeight="{Binding SelectedItem.Weight, ElementName=lstTypefaces}"
-                         FontStretch="{Binding SelectedItem.Stretch, ElementName=lstTypefaces}"
-                         FontStyle="{Binding SelectedItem.Style, ElementName=lstTypefaces}"
-                         Background="{DynamicResource RTBBackgroundColorBrush}"
-                         Margin="5" IsDocumentEnabled="True" AcceptsTab="True" RenderTransformOrigin="0.5,0.5">
-            <RichTextBox.Resources>
-                <Style TargetType="RichTextBox">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate>
-                                <Border x:Name="Bd"
-                                        BorderBrush="{DynamicResource TextColorBrush}"
-                                        BorderThickness="{TemplateBinding BorderThickness}"
-                                        SnapsToDevicePixels="True"
-                                        Background="{TemplateBinding Background}">
-                                    <ScrollViewer Name="PART_ContentHost" />
-                                </Border>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </RichTextBox.Resources>
-            <FlowDocument LineStackingStrategy="BlockLineHeight">
-                <Paragraph TextAlignment="Center" x:Name="textpar" LineHeight="{Binding Value, ElementName=lineHeightSlider}">
-                    <Run x:Name="textrun" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
-                </Paragraph>
-            </FlowDocument>
-        </RichTextBox>
-        <Grid Grid.Column="2" Grid.Row="4" Grid.RowSpan="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Height="28" Margin="0" Width="102" VerticalAlignment="Top">
-                <Label.Content>
-                    <TextBlock Text="Font Size:" Style="{DynamicResource ToolTipTextStyle}" />
-                </Label.Content>
-            </Label>
-            <Grid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="40" />
-                </Grid.ColumnDefinitions>
-                <Slider Grid.Column="0" Grid.Row="1"  x:Name="fontSizeSlider"
-                		Maximum="100" Value="18"
-                        Minimum="1"
-                		SmallChange="0.5" LargeChange="2" Margin="5,0"
-                        AutoToolTipPlacement ="TopLeft" Height="24" VerticalAlignment="Center" IsMoveToPointEnabled="True" IsSnapToTickEnabled="True" TickFrequency="0.5" />
-                <xctk:DecimalUpDown Grid.Column="1" Grid.Row="0"
-                                    FormatString="G" ClipValueToMinMax="True" TextAlignment="Center"
-                                    HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" Margin="0,5,5,5"
-                                    Minimum="{Binding Minimum, ElementName=fontSizeSlider}"
-                                    Maximum="{Binding Maximum, ElementName=fontSizeSlider}"
-                                    Value="{Binding Value, ElementName=fontSizeSlider}"
-                                    ScrollViewer.VerticalScrollBarVisibility="Disabled" UpdateValueOnEnterKey="False" ShowButtonSpinner="False" AutoMoveFocus="True" />
-            </Grid>
-
-            <Label Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" Height="28" Margin="0" Width="102" VerticalAlignment="Top">
-                <Label.Content>
-                    <TextBlock Text="Line Height:" Style="{DynamicResource ToolTipTextStyle}" />
-                </Label.Content>
-            </Label>
-            <Button x:Name="FontSzLineSz" Grid.Column="1" Grid.Row="2" Width="30" Height="30" HorizontalAlignment="Right" Margin="0,0,7,0" Click="FontSzLineSz_Click"
-                        Style="{DynamicResource ButtonsStyle}">
-                <Button.Content>
-                    <Canvas Width="22" Height="22" Clip="F1 M 0,0L 22,0L 22,22L 0,22L 0,0">
-                        <Path Width="22" Height="22"
-                                  Canvas.Left="0" Canvas.Top="0"
-                                  Stretch="Uniform"
-                                  Fill="{DynamicResource ButtonFrontColorBrush}"
-                                  Data="F1 M 23.9999,54L 23.9999,29.25L 16,37.25L 16,26.75L 27.9999,14.75L 40,26.75L 40,37.25L 31.9999,29.25L 31.9999,54L 23.9999,54 Z M 52,22L 52,46.75L 60,38.75L 60,49.25L 48,61.25L 36,49.2499L 36,38.7499L 44,46.75L 44.0001,22L 52,22 Z "/>
-                    </Canvas>
-                </Button.Content>
-                <Button.ToolTip>
-                    <ToolTip Style="{DynamicResource ToolTipStyle}">
-                        <Border Style="{DynamicResource ToolTipBorderStyle}">
-                            <TextBlock Text="Align Center" Style="{DynamicResource ToolTipTextStyle}" />
-                        </Border>
-                    </ToolTip>
-                </Button.ToolTip>
-            </Button>
-
-            <Grid Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="40" />
-                </Grid.ColumnDefinitions>
-                <Slider Grid.Column="0" Grid.Row="1" x:Name="lineHeightSlider"
-                		Maximum="100" Value="18"
-                        Minimum="1"
-                		SmallChange="0.5" LargeChange="2" Margin="5,0"
-                        AutoToolTipPlacement ="TopLeft" Height="24" VerticalAlignment="Center" IsMoveToPointEnabled="True" IsSnapToTickEnabled="True" TickFrequency="0.5" />
-                <xctk:DecimalUpDown Grid.Column="1" Grid.Row="0"
-                                    FormatString="G" ClipValueToMinMax="True" TextAlignment="Center"
-                                    HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" Margin="0,5,5,5"
-                                    Minimum="{Binding Minimum, ElementName=lineHeightSlider}"
-                                    Maximum="{Binding Maximum, ElementName=lineHeightSlider}"
-                                    Value="{Binding Value, ElementName=lineHeightSlider}"
-                                    ScrollViewer.VerticalScrollBarVisibility="Disabled" UpdateValueOnEnterKey="False" ShowButtonSpinner="False" AutoMoveFocus="True" />
-            </Grid>
-
-            <Grid Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Grid.RowSpan="1">
+            <Grid Grid.Column="0" Grid.Row="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
@@ -638,6 +269,414 @@
                     </RadioButton.ToolTip>
                 </RadioButton>
             </Grid>
+            <Label Grid.Column="0" Grid.Row="4"
+                       Style="{DynamicResource LabelStyle}">
+                <Label.Content>
+                    <TextBlock Text="Flow Direction:" Style="{DynamicResource ToolTipTextStyle}" />
+                </Label.Content>
+            </Label>
+            <Grid Grid.Column="0" Grid.Row="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+            <RadioButton x:Name="FlowDirLTR" Grid.Column="0" Grid.Row="0" Width="30" Height="30" Checked="FlowDirLTR_Checked" IsChecked="True"
+                             Style="{DynamicResource RadioButtonsStyle}">
+                <RadioButton.Content>
+                    <Canvas Width="22" Height="22" Clip="F1 M 0,0L 22,0L 22,22L 0,22L 0,0">
+                        <Path Width="22" Height="22"
+                                Canvas.Left="0" Canvas.Top="0"
+                                Stretch="Uniform"
+                                Fill="{DynamicResource ButtonFrontColorBrush}"
+                                Data="M21,18L17,14V17H5V19H17V22M9,10V15H11V4H13V15H15V4H17V2H9A4,4 0 0,0 5,6A4,4 0 0,0 9,10Z"/>
+                    </Canvas>
+                </RadioButton.Content>
+                <RadioButton.ToolTip>
+                    <ToolTip Style="{DynamicResource ToolTipStyle}">
+                        <Border Style="{DynamicResource ToolTipBorderStyle}">
+                            <TextBlock Text="Text Flow Direction Left to Right (Default)" Style="{DynamicResource ToolTipTextStyle}" />
+                        </Border>
+                    </ToolTip>
+                </RadioButton.ToolTip>
+            </RadioButton>
+            <RadioButton x:Name="FlowDirRTL" Grid.Column="1" Grid.Row="0" Width="30" Height="30" Checked="FlowDirLTR_Checked"
+                             Style="{DynamicResource RadioButtonsStyle}">
+                <RadioButton.Content>
+                    <Canvas Width="22" Height="22" Clip="F1 M 0,0L 22,0L 22,22L 0,22L 0,0">
+                        <Path Width="22" Height="22"
+                            Canvas.Left="0" Canvas.Top="0"
+                            Stretch="Uniform"
+                            Fill="{DynamicResource ButtonFrontColorBrush}"
+                            Data="M8,17V14L4,18L8,22V19H20V17M10,10V15H12V4H14V15H16V4H18V2H10A4,4 0 0,0 6,6A4,4 0 0,0 10,10Z"/>
+                    </Canvas>
+                </RadioButton.Content>
+                <RadioButton.ToolTip>
+                    <ToolTip Style="{DynamicResource ToolTipStyle}">
+                        <Border Style="{DynamicResource ToolTipBorderStyle}">
+                            <TextBlock Text="Text Flow Direction Right to Left" Style="{DynamicResource ToolTipTextStyle}" />
+                        </Border>
+                    </ToolTip>
+                </RadioButton.ToolTip>
+            </RadioButton>
+            </Grid>
+
+        </Grid>
+        <ListBox x:Name="lstTypefaces" Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" ItemsSource="{Binding FamilyTypefaces}" Style="{DynamicResource ListBoxStyle}"/>
+
+        <Label Grid.Column="1" Grid.Row="1"
+                       Style="{DynamicResource LabelStyle}">
+            <Label.Content>
+                <TextBlock Text="Font Style:" Style="{DynamicResource ToolTipTextStyle}" />
+            </Label.Content>
+        </Label>
+
+
+
+        <Grid Grid.Column="1" Grid.Row="4" Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="10" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Column="1" Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="45"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Grid.Row="0"
+                       Style="{DynamicResource LabelStyle}">
+                    <Label.Content>
+                        <TextBlock Text="Font Color:" Style="{DynamicResource ToolTipTextStyle}" />
+                    </Label.Content>
+                </Label>
+                <xctk:ColorPicker Name="ClrPcker_Font"
+                              Grid.Column="1" Grid.Row="0"
+                              SelectedColorChanged="ClrPcker_Font_SelectedColorChanged"
+                              Style="{DynamicResource ColorPickerStyle2}"
+                              SelectedColor="Black"/>
+            </Grid>
+
+            <Grid Grid.Column="0" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="45"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Grid.Row="0"
+                       Style="{DynamicResource LabelStyle}">
+                    <Label.Content>
+                        <TextBlock Text="Font Background:" Style="{DynamicResource ToolTipTextStyle}" VerticalAlignment="Center" />
+                    </Label.Content>
+                </Label>
+                <xctk:ColorPicker Name="ClrPcker_Bg"
+                                  Grid.Column="1" Grid.Row="0"
+                                  SelectedColorChanged="ClrPcker_Bg_SelectedColorChanged"
+                                  Style="{DynamicResource ColorPickerStyle2}"
+                                  SelectedColor="Transparent"/>
+            </Grid>
+
+                <Label Grid.Column="0" Grid.Row="2"
+                       Style="{DynamicResource LabelStyle}">
+                    <Label.Content>
+                        <TextBlock Text="Script Type:" Style="{DynamicResource ToolTipTextStyle}" VerticalAlignment="Center" />
+                    </Label.Content>
+                </Label>
+                <Grid Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Grid.RowSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <RadioButton x:Name="topScript" Grid.Column="0" Grid.Row="0"  Width="30" Height="30" Checked="Superscript_Checked"
+                             Style="{DynamicResource RadioButtonsStyle}">
+                        <RadioButton.Content>
+                            <Canvas Width="22" Height="22" Clip="F1 M 0,0L 22,0L 22,22L 0,22L 0,0">
+                                <Path Width="22" Height="22"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M8,11H11V21H13V11H16L12,7L8,11M4,3V5H20V3H4Z"/>
+                            </Canvas>
+                        </RadioButton.Content>
+                        <RadioButton.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="Top: A baseline that is aligned to the upper edge of the containing box." Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </RadioButton.ToolTip>
+                    </RadioButton>
+                    <RadioButton x:Name="superscript" Grid.Column="1" Grid.Row="0" Width="30" Height="30" Checked="Superscript_Checked"
+                             Style="{DynamicResource RadioButtonsStyle}">
+                        <RadioButton.Content>
+                            <Canvas Width="22" Height="22" Clip="F1 M 0,0L 22,0L 22,22L 0,22L 0,0">
+                                <Path Width="22" Height="22"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M16,7.41L11.41,12L16,16.59L14.59,18L10,13.41L5.41,18L4,16.59L8.59,12L4,7.41L5.41,6L10,10.59L14.59,6L16,7.41M21.85,9H16.97V8L17.86,7.18C18.62,6.54 19.18,6 19.56,5.55C19.93,5.11 20.12,4.7 20.13,4.32C20.14,4.04 20.05,3.8 19.86,3.62C19.68,3.43 19.39,3.34 19,3.33C18.69,3.34 18.42,3.4 18.16,3.5L17.5,3.89L17.05,2.72C17.32,2.5 17.64,2.33 18.03,2.19C18.42,2.05 18.85,2 19.32,2C20.1,2 20.7,2.2 21.1,2.61C21.5,3 21.72,3.54 21.72,4.18C21.71,4.74 21.53,5.26 21.18,5.73C20.84,6.21 20.42,6.66 19.91,7.09L19.27,7.61V7.63H21.85V9Z"/>
+                            </Canvas>
+                        </RadioButton.Content>
+                        <RadioButton.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="SuperScript: A baseline that is aligned at the superscript position of the containing box." Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </RadioButton.ToolTip>
+                    </RadioButton>
+                    <RadioButton x:Name="texttopScript" Grid.Column="2" Grid.Row="0" Width="30" Height="30" Checked="Superscript_Checked"
+                             Style="{DynamicResource RadioButtonsStyle}">
+                        <RadioButton.Content>
+                            <Canvas Width="22" Height="22" Clip="F1 M 0,0L 22,0L 22,22L 0,22L 0,0">
+                                <Path Width="22" Height="22"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M13,15L15.5,17.5L16.92,16.08L12,11.16L7.08,16.08L8.5,17.5L11,15V21H13V15M3,3H21V5H3V3M3,7H13V9H3V7Z"/>
+                            </Canvas>
+                        </RadioButton.Content>
+                        <RadioButton.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="TextTop: A baseline that is aligned at the upper edge of the text baseline." Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </RadioButton.ToolTip>
+                    </RadioButton>
+                    <RadioButton x:Name="centerScript" Grid.Column="3" Grid.Row="0" Width="30" Height="30" Checked="Superscript_Checked"
+                             Style="{DynamicResource RadioButtonsStyle}">
+                        <RadioButton.Content>
+                            <Canvas Width="22" Height="22" Clip="F1 M 0,0L 22,0L 22,22L 0,22L 0,0">
+                                <Path Width="22" Height="22"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M8,19H11V23H13V19H16L12,15L8,19M16,5H13V1H11V5H8L12,9L16,5M4,11V13H20V11H4Z"/>
+                            </Canvas>
+                        </RadioButton.Content>
+                        <RadioButton.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="Center: A baseline that is aligned to the center of the containing box." Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </RadioButton.ToolTip>
+                    </RadioButton>
+
+                    <RadioButton x:Name="subscript" Grid.Column="0" Grid.Row="1" Width="30" Height="30" Checked="Superscript_Checked"
+                             Style="{DynamicResource RadioButtonsStyle}">
+                        <RadioButton.Content>
+                            <Canvas Width="22" Height="22" Clip="F1 M 0,0L 22,0L 22,22L 0,22L 0,0">
+                                <Path Width="22" Height="22"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M16,7.41L11.41,12L16,16.59L14.59,18L10,13.41L5.41,18L4,16.59L8.59,12L4,7.41L5.41,6L10,10.59L14.59,6L16,7.41M21.85,21.03H16.97V20.03L17.86,19.23C18.62,18.58 19.18,18.04 19.56,17.6C19.93,17.16 20.12,16.75 20.13,16.36C20.14,16.08 20.05,15.85 19.86,15.66C19.68,15.5 19.39,15.38 19,15.38C18.69,15.38 18.42,15.44 18.16,15.56L17.5,15.94L17.05,14.77C17.32,14.56 17.64,14.38 18.03,14.24C18.42,14.1 18.85,14 19.32,14C20.1,14.04 20.7,14.25 21.1,14.66C21.5,15.07 21.72,15.59 21.72,16.23C21.71,16.79 21.53,17.31 21.18,17.78C20.84,18.25 20.42,18.7 19.91,19.14L19.27,19.66V19.68H21.85V21.03Z"/>
+                            </Canvas>
+                        </RadioButton.Content>
+                        <RadioButton.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="SubScript: A baseline that is aligned at the subscript position of the containing box." Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </RadioButton.ToolTip>
+                    </RadioButton>
+                    <RadioButton x:Name="textbottomScript" Grid.Column="1" Grid.Row="1" Width="30" Height="30" Checked="Superscript_Checked"
+                             Style="{DynamicResource RadioButtonsStyle}">
+                        <RadioButton.Content>
+                            <Canvas Width="22" Height="22" Clip="F1 M 0,0L 22,0L 22,22L 0,22L 0,0">
+                                <Path Width="22" Height="22"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M13,9L15.5,6.5L16.92,7.92L12,12.84L7.08,7.92L8.5,6.5L11,9V3H13V9M3,15H21V17H3V15M3,19H13V21H3V19Z"/>
+                            </Canvas>
+                        </RadioButton.Content>
+                        <RadioButton.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="TextBottom: A baseline that is aligned at the lower edge of the text baseline." Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </RadioButton.ToolTip>
+                    </RadioButton>
+                    <RadioButton x:Name="bottomScript" Grid.Column="2" Grid.Row="1" Width="30" Height="30" Checked="Superscript_Checked"
+                             Style="{DynamicResource RadioButtonsStyle}">
+                        <RadioButton.Content>
+                            <Canvas Width="22" Height="22" Clip="F1 M 0,0L 22,0L 22,22L 0,22L 0,0">
+                                <Path Width="22" Height="22"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M16,13H13V3H11V13H8L12,17L16,13M4,19V21H20V19H4Z"/>
+                            </Canvas>
+                        </RadioButton.Content>
+                        <RadioButton.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="Bottom: A baseline that is aligned at the lower edge of the containing box." Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </RadioButton.ToolTip>
+                    </RadioButton>
+                    <RadioButton x:Name="baseScript" Grid.Column="3" Grid.Row="1" Width="30" Height="30" Checked="Superscript_Checked" IsChecked="True"
+                    Style="{DynamicResource RadioButtonsStyle}">
+                        <RadioButton.Content>
+                            <Canvas Width="22" Height="22" Clip="F1 M 0,0L 22,0L 22,22L 0,22L 0,0">
+                                <Path Width="22" Height="22"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M13,4A4,4 0 0,1 17,8A4,4 0 0,1 13,12H11V18H9V4H13M13,10A2,2 0 0,0 15,8A2,2 0 0,0 13,6H11V10H13Z"/>
+                            </Canvas>
+                        </RadioButton.Content>
+                        <RadioButton.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="Baseline: A baseline that is aligned at the actual baseline of the containing box.(Default)" Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </RadioButton.ToolTip>
+                    </RadioButton>
+                </Grid>
+
+            </Grid>
+
+        <Label Grid.Column="3" Grid.Row="1"
+                       Style="{DynamicResource LabelStyle}">
+            <Label.Content>
+                <TextBlock Text="Font Sample:" Style="{DynamicResource ToolTipTextStyle}" />
+            </Label.Content>
+        </Label>
+
+        <RichTextBox Grid.Column="2" Grid.Row="2" Grid.RowSpan="2" Name="txtSampleText" AcceptsReturn="true"
+                         FontSize="{Binding Value, ElementName=fontSizeSlider}"
+                         FontFamily="{Binding Source, Source={StaticResource familyCollection}}"
+                         FontWeight="{Binding SelectedItem.Weight, ElementName=lstTypefaces}"
+                         FontStretch="{Binding SelectedItem.Stretch, ElementName=lstTypefaces}"
+                         FontStyle="{Binding SelectedItem.Style, ElementName=lstTypefaces}"
+                         Background="{DynamicResource RTBBackgroundColorBrush}"
+                         Margin="5" IsDocumentEnabled="True" AcceptsTab="True" RenderTransformOrigin="0.5,0.5">
+            <RichTextBox.Resources>
+                <Style TargetType="RichTextBox">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Border x:Name="Bd"
+                                        BorderBrush="{DynamicResource TextColorBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        SnapsToDevicePixels="True"
+                                        Background="{TemplateBinding Background}">
+                                    <ScrollViewer Name="PART_ContentHost" />
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </RichTextBox.Resources>
+            <FlowDocument LineStackingStrategy="BlockLineHeight">
+                <Paragraph TextAlignment="Center" x:Name="textpar" LineHeight="{Binding Value, ElementName=lineHeightSlider}">
+                    <Run x:Name="textrun" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <Grid Grid.Column="2" Grid.Row="4" Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
+                       Style="{DynamicResource LabelStyle}">
+                <Label.Content>
+                    <TextBlock Text="Font Size:" Style="{DynamicResource ToolTipTextStyle}" />
+                </Label.Content>
+            </Label>
+            <Grid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                </Grid.ColumnDefinitions>
+                <Slider Grid.Column="0" Grid.Row="1"  x:Name="fontSizeSlider"
+                		Maximum="100" Value="18"
+                        Minimum="1"
+                		SmallChange="0.5" LargeChange="2" Margin="5,0"
+                        AutoToolTipPlacement ="TopLeft" Height="24" VerticalAlignment="Center" IsMoveToPointEnabled="True" IsSnapToTickEnabled="True" TickFrequency="0.5" />
+                <xctk:DecimalUpDown Grid.Column="1" Grid.Row="0"
+                                    FormatString="G" ClipValueToMinMax="True" TextAlignment="Center"
+                                    HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" Margin="0,5,5,5"
+                                    Minimum="{Binding Minimum, ElementName=fontSizeSlider}"
+                                    Maximum="{Binding Maximum, ElementName=fontSizeSlider}"
+                                    Value="{Binding Value, ElementName=fontSizeSlider}"
+                                    ScrollViewer.VerticalScrollBarVisibility="Disabled" UpdateValueOnEnterKey="False" ShowButtonSpinner="False" AutoMoveFocus="True" />
+            </Grid>
+
+            <Label Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"
+                       Style="{DynamicResource LabelStyle}">
+                <Label.Content>
+                    <TextBlock Text="Line Height:" Style="{DynamicResource ToolTipTextStyle}" />
+                </Label.Content>
+            </Label>
+            <Button x:Name="FontSzLineSz" Grid.Column="1" Grid.Row="2" Width="30" Height="30" HorizontalAlignment="Right" Margin="0,0,7,0" Click="FontSzLineSz_Click"
+                        Style="{DynamicResource ButtonsStyle}">
+                <Button.Content>
+                    <Canvas Width="22" Height="22" Clip="F1 M 0,0L 22,0L 22,22L 0,22L 0,0">
+                        <Path Width="22" Height="22"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="F1 M 23.9999,54L 23.9999,29.25L 16,37.25L 16,26.75L 27.9999,14.75L 40,26.75L 40,37.25L 31.9999,29.25L 31.9999,54L 23.9999,54 Z M 52,22L 52,46.75L 60,38.75L 60,49.25L 48,61.25L 36,49.2499L 36,38.7499L 44,46.75L 44.0001,22L 52,22 Z "/>
+                    </Canvas>
+                </Button.Content>
+                <Button.ToolTip>
+                    <ToolTip Style="{DynamicResource ToolTipStyle}">
+                        <Border Style="{DynamicResource ToolTipBorderStyle}">
+                            <TextBlock Text="Align Center" Style="{DynamicResource ToolTipTextStyle}" />
+                        </Border>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+
+            <Grid Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                </Grid.ColumnDefinitions>
+                <Slider Grid.Column="0" Grid.Row="1" x:Name="lineHeightSlider"
+                		Maximum="100" Value="18"
+                        Minimum="1"
+                		SmallChange="0.5" LargeChange="2" Margin="5,0"
+                        AutoToolTipPlacement ="TopLeft" Height="24" VerticalAlignment="Center" IsMoveToPointEnabled="True" IsSnapToTickEnabled="True" TickFrequency="0.5" />
+                <xctk:DecimalUpDown Grid.Column="1" Grid.Row="0"
+                                    FormatString="G" ClipValueToMinMax="True" TextAlignment="Center"
+                                    HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" Margin="0,5,5,5"
+                                    Minimum="{Binding Minimum, ElementName=lineHeightSlider}"
+                                    Maximum="{Binding Maximum, ElementName=lineHeightSlider}"
+                                    Value="{Binding Value, ElementName=lineHeightSlider}"
+                                    ScrollViewer.VerticalScrollBarVisibility="Disabled" UpdateValueOnEnterKey="False" ShowButtonSpinner="False" AutoMoveFocus="True" />
+            </Grid>
+
+
 
             <Button  Grid.Column="0" Grid.Row="5" Grid.RowSpan="2" Click="Apply_Click"
                      Style="{DynamicResource ButtonsStyle}" Width="70" Height="40">

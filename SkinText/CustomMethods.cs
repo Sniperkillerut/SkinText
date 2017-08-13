@@ -181,40 +181,68 @@ namespace SkinText {
                 MainW.grid.RowDefinitions[0].Height = new GridLength(borderSize, GridUnitType.Star);
                 MainW.grid.RowDefinitions[2].Height = new GridLength(borderSize, GridUnitType.Star);
 
-            //Colors
+
+            #region Legacy styles
             /*Application.Current.Resources["BorderColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#997E7E7E"));
             Application.Current.Resources["MainWindowBackgroundColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#85949494"));
             Application.Current.Resources["RTBBackgroundColor"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("Transparent"));
 
-        Application.Current.Resources["BackgroundColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#C03A3A3A"));
-        Application.Current.Resources["ButtonBackgroundColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#602C2C2C"));
-        Application.Current.Resources["ButtonFrontColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("##FFE6E6E6"));
-        Application.Current.Resources["ButtonBackgroundMouseOverColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#85949494"));
-        Application.Current.Resources["ButtonBorderMouseOverColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFE6E6E6"));
-        Application.Current.Resources["ButtonBackgroundCheckedColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#607E7E7E"));
-        Application.Current.Resources["ButtonBorderCheckedColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF808080"));
-        Application.Current.Resources["TextColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFE6E6E6"));
+            Application.Current.Resources["BackgroundColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#C03A3A3A"));
+            Application.Current.Resources["ButtonBackgroundColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#602C2C2C"));
+            Application.Current.Resources["ButtonFrontColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("##FFE6E6E6"));
+            Application.Current.Resources["ButtonBackgroundMouseOverColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#85949494"));
+            Application.Current.Resources["ButtonBorderMouseOverColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFE6E6E6"));
+            Application.Current.Resources["ButtonBackgroundCheckedColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#607E7E7E"));
+            Application.Current.Resources["ButtonBorderCheckedColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF808080"));
+            Application.Current.Resources["TextColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFE6E6E6"));
 
-        Application.Current.Resources["FontPickBackgroundColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#AA606060"));
-        Application.Current.Resources["FontPickTextColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFE6E6E6"));
-        Application.Current.Resources["FontPickMouseOverBackgroundColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#20FFFFFF"));
-        Application.Current.Resources["FontPickMouseOverBorderColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#90FFFFFF"));
-        Application.Current.Resources["FontPickSelectedBackgroundColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#40FFFFFF"));
-        Application.Current.Resources["FontPickSelectedBorderColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFFFFFF"));
+            Application.Current.Resources["FontPickBackgroundColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#AA606060"));
+            Application.Current.Resources["FontPickTextColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFE6E6E6"));
+            Application.Current.Resources["FontPickMouseOverBackgroundColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#20FFFFFF"));
+            Application.Current.Resources["FontPickMouseOverBorderColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#90FFFFFF"));
+            Application.Current.Resources["FontPickSelectedBackgroundColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#40FFFFFF"));
+            Application.Current.Resources["FontPickSelectedBorderColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFFFFFF"));
 
-        Application.Current.Resources["MenuBackgroundColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#aa535353"));
-        Application.Current.Resources["MenuItem1BorderColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("Transparent"));
-        Application.Current.Resources["MenuItem2HighlightTextColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("Black"));
-        Application.Current.Resources["MenuItem2HighlightBorderColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#602C2C2C"));
-        Application.Current.Resources["MenuItem2DisabledColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF2C2C2C"));
+            Application.Current.Resources["MenuBackgroundColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#aa535353"));
+            Application.Current.Resources["MenuItem1BorderColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("Transparent"));
+            Application.Current.Resources["MenuItem2HighlightTextColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("Black"));
+            Application.Current.Resources["MenuItem2HighlightBorderColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#602C2C2C"));
+            Application.Current.Resources["MenuItem2DisabledColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF2C2C2C"));
             */
+            #endregion Legacy styles
+
+            Application.Current.Resources["BorderColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF424242"));
+            Application.Current.Resources["MainWindowBackgroundColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#55FFFFFF"));
+            Application.Current.Resources["RTBBackgroundColor"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#7DFFFFFF"));
+
+            Application.Current.Resources["BackgroundColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF1C1C1C"));
+            Application.Current.Resources["ButtonBackgroundColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF262626"));
+            Application.Current.Resources["ButtonFrontColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFE6E6E6"));
+            Application.Current.Resources["ButtonBackgroundMouseOverColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00B5FF"));
+            Application.Current.Resources["ButtonBorderMouseOverColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFE6E6E6"));
+            Application.Current.Resources["ButtonBackgroundCheckedColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#CD000000"));
+            Application.Current.Resources["ButtonBorderCheckedColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF808080"));
+            Application.Current.Resources["TextColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF808080"));
+
+            Application.Current.Resources["FontPickBackgroundColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#23696969"));
+            Application.Current.Resources["FontPickTextColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFE6E6E6"));
+            Application.Current.Resources["FontPickMouseOverBackgroundColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF000000"));
+            Application.Current.Resources["FontPickMouseOverBorderColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00B5FF"));
+            Application.Current.Resources["FontPickSelectedBackgroundColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#8C000000"));
+            Application.Current.Resources["FontPickSelectedBorderColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFDB6929"));
+
+            Application.Current.Resources["MenuBackgroundColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#C9000000"));
+            Application.Current.Resources["MenuItem1BorderColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#00FFFFFF"));
+            Application.Current.Resources["MenuItem2HighlightTextColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00B5FF"));
+            Application.Current.Resources["MenuItem2HighlightBorderColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFDB6929"));
+            Application.Current.Resources["MenuItem2DisabledColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#73696969"));
 
 
 
             //text bg color
 
             //Colors:
-            MainW.WinConfig.ClrPcker_BorderBackground.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("BorderColorBrush")).Color;
+                MainW.WinConfig.ClrPcker_BorderBackground.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("BorderColorBrush")).Color;
                 MainW.WinConfig.ClrPcker_WindowBackground.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("MainWindowBackgroundColorBrush")).Color;
                 MainW.WinConfig.ClrPcker_RTB_Background.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("RTBBackgroundColorBrush")).Color;
             //Advanced Colors:
@@ -239,7 +267,7 @@ namespace SkinText {
                 MainW.AdvConf.ClrPcker_ButtonBorderCheckedColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("ButtonBorderCheckedColorBrush")).Color;
 
             //rotation angle
-            MainW.WinConfig.slValue.Value = 0;
+                MainW.WinConfig.slValue.Value = 0;
 
             //no file
                 NewFile();
@@ -248,13 +276,12 @@ namespace SkinText {
                 //TODO: add to load/save config and to windowConf to modify
                 AutoSaveTimer = 5 * 60 * 1000;
 
-            //gif_uses_ram
-                //Default = false (use CPU)
-                MainW.WinConfig.GifMethodCPU.IsChecked = true;
-
             //BG image clear
                 //this makes Imagepath = "";
                 ImageClear();
+
+            //BgImage Blur
+                MainW.WinConfig.imageBlurSlider.Value = 0;
 
             //opacity
                 MainW.WinConfig.imageopacityslider.Value = 100;
@@ -262,16 +289,20 @@ namespace SkinText {
                 MainW.WinConfig.textopacityslider.Value = 100;
 
             //checkboxes
-                MainW.WinConfig.resizecheck.IsChecked = true;
+                MainW.WinConfig.GifMethodCPU.IsChecked = true;
+                MainW.WinConfig.ImageBlurGauss.IsChecked = true;
                 MainW.WinConfig.readOnlyCheck.IsChecked = false;
                 MainW.WinConfig.spellcheck.IsChecked = false;
                 MainW.WinConfig.alwaysontop.IsChecked = false;
                 MainW.WinConfig.taskbarvisible.IsChecked = true;
                 MainW.WinConfig.NotificationVisible.IsChecked = true;
                 MainW.WinConfig.ResizeVisible.IsChecked = true;
+                MainW.WinConfig.BgBlur.IsChecked = false;
+                MainW.WinConfig.resizecheck.IsChecked = true;
                 MainW.WinConfig.FlipXButton.IsChecked = false;
                 MainW.WinConfig.FlipYButton.IsChecked = false;
                 MainW.LineWrapMenuItem.IsChecked = true;
+                MainW.ToolBarMenuItem.IsChecked = false;
         }
 
         /// <summary>
@@ -720,15 +751,49 @@ namespace SkinText {
                                 MainW.AdvConf.ClrPcker_FontPickTextColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString(line[1]);
                                 break;
                             }
-
+                        case "IMG_BLUR_VAL":
+                            {
+                                if (double.TryParse(line[1], out double1)) //angle
+                                {
+                                    if (double1 <= MainW.WinConfig.imageBlurSlider.Maximum && double1 >= MainW.WinConfig.imageBlurSlider.Minimum)
+                                    {
+                                        MainW.WinConfig.imageBlurSlider.Value = double1;
+                                    }
+                                }
+                                break;
+                            }
+                        case "IMG_BLUR_GAUSS":
+                            {//GIF rendering method
+                                if (bool.TryParse(line[1], out bool1))
+                                {// true = Gauss (DEFAULT) false = Box
+                                    MainW.WinConfig.ImageBlurGauss.IsChecked = bool1;
+                                }
+                                break;
+                            }
+                        case "WINDOW_BLUR":
+                            {//GIF rendering method
+                                if (bool.TryParse(line[1], out bool1))
+                                {
+                                    MainW.WinConfig.BgBlur.IsChecked = bool1;
+                                }
+                                break;
+                            }
+                        case "TOOLBAR_ENABLED":
+                            {//GIF rendering method
+                                if (bool.TryParse(line[1], out bool1))
+                                {
+                                    MainW.ToolBarMenuItem.IsChecked = bool1;
+                                }
+                                break;
+                            }
                     }
                 }
                 catch (Exception ex) {
                     //System.FormatException catched from BORDER_COLOR, WINDOW_COLOR, TEXT_BG_COLOR
-#if DEBUG
+                    #if DEBUG
                     MessageBox.Show(ex.ToString());
                     //throw;
-#endif
+                    #endif
                 }
             }
         }
@@ -796,9 +861,20 @@ namespace SkinText {
         /// <para>Called from <see cref="MainWindow.Resettodefaults_Click"/> using <see cref="SaveChanges"/></para>
         /// </summary>
         public static void ResetDefaults() {
-            LoadDefault();
-            MainW.grid.UpdateLayout();
-            FixResizeTextBox();
+            switch (MessageBox.Show("This will reset ALL configuration\r\n Are you sure?", "Reset To Defaults", MessageBoxButton.YesNo, MessageBoxImage.Exclamation, MessageBoxResult.No))
+            {
+                case (MessageBoxResult.Yes):
+                    {
+                        LoadDefault();
+                        MainW.grid.UpdateLayout();
+                        FixResizeTextBox();
+                        break;
+                    }
+                case MessageBoxResult.No:
+                    {
+                        break;
+                    }
+            }
         }
 
         /// <summary>
@@ -989,10 +1065,64 @@ namespace SkinText {
                 }
             }
             catch (Exception ex) {
-#if DEBUG
+            #if DEBUG
                 MessageBox.Show(ex.ToString());
                 //throw;
-#endif
+            #endif
+            }
+        }
+
+        public static void GridSizeChanged() {
+            try
+            {
+                if (MainW?.WinConfig != null)
+                {
+                    double borderSize = MainW.WinConfig.bordersize.Value;
+                    double row0 = MainW.grid.RowDefinitions[0].ActualHeight;
+                    double row1 = MainW.grid.RowDefinitions[1].ActualHeight;
+                    double row2 = MainW.grid.RowDefinitions[2].ActualHeight;
+                    double column0 = MainW.grid.ColumnDefinitions[0].ActualWidth;
+                    double column1 = MainW.grid.ColumnDefinitions[1].ActualWidth;
+                    double column2 = MainW.grid.ColumnDefinitions[2].ActualWidth;
+                    double windowWidth = mainW.window.ActualWidth;
+                    double windowHeight = mainW.window.ActualHeight;
+                    if (row0 < borderSize + 1)
+                    {
+                        MainW.grid.RowDefinitions[0].Height = new GridLength(borderSize+1,GridUnitType.Star);
+                    }
+                    if (row2 < borderSize + 1)
+                    {
+                        MainW.grid.RowDefinitions[2].Height = new GridLength(borderSize + 1, GridUnitType.Star);
+                    }
+                    if (column0 < borderSize + 1)
+                    {
+                        MainW.grid.ColumnDefinitions[0].Width = new GridLength(borderSize + 1, GridUnitType.Star);
+                    }
+                    if (column2 < borderSize + 1)
+                    {
+                        MainW.grid.ColumnDefinitions[2].Width = new GridLength(borderSize + 1, GridUnitType.Star);
+                    }
+
+                    if (column0 + column1 + column2 > windowWidth + borderSize * 2)
+                    {
+                        MainW.grid.ColumnDefinitions[0].Width = new GridLength(2, GridUnitType.Star);
+                        MainW.grid.ColumnDefinitions[2].Width = new GridLength(windowWidth-4-borderSize);
+                        MainW.grid.ColumnDefinitions[2].Width = new GridLength(2, GridUnitType.Star);
+                    }
+                    if (row0+row1+row2>windowHeight+borderSize*2)
+                    {
+                        MainW.grid.RowDefinitions[0].Height = new GridLength(2, GridUnitType.Star);
+                        MainW.grid.RowDefinitions[2].Height = new GridLength(windowHeight - 4 - borderSize);
+                        MainW.grid.RowDefinitions[2].Height = new GridLength(2, GridUnitType.Star);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                #if DEBUG
+                MessageBox.Show(ex.ToString());
+                //throw;
+                #endif
             }
         }
 
@@ -1014,6 +1144,7 @@ namespace SkinText {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:No pasar cadenas literal como parámetros localizados", MessageId = "System.Windows.MessageBox.Show(System.String,System.String,System.Windows.MessageBoxButton,System.Windows.MessageBoxImage,System.Windows.MessageBoxResult,System.Windows.MessageBoxOptions)")]
         public static void Save(bool saveas) {
+            bool skip = false;
             if (!saveas && Filepath.Length < 4) {//checks for complete filenames instead of just .rtf or .xaml //should be "" because it is validated in other places too but just in case
                 saveas = true;
             }
@@ -1024,10 +1155,9 @@ namespace SkinText {
                     CheckPathExists = true,
                     ValidateNames = true,
                     RestoreDirectory = true,
-                    Filter = "XAML Package (*.xamlp)|*.xamlp|Rich Text File (*.rtf)|*.rtf|XAML File (*.xaml)|*.xaml|Text file (*.txt)|*.txt",
-                    DefaultExt = ".xamlp"
+                    Filter = "XAML Package (*.xamlp)|*.xamlp|Rich Text File (*.rtf)|*.rtf|XAML File (*.xaml)|*.xaml|Text file (*.txt)|*.txt"
                 };
-                if (Filepath.Length < 4) {//checks for complete filenames instead of just .rtf or .xaml //should be "" becouse it is validate in other places too but just in case
+                if (Filepath.Length < 4) {//checks for complete filenames instead of just .rtf or .xaml //should be "" because it is validate in other places too but just in case
                     savedialog.FileName = "Notes";
                 }
                 else {
@@ -1038,43 +1168,57 @@ namespace SkinText {
                     Filepath = savedialog.FileName;
                     MainW.MenuFileName.Header = Path.GetFileName(Filepath);
                 }
-            }
-
-            try {
-                TextRange t = new TextRange(MainW.rtb.Document.ContentStart, MainW.rtb.Document.ContentEnd);
-                using (FileStream file = new FileStream(Filepath, FileMode.Create)) {
-                    switch (Path.GetExtension(Filepath).ToUpperInvariant()) {
-                        case (".RTF"): {
-                                t.Save(file, DataFormats.Rtf);
-                                break;
-                            }
-                        case (".TXT"): {
-                                t.Save(file, DataFormats.Text);
-                                break;
-                            }
-                        case (".XAML"): {
-                                t.Save(file, DataFormats.Xaml);
-                                break;
-                            }
-
-                        case (".XAMLP"): {//TODO: change extension to skintext and register it to open with defaults
-                                t.Save(file, DataFormats.XamlPackage);
-                                break;
-                            }
-                        default: {//ths should never hapen
-                                throw new FileFormatException();
-                            }
-                    }
-                    FileChanged = false;
-                    SaveConfig();
+                else
+                {
+                    skip = true;
                 }
             }
-            catch (Exception ex) {
-                MessageBox.Show("Failed to Write File", "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
-                #if DEBUG
-                MessageBox.Show(ex.ToString());
-                //throw;
-                #endif
+            if (!skip)
+            {
+                try
+                {
+                    TextRange t = new TextRange(MainW.rtb.Document.ContentStart, MainW.rtb.Document.ContentEnd);
+                    using (FileStream file = new FileStream(Filepath, FileMode.Create))
+                    {
+                        switch (Path.GetExtension(Filepath).ToUpperInvariant())
+                        {
+                            case (".RTF"):
+                                {
+                                    t.Save(file, DataFormats.Rtf);
+                                    break;
+                                }
+                            case (".TXT"):
+                                {
+                                    t.Save(file, DataFormats.Text);
+                                    break;
+                                }
+                            case (".XAML"):
+                                {
+                                    t.Save(file, DataFormats.Xaml);
+                                    break;
+                                }
+                            case (".XAMLP"):
+                                {//TODO: change extension to skintext and register it to open with defaults
+                                    t.Save(file, DataFormats.XamlPackage);
+                                    break;
+                                }
+                            default:
+                                {//ths should never hapen
+                                    throw new FileFormatException();
+                                }
+                        }
+                        FileChanged = false;
+                        SaveConfig();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Failed to Write File", "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
+                    #if DEBUG
+                    MessageBox.Show(ex.ToString());
+                    //throw;
+                    #endif
+                }
             }
         }
 
@@ -1270,6 +1414,18 @@ namespace SkinText {
                     writer.WriteLine(data);
 
 
+                    //Image Blur Value
+                    data = "img_blur_val = " + MainW.WinConfig.imageBlurSlider.Value.ToString();
+                    writer.WriteLine(data);
+                    //Image Blur Mehod (Gauss, Box)
+                    data = "img_blur_gauss = " + MainW.WinConfig.ImageBlurGauss.IsChecked.Value.ToString();
+                    writer.WriteLine(data);
+                    //Window Blur Enabled
+                    data = "window_blur = " + MainW.WinConfig.BgBlur.IsChecked.Value.ToString();
+                    writer.WriteLine(data);
+                    //ToolBar Enabled
+                    data = "toolbar_enabled = " + MainW.ToolBarMenuItem.IsChecked.ToString();
+                    writer.WriteLine(data);
 
                     //////////////////////////////////////
                     //ADVANCED
@@ -1760,12 +1916,546 @@ namespace SkinText {
         }
 
 
-        public static void BlurBgImage(double blurVal) {
-            var blur = new System.Windows.Media.Effects.BlurEffect();
-            blur.KernelType = System.Windows.Media.Effects.KernelType.Gaussian;
-            blur.Radius = blurVal;
+        public static void BlurBgImage(double blurVal, System.Windows.Media.Effects.KernelType kernelType) {
+            System.Windows.Media.Effects.BlurEffect blur = new System.Windows.Media.Effects.BlurEffect {
+                KernelType = kernelType,
+                Radius = blurVal
+            };
 
             mainW.backgroundimg.Effect = blur;
         }
+        public static void BlurBG (bool EnableBlur) {
+            if (EnableBlur)
+            {
+                mainW.EnableBlur(AccentState.ACCENT_ENABLE_BLURBEHIND, MainW);
+                mainW.EnableBlur(AccentState.ACCENT_ENABLE_BLURBEHIND, MainW.FontConf);
+                mainW.EnableBlur(AccentState.ACCENT_ENABLE_BLURBEHIND, MainW.WinConfig);
+                mainW.EnableBlur(AccentState.ACCENT_ENABLE_BLURBEHIND, MainW.AdvConf);
+            }
+            else
+            {
+                mainW.EnableBlur(AccentState.ACCENT_INVALID_STATE, MainW);
+                mainW.EnableBlur(AccentState.ACCENT_INVALID_STATE, MainW.FontConf);
+                mainW.EnableBlur(AccentState.ACCENT_INVALID_STATE, MainW.WinConfig);
+                mainW.EnableBlur(AccentState.ACCENT_INVALID_STATE, MainW.AdvConf);
+            }
+        }
+        public static void ShowAdvancedConfig() {
+            mainW.AdvConf.Show();
+        }
+
+        public static void UpdateItemCheckedState(System.Windows.Controls.Primitives.ToggleButton button, DependencyProperty formattingProperty, object expectedValue) {
+            object currentValue = MainW.rtb.Selection.GetPropertyValue(formattingProperty);
+            button.IsChecked = (currentValue != DependencyProperty.UnsetValue) && currentValue != null && currentValue.Equals(expectedValue);
+        }
+
+        public static void UpdateToggleButtonState() {
+            UpdateItemCheckedState(MainW._btnBold, TextElement.FontWeightProperty, FontWeights.Bold);
+            UpdateItemCheckedState(MainW._btnItalic, TextElement.FontStyleProperty, FontStyles.Italic);
+
+            UpdateItemCheckedState(MainW._btnTopscript, Inline.BaselineAlignmentProperty, BaselineAlignment.Top);
+            UpdateItemCheckedState(MainW._btnTextTopscript, Inline.BaselineAlignmentProperty, BaselineAlignment.TextTop);
+            UpdateItemCheckedState(MainW._btnSuperscript, Inline.BaselineAlignmentProperty, BaselineAlignment.Superscript);
+            UpdateItemCheckedState(MainW._btnCentercript, Inline.BaselineAlignmentProperty, BaselineAlignment.Center);
+            UpdateItemCheckedState(MainW._btnSubscript, Inline.BaselineAlignmentProperty, BaselineAlignment.Subscript);
+            UpdateItemCheckedState(MainW._btnTextBottomscript, Inline.BaselineAlignmentProperty, BaselineAlignment.TextBottom);
+            UpdateItemCheckedState(MainW._btnBottomscript, Inline.BaselineAlignmentProperty, BaselineAlignment.Bottom);
+            UpdateItemCheckedState(MainW._btnBasescript, Inline.BaselineAlignmentProperty, BaselineAlignment.Baseline);
+
+            UpdateItemCheckedState(MainW._btnAlignLeft, Block.TextAlignmentProperty, TextAlignment.Left);
+            UpdateItemCheckedState(MainW._btnAlignCenter, Block.TextAlignmentProperty, TextAlignment.Center);
+            UpdateItemCheckedState(MainW._btnAlignRight, Block.TextAlignmentProperty, TextAlignment.Right);
+            UpdateItemCheckedState(MainW._btnAlignJustify, Block.TextAlignmentProperty, TextAlignment.Justify);
+
+            UpdateItemCheckedState(MainW._btnFlowDirLTR, Block.FlowDirectionProperty, FlowDirection.LeftToRight);
+            UpdateItemCheckedState(MainW._btnFlowDirRTL, Block.FlowDirectionProperty, FlowDirection.RightToLeft);
+
+            /*
+            UpdateItemCheckedState(_btnOverLine        , Inline.TextDecorationsProperty, TextDecorations.OverLine);
+            UpdateItemCheckedState(_btnStrikethrough   , Inline.TextDecorationsProperty, TextDecorations.Strikethrough);
+            UpdateItemCheckedState(_btnBaseline        , Inline.TextDecorationsProperty, TextDecorations.Baseline);
+            UpdateItemCheckedState(_btnUnderline       , Inline.TextDecorationsProperty, TextDecorations.Underline);
+            */
+        }
+
+
+        public static void UpdateDecorators() {
+            if (MainW.rtb.Selection != null)
+            {
+                MainW._btnOverLine.IsChecked = false;
+                MainW._btnStrikethrough.IsChecked = false;
+                MainW._btnBaseline.IsChecked = false;
+                MainW._btnUnderline.IsChecked = false;
+                if (!DependencyProperty.UnsetValue.Equals(MainW.rtb.Selection.GetPropertyValue(Inline.TextDecorationsProperty)))
+                {
+                    TextDecorationCollection temp = (TextDecorationCollection)MainW.rtb.Selection.GetPropertyValue(Inline.TextDecorationsProperty);
+                    foreach (TextDecoration decor in temp)
+                    {
+                        switch (decor.Location)
+                        {
+                            case (TextDecorationLocation.Baseline):
+                                {
+                                    MainW._btnBaseline.IsChecked = true;
+                                    break;
+                                }
+                            case (TextDecorationLocation.OverLine):
+                                {
+                                    MainW._btnOverLine.IsChecked = true;
+                                    break;
+                                }
+                            case (TextDecorationLocation.Strikethrough):
+                                {
+                                    MainW._btnStrikethrough.IsChecked = true;
+                                    break;
+                                }
+                            case (TextDecorationLocation.Underline):
+                                {
+                                    MainW._btnUnderline.IsChecked = true;
+                                    break;
+                                }
+                        }
+                    }
+                }
+            }
+        }
+
+        public static void UpdateSelectionListType() {
+            Paragraph startParagraph = MainW.rtb.Selection.Start.Paragraph;
+            Paragraph endParagraph = MainW.rtb.Selection.End.Paragraph;
+            if (startParagraph != null && endParagraph != null && (startParagraph.Parent is ListItem) && (endParagraph.Parent is ListItem) && object.ReferenceEquals(((ListItem)startParagraph.Parent).List, ((ListItem)endParagraph.Parent).List))
+            {
+                MainW._btnToggleBox.IsChecked = false;
+                MainW._btnToggleCircle.IsChecked = false;
+                MainW._btnToggleNumbering.IsChecked = false;
+                MainW._btnToggleBullets.IsChecked = false;
+                MainW._btnToggleLowerLatin.IsChecked = false;
+                MainW._btnToggleLowerRoman.IsChecked = false;
+                MainW._btnToggleSquare.IsChecked = false;
+                MainW._btnToggleUpperLatin.IsChecked = false;
+                MainW._btnToggleUpperRoman.IsChecked = false;
+
+                TextMarkerStyle markerStyle = ((ListItem)startParagraph.Parent).List.MarkerStyle;
+                switch (markerStyle)
+                {
+                    case (TextMarkerStyle.Box):
+                        {
+                            MainW._btnToggleBox.IsChecked = true;
+                            break;
+                        }
+                    case (TextMarkerStyle.Circle):
+                        {
+                            MainW._btnToggleCircle.IsChecked = true;
+                            break;
+                        }
+                    case (TextMarkerStyle.Decimal):
+                        {
+                            MainW._btnToggleNumbering.IsChecked = true;
+                            break;
+                        }
+                    case (TextMarkerStyle.Disc):
+                        {
+                            MainW._btnToggleBullets.IsChecked = true;
+                            break;
+                        }
+                    case (TextMarkerStyle.LowerLatin):
+                        {
+                            MainW._btnToggleLowerLatin.IsChecked = true;
+                            break;
+                        }
+                    case (TextMarkerStyle.LowerRoman):
+                        {
+                            MainW._btnToggleLowerRoman.IsChecked = true;
+                            break;
+                        }
+                    case (TextMarkerStyle.Square):
+                        {
+                            MainW._btnToggleSquare.IsChecked = true;
+                            break;
+                        }
+                    case (TextMarkerStyle.UpperLatin):
+                        {
+                            MainW._btnToggleUpperLatin.IsChecked = true;
+                            break;
+                        }
+                    case (TextMarkerStyle.UpperRoman):
+                        {
+                            MainW._btnToggleUpperRoman.IsChecked = true;
+                            break;
+                        }
+
+                }
+            }
+            else
+            {
+                MainW._btnToggleBox.IsChecked = false;
+                MainW._btnToggleCircle.IsChecked = false;
+                MainW._btnToggleNumbering.IsChecked = false;
+                MainW._btnToggleBullets.IsChecked = false;
+                MainW._btnToggleLowerLatin.IsChecked = false;
+                MainW._btnToggleLowerRoman.IsChecked = false;
+                MainW._btnToggleSquare.IsChecked = false;
+                MainW._btnToggleUpperLatin.IsChecked = false;
+                MainW._btnToggleUpperRoman.IsChecked = false;
+            }
+        }
+
+        public static void UpdateSelectedFontFamily() {
+            object value = MainW.rtb.Selection.GetPropertyValue(TextElement.FontFamilyProperty);
+            System.Windows.Media.FontFamily currentFontFamily = (System.Windows.Media.FontFamily)((value == DependencyProperty.UnsetValue) ? null : value);
+            if (currentFontFamily != null)
+            {
+                MainW._fontFamily.SelectedItem = currentFontFamily;
+            }
+        }
+
+        public static void UpdateSelectedFontSize() {
+            object value = MainW.rtb.Selection.GetPropertyValue(TextElement.FontSizeProperty);
+            MainW._fontSize.SelectedValue = (value == DependencyProperty.UnsetValue) ? null : value;
+        }
+
+        public static void SelectImg() {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog {
+                Filter = "Image files (*.jpg, *.jpeg,*.gif, *.png) | *.jpg; *.jpeg; *.gif; *.png"
+            };
+            bool? result = dlg.ShowDialog();
+            if (result.Value)
+            {
+                Uri uri = new Uri(dlg.FileName, UriKind.Relative);
+                System.Windows.Media.Imaging.BitmapImage bitmapImg = new System.Windows.Media.Imaging.BitmapImage(uri);
+                System.Windows.Controls.Image image = new System.Windows.Controls.Image {
+                    Stretch = System.Windows.Media.Stretch.Fill,
+                    Width = 250,
+                    Height = 200,
+                    Source = bitmapImg
+                };
+                TextPointer tp = MainW.rtb.CaretPosition.GetInsertionPosition(LogicalDirection.Forward);
+                #pragma warning disable RECS0026 // Possible unassigned object created by 'new'
+                new InlineUIContainer(image, tp);
+                #pragma warning restore RECS0026 // Possible unassigned object created by 'new'
+            }
+        }
+        public static void ApplyTextDecorators() {
+            if (MainW.rtb.Selection != null)
+            {
+                TextDecorationCollection decor = new TextDecorationCollection();
+
+                if (MainW._btnOverLine.IsChecked.Value)
+                {
+                    decor.Add(TextDecorations.OverLine);
+                }
+                if (MainW._btnStrikethrough.IsChecked.Value)
+                {
+                    decor.Add(TextDecorations.Strikethrough);
+                }
+                if (MainW._btnBaseline.IsChecked.Value)
+                {
+                    decor.Add(TextDecorations.Baseline);
+                }
+                if (MainW._btnUnderline.IsChecked.Value)
+                {
+                    decor.Add(TextDecorations.Underline);
+                }
+                decor.Freeze();
+                if (decor != null)
+                {
+                    //rtb.Selection.ApplyPropertyValue(Inline.TextDecorationsProperty, null);
+                    MainW.rtb.Selection.ApplyPropertyValue(Inline.TextDecorationsProperty, decor);
+                }
+            }
+        }
+        public static void ApplyTextScript(object sender) {
+            if (MainW.rtb.Selection != null)
+            {
+                System.Windows.Controls.Primitives.ToggleButton btn = (System.Windows.Controls.Primitives.ToggleButton)sender;
+                if (btn != null && btn.IsChecked.Value)
+                {
+                    MainW._btnTopscript.IsChecked = false;
+                    MainW._btnSuperscript.IsChecked = false;
+                    MainW._btnTextTopscript.IsChecked = false;
+                    MainW._btnCentercript.IsChecked = false;
+                    MainW._btnSubscript.IsChecked = false;
+                    MainW._btnTextBottomscript.IsChecked = false;
+                    MainW._btnBottomscript.IsChecked = false;
+                    MainW._btnBasescript.IsChecked = false;
+                    switch (btn.Name)
+                    {
+                        case nameof(MainW._btnTopscript):
+                            {
+                                MainW.rtb.Selection.ApplyPropertyValue(Inline.BaselineAlignmentProperty, BaselineAlignment.Top);
+                                MainW._btnTopscript.IsChecked = true;
+                                break;
+                            }
+                        case nameof(MainW._btnSuperscript):
+                            {
+                                MainW.rtb.Selection.ApplyPropertyValue(Inline.BaselineAlignmentProperty, BaselineAlignment.Superscript);
+                                MainW._btnSuperscript.IsChecked = true;
+                                break;
+                            }
+                        case nameof(MainW._btnTextTopscript):
+                            {
+                                MainW.rtb.Selection.ApplyPropertyValue(Inline.BaselineAlignmentProperty, BaselineAlignment.TextTop);
+                                MainW._btnTextTopscript.IsChecked = true;
+                                break;
+                            }
+                        case nameof(MainW._btnCentercript):
+                            {
+                                MainW.rtb.Selection.ApplyPropertyValue(Inline.BaselineAlignmentProperty, BaselineAlignment.Center);
+                                MainW._btnCentercript.IsChecked = true;
+                                break;
+                            }
+                        case nameof(MainW._btnSubscript):
+                            {
+                                MainW.rtb.Selection.ApplyPropertyValue(Inline.BaselineAlignmentProperty, BaselineAlignment.Subscript);
+                                MainW._btnSubscript.IsChecked = true;
+                                break;
+                            }
+                        case nameof(MainW._btnTextBottomscript):
+                            {
+                                MainW.rtb.Selection.ApplyPropertyValue(Inline.BaselineAlignmentProperty, BaselineAlignment.TextBottom);
+                                MainW._btnTextBottomscript.IsChecked = true;
+                                break;
+                            }
+                        case nameof(MainW._btnBottomscript):
+                            {
+                                MainW.rtb.Selection.ApplyPropertyValue(Inline.BaselineAlignmentProperty, BaselineAlignment.Bottom);
+                                MainW._btnBottomscript.IsChecked = true;
+                                break;
+                            }
+                        case nameof(MainW._btnBasescript):
+                            {
+                                MainW.rtb.Selection.ApplyPropertyValue(Inline.BaselineAlignmentProperty, BaselineAlignment.Baseline);
+                                MainW._btnBasescript.IsChecked = true;
+                                break;
+                            }
+                    }
+                }
+                else
+                {
+                    MainW._btnTopscript.IsChecked = false;
+                    MainW._btnSuperscript.IsChecked = false;
+                    MainW._btnTextTopscript.IsChecked = false;
+                    MainW._btnCentercript.IsChecked = false;
+                    MainW._btnSubscript.IsChecked = false;
+                    MainW._btnTextBottomscript.IsChecked = false;
+                    MainW._btnBottomscript.IsChecked = false;
+                    MainW.rtb.Selection.ApplyPropertyValue(Inline.BaselineAlignmentProperty, BaselineAlignment.Baseline);
+                    MainW._btnBasescript.IsChecked = true;
+                }
+            }
+        }
+        public static void ApplyFlowDir() {
+            if (MainW.rtb.Selection != null)
+            {
+                if (MainW._btnFlowDirLTR.IsChecked.Value)
+                {
+                    MainW.rtb.Selection.ApplyPropertyValue(Block.FlowDirectionProperty, FlowDirection.LeftToRight);
+                }
+                else
+                {
+                    MainW.rtb.Selection.ApplyPropertyValue(Block.FlowDirectionProperty, FlowDirection.RightToLeft);
+                }
+            }
+        }
+        public static void ApplyFontSize(System.Windows.Controls.SelectionChangedEventArgs e) {
+            try
+            {
+                if (e.AddedItems.Count > 0)
+                {
+                    ApplyPropertyValueToSelectedText(TextElement.FontSizeProperty, e.AddedItems[0]);
+                }
+            }
+            catch (Exception ex)
+            {
+                #if DEBUG
+                MessageBox.Show(ex.ToString());
+                //throw;
+                #endif
+            }
+        }
+        public static void ApplyPropertyValueToSelectedText(DependencyProperty formattingProperty, object value) {
+            if (MainW.rtb?.Selection != null)
+            {
+                if (value == null)
+                {
+                    return;
+                }
+                MainW.rtb.Selection.ApplyPropertyValue(formattingProperty, value);
+            }
+        }
+        public static void ApplyFontFamily(System.Windows.Controls.SelectionChangedEventArgs e) {
+            if (e.AddedItems.Count > 0)
+            {
+                System.Windows.Media.FontFamily editValue = (System.Windows.Media.FontFamily)e.AddedItems[0];
+                ApplyPropertyValueToSelectedText(TextElement.FontFamilyProperty, editValue);
+            }
+        }
+        public static void ApplyFontColor() {
+            if (MainW.rtb != null && MainW.rtb.Selection != null && !MainW.rtb.Selection.IsEmpty)
+            {
+                System.Windows.Media.SolidColorBrush newBrush = new System.Windows.Media.SolidColorBrush(MainW.ClrPcker_Font.SelectedColor.Value);
+                newBrush.Freeze();
+                MainW.rtb.Selection.ApplyPropertyValue(TextElement.ForegroundProperty, newBrush);
+            }
+        }
+        public static void ApplyFontBackColor() {
+            if (MainW.rtb != null && MainW.rtb.Selection != null && !MainW.rtb.Selection.IsEmpty)
+            {
+                System.Windows.Media.SolidColorBrush newBrush = new System.Windows.Media.SolidColorBrush(MainW.ClrPcker_FontBack.SelectedColor.Value);
+                if (newBrush.Color.A < 255)
+                {
+                    newBrush = System.Windows.Media.Brushes.Transparent;
+                }
+                if ((newBrush != null) && (newBrush.Equals(System.Windows.Media.Brushes.Transparent)))
+                {
+                    newBrush = null;
+                }
+                MainW.rtb.Selection.ApplyPropertyValue(TextElement.BackgroundProperty, newBrush);
+            }
+        }
+        public static void ApplyListType(object sender) {
+            if (MainW.rtb.Selection != null)
+            {
+                System.Windows.Controls.Primitives.ToggleButton btn = (System.Windows.Controls.Primitives.ToggleButton)sender;
+                if (btn != null)
+                {
+                    Paragraph startParagraph = MainW.rtb.Selection.Start.Paragraph;
+                    Paragraph endParagraph = MainW.rtb.Selection.End.Paragraph;
+                    if (startParagraph != null && endParagraph != null && (startParagraph.Parent is ListItem) && (endParagraph.Parent is ListItem) && object.ReferenceEquals(((ListItem)startParagraph.Parent).List, ((ListItem)endParagraph.Parent).List))
+                    {//if there is a list only change TextMarkerStyle
+                    }
+                    else
+                    {
+                        EditingCommands.ToggleBullets.Execute(null, MainW.rtb);
+                    }
+                    if (btn.IsChecked.Value)
+                    {
+                        MainW._btnToggleBox.IsChecked = false;
+                        MainW._btnToggleCircle.IsChecked = false;
+                        MainW._btnToggleNumbering.IsChecked = false;
+                        MainW._btnToggleBullets.IsChecked = false;
+                        MainW._btnToggleLowerLatin.IsChecked = false;
+                        MainW._btnToggleLowerRoman.IsChecked = false;
+                        MainW._btnToggleSquare.IsChecked = false;
+                        MainW._btnToggleUpperLatin.IsChecked = false;
+                        MainW._btnToggleUpperRoman.IsChecked = false;
+                        #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                        switch (btn.Name)
+                        {
+                            case nameof(MainW._btnToggleBox):
+                                {
+                                    MainW._btnToggleBox.IsChecked = true;
+                                    ListBulletTypeAsync(MainW.rtb.Selection.Start.Paragraph, MainW.rtb.Selection.End.Paragraph, TextMarkerStyle.Box);
+                                    break;
+                                }
+                            case nameof(MainW._btnToggleCircle):
+                                {
+                                    MainW._btnToggleCircle.IsChecked = true;
+                                    ListBulletTypeAsync(MainW.rtb.Selection.Start.Paragraph, MainW.rtb.Selection.End.Paragraph, TextMarkerStyle.Circle);
+                                    break;
+                                }
+                            case nameof(MainW._btnToggleNumbering):
+                                {
+                                    MainW._btnToggleNumbering.IsChecked = true;
+                                    ListBulletTypeAsync(MainW.rtb.Selection.Start.Paragraph, MainW.rtb.Selection.End.Paragraph, TextMarkerStyle.Decimal);
+                                    break;
+                                }
+                            case nameof(MainW._btnToggleBullets):
+                                {
+                                    MainW._btnToggleBullets.IsChecked = true;
+                                    ListBulletTypeAsync(MainW.rtb.Selection.Start.Paragraph, MainW.rtb.Selection.End.Paragraph, TextMarkerStyle.Disc);
+                                    break;
+                                }
+                            case nameof(MainW._btnToggleLowerLatin):
+                                {
+                                    MainW._btnToggleLowerLatin.IsChecked = true;
+                                    ListBulletTypeAsync(MainW.rtb.Selection.Start.Paragraph, MainW.rtb.Selection.End.Paragraph, TextMarkerStyle.LowerLatin);
+                                    break;
+                                }
+                            case nameof(MainW._btnToggleLowerRoman):
+                                {
+                                    MainW._btnToggleLowerRoman.IsChecked = true;
+                                    ListBulletTypeAsync(MainW.rtb.Selection.Start.Paragraph, MainW.rtb.Selection.End.Paragraph, TextMarkerStyle.LowerRoman);
+                                    break;
+                                }
+                            case nameof(MainW._btnToggleSquare):
+                                {
+                                    MainW._btnToggleSquare.IsChecked = true;
+                                    ListBulletTypeAsync(MainW.rtb.Selection.Start.Paragraph, MainW.rtb.Selection.End.Paragraph, TextMarkerStyle.Square);
+                                    break;
+                                }
+                            case nameof(MainW._btnToggleUpperLatin):
+                                {
+                                    MainW._btnToggleUpperLatin.IsChecked = true;
+                                    ListBulletTypeAsync(MainW.rtb.Selection.Start.Paragraph, MainW.rtb.Selection.End.Paragraph, TextMarkerStyle.UpperLatin);
+                                    break;
+                                }
+                            case nameof(MainW._btnToggleUpperRoman):
+                                {
+                                    MainW._btnToggleUpperRoman.IsChecked = true;
+                                    ListBulletTypeAsync(MainW.rtb.Selection.Start.Paragraph, MainW.rtb.Selection.End.Paragraph, TextMarkerStyle.UpperRoman);
+                                    break;
+                                }
+                        }
+                        #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                    }
+                    else
+                    {//if unchecking
+                        TextMarkerStyle markerStyle = ((ListItem)startParagraph.Parent).List.MarkerStyle;
+                        if (markerStyle != TextMarkerStyle.Disc && markerStyle != TextMarkerStyle.Box && markerStyle != TextMarkerStyle.Circle && markerStyle != TextMarkerStyle.Square)
+                        {
+                            EditingCommands.ToggleBullets.Execute(null, MainW.rtb);
+                        }
+                        EditingCommands.ToggleBullets.Execute(null, MainW.rtb);
+
+                    }
+                }
+            }
+        }
+
+        private async static System.Threading.Tasks.Task ListBulletTypeAsync(Paragraph startParagraph, Paragraph endParagraph, TextMarkerStyle textMarker) {
+            await System.Threading.Tasks.Task.Delay(100);
+            if (startParagraph != null && endParagraph != null && (startParagraph.Parent is ListItem) && (endParagraph.Parent is ListItem) && object.ReferenceEquals(((ListItem)startParagraph.Parent).List, ((ListItem)endParagraph.Parent).List))
+            {
+                ((ListItem)startParagraph.Parent).List.MarkerStyle = textMarker;
+            }
+        }
+        public static void FilterFontFamilyComboBox() {
+            if (!MainW._fontFamily.IsDropDownOpen)
+            {
+                MainW._fontFamily.IsDropDownOpen = true;
+            }
+
+            System.Windows.Data.CollectionView itemsViewOriginal = (System.Windows.Data.CollectionView)System.Windows.Data.CollectionViewSource.GetDefaultView(MainW._fontFamily.ItemsSource);
+
+            itemsViewOriginal.Filter = ((o) => {
+                /*if (String.IsNullOrEmpty(_fontFamily.Text)) return true;
+                else
+                {
+                    if (((string)o.ToString()).Contains(_fontFamily.Text)) return true;
+                    else return false;
+                }*/
+                //1 line:
+                return string.IsNullOrEmpty(MainW._fontFamily.Text) || o.ToString().Contains(MainW._fontFamily.Text);
+            });
+
+            //itemsViewOriginal.Refresh();
+
+            // if datasource is a DataView, then apply RowFilter as below and replace above logic with below one
+            /*
+             DataView view = (DataView) _fontFamily.ItemsSource;
+             view.RowFilter = ("Name like '*" + _fontFamily.Text + "*'");
+            */
+        }
+
+
+
+
+
+
+
+
+
+
+
     }
 }

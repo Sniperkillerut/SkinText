@@ -89,7 +89,23 @@ namespace SkinText {
         }
 
         private void ImageBlurSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
-            CustomMethods.BlurBgImage(imageBlurSlider.Value);
+            if (ImageBlurBox.IsChecked.Value)
+            {
+                CustomMethods.BlurBgImage(imageBlurSlider.Value, System.Windows.Media.Effects.KernelType.Box);
+
+            }
+            else
+            {
+                CustomMethods.BlurBgImage(imageBlurSlider.Value, System.Windows.Media.Effects.KernelType.Gaussian);
+            }
+        }
+
+        private void BgBlur_Checked(object sender, RoutedEventArgs e) {
+            CustomMethods.BlurBG(BgBlur.IsChecked.Value);
+        }
+
+        private void BtnShowAdvancedConfig_Click(object sender, RoutedEventArgs e) {
+            CustomMethods.ShowAdvancedConfig();
         }
     }
 }

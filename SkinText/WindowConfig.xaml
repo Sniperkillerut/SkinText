@@ -27,10 +27,6 @@
         BorderThickness="2"
         Padding="5"
         MouseDown="Window_MouseDown">
-    <Window.Resources>
-        <BitmapImage x:Key="ImageSource1FlipH" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="Resources\FlipH.png" />
-        <BitmapImage x:Key="ImageSource1FlipV" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="Resources\FlipV.png" />
-    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -39,7 +35,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="10" />
-            <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
@@ -72,26 +67,8 @@
                                   Data="F1 M 26.9166,22.1667L 37.9999,33.25L 49.0832,22.1668L 53.8332,26.9168L 42.7499,38L 53.8332,49.0834L 49.0833,53.8334L 37.9999,42.75L 26.9166,53.8334L 22.1666,49.0833L 33.25,38L 22.1667,26.9167L 26.9166,22.1667 Z "/>
             </Canvas>
         </Button>
+
         <Label Grid.Column="0" Grid.Row="2">
-            <Label.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Enable Text Area Border. Recommended: Off" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </Label.ToolTip>
-            <TextBlock Text="Resize / Move Text: " Style="{DynamicResource ToolTipTextStyle}" />
-        </Label>
-        <CheckBox x:Name="resizecheck" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Margin="10,0,10,0" Checked="ResizeCheckBoxChanged" Unchecked="ResizeCheckBoxChanged" IsChecked="True" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center">
-            <CheckBox.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Can cause the background Image to clip when rotation is enabled" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </CheckBox.ToolTip>
-        </CheckBox>
-        <Label Grid.Column="0" Grid.Row="3">
             <Label.ToolTip>
                 <ToolTip Style="{DynamicResource ToolTipStyle}">
                     <Border Style="{DynamicResource ToolTipBorderStyle}">
@@ -101,7 +78,7 @@
             </Label.ToolTip>
             <TextBlock Text="Resize border Width: " Style="{DynamicResource ToolTipTextStyle}" />
         </Label>
-        <Grid Grid.Column="1" Grid.Row="3">
+        <Grid Grid.Column="1" Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="40" />
@@ -115,7 +92,7 @@
                                 Value="{Binding Value, ElementName=bordersize}"
                                 ScrollViewer.VerticalScrollBarVisibility="Disabled" UpdateValueOnEnterKey="False" ShowButtonSpinner="False" AutoMoveFocus="True" />
         </Grid>
-        <Label Grid.Column="0" Grid.Row="4">
+        <Label Grid.Column="0" Grid.Row="3">
             <Label.ToolTip>
                 <ToolTip Style="{DynamicResource ToolTipStyle}">
                     <Border Style="{DynamicResource ToolTipBorderStyle}">
@@ -126,11 +103,10 @@
             <TextBlock Text="Resize border Color: " Style="{DynamicResource ToolTipTextStyle}" />
         </Label>
         <xctk:ColorPicker x:Name="ClrPcker_BorderBackground"
-                          Grid.Column="1" Grid.Row="4"
+                          Grid.Column="1" Grid.Row="3"
                           SelectedColorChanged="ClrPcker_BorderBackground_SelectedColorChanged"
-                          Style="{DynamicResource ColorPickerStyle}"
-                          DisplayColorAndName="False" ColorMode="ColorPalette"/>
-        <Label Grid.Column="0" Grid.Row="5">
+                          Style="{DynamicResource ColorPickerStyle2}"/>
+        <Label Grid.Column="0" Grid.Row="4">
             <Label.ToolTip>
                 <ToolTip Style="{DynamicResource ToolTipStyle}">
                     <Border Style="{DynamicResource ToolTipBorderStyle}">
@@ -140,7 +116,7 @@
             </Label.ToolTip>
             <TextBlock Text="Rotation Angle: " Style="{DynamicResource ToolTipTextStyle}" />
         </Label>
-        <Grid Grid.Column="1" Grid.Row="5">
+        <Grid Grid.Column="1" Grid.Row="4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="40" />
@@ -154,245 +130,7 @@
                                 Value="{Binding Value, ElementName=slValue}"
                                 ScrollViewer.VerticalScrollBarVisibility="Disabled" UpdateValueOnEnterKey="False" ShowButtonSpinner="False" AutoMoveFocus="True" />
         </Grid>
-        <Label Grid.Column="0" Grid.Row="6">
-            <Label.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Set SkinText background Image" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </Label.ToolTip>
-            <TextBlock Text="Background Image: " Style="{DynamicResource ToolTipTextStyle}" />
-        </Label>
-        <Button x:Name="imagedir" Grid.Column="1" Grid.Row="6" Width="160" Height="23" Click="Imagedir_Click" Style="{DynamicResource ButtonsStyle}">
-            <Button.Content>
-                <TextBlock Text="Change Bg Img"/>
-            </Button.Content>
-            <Button.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Select Background Image" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </Button.ToolTip>
-        </Button>
-        <Label Grid.Column="0" Grid.Row="7">
-            <Label.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Set SkinText background Color" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </Label.ToolTip>
-            <TextBlock Text="Window Color: " Style="{DynamicResource ToolTipTextStyle}" />
-        </Label>
-        <xctk:ColorPicker x:Name="ClrPcker_WindowBackground"
-                          Grid.Column="1" Grid.Row="7"
-                          SelectedColorChanged="ClrPcker_WindowBackground_SelectedColorChanged"
-                          Style="{DynamicResource ColorPickerStyle}"
-                          DisplayColorAndName="False" ColorMode="ColorPalette"/>
-        <Label Grid.Column="0" Grid.Row="8">
-            <Label.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Set Text Area background Color" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </Label.ToolTip>
-            <TextBlock Text="Text Bg Color: " Style="{DynamicResource ToolTipTextStyle}" />
-        </Label>
-        <xctk:ColorPicker x:Name="ClrPcker_RTB_Background"
-                          Grid.Column="1" Grid.Row="8"
-                          SelectedColorChanged="ClrPcker_RTB_Background_SelectedColorChanged"
-                          Style="{DynamicResource ColorPickerStyle}"
-                          DisplayColorAndName="False" ColorMode="ColorPalette"/>
-        <Label Grid.Column="0" Grid.Row="9">
-            <Label.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Set background Image Transparency" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </Label.ToolTip>
-            <TextBlock Text="Image Opacity: " Style="{DynamicResource ToolTipTextStyle}" />
-        </Label>
-        <Grid Grid.Column="1" Grid.Row="9">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-            </Grid.ColumnDefinitions>
-            <Slider Grid.Column="0" Minimum="0" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center" x:Name="imageopacityslider" ValueChanged="Imageopacityslider_ValueChanged" IsMoveToPointEnabled="True" />
-            <xctk:DecimalUpDown Grid.Column="1" Grid.Row="0"
-                                FormatString="G" ClipValueToMinMax="True" TextAlignment="Center"
-                                HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" Margin="0,5,5,5"
-                                Minimum="{Binding Minimum, ElementName=imageopacityslider}"
-                                Maximum="{Binding Maximum, ElementName=imageopacityslider}"
-                                Value="{Binding Value, ElementName=imageopacityslider}"
-                                ScrollViewer.VerticalScrollBarVisibility="Disabled" UpdateValueOnEnterKey="False" ShowButtonSpinner="False" AutoMoveFocus="True" />
-        </Grid>
-        <Label Grid.Column="0" Grid.Row="10">
-            <Label.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Set Text Area Transparency" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </Label.ToolTip>
-            <TextBlock Text="Text Opacity: " Style="{DynamicResource ToolTipTextStyle}" />
-        </Label>
-        <Grid Grid.Column="1" Grid.Row="10">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="40" />
-        </Grid.ColumnDefinitions>
-            <Slider Grid.Column="0" Minimum="0" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center"  x:Name="textopacityslider" ValueChanged="TextOpacityslider_ValueChanged" IsMoveToPointEnabled="True" />
-        <xctk:DecimalUpDown Grid.Column="1" Grid.Row="0"
-                                FormatString="G" ClipValueToMinMax="True" TextAlignment="Center"
-                                HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" Margin="0,5,5,5"
-                                Minimum="{Binding Minimum, ElementName=textopacityslider}"
-                                Maximum="{Binding Maximum, ElementName=textopacityslider}"
-                                Value="{Binding Value, ElementName=textopacityslider}"
-                                ScrollViewer.VerticalScrollBarVisibility="Disabled" UpdateValueOnEnterKey="False" ShowButtonSpinner="False" AutoMoveFocus="True" />
-    </Grid>
-    <Label Grid.Column="0" Grid.Row="11">
-            <Label.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Set SkinText Transparency" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </Label.ToolTip>
-            <TextBlock Text="Window Opacity: " Style="{DynamicResource ToolTipTextStyle}" />
-        </Label>
-        <Grid Grid.Column="1" Grid.Row="11">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-            </Grid.ColumnDefinitions>
-            <Slider Grid.Column="0" Minimum="0" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center" x:Name="windowopacityslider" ValueChanged="WindowOpacityslider_ValueChanged" IsMoveToPointEnabled="True" />
-            <xctk:DecimalUpDown Grid.Column="1" Grid.Row="0"
-                                FormatString="G" ClipValueToMinMax="True" TextAlignment="Center"
-                                HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" Margin="0,5,5,5"
-                                Minimum="{Binding Minimum, ElementName=windowopacityslider}"
-                                Maximum="{Binding Maximum, ElementName=windowopacityslider}"
-                                Value="{Binding Value, ElementName=windowopacityslider}"
-                                ScrollViewer.VerticalScrollBarVisibility="Disabled" UpdateValueOnEnterKey="False" ShowButtonSpinner="False" AutoMoveFocus="True" />
-        </Grid>
-        <Label Grid.Column="0" Grid.Row="12">
-            <Label.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Disable Text Editing" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </Label.ToolTip>
-            <TextBlock Text="Read Only: " Style="{DynamicResource ToolTipTextStyle}" />
-        </Label>
-        <CheckBox x:Name="readOnlyCheck" Grid.Column="1" Grid.Row="12" VerticalAlignment="Center" Margin="10,0,10,0" Checked="ReadOnlyCheck_Checked" Unchecked="ReadOnlyCheck_Checked" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center">
-            <CheckBox.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Disable Text Editing" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </CheckBox.ToolTip>
-        </CheckBox>
-        <Label Grid.Column="0" Grid.Row="13">
-            <Label.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Enable Spell Check (Uses keyboard language)" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </Label.ToolTip>
-            <TextBlock Text="Spell Check: " Style="{DynamicResource ToolTipTextStyle}" />
-        </Label>
-        <CheckBox x:Name="spellcheck" Grid.Column="1" Grid.Row="13" VerticalAlignment="Center" Margin="10,0,10,0" Checked="Spellcheck_Checked" Unchecked="Spellcheck_Checked" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center">
-            <CheckBox.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Enable Spell Check (Uses keyboard language)" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </CheckBox.ToolTip>
-        </CheckBox>
-        <Label Grid.Column="0" Grid.Row="14">
-            <Label.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Always show SkinText" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </Label.ToolTip>
-            <TextBlock Text="Always on Top:" Style="{DynamicResource ToolTipTextStyle}" />
-        </Label>
-        <CheckBox x:Name="alwaysontop" Grid.Column="1" Grid.Row="14" Margin="10,0" Checked="Alwaysontop_Unchecked" Unchecked="Alwaysontop_Unchecked" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" VerticalAlignment="Center">
-            <CheckBox.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Always show SkinText" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </CheckBox.ToolTip>
-        </CheckBox>
-        <Label Grid.Column="0" Grid.Row="15">
-            <Label.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Show TaskBar Icon" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </Label.ToolTip>
-            <TextBlock Text="TaskBar Icon:" Style="{DynamicResource ToolTipTextStyle}" />
-        </Label>
-        <CheckBox x:Name="taskbarvisible" Grid.Column="1" Grid.Row="15" Margin="10,0" Checked="Taskbarvisible_Unchecked" Unchecked="Taskbarvisible_Unchecked" IsChecked="True" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" VerticalAlignment="Center">
-            <CheckBox.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Show TaskBar Icon" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </CheckBox.ToolTip>
-        </CheckBox>
-        <Label Grid.Column="0" Grid.Row="16">
-            <Label.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Show Notification Icon. Recommended: On" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </Label.ToolTip>
-            <TextBlock Text="Notification Icon:" Style="{DynamicResource ToolTipTextStyle}" />
-        </Label>
-        <CheckBox x:Name="NotificationVisible" Grid.Column="1" Grid.Row="16" Margin="10,0" Checked="NotificationVisible_Unchecked" Unchecked="NotificationVisible_Unchecked" IsChecked="True" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" VerticalAlignment="Center">
-            <CheckBox.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Show Notification Icon. Recommended: On" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </CheckBox.ToolTip>
-        </CheckBox>
-        <Label Grid.Column="0" Grid.Row="17">
-            <Label.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Show Resize on Bottom Right Corner. Recommended: Off" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </Label.ToolTip>
-            <TextBlock Text="Resize Corner:" Style="{DynamicResource ToolTipTextStyle}" />
-        </Label>
-        <CheckBox x:Name="ResizeVisible" Grid.Column="1" Grid.Row="17" Margin="10,0" Checked="ResizeVisible_Unchecked" Unchecked="ResizeVisible_Unchecked" IsChecked="True" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" VerticalAlignment="Center">
-            <CheckBox.ToolTip>
-                <ToolTip Style="{DynamicResource ToolTipStyle}">
-                    <Border Style="{DynamicResource ToolTipBorderStyle}">
-                        <TextBlock Text="Show Resize on Bottom Right Corner. Recommended: Off" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Border>
-                </ToolTip>
-            </CheckBox.ToolTip>
-        </CheckBox>
-        <Label Grid.Column="0" Grid.Row="18" Background="Transparent">
+        <Label Grid.Column="0" Grid.Row="5">
             <Label.ToolTip>
                 <ToolTip Style="{DynamicResource ToolTipStyle}">
                     <Border Style="{DynamicResource ToolTipBorderStyle}">
@@ -402,7 +140,7 @@
             </Label.ToolTip>
             <TextBlock Text="GIF uses:" Style="{DynamicResource ToolTipTextStyle}" />
         </Label>
-        <Grid Grid.Column="1" Grid.Row="18">
+        <Grid Grid.Column="1" Grid.Row="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -434,7 +172,277 @@
                 </RadioButton.ToolTip>
             </RadioButton>
         </Grid>
-        <Label Grid.Column="0" Grid.Row="19" Background="Transparent">
+        <Label Grid.Column="0" Grid.Row="6" >
+            <Label.ToolTip>
+                <ToolTip Style="{DynamicResource ToolTipStyle}">
+                    <Border Style="{DynamicResource ToolTipBorderStyle}">
+                        <TextBlock Text="Set SkinText background Image" Style="{DynamicResource ToolTipTextStyle}" />
+                    </Border>
+                </ToolTip>
+            </Label.ToolTip>
+            <TextBlock Text="Background Image: " Style="{DynamicResource ToolTipTextStyle}" />
+        </Label>
+        <Button x:Name="imagedir" Grid.Column="1" Grid.Row="6" Width="160" Height="23" Click="Imagedir_Click" Style="{DynamicResource ButtonsStyle}">
+            <Button.Content>
+                <TextBlock Text="Change Bg Img"/>
+            </Button.Content>
+            <Button.ToolTip>
+                <ToolTip Style="{DynamicResource ToolTipStyle}">
+                    <Border Style="{DynamicResource ToolTipBorderStyle}">
+                        <TextBlock Text="Select Background Image" Style="{DynamicResource ToolTipTextStyle}" />
+                    </Border>
+                </ToolTip>
+            </Button.ToolTip>
+        </Button>
+        <Label Grid.Column="0" Grid.Row="7">
+            <Label.ToolTip>
+                <ToolTip Style="{DynamicResource ToolTipStyle}">
+                    <Border Style="{DynamicResource ToolTipBorderStyle}">
+                        <TextBlock Text="Set background Image Blur ammount" Style="{DynamicResource ToolTipTextStyle}" />
+                    </Border>
+                </ToolTip>
+            </Label.ToolTip>
+            <TextBlock Text="BG Image Blur Value: " Style="{DynamicResource ToolTipTextStyle}" />
+        </Label>
+        <Grid Grid.Column="1" Grid.Row="7">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="40" />
+            </Grid.ColumnDefinitions>
+            <Slider Grid.Column="0"  Minimum="0" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True" x:Name="imageBlurSlider" SmallChange="1" Margin="10,0,10,0" ValueChanged="ImageBlurSlider_ValueChanged" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center" IsMoveToPointEnabled="True" />
+            <xctk:DecimalUpDown Grid.Column="1" Grid.Row="0"
+                                FormatString="G" ClipValueToMinMax="True" TextAlignment="Center"
+                                HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" Margin="0,5,5,5"
+                                Minimum="{Binding Minimum, ElementName=imageBlurSlider}"
+                                Maximum="{Binding Maximum, ElementName=imageBlurSlider}"
+                                Value="{Binding Value, ElementName=imageBlurSlider}"
+                                ScrollViewer.VerticalScrollBarVisibility="Disabled" UpdateValueOnEnterKey="False" ShowButtonSpinner="False" AutoMoveFocus="True" />
+        </Grid>
+        <Label Grid.Column="0" Grid.Row="8">
+            <Label.ToolTip>
+                <ToolTip Style="{DynamicResource ToolTipStyle}">
+                    <Border Style="{DynamicResource ToolTipBorderStyle}">
+                        <TextBlock Text="Set background Image Blur Type" Style="{DynamicResource ToolTipTextStyle}" />
+                    </Border>
+                </ToolTip>
+            </Label.ToolTip>
+            <TextBlock Text="BG Image Blur Type: " Style="{DynamicResource ToolTipTextStyle}" />
+        </Label>
+        <Grid Grid.Column="1" Grid.Row="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <RadioButton x:Name="ImageBlurBox" Grid.Column="0" Width="70" Height="23"
+                         Style="{DynamicResource RadioButtonsStyle}">
+                <RadioButton.Content>
+                    <TextBlock Text="Box" />
+                </RadioButton.Content>
+                <RadioButton.ToolTip>
+                    <ToolTip Style="{DynamicResource ToolTipStyle}">
+                        <Border Style="{DynamicResource ToolTipBorderStyle}">
+                            <TextBlock Text="Box Blur Method" Style="{DynamicResource ToolTipTextStyle}" />
+                        </Border>
+                    </ToolTip>
+                </RadioButton.ToolTip>
+            </RadioButton>
+            <RadioButton x:Name="ImageBlurGauss" Grid.Column="1" Width="70" Height="23" IsChecked="True"
+                         Style="{DynamicResource RadioButtonsStyle}">
+                <RadioButton.Content>
+                    <TextBlock Text="Gauss" />
+                </RadioButton.Content>
+                <RadioButton.ToolTip>
+                    <ToolTip Style="{DynamicResource ToolTipStyle}">
+                        <Border Style="{DynamicResource ToolTipBorderStyle}">
+                            <TextBlock Text="Gaussian Blur Method" Style="{DynamicResource ToolTipTextStyle}" />
+                        </Border>
+                    </ToolTip>
+                </RadioButton.ToolTip>
+            </RadioButton>
+        </Grid>
+        <Label Grid.Column="0" Grid.Row="9">
+            <Label.ToolTip>
+                <ToolTip Style="{DynamicResource ToolTipStyle}">
+                    <Border Style="{DynamicResource ToolTipBorderStyle}">
+                        <TextBlock Text="Set SkinText background Color" Style="{DynamicResource ToolTipTextStyle}" />
+                    </Border>
+                </ToolTip>
+            </Label.ToolTip>
+            <TextBlock Text="Main Window Color: " Style="{DynamicResource ToolTipTextStyle}" />
+        </Label>
+        <xctk:ColorPicker x:Name="ClrPcker_WindowBackground"
+                          Grid.Column="1" Grid.Row="9"
+                          SelectedColorChanged="ClrPcker_WindowBackground_SelectedColorChanged"
+                          Style="{DynamicResource ColorPickerStyle2}"/>
+        <Label Grid.Column="0" Grid.Row="10">
+            <Label.ToolTip>
+                <ToolTip Style="{DynamicResource ToolTipStyle}">
+                    <Border Style="{DynamicResource ToolTipBorderStyle}">
+                        <TextBlock Text="Set Text Area background Color" Style="{DynamicResource ToolTipTextStyle}" />
+                    </Border>
+                </ToolTip>
+            </Label.ToolTip>
+            <TextBlock Text="Text Bg Color: " Style="{DynamicResource ToolTipTextStyle}" />
+        </Label>
+        <xctk:ColorPicker x:Name="ClrPcker_RTB_Background"
+                          Grid.Column="1" Grid.Row="10"
+                          SelectedColorChanged="ClrPcker_RTB_Background_SelectedColorChanged"
+                          Style="{DynamicResource ColorPickerStyle2}"
+                          />
+        <Label Grid.Column="0" Grid.Row="11">
+            <Label.ToolTip>
+                <ToolTip Style="{DynamicResource ToolTipStyle}">
+                    <Border Style="{DynamicResource ToolTipBorderStyle}">
+                        <TextBlock Text="Set background Image Transparency" Style="{DynamicResource ToolTipTextStyle}" />
+                    </Border>
+                </ToolTip>
+            </Label.ToolTip>
+            <TextBlock Text="Image Opacity: " Style="{DynamicResource ToolTipTextStyle}" />
+        </Label>
+        <Grid Grid.Column="1" Grid.Row="11">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="40" />
+            </Grid.ColumnDefinitions>
+            <Slider Grid.Column="0" Minimum="0" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center" x:Name="imageopacityslider" ValueChanged="Imageopacityslider_ValueChanged" IsMoveToPointEnabled="True" />
+            <xctk:DecimalUpDown Grid.Column="1" Grid.Row="0"
+                                FormatString="G" ClipValueToMinMax="True" TextAlignment="Center"
+                                HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" Margin="0,5,5,5"
+                                Minimum="{Binding Minimum, ElementName=imageopacityslider}"
+                                Maximum="{Binding Maximum, ElementName=imageopacityslider}"
+                                Value="{Binding Value, ElementName=imageopacityslider}"
+                                ScrollViewer.VerticalScrollBarVisibility="Disabled" UpdateValueOnEnterKey="False" ShowButtonSpinner="False" AutoMoveFocus="True" />
+        </Grid>
+        <Label Grid.Column="0" Grid.Row="12">
+            <Label.ToolTip>
+                <ToolTip Style="{DynamicResource ToolTipStyle}">
+                    <Border Style="{DynamicResource ToolTipBorderStyle}">
+                        <TextBlock Text="Set Text Area Transparency" Style="{DynamicResource ToolTipTextStyle}" />
+                    </Border>
+                </ToolTip>
+            </Label.ToolTip>
+            <TextBlock Text="Text Opacity: " Style="{DynamicResource ToolTipTextStyle}" />
+        </Label>
+        <Grid Grid.Column="1" Grid.Row="12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="40" />
+            </Grid.ColumnDefinitions>
+            <Slider Grid.Column="0" Minimum="0" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center"  x:Name="textopacityslider" ValueChanged="TextOpacityslider_ValueChanged" IsMoveToPointEnabled="True" />
+            <xctk:DecimalUpDown Grid.Column="1" Grid.Row="0"
+                                    FormatString="G" ClipValueToMinMax="True" TextAlignment="Center"
+                                    HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" Margin="0,5,5,5"
+                                    Minimum="{Binding Minimum, ElementName=textopacityslider}"
+                                    Maximum="{Binding Maximum, ElementName=textopacityslider}"
+                                    Value="{Binding Value, ElementName=textopacityslider}"
+                                    ScrollViewer.VerticalScrollBarVisibility="Disabled" UpdateValueOnEnterKey="False" ShowButtonSpinner="False" AutoMoveFocus="True" />
+        </Grid>
+        <Label Grid.Column="0" Grid.Row="13">
+            <Label.ToolTip>
+                <ToolTip Style="{DynamicResource ToolTipStyle}">
+                    <Border Style="{DynamicResource ToolTipBorderStyle}">
+                        <TextBlock Text="Set SkinText Transparency" Style="{DynamicResource ToolTipTextStyle}" />
+                    </Border>
+                </ToolTip>
+            </Label.ToolTip>
+            <TextBlock Text="Window Opacity: " Style="{DynamicResource ToolTipTextStyle}" />
+        </Label>
+        <Grid Grid.Column="1" Grid.Row="13">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="40" />
+            </Grid.ColumnDefinitions>
+            <Slider Grid.Column="0" Minimum="0" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center" x:Name="windowopacityslider" ValueChanged="WindowOpacityslider_ValueChanged" IsMoveToPointEnabled="True" />
+            <xctk:DecimalUpDown Grid.Column="1" Grid.Row="0"
+                                FormatString="G" ClipValueToMinMax="True" TextAlignment="Center"
+                                HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" Margin="0,5,5,5"
+                                Minimum="{Binding Minimum, ElementName=windowopacityslider}"
+                                Maximum="{Binding Maximum, ElementName=windowopacityslider}"
+                                Value="{Binding Value, ElementName=windowopacityslider}"
+                                ScrollViewer.VerticalScrollBarVisibility="Disabled" UpdateValueOnEnterKey="False" ShowButtonSpinner="False" AutoMoveFocus="True" />
+        </Grid>
+
+        <CheckBox x:Name="readOnlyCheck" Grid.Column="0" Grid.Row="14" VerticalAlignment="Center" Margin="10,0,10,0" Checked="ReadOnlyCheck_Checked" Unchecked="ReadOnlyCheck_Checked" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center">
+            <CheckBox.ToolTip>
+                <ToolTip Style="{DynamicResource ToolTipStyle}">
+                    <Border Style="{DynamicResource ToolTipBorderStyle}">
+                        <TextBlock Text="Disable Text Editing" Style="{DynamicResource ToolTipTextStyle}" />
+                    </Border>
+                </ToolTip>
+            </CheckBox.ToolTip>
+            <TextBlock Text="Read Only " Style="{DynamicResource ToolTipTextStyle}" />
+        </CheckBox>
+        <CheckBox x:Name="spellcheck" Grid.Column="1" Grid.Row="14" VerticalAlignment="Center" Margin="10,0,10,0" Checked="Spellcheck_Checked" Unchecked="Spellcheck_Checked" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center">
+            <CheckBox.ToolTip>
+                <ToolTip Style="{DynamicResource ToolTipStyle}">
+                    <Border Style="{DynamicResource ToolTipBorderStyle}">
+                        <TextBlock Text="Enable Spell Check (Uses keyboard language)" Style="{DynamicResource ToolTipTextStyle}" />
+                    </Border>
+                </ToolTip>
+            </CheckBox.ToolTip>
+            <TextBlock Text="Spell Check " Style="{DynamicResource ToolTipTextStyle}" />
+        </CheckBox>
+        <CheckBox x:Name="alwaysontop" Grid.Column="0" Grid.Row="15" Margin="10,0" Checked="Alwaysontop_Unchecked" Unchecked="Alwaysontop_Unchecked" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" VerticalAlignment="Center">
+            <CheckBox.ToolTip>
+                <ToolTip Style="{DynamicResource ToolTipStyle}">
+                    <Border Style="{DynamicResource ToolTipBorderStyle}">
+                        <TextBlock Text="Always show SkinText" Style="{DynamicResource ToolTipTextStyle}" />
+                    </Border>
+                </ToolTip>
+            </CheckBox.ToolTip>
+            <TextBlock Text="Always on Top:" Style="{DynamicResource ToolTipTextStyle}" />
+        </CheckBox>
+        <CheckBox x:Name="taskbarvisible" Grid.Column="1" Grid.Row="15" Margin="10,0" Checked="Taskbarvisible_Unchecked" Unchecked="Taskbarvisible_Unchecked" IsChecked="True" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" VerticalAlignment="Center">
+            <CheckBox.ToolTip>
+                <ToolTip Style="{DynamicResource ToolTipStyle}">
+                    <Border Style="{DynamicResource ToolTipBorderStyle}">
+                        <TextBlock Text="Show TaskBar Icon" Style="{DynamicResource ToolTipTextStyle}" />
+                    </Border>
+                </ToolTip>
+            </CheckBox.ToolTip>
+            <TextBlock Text="TaskBar Icon" Style="{DynamicResource ToolTipTextStyle}" />
+        </CheckBox>
+        <CheckBox x:Name="NotificationVisible" Grid.Column="0" Grid.Row="16" Margin="10,0" Checked="NotificationVisible_Unchecked" Unchecked="NotificationVisible_Unchecked" IsChecked="True" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" VerticalAlignment="Center">
+            <CheckBox.ToolTip>
+                <ToolTip Style="{DynamicResource ToolTipStyle}">
+                    <Border Style="{DynamicResource ToolTipBorderStyle}">
+                        <TextBlock Text="Show Notification Icon. Recommended: On" Style="{DynamicResource ToolTipTextStyle}" />
+                    </Border>
+                </ToolTip>
+            </CheckBox.ToolTip>
+            <TextBlock Text="Notification Icon" Style="{DynamicResource ToolTipTextStyle}" />
+        </CheckBox>
+        <CheckBox x:Name="ResizeVisible" Grid.Column="1" Grid.Row="16" Margin="10,0" Checked="ResizeVisible_Unchecked" Unchecked="ResizeVisible_Unchecked" IsChecked="True" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" VerticalAlignment="Center">
+            <CheckBox.ToolTip>
+                <ToolTip Style="{DynamicResource ToolTipStyle}">
+                    <Border Style="{DynamicResource ToolTipBorderStyle}">
+                        <TextBlock Text="Show Resize on Bottom Right Corner. Recommended: Off" Style="{DynamicResource ToolTipTextStyle}" />
+                    </Border>
+                </ToolTip>
+            </CheckBox.ToolTip>
+            <TextBlock Text="Resize Corner" Style="{DynamicResource ToolTipTextStyle}" />
+        </CheckBox>
+        <CheckBox x:Name="BgBlur" Grid.Column="0" Grid.Row="17" Margin="10,0" Checked="BgBlur_Checked" Unchecked="BgBlur_Checked" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" VerticalAlignment="Center">
+            <CheckBox.ToolTip>
+                <ToolTip Style="{DynamicResource ToolTipStyle}">
+                    <Border Style="{DynamicResource ToolTipBorderStyle}">
+                        <TextBlock Text="Blur SkinText Background" Style="{DynamicResource ToolTipTextStyle}" />
+                    </Border>
+                </ToolTip>
+            </CheckBox.ToolTip>
+            <TextBlock Text="Blur Background" Style="{DynamicResource ToolTipTextStyle}" />
+        </CheckBox>
+        <CheckBox x:Name="resizecheck" Grid.Column="1" Grid.Row="17" Margin="10,0"  Checked="ResizeCheckBoxChanged" Unchecked="ResizeCheckBoxChanged" IsChecked="True" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" VerticalAlignment="Center">
+            <CheckBox.ToolTip>
+                <ToolTip Style="{DynamicResource ToolTipStyle}">
+                    <Border Style="{DynamicResource ToolTipBorderStyle}">
+                        <TextBlock Text="Can cause the background Image to clip when rotation is enabled" Style="{DynamicResource ToolTipTextStyle}" />
+                    </Border>
+                </ToolTip>
+            </CheckBox.ToolTip>
+            <TextBlock Text="Text Border" Style="{DynamicResource ToolTipTextStyle}" />
+        </CheckBox>
+        <Label Grid.Column="0" Grid.Row="18" >
             <Label.ToolTip>
                 <ToolTip Style="{DynamicResource ToolTipStyle}">
                     <Border Style="{DynamicResource ToolTipBorderStyle}">
@@ -444,7 +452,7 @@
             </Label.ToolTip>
             <TextBlock Text="Flip Text:" Style="{DynamicResource ToolTipTextStyle}" />
         </Label>
-        <Grid Grid.Column="1" Grid.Row="19">
+        <Grid Grid.Column="1" Grid.Row="18">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -488,6 +496,12 @@
                 </ToggleButton.ToolTip>
             </ToggleButton>
         </Grid>
-        <Slider Grid.Column="1" Grid.Row="20" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center" x:Name="imageBlurSlider" ValueChanged="ImageBlurSlider_ValueChanged" IsMoveToPointEnabled="True"/>
+        <Button Grid.Column="0" Grid.Row="19" Grid.ColumnSpan="2" Grid.RowSpan="2"
+                Style="{DynamicResource ButtonsStyle}" Height="25" Width="280"
+                x:Name="BtnShowAdvancedConfig" Click="BtnShowAdvancedConfig_Click">
+            <Button.Content>
+                <TextBlock Text="Show Advanced Configuration"/>
+            </Button.Content>
+        </Button>
     </Grid>
 </Window>

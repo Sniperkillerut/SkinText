@@ -212,6 +212,9 @@
     <Compile Include="WindowConfig.xaml.cs">
       <DependentUpon>WindowConfig.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WindowTest.xaml.cs">
+      <DependentUpon>WindowTest.xaml</DependentUpon>
+    </Compile>
     <Page Include="AdvancedConfig.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -233,6 +236,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="WindowConfig.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowTest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -294,6 +301,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\X.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\CharMap.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

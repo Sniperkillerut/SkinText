@@ -36,7 +36,7 @@ namespace SkinText {
         private void Align_Checked(object sender, RoutedEventArgs e) {
             try {
                 System.Windows.Controls.RadioButton btn = (System.Windows.Controls.RadioButton)sender;
-                if (btn != null && btn.IsChecked.Value) {
+                if (btn != null && btn.IsChecked.Value && txtSampleText!=null) {
                     switch (btn.Name) {
                         case nameof(leftAlign): {
                                 txtSampleText.Selection.Start.Paragraph.TextAlignment = TextAlignment.Left;
@@ -82,11 +82,11 @@ namespace SkinText {
             try {
                 if (textrun != null) {
                     SolidColorBrush brush = new SolidColorBrush(ClrPcker_Bg.SelectedColor.Value);
-                    if (brush.Color.A < 255) {
+                    /*if (brush.Color.A < 255) {
                         brush = Brushes.Transparent;
-                    }
+                    }*/
                     textrun.Background = brush;
-                    ClrPcker_Bg.SelectedColor = brush.Color;
+                    //ClrPcker_Bg.SelectedColor = brush.Color;
                     //TODO: is this aplied twice on transparent?
                 }
             }
@@ -189,16 +189,6 @@ namespace SkinText {
             }
         }
 
-        private void Cmb_KeyUp(object sender, KeyEventArgs e) {
-            if (!_fontFamily.IsDropDownOpen)
-            {
-                _fontFamily.IsDropDownOpen = true;
-            }
-            System.Windows.Data.CollectionView itemsViewOriginal = (System.Windows.Data.CollectionView)System.Windows.Data.CollectionViewSource.GetDefaultView(_fontFamily.ItemsSource);
-            itemsViewOriginal.Filter = ((o) => {
-
-                return string.IsNullOrEmpty(_fontFamily.Text) || o.ToString().Contains(_fontFamily.Text);
-            });
-        }
+       
     }
 }
