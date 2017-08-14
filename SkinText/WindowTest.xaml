@@ -14,35 +14,31 @@
         WindowStyle="None"
         ResizeMode="CanResizeWithGrip"
         Background="{DynamicResource MainWindowBackgroundColorBrush}">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Menu Grid.Row="0" PreviewMouseDown="Menu_PreviewMouseDown">
+    <DockPanel x:Name="dockPanel" LastChildFill="true">
+        <Menu DockPanel.Dock="Top" Grid.Row="0" PreviewMouseDown="Menu_PreviewMouseDown">
             <MenuItem Header="ASD">
 
             </MenuItem>
         </Menu>
-    <Canvas x:Name="canvas" Grid.Row="1" >
-        <Border
+        <CheckBox x:Name="chkEnable" DockPanel.Dock="Top" Click="CheckBox_Click"
+             Grid.Row="0" >ASD</CheckBox>
+        <Canvas x:Name="canvas" Width="{Binding ActualWidth, ElementName=dockPanel, Mode=OneWay}">
+            <Border
         BorderBrush="{DynamicResource BorderColorBrush}"
         BorderThickness="5,5,5,5"
         Name="TitleBorder"
                 Width="150"
                 Height="150"
-                 Canvas.Left="0" Canvas.Top="0">
-            <StackPanel x:Name="stackborder">
-            <Label Style="{DynamicResource LabelStyle}">
-                <TextBlock Style="{DynamicResource ToolTipTextStyle}"> asdad</TextBlock>
-            </Label>
-            <Button Click="Button_Click" Style="{DynamicResource ButtonsStyle}">asd</Button>
+                    Canvas.Left="0" Canvas.Top="0">
+                <StackPanel x:Name="stackborder">
+                    <Label Style="{DynamicResource LabelStyle}">
+                        <TextBlock Style="{DynamicResource ToolTipTextStyle}"> asdad</TextBlock>
+                    </Label>
+                    <Button Click="Button_Click" Style="{DynamicResource ButtonsStyle}">asd</Button>
                     <Button Style="{DynamicResource ButtonsStyle}">asd2</Button>
                     <TextBox>lala</TextBox>
                 </StackPanel>
-        </Border>
-    </Canvas>
-    <CheckBox x:Name="chkEnable" Click="CheckBox_Click"
-              Width="80" Height="20" Grid.Row="0"> ASD</CheckBox>
-    </Grid>
+            </Border>
+        </Canvas>
+    </DockPanel>
 </Window>
