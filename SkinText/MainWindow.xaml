@@ -197,7 +197,7 @@
                                         <Image Source="{DynamicResource ImageSource1icon}" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Header="Reset to defaults" Template="{DynamicResource MenuItemControlTemplate2}" Click="Resettodefaults_Click">
+                                <MenuItem x:Name="resetToDefaultsMenu" Header="Reset to defaults" Template="{DynamicResource MenuItemControlTemplate2}" Click="Resettodefaults_Click">
                                     <MenuItem.Icon>
                                         <Canvas Width="15" Height="15" Clip="F1 M 0,0L 15,0L 15,20L 0,15L 0,0">
                                             <Path Width="15" Height="15"
@@ -323,6 +323,23 @@
                                       Fill="{DynamicResource ButtonFrontColorBrush}"
                                       Data="F1 M 17,20L 59,20L 59,56L 17,56L 17,20 Z M 20,23L 20,53L 56,53L 56,23L 20,23 Z M 24,51L 30.0833,44.3333L 33.25,47.5L 45.9167,34.8333L 50.6667,39.5833L 54,36L 54,51L 24,51 Z M 30.0833,26.9167C 30.0833,30.4145 27.2478,33.25 23.75,33.25C 23.2033,33.25 22.5061,33.1302 22,33L 22,25L 29.6666,25C 29.7968,25.5061 30.0833,26.3699 30.0833,26.9167 Z "/>
                                     </Canvas>
+                                </Button>
+
+                            <Button x:Name="_btn_addhyperlink" Click="_btn_addhyperlink_Click">
+                                <Button.ToolTip>
+                                    <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                        <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                            <TextBlock Text="Insert Hyperlink" Style="{DynamicResource ToolTipTextStyle}" />
+                                        </Border>
+                                    </ToolTip>
+                                </Button.ToolTip>
+                                <Canvas Width="20" Height="20" Clip="F1 M 0,0L 20,0L 20,20L 0,20L 0,0">
+                                    <Path Width="20" Height="20"
+                                      Canvas.Left="0" Canvas.Top="0"
+                                      Stretch="Uniform"
+                                      Fill="{DynamicResource ButtonFrontColorBrush}"
+                                      Data="M10.59,13.41C11,13.8 11,14.44 10.59,14.83C10.2,15.22 9.56,15.22 9.17,14.83C7.22,12.88 7.22,9.71 9.17,7.76V7.76L12.71,4.22C14.66,2.27 17.83,2.27 19.78,4.22C21.73,6.17 21.73,9.34 19.78,11.29L18.29,12.78C18.3,11.96 18.17,11.14 17.89,10.36L18.36,9.88C19.54,8.71 19.54,6.81 18.36,5.64C17.19,4.46 15.29,4.46 14.12,5.64L10.59,9.17C9.41,10.34 9.41,12.24 10.59,13.41M13.41,9.17C13.8,8.78 14.44,8.78 14.83,9.17C16.78,11.12 16.78,14.29 14.83,16.24V16.24L11.29,19.78C9.34,21.73 6.17,21.73 4.22,19.78C2.27,17.83 2.27,14.66 4.22,12.71L5.71,11.22C5.7,12.04 5.83,12.86 6.11,13.65L5.64,14.12C4.46,15.29 4.46,17.19 5.64,18.36C6.81,19.54 8.71,19.54 9.88,18.36L13.41,14.83C14.59,13.66 14.59,11.76 13.41,10.59C13,10.2 13,9.56 13.41,9.17Z"/>
+                                </Canvas>
                             </Button>
                         </ToolBar>
                             <ToolBar x:Name="ToolBarStyle" Band="1">
@@ -1050,7 +1067,8 @@
                     <wpfspark:ClipBorder x:Name="stackborder"
                                             BorderBrush="{DynamicResource BorderColorBrush}"
                                             BorderThickness="5"
-                                            CornerRadius="20">
+                                            CornerRadius="20"
+                                         RenderTransformOrigin="0.5,0.5">
                         <RichTextBox
                                     x:Name="rtb"
                                     Background="{DynamicResource RTBBackgroundColorBrush}"
@@ -1072,9 +1090,18 @@
                                         <Setter Property="Margin" Value="0" />
                                         <Setter Property="Padding" Value="0" />
                                     </Style>
-                                    <Style TargetType="Hyperlink">
+                                    <Style x:Key="{x:Type Hyperlink}" TargetType="{x:Type Hyperlink}">
                                         <Setter Property="Cursor" Value="Hand" />
-                                        <EventSetter Event="MouseLeftButtonDown" Handler="Hyperlink_MouseLeftButtonDown" />
+                                        <Setter Property="TextDecorations" Value=""/>
+                                        <Setter Property="Foreground" Value="Black"/>
+                                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="Hyperlink_PreviewMouseLeftButtonDown" />
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Foreground" Value="{DynamicResource ButtonBorderMouseOverColorBrush}"/>
+                                                <Setter Property="Background" Value="{DynamicResource ButtonBackgroundMouseOverColorBrush}"/>
+                                                <Setter Property="Cursor" Value="Hand"/>
+                                            </Trigger>
+                                        </Style.Triggers>
                                     </Style>
                                 </RichTextBox.Resources>
                                 <RichTextBox.RenderTransform>
@@ -1085,7 +1112,7 @@
                                         <TranslateTransform />
                                     </TransformGroup>
                                 </RichTextBox.RenderTransform>
-                            </RichTextBox>
+                        </RichTextBox>
                     </wpfspark:ClipBorder>
                 </DockPanel>
             </Border>
@@ -1111,7 +1138,7 @@
             </tb:TaskbarIcon.TrayToolTip>
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Reset to Defaults"  Click="Resettodefaults_Click" />
+                    <MenuItem Header="Reset to Defaults"  Click="Resettodefaults_Click" x:Name="resetToDefaultsTray" />
                     <MenuItem Header="Window Configuration" Click="Config_Click" />
                     <MenuItem Header="Exit" Click="Exit_Click" />
                 </ContextMenu>

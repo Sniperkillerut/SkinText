@@ -75,7 +75,7 @@ namespace SkinText {
         }
 
         /// <summary>
-        /// <para>Closes <see cref="MainWindow.FontConf"/> and <see cref="WindowConfig"/>, then calls <see cref="SaveConfig"/></para>
+        /// <para>Closes <see cref="MainWindow.FontConf"/> and <see cref="ConfigWin"/>, then calls <see cref="SaveConfig"/></para>
         /// Called from <see cref="MainWindow.Window_Closing"/>
         /// </summary>
         public static void ExitProgram() {
@@ -129,6 +129,7 @@ namespace SkinText {
         /// <summary>
         /// Clears, Disposes, Makes null, Unload, Frees from memory and HDD the loaded image
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.GC.Collect")]
         public static void ImageClear() {
             string oldpath = Imagepath;
@@ -536,10 +537,11 @@ namespace SkinText {
                                 if (double.TryParse(array[0], out double1) &&  //left
                                     double.TryParse(array[1], out double2))    //top
                                 {
-                                    double borderSize = MainW.Conf.bordersize.Value;
                                     System.Windows.Controls.Canvas.SetLeft(MainW.TitleBorder, double1);
                                     System.Windows.Controls.Canvas.SetTop(MainW.TitleBorder, double2);
-                                    /* if ((double1 < MainW.window.Width - (borderSize * 2 + 1)) && (double1 >= 0)){//left
+                                    /*
+                                    double borderSize = MainW.Conf.bordersize.Value;
+                                     *if ((double1 < MainW.window.Width - (borderSize * 2 + 1)) && (double1 >= 0)){//left
                                          System.Windows.Controls.Canvas.SetLeft(MainW.TitleBorder, double1);
                                      }
                                      if ((double2 < MainW.window.Height - (borderSize * 2 + 1)) && (double2 >= 0)){//top
@@ -554,10 +556,11 @@ namespace SkinText {
                                 if (double.TryParse(array[0], out double1) &&  //width
                                     double.TryParse(array[1], out double2))    //height
                                 {
-                                    double borderSize = MainW.Conf.bordersize.Value;
                                     MainW.TitleBorder.Width = double1;
                                     MainW.TitleBorder.Height = double2;
-                                    /*if ((double1 < MainW.window.Width - (borderSize * 2 + 1)) && (double1 > 0)) {//width
+                                    /*
+                                    double borderSize = MainW.Conf.bordersize.Value;
+                                     * if ((double1 < MainW.window.Width - (borderSize * 2 + 1)) && (double1 > 0)) {//width
                                         MainW.TitleBorder.Width = double1;
                                     }
                                     if ((double2 < MainW.window.Height - (borderSize * 2 + 1)) && (double2 > 0)) {//height
@@ -571,7 +574,7 @@ namespace SkinText {
                                 {
                                     if (double1 >= 0 && double1 < 1000000)
                                     {
-                                        MainW.Conf.CornerMax.Value = decimal.Parse(double1.ToString());
+                                        MainW.Conf.CornerMax.Value = Convert.ToDecimal(double1);
                                     }
                                 }
                                 break;
@@ -941,8 +944,9 @@ namespace SkinText {
         /// <summary>
         /// <para>Called from <see cref="MainWindow.Resettodefaults_Click"/> using <see cref="SaveChanges"/></para>
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:No pasar cadenas literal como parámetros localizados", MessageId = "System.Windows.MessageBox.Show(System.String,System.String,System.Windows.MessageBoxButton,System.Windows.MessageBoxImage,System.Windows.MessageBoxResult)")]
         public static void ResetDefaults() {
-            switch (MessageBox.Show("This will reset ALL configuration\r\n Are you sure?", "Reset To Defaults", MessageBoxButton.YesNo, MessageBoxImage.Exclamation, MessageBoxResult.No))
+            switch (MessageBox.Show("This will reset ALL configuration\r\n Are you sure?", "Reset To Defaults", MessageBoxButton.YesNo, MessageBoxImage.Exclamation,MessageBoxResult.No))
             {
                 case (MessageBoxResult.Yes):
                     {
@@ -966,7 +970,7 @@ namespace SkinText {
         /// <param name="flipX"></param>
         /// <param name="flipY"></param>
         public static void RtbFlip(bool flipX, bool flipY) {
-            MainW.FontConf.txtSampleText.RenderTransform = MainW.panel.RenderTransform = new ScaleTransform(flipX ? -1 : 1, flipY ? -1 : 1);
+            MainW.FontConf.txtSampleText.RenderTransform = MainW.stackborder.RenderTransform = new ScaleTransform(flipX ? -1 : 1, flipY ? -1 : 1);
         }
 
         /// <summary>
@@ -1548,17 +1552,12 @@ namespace SkinText {
                             if (decor != null) {
                                 newRun.TextDecorations = decor.Clone();
                             }
-                            /* TODO: hyperlinks
-                            Hyperlink textlink = new Hyperlink(new Run("LINK"))
-                            {
-                                NavigateUri = new Uri("https://ar.ikariam.gameforge.com/main/gametour_extended")
-                            };
-                            curParagraph.Inlines.Add(textlink);
-                            //TODO: add checkboxes. NOT POSSIBLE, ON SAVE THEY ARE DELETED
+                            /*
+                            //NOTE: add checkboxes. NOT POSSIBLE, ON SAVE THEY ARE DELETED
                             System.Windows.Controls.CheckBox checkbox = new System.Windows.Controls.CheckBox();
                             curParagraph.Inlines.Add(checkbox);
 
-                            //TODO: add expander NOT ADDING EXPANDERS, NOT WORTH IT, NOT PRETTY, CANT ADD INLINES, MUST ADD TEXTBOX OR SIMILAR:
+                            //NOTE: NOT ADDING EXPANDERS, NOT WORTH IT, NOT PRETTY, CANT ADD INLINES, MUST ADD TEXTBOX OR SIMILAR:
                             System.Windows.Controls.TextBox txtbox = new System.Windows.Controls.TextBox();
                             System.Windows.Controls.Expander expander = new System.Windows.Controls.Expander();
                             MainW.rtb.Selection.Start.Paragraph.Inlines.Add(expander);

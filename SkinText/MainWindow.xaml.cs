@@ -74,12 +74,12 @@ namespace SkinText
             FontConf.Show();
         }
 
-        private void Hyperlink_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            Hyperlink hyperlink = (Hyperlink)sender;
-            if (hyperlink.NavigateUri != null)
-            {
-                Process.Start(hyperlink.NavigateUri.ToString());
+        private void Hyperlink_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
+            if (Keyboard.IsKeyDown(Key.LeftCtrl)) {
+                Hyperlink hyperlink = (Hyperlink)sender;
+                if (hyperlink.NavigateUri != null) {
+                    Process.Start(hyperlink.NavigateUri.ToString());
+                }
             }
         }
 
@@ -110,6 +110,9 @@ namespace SkinText
 
         private void Resettodefaults_Click(object sender, RoutedEventArgs e)
         {
+            if (sender.Equals(resetToDefaultsTray)) {
+                MessageBox.Show("Ignore this");
+            }
             CustomMethods.SaveChanges(CustomMethods.ResetDefaults, new System.ComponentModel.CancelEventArgs(), "Reset to Defaults");
         }
 
@@ -380,6 +383,29 @@ namespace SkinText
             CustomMethods.FilterFontFamilyComboBox();
         }
 
+        private void _btn_addhyperlink_Click(object sender, RoutedEventArgs e) {
+            HyperLinkWindow link = new HyperLinkWindow();
+            if (link.ShowDialog() == true) {
+                if (!string.IsNullOrWhiteSpace(link.HyperNameResult) && !string.IsNullOrWhiteSpace(link.HyperLinkResult)) {
+                    try {
+                        Hyperlink textlink = new Hyperlink(new Run(link.HyperNameResult), rtb.CaretPosition.GetInsertionPosition(LogicalDirection.Forward)) {
+                            NavigateUri = new Uri(link.HyperLinkResult),
+                            Cursor = Cursors.Hand
+                        };
+                    }
+                    catch (Exception ex) {
+                        MessageBox.Show("Information is invalid", "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
+                        #if DEBUG
+                        MessageBox.Show(ex.ToString());
+                        //throw;
+                        #endif
+                    }
+                }
+                else {
+                    MessageBox.Show("Information is invalid", "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
+                }
+            }
+        }
 
 
 
