@@ -20,10 +20,10 @@ namespace SkinText {
             }
             catch (Exception ex) {
                 MessageBox.Show("Error creating Initial Config", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                #if DEBUG
-                    MessageBox.Show(ex.ToString());
-                    //throw;
-                #endif
+#if DEBUG
+                MessageBox.Show(ex.ToString());
+                //throw;
+#endif
                 throw;
             }
         }
@@ -56,14 +56,14 @@ namespace SkinText {
                 try {
                     Directory.CreateDirectory(path);
                     File.Copy(curFileName, path + "\\" + curFileName);
-                    Directory.CreateDirectory(path+@"\Default");
+                    Directory.CreateDirectory(path + @"\Default");
                     MessageBox.Show("Config complete!", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 catch (Exception ex) {
-                    #if DEBUG
-                        MessageBox.Show(ex.ToString());
-                        //throw;
-                    #endif
+#if DEBUG
+                    MessageBox.Show(ex.ToString());
+                    //throw;
+#endif
                     try {
                         //Request admin rights
                         using (Process process = new Process()) {
@@ -76,10 +76,10 @@ namespace SkinText {
                     }
                     catch (Exception ex2) {
                         MessageBox.Show("Could Not complete config", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        #if DEBUG
-                            MessageBox.Show(ex2.ToString());
-                            //throw;
-                        #endif
+#if DEBUG
+                        MessageBox.Show(ex2.ToString());
+                        //throw;
+#endif
                     }
                 }
             }
@@ -89,10 +89,10 @@ namespace SkinText {
                     MessageBox.Show("Detected a missing file and created it", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 catch (Exception ex) {
-                    #if DEBUG
-                        MessageBox.Show(ex.ToString());
-                        //throw;
-                    #endif
+#if DEBUG
+                    MessageBox.Show(ex.ToString());
+                    //throw;
+#endif
                     try {
                         MessageBox.Show("Detected a missing file and need to create it", "!!", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                         //Request admin rights
@@ -106,10 +106,10 @@ namespace SkinText {
                         }
                     }
                     catch (Exception ex2) {
-                        #if DEBUG
-                            MessageBox.Show(ex2.ToString());
-                            //throw;
-                        #endif
+#if DEBUG
+                        MessageBox.Show(ex2.ToString());
+                        //throw;
+#endif
                         MessageBox.Show("Detected a missing file and could not fix it, file associations will not work", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
@@ -153,10 +153,10 @@ namespace SkinText {
                     }
                 }
                 catch (Exception ex) {
-                    #if DEBUG
-                        MessageBox.Show(ex.ToString());
-                        //throw;
-                    #endif
+#if DEBUG
+                    MessageBox.Show(ex.ToString());
+                    //throw;
+#endif
                 }
             }
         }

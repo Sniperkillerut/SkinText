@@ -1,14 +1,14 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
-
+using Microsoft.Win32;
 
 namespace SkinText {
+
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling")]
     public static class CustomMethods {
         private static string appDataPath;
@@ -92,19 +92,16 @@ namespace SkinText {
                 MainW.Conf.ClrPcker_MainWindowBackgroundColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#85949494");
             }
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
-            try
-            {
-                if (File.Exists(oldpath))
-                {
+            try {
+                if (File.Exists(oldpath)) {
                     File.Delete(oldpath);
                 }
             }
-            catch (Exception ex)
-            {
-                #if DEBUG
+            catch (Exception ex) {
+#if DEBUG
                 MessageBox.Show(ex.ToString());
                 //throw;
-                #endif
+#endif
             }
         }
 
@@ -183,10 +180,10 @@ namespace SkinText {
                     LoadImage(newImagePath);
                 }
                 catch (Exception ex) {
-                    #if DEBUG
-                        MessageBox.Show(ex.ToString());
-                        //throw;
-                    #endif
+#if DEBUG
+                    MessageBox.Show(ex.ToString());
+                    //throw;
+#endif
                 }
             }
             else {
@@ -210,13 +207,11 @@ namespace SkinText {
             };
             if (gauss) {
                 blur.KernelType = System.Windows.Media.Effects.KernelType.Gaussian;
-
             }
             else {
                 blur.KernelType = System.Windows.Media.Effects.KernelType.Box;
             }
             mainW.backgroundimg.Effect = blur;
-
         }
 
         #endregion Bg Image
@@ -257,10 +252,10 @@ namespace SkinText {
                 // The appdata folders dont exist
                 //can be first open, let default values
                 CurrentSkin = @"\Default";
-                #if DEBUG
+#if DEBUG
                 MessageBox.Show(ex.ToString());
                 //throw;
-                #endif
+#endif
             }
         }
 
@@ -270,37 +265,38 @@ namespace SkinText {
         /// </summary>
         public static void LoadDefault() {
             //window size
-                MainW.window.Width = 525;
-                MainW.window.Height = 350;
+            MainW.window.Width = 525;
+            MainW.window.Height = 350;
 
             //Window position
-                MainW.Left = (SystemParameters.PrimaryScreenWidth / 2) - (MainW.Width / 2);
-                MainW.Top = (SystemParameters.PrimaryScreenHeight / 2) - (MainW.Height / 2);
+            MainW.Left = (SystemParameters.PrimaryScreenWidth / 2) - (MainW.Width / 2);
+            MainW.Top = (SystemParameters.PrimaryScreenHeight / 2) - (MainW.Height / 2);
 
             //Text position
-                System.Windows.Controls.Canvas.SetLeft(MainW.TitleBorder, 25);
-                System.Windows.Controls.Canvas.SetTop(MainW.TitleBorder, 25);
+            System.Windows.Controls.Canvas.SetLeft(MainW.TitleBorder, 25);
+            System.Windows.Controls.Canvas.SetTop(MainW.TitleBorder, 25);
 
             //Text Size
-                MainW.TitleBorder.Width = 475;
-                MainW.TitleBorder.Height = 300;
+            MainW.TitleBorder.Width = 475;
+            MainW.TitleBorder.Height = 300;
 
             //Text border corner radius
-                MainW.Conf.CornerRadius1Slider.Value = 20;
-                MainW.Conf.CornerRadius2Slider.Value = 20;
-                MainW.Conf.CornerRadius3Slider.Value = 20;
-                MainW.Conf.CornerRadius4Slider.Value = 20;
+            MainW.Conf.CornerRadius1Slider.Value = 20;
+            MainW.Conf.CornerRadius2Slider.Value = 20;
+            MainW.Conf.CornerRadius3Slider.Value = 20;
+            MainW.Conf.CornerRadius4Slider.Value = 20;
 
             //Text border max corner radius
-                MainW.Conf.CornerMax.Value = 500;
+            MainW.Conf.CornerMax.Value = 500;
 
             //Text border corner radius linked
-                MainW.Conf.lockSlidersCheckbox.IsChecked = true;
+            MainW.Conf.lockSlidersCheckbox.IsChecked = true;
 
             //Text border size
             MainW.Conf.bordersize.Value = 5;
 
             #region Legacy styles
+
             /*Application.Current.Resources["BorderColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#997E7E7E"));
             Application.Current.Resources["MainWindowBackgroundColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#85949494"));
             Application.Current.Resources["RTBBackgroundColor"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("Transparent"));
@@ -327,9 +323,11 @@ namespace SkinText {
             Application.Current.Resources["MenuItem2HighlightBorderColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#602C2C2C"));
             Application.Current.Resources["MenuItem2DisabledColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF2C2C2C"));
             */
+
             #endregion Legacy styles
 
             #region Legacy color reset method
+
             /*
             Application.Current.Resources["BorderColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF424242"));
             Application.Current.Resources["MainWindowBackgroundColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#55FFFFFF"));
@@ -384,82 +382,80 @@ namespace SkinText {
                 MainW.Conf.ClrPcker_TextColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("TextColorBrush")).Color;
                 MainW.Conf.ClrPcker_FontPickTextColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("FontPickTextColorBrush")).Color;
             */
+
             #endregion Legacy color reset method
 
-            MainW.Conf.ClrPcker_BorderColorBrush.SelectedColor                      = (Color)ColorConverter.ConvertFromString("#FF424242");
-            MainW.Conf.ClrPcker_MainWindowBackgroundColorBrush.SelectedColor        = (Color)ColorConverter.ConvertFromString("#55FFFFFF");
-            MainW.Conf.ClrPcker_RTBBackgroundColorBrush.SelectedColor               = (Color)ColorConverter.ConvertFromString("#7DFFFFFF");
+            MainW.Conf.ClrPcker_BorderColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#FF424242");
+            MainW.Conf.ClrPcker_MainWindowBackgroundColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#55FFFFFF");
+            MainW.Conf.ClrPcker_RTBBackgroundColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#7DFFFFFF");
 
-            MainW.Conf.ClrPcker_BackgroundColorBrush.SelectedColor                  = (Color)ColorConverter.ConvertFromString("#FF1C1C1C");
-            MainW.Conf.ClrPcker_ButtonBackgroundColorBrush.SelectedColor            = (Color)ColorConverter.ConvertFromString("#FF262626");
-            MainW.Conf.ClrPcker_ButtonFrontColorBrush.SelectedColor                 = (Color)ColorConverter.ConvertFromString("#FFE6E6E6");
-            MainW.Conf.ClrPcker_ButtonBackgroundMouseOverColorBrush.SelectedColor   = (Color)ColorConverter.ConvertFromString("#FF00B5FF");
-            MainW.Conf.ClrPcker_ButtonBorderMouseOverColorBrush.SelectedColor       = (Color)ColorConverter.ConvertFromString("#FFE6E6E6");
-            MainW.Conf.ClrPcker_ButtonBackgroundCheckedColorBrush.SelectedColor     = (Color)ColorConverter.ConvertFromString("#CD000000");
-            MainW.Conf.ClrPcker_ButtonBorderCheckedColorBrush.SelectedColor         = (Color)ColorConverter.ConvertFromString("#FF808080");
-            MainW.Conf.ClrPcker_TextColorBrush.SelectedColor                        = (Color)ColorConverter.ConvertFromString("#FF808080");
+            MainW.Conf.ClrPcker_BackgroundColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#FF1C1C1C");
+            MainW.Conf.ClrPcker_ButtonBackgroundColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#FF262626");
+            MainW.Conf.ClrPcker_ButtonFrontColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#FFE6E6E6");
+            MainW.Conf.ClrPcker_ButtonBackgroundMouseOverColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#FF00B5FF");
+            MainW.Conf.ClrPcker_ButtonBorderMouseOverColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#FFE6E6E6");
+            MainW.Conf.ClrPcker_ButtonBackgroundCheckedColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#CD000000");
+            MainW.Conf.ClrPcker_ButtonBorderCheckedColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#FF808080");
+            MainW.Conf.ClrPcker_TextColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#FF808080");
 
-            MainW.Conf.ClrPcker_FontPickBackgroundColorBrush.SelectedColor          = (Color)ColorConverter.ConvertFromString("#23696969");
-            MainW.Conf.ClrPcker_FontPickTextColorBrush.SelectedColor                = (Color)ColorConverter.ConvertFromString("#FFE6E6E6");
+            MainW.Conf.ClrPcker_FontPickBackgroundColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#23696969");
+            MainW.Conf.ClrPcker_FontPickTextColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#FFE6E6E6");
             MainW.Conf.ClrPcker_FontPickMouseOverBackgroundColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#FF000000");
-            MainW.Conf.ClrPcker_FontPickMouseOverBorderColorBrush.SelectedColor     = (Color)ColorConverter.ConvertFromString("#FF00B5FF");
-            MainW.Conf.ClrPcker_FontPickSelectedBackgroundColorBrush.SelectedColor  = (Color)ColorConverter.ConvertFromString("#8C000000");
-            MainW.Conf.ClrPcker_FontPickSelectedBorderColorBrush.SelectedColor      = (Color)ColorConverter.ConvertFromString("#FFDB6929");
+            MainW.Conf.ClrPcker_FontPickMouseOverBorderColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#FF00B5FF");
+            MainW.Conf.ClrPcker_FontPickSelectedBackgroundColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#8C000000");
+            MainW.Conf.ClrPcker_FontPickSelectedBorderColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#FFDB6929");
 
-            MainW.Conf.ClrPcker_MenuBackgroundColorBrush.SelectedColor              = (Color)ColorConverter.ConvertFromString("#C9000000");
-            MainW.Conf.ClrPcker_MenuItem1BorderColorBrush.SelectedColor             = (Color)ColorConverter.ConvertFromString("#00FFFFFF");
-            MainW.Conf.ClrPcker_MenuItem2HighlightTextColorBrush.SelectedColor      = (Color)ColorConverter.ConvertFromString("#FF00B5FF");
-            MainW.Conf.ClrPcker_MenuItem2HighlightBorderColorBrush.SelectedColor    = (Color)ColorConverter.ConvertFromString("#FFDB6929");
-            MainW.Conf.ClrPcker_MenuItem2DisabledColorBrush.SelectedColor           = (Color)ColorConverter.ConvertFromString("#73696969");
-
+            MainW.Conf.ClrPcker_MenuBackgroundColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#C9000000");
+            MainW.Conf.ClrPcker_MenuItem1BorderColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#00FFFFFF");
+            MainW.Conf.ClrPcker_MenuItem2HighlightTextColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#FF00B5FF");
+            MainW.Conf.ClrPcker_MenuItem2HighlightBorderColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#FFDB6929");
+            MainW.Conf.ClrPcker_MenuItem2DisabledColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#73696969");
 
             //rotation angle
-                MainW.Conf.slValue.Value = 0;
+            MainW.Conf.slValue.Value = 0;
 
             //no file
-                NewFile();
-
+            NewFile();
 
             //BG image clear
-                //this makes Imagepath = "";
-                ImageClear();
+            //this makes Imagepath = "";
+            ImageClear();
 
             //BgImage Blur
-                MainW.Conf.imageBlurSlider.Value = 0;
+            MainW.Conf.imageBlurSlider.Value = 0;
 
             //opacity
-                MainW.Conf.imageopacityslider.Value = 100;
-                MainW.Conf.windowopacityslider.Value = 100;
-                MainW.Conf.textopacityslider.Value = 100;
+            MainW.Conf.imageopacityslider.Value = 100;
+            MainW.Conf.windowopacityslider.Value = 100;
+            MainW.Conf.textopacityslider.Value = 100;
 
             //Auto Save Timer
-                MainW.Conf.autosavetimersider.Value = 5;
+            MainW.Conf.autosavetimersider.Value = 5;
 
             //window Checkboxes
-                MainW.Conf.alwaysontop.IsChecked = false;
-                MainW.Conf.taskbarvisible.IsChecked = true;
-                MainW.Conf.NotificationVisible.IsChecked = true;
-                MainW.Conf.ResizeVisible.IsChecked = true;
-                MainW.Conf.BgBlur.IsChecked = true;
-                MainW.Conf.toolsalwaysontop.IsChecked = true;
+            MainW.Conf.alwaysontop.IsChecked = false;
+            MainW.Conf.taskbarvisible.IsChecked = true;
+            MainW.Conf.NotificationVisible.IsChecked = true;
+            MainW.Conf.ResizeVisible.IsChecked = true;
+            MainW.Conf.BgBlur.IsChecked = true;
+            MainW.Conf.toolsalwaysontop.IsChecked = true;
 
             //Image Checkboxes
-                MainW.Conf.GifMethodCPU.IsChecked = true;
-                MainW.Conf.ImageBlurGauss.IsChecked = true;
+            MainW.Conf.GifMethodCPU.IsChecked = true;
+            MainW.Conf.ImageBlurGauss.IsChecked = true;
 
             //menu checkboxes
-                MainW.LineWrapMenuItem.IsChecked = true;
-                MainW.ToolBarMenuItem.IsChecked = false;
-                MainW.Conf.ToolBarEnabled.IsChecked = false;
+            MainW.LineWrapMenuItem.IsChecked = true;
+            MainW.ToolBarMenuItem.IsChecked = false;
+            MainW.Conf.ToolBarEnabled.IsChecked = false;
 
             //text checkboxes
-                MainW.Conf.TextWrap.IsChecked = true;
-                MainW.Conf.readOnlyCheck.IsChecked = false;
-                MainW.Conf.spellcheck.IsChecked = false;
-                MainW.Conf.resizecheck.IsChecked = false;
-                MainW.Conf.FlipXButton.IsChecked = false;
-                MainW.Conf.FlipYButton.IsChecked = false;
-
+            MainW.Conf.TextWrap.IsChecked = true;
+            MainW.Conf.readOnlyCheck.IsChecked = false;
+            MainW.Conf.spellcheck.IsChecked = false;
+            MainW.Conf.resizecheck.IsChecked = false;
+            MainW.Conf.FlipXButton.IsChecked = false;
+            MainW.Conf.FlipYButton.IsChecked = false;
         }
 
         /// <summary>
@@ -563,7 +559,6 @@ namespace SkinText {
                                      }*/
                                 }
                                 break;
-
                             }
                         case "TEXT_SIZE": {
                                 array = line[1].Split(',');
@@ -584,18 +579,15 @@ namespace SkinText {
                                 break;
                             }
                         case "TEXT_MAX_CORNER_RADIUS": {
-                                if (double.TryParse(line[1], out double1))
-                                {
-                                    if (double1 >= 0 && double1 < 1000000)
-                                    {
+                                if (double.TryParse(line[1], out double1)) {
+                                    if (double1 >= 0 && double1 < 1000000) {
                                         MainW.Conf.CornerMax.Value = Convert.ToDecimal(double1);
                                     }
                                 }
                                 break;
                             }
-                        case "TEXT_CORNER_RADIUS_LOCKED":{
-                                if (bool.TryParse(line[1], out bool1))
-                                {
+                        case "TEXT_CORNER_RADIUS_LOCKED": {
+                                if (bool.TryParse(line[1], out bool1)) {
                                     MainW.Conf.lockSlidersCheckbox.IsChecked = bool1;
                                 }
                                 break;
@@ -607,20 +599,16 @@ namespace SkinText {
                                     double.TryParse(array[2], out double double3) &&  //right-bottom
                                     double.TryParse(array[3], out double double4))    //left-bottom
                                 {
-                                    if (double1 >= 0 && double1 <= double.Parse(MainW.Conf.CornerMax.Value.ToString()))
-                                    {
+                                    if (double1 >= 0 && double1 <= double.Parse(MainW.Conf.CornerMax.Value.ToString())) {
                                         MainW.Conf.CornerRadius1Slider.Value = double1;
                                     }
-                                    if (double2 >= 0 && double2 <= double.Parse(MainW.Conf.CornerMax.Value.ToString()))
-                                    {
+                                    if (double2 >= 0 && double2 <= double.Parse(MainW.Conf.CornerMax.Value.ToString())) {
                                         MainW.Conf.CornerRadius2Slider.Value = double2;
                                     }
-                                    if (double3 >= 0 && double3 <= double.Parse(MainW.Conf.CornerMax.Value.ToString()))
-                                    {
+                                    if (double3 >= 0 && double3 <= double.Parse(MainW.Conf.CornerMax.Value.ToString())) {
                                         MainW.Conf.CornerRadius3Slider.Value = double3;
                                     }
-                                    if (double4 >= 0 && double4 <= double.Parse(MainW.Conf.CornerMax.Value.ToString()))
-                                    {
+                                    if (double4 >= 0 && double4 <= double.Parse(MainW.Conf.CornerMax.Value.ToString())) {
                                         MainW.Conf.CornerRadius4Slider.Value = double4;
                                     }
                                 }
@@ -753,7 +741,7 @@ namespace SkinText {
                                 }
                                 break;
                             }
-                            ////////////////////////////////////
+                        ////////////////////////////////////
                         case "BACKGROUNDCOLORBRUSH": {
                                 MainW.Conf.ClrPcker_BackgroundColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString(line[1]);
                                 break;
@@ -830,33 +818,29 @@ namespace SkinText {
                                 MainW.Conf.ClrPcker_FontPickTextColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString(line[1]);
                                 break;
                             }
-                        case "IMG_BLUR_VAL":{
+                        case "IMG_BLUR_VAL": {
                                 if (double.TryParse(line[1], out double1)) //angle
                                 {
-                                    if (double1 <= MainW.Conf.imageBlurSlider.Maximum && double1 >= MainW.Conf.imageBlurSlider.Minimum)
-                                    {
+                                    if (double1 <= MainW.Conf.imageBlurSlider.Maximum && double1 >= MainW.Conf.imageBlurSlider.Minimum) {
                                         MainW.Conf.imageBlurSlider.Value = double1;
                                     }
                                 }
                                 break;
                             }
-                        case "IMG_BLUR_GAUSS":{
-                                if (bool.TryParse(line[1], out bool1))
-                                {// true = Gauss (DEFAULT) false = Box
+                        case "IMG_BLUR_GAUSS": {
+                                if (bool.TryParse(line[1], out bool1)) {// true = Gauss (DEFAULT) false = Box
                                     MainW.Conf.ImageBlurGauss.IsChecked = bool1;
                                 }
                                 break;
                             }
-                        case "WINDOW_BLUR":{
-                                if (bool.TryParse(line[1], out bool1))
-                                {
+                        case "WINDOW_BLUR": {
+                                if (bool.TryParse(line[1], out bool1)) {
                                     MainW.Conf.BgBlur.IsChecked = bool1;
                                 }
                                 break;
                             }
-                        case "TOOLBAR_ENABLED":{
-                                if (bool.TryParse(line[1], out bool1))
-                                {
+                        case "TOOLBAR_ENABLED": {
+                                if (bool.TryParse(line[1], out bool1)) {
                                     MainW.ToolBarMenuItem.IsChecked = bool1;
                                     MainW.Conf.ToolBarEnabled.IsChecked = bool1;
                                 }
@@ -868,7 +852,6 @@ namespace SkinText {
                                 }
                                 break;
                             }
-
 
                         case "AUTOSAVE_ENABLED": {
                                 if (bool.TryParse(line[1], out bool1)) {
@@ -889,10 +872,10 @@ namespace SkinText {
                 }
                 catch (Exception ex) {
                     //System.FormatException catched from BORDER_COLOR, WINDOW_COLOR, TEXT_BG_COLOR
-                    #if DEBUG
+#if DEBUG
                     MessageBox.Show(ex.ToString());
                     //throw;
-                    #endif
+#endif
                 }
             }
         }
@@ -952,8 +935,6 @@ namespace SkinText {
                     MainW.Conf.CornerRadius3Slider.Value.ToString() + " , " +
                     MainW.Conf.CornerRadius4Slider.Value.ToString();
                     writer.WriteLine(data);
-
-
 
                     //filetry
 
@@ -1084,7 +1065,6 @@ namespace SkinText {
                     data = "line_wrap = " + MainW.LineWrapMenuItem.IsChecked.ToString();
                     writer.WriteLine(data);
 
-
                     //Image Blur Value
                     data = "img_blur_val = " + MainW.Conf.imageBlurSlider.Value.ToString();
                     writer.WriteLine(data);
@@ -1145,12 +1125,10 @@ namespace SkinText {
                     data = "tools_top = " + MainW.Conf.toolsalwaysontop.IsChecked.Value.ToString();
                     writer.WriteLine(data);
 
-
                     data = "autosave_enabled = " + AutoSaveEnabled.ToString();
                     writer.WriteLine(data);
                     data = "autosave_timer = " + MainW.Conf.autosavetimersider.Value.ToString();
                     writer.WriteLine(data);
-
                 }
 
                 //to hide file: but exception from FileMode.Create
@@ -1266,10 +1244,10 @@ namespace SkinText {
                     MessageBox.Show("Failed to Open File:\r\n " + pathToFile, "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
                 }
                 NewFile();
-                #if DEBUG
+#if DEBUG
                 MessageBox.Show(ex.ToString());
                 //throw;
-                #endif
+#endif
             }
         }
 
@@ -1352,6 +1330,7 @@ namespace SkinText {
 
         private static bool _isSaving;
         public static bool AutoSaveEnabled = true;
+
         public async static System.Threading.Tasks.Task DelayedSaveAsync() {
             // if already waiting, get out
             if (_isSaving) {
@@ -1382,16 +1361,13 @@ namespace SkinText {
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:No pasar cadenas literal como parámetros localizados", MessageId = "System.Windows.MessageBox.Show(System.String,System.String,System.Windows.MessageBoxButton,System.Windows.MessageBoxImage,System.Windows.MessageBoxResult)")]
         public static void ResetDefaults() {
-            switch (MessageBox.Show("This will reset ALL configuration\r\n Are you sure?", "Reset To Defaults", MessageBoxButton.YesNo, MessageBoxImage.Exclamation,MessageBoxResult.No))
-            {
-                case (MessageBoxResult.Yes):
-                    {
+            switch (MessageBox.Show("This will reset ALL configuration\r\n Are you sure?", "Reset To Defaults", MessageBoxButton.YesNo, MessageBoxImage.Exclamation, MessageBoxResult.No)) {
+                case (MessageBoxResult.Yes): {
                         LoadDefault();
                         //MainW.grid.UpdateLayout();
                         break;
                     }
-                case MessageBoxResult.No:
-                    {
+                case MessageBoxResult.No: {
                         break;
                     }
             }
@@ -1559,14 +1535,12 @@ namespace SkinText {
                 MainW.canvas.PreviewMouseLeftButtonDown += MainW.MyCanvas_PreviewMouseLeftButtonDown;
                 MainW.canvas.PreviewMouseLeftButtonUp += MainW.DragFinishedMouseHandler;
 
-
                 MainW.selectedElement = MainW.TitleBorder as UIElement;
                 MainW.OriginalLeft = System.Windows.Controls.Canvas.GetLeft(MainW.selectedElement);
                 MainW.OriginalTop = System.Windows.Controls.Canvas.GetTop(MainW.selectedElement);
                 MainW.aLayer = AdornerLayer.GetAdornerLayer(MainW.selectedElement);
                 MainW.aLayer.Add(new ResizingAdorner(MainW.selectedElement));
                 MainW.selected = true;
-
             }
             else {
                 MainW.Deselect();
@@ -1622,7 +1596,6 @@ namespace SkinText {
                 brush = null;
             }
         }
-
 
         #endregion Window Config
 
@@ -1769,7 +1742,6 @@ namespace SkinText {
                         selectionTextRange.ApplyPropertyValue(Block.FlowDirectionProperty, flow);
                         selectionTextRange.ApplyPropertyValue(Block.LineHeightProperty, lineHeight);
                         selectionTextRange.ApplyPropertyValue(Inline.BaselineAlignmentProperty, basealign);
-
                     }
                     catch (Exception ex) {
                         //crashes when changing hyperLink properties
@@ -1867,11 +1839,11 @@ namespace SkinText {
                     newBrush3 = (SolidColorBrush)((Span)((Run)MainW.rtb.Selection.Start.Parent).Parent).Background;
                 }
                 catch (Exception ex) {
-                    #if DEBUG
+#if DEBUG
                     //MessageBox.Show(ex.ToString());
                     System.Diagnostics.Debug.WriteLine(ex.ToString());
                     //throw;
-                    #endif
+#endif
                 }
 
                 if (newBrush == null) {
@@ -1906,7 +1878,6 @@ namespace SkinText {
         }
 
         private static void RtbSelectionChangedFontColor(TextRange selectionTextRange) {
-
             if (!DependencyProperty.UnsetValue.Equals(selectionTextRange.GetPropertyValue(TextElement.ForegroundProperty))) {
                 SolidColorBrush newBrush = null;
                 newBrush = (SolidColorBrush)selectionTextRange.GetPropertyValue(TextElement.ForegroundProperty);
@@ -2049,36 +2020,28 @@ namespace SkinText {
         }
 
         public static void UpdateDecorators() {
-            if (MainW.rtb.Selection != null)
-            {
+            if (MainW.rtb.Selection != null) {
                 MainW._btnOverLine.IsChecked = false;
                 MainW._btnStrikethrough.IsChecked = false;
                 MainW._btnBaseline.IsChecked = false;
                 MainW._btnUnderline.IsChecked = false;
-                if (!DependencyProperty.UnsetValue.Equals(MainW.rtb.Selection.GetPropertyValue(Inline.TextDecorationsProperty)))
-                {
+                if (!DependencyProperty.UnsetValue.Equals(MainW.rtb.Selection.GetPropertyValue(Inline.TextDecorationsProperty))) {
                     TextDecorationCollection temp = (TextDecorationCollection)MainW.rtb.Selection.GetPropertyValue(Inline.TextDecorationsProperty);
-                    foreach (TextDecoration decor in temp)
-                    {
-                        switch (decor.Location)
-                        {
-                            case (TextDecorationLocation.Baseline):
-                                {
+                    foreach (TextDecoration decor in temp) {
+                        switch (decor.Location) {
+                            case (TextDecorationLocation.Baseline): {
                                     MainW._btnBaseline.IsChecked = true;
                                     break;
                                 }
-                            case (TextDecorationLocation.OverLine):
-                                {
+                            case (TextDecorationLocation.OverLine): {
                                     MainW._btnOverLine.IsChecked = true;
                                     break;
                                 }
-                            case (TextDecorationLocation.Strikethrough):
-                                {
+                            case (TextDecorationLocation.Strikethrough): {
                                     MainW._btnStrikethrough.IsChecked = true;
                                     break;
                                 }
-                            case (TextDecorationLocation.Underline):
-                                {
+                            case (TextDecorationLocation.Underline): {
                                     MainW._btnUnderline.IsChecked = true;
                                     break;
                                 }
@@ -2091,8 +2054,7 @@ namespace SkinText {
         public static void UpdateSelectionListType() {
             Paragraph startParagraph = MainW.rtb.Selection.Start.Paragraph;
             Paragraph endParagraph = MainW.rtb.Selection.End.Paragraph;
-            if (startParagraph != null && endParagraph != null && (startParagraph.Parent is ListItem) && (endParagraph.Parent is ListItem) && ReferenceEquals(((ListItem)startParagraph.Parent).List, ((ListItem)endParagraph.Parent).List))
-            {
+            if (startParagraph != null && endParagraph != null && (startParagraph.Parent is ListItem) && (endParagraph.Parent is ListItem) && ReferenceEquals(((ListItem)startParagraph.Parent).List, ((ListItem)endParagraph.Parent).List)) {
                 MainW._btnToggleBox.IsChecked = false;
                 MainW._btnToggleCircle.IsChecked = false;
                 MainW._btnToggleNumbering.IsChecked = false;
@@ -2104,58 +2066,46 @@ namespace SkinText {
                 MainW._btnToggleUpperRoman.IsChecked = false;
 
                 TextMarkerStyle markerStyle = ((ListItem)startParagraph.Parent).List.MarkerStyle;
-                switch (markerStyle)
-                {
-                    case (TextMarkerStyle.Box):
-                        {
+                switch (markerStyle) {
+                    case (TextMarkerStyle.Box): {
                             MainW._btnToggleBox.IsChecked = true;
                             break;
                         }
-                    case (TextMarkerStyle.Circle):
-                        {
+                    case (TextMarkerStyle.Circle): {
                             MainW._btnToggleCircle.IsChecked = true;
                             break;
                         }
-                    case (TextMarkerStyle.Decimal):
-                        {
+                    case (TextMarkerStyle.Decimal): {
                             MainW._btnToggleNumbering.IsChecked = true;
                             break;
                         }
-                    case (TextMarkerStyle.Disc):
-                        {
+                    case (TextMarkerStyle.Disc): {
                             MainW._btnToggleBullets.IsChecked = true;
                             break;
                         }
-                    case (TextMarkerStyle.LowerLatin):
-                        {
+                    case (TextMarkerStyle.LowerLatin): {
                             MainW._btnToggleLowerLatin.IsChecked = true;
                             break;
                         }
-                    case (TextMarkerStyle.LowerRoman):
-                        {
+                    case (TextMarkerStyle.LowerRoman): {
                             MainW._btnToggleLowerRoman.IsChecked = true;
                             break;
                         }
-                    case (TextMarkerStyle.Square):
-                        {
+                    case (TextMarkerStyle.Square): {
                             MainW._btnToggleSquare.IsChecked = true;
                             break;
                         }
-                    case (TextMarkerStyle.UpperLatin):
-                        {
+                    case (TextMarkerStyle.UpperLatin): {
                             MainW._btnToggleUpperLatin.IsChecked = true;
                             break;
                         }
-                    case (TextMarkerStyle.UpperRoman):
-                        {
+                    case (TextMarkerStyle.UpperRoman): {
                             MainW._btnToggleUpperRoman.IsChecked = true;
                             break;
                         }
-
                 }
             }
-            else
-            {
+            else {
                 MainW._btnToggleBox.IsChecked = false;
                 MainW._btnToggleCircle.IsChecked = false;
                 MainW._btnToggleNumbering.IsChecked = false;
@@ -2171,8 +2121,7 @@ namespace SkinText {
         public static void UpdateSelectedFontFamily() {
             object value = MainW.rtb.Selection.GetPropertyValue(TextElement.FontFamilyProperty);
             FontFamily currentFontFamily = (FontFamily)((value == DependencyProperty.UnsetValue) ? null : value);
-            if (currentFontFamily != null)
-            {
+            if (currentFontFamily != null) {
                 MainW._fontFamily.SelectedItem = currentFontFamily;
             }
         }
@@ -2187,8 +2136,7 @@ namespace SkinText {
                 Filter = "Image files (*.jpg, *.jpeg,*.gif, *.png) | *.jpg; *.jpeg; *.gif; *.png"
             };
             bool? result = dlg.ShowDialog();
-            if (result.Value)
-            {
+            if (result.Value) {
                 Uri uri = new Uri(dlg.FileName, UriKind.Relative);
                 System.Windows.Media.Imaging.BitmapImage bitmapImg = (System.Windows.Media.Imaging.BitmapImage)BitmapFromUri(uri);
                 System.Windows.Controls.Image image = new System.Windows.Controls.Image {
@@ -2198,36 +2146,30 @@ namespace SkinText {
                     Source = bitmapImg
                 };
                 TextPointer tp = MainW.rtb.CaretPosition.GetInsertionPosition(LogicalDirection.Forward);
-                #pragma warning disable RECS0026 // Possible unassigned object created by 'new'
+#pragma warning disable RECS0026 // Possible unassigned object created by 'new'
                 new InlineUIContainer(image, tp);
-                #pragma warning restore RECS0026 // Possible unassigned object created by 'new'
+#pragma warning restore RECS0026 // Possible unassigned object created by 'new'
             }
         }
 
         public static void ApplyTextDecorators() {
-            if (MainW.rtb.Selection != null)
-            {
+            if (MainW.rtb.Selection != null) {
                 TextDecorationCollection decor = new TextDecorationCollection();
 
-                if (MainW._btnOverLine.IsChecked.Value)
-                {
+                if (MainW._btnOverLine.IsChecked.Value) {
                     decor.Add(TextDecorations.OverLine);
                 }
-                if (MainW._btnStrikethrough.IsChecked.Value)
-                {
+                if (MainW._btnStrikethrough.IsChecked.Value) {
                     decor.Add(TextDecorations.Strikethrough);
                 }
-                if (MainW._btnBaseline.IsChecked.Value)
-                {
+                if (MainW._btnBaseline.IsChecked.Value) {
                     decor.Add(TextDecorations.Baseline);
                 }
-                if (MainW._btnUnderline.IsChecked.Value)
-                {
+                if (MainW._btnUnderline.IsChecked.Value) {
                     decor.Add(TextDecorations.Underline);
                 }
                 decor.Freeze();
-                if (decor != null)
-                {
+                if (decor != null) {
                     //rtb.Selection.ApplyPropertyValue(Inline.TextDecorationsProperty, null);
                     MainW.rtb.Selection.ApplyPropertyValue(Inline.TextDecorationsProperty, decor);
                 }
@@ -2235,11 +2177,9 @@ namespace SkinText {
         }
 
         public static void ApplyTextScript(object sender) {
-            if (MainW.rtb.Selection != null)
-            {
+            if (MainW.rtb.Selection != null) {
                 System.Windows.Controls.Primitives.ToggleButton btn = (System.Windows.Controls.Primitives.ToggleButton)sender;
-                if (btn != null && btn.IsChecked.Value)
-                {
+                if (btn != null && btn.IsChecked.Value) {
                     MainW._btnTopscript.IsChecked = false;
                     MainW._btnSuperscript.IsChecked = false;
                     MainW._btnTextTopscript.IsChecked = false;
@@ -2248,60 +2188,50 @@ namespace SkinText {
                     MainW._btnTextBottomscript.IsChecked = false;
                     MainW._btnBottomscript.IsChecked = false;
                     MainW._btnBasescript.IsChecked = false;
-                    switch (btn.Name)
-                    {
-                        case nameof(MainW._btnTopscript):
-                            {
+                    switch (btn.Name) {
+                        case nameof(MainW._btnTopscript): {
                                 MainW.rtb.Selection.ApplyPropertyValue(Inline.BaselineAlignmentProperty, BaselineAlignment.Top);
                                 MainW._btnTopscript.IsChecked = true;
                                 break;
                             }
-                        case nameof(MainW._btnSuperscript):
-                            {
+                        case nameof(MainW._btnSuperscript): {
                                 MainW.rtb.Selection.ApplyPropertyValue(Inline.BaselineAlignmentProperty, BaselineAlignment.Superscript);
                                 MainW._btnSuperscript.IsChecked = true;
                                 break;
                             }
-                        case nameof(MainW._btnTextTopscript):
-                            {
+                        case nameof(MainW._btnTextTopscript): {
                                 MainW.rtb.Selection.ApplyPropertyValue(Inline.BaselineAlignmentProperty, BaselineAlignment.TextTop);
                                 MainW._btnTextTopscript.IsChecked = true;
                                 break;
                             }
-                        case nameof(MainW._btnCentercript):
-                            {
+                        case nameof(MainW._btnCentercript): {
                                 MainW.rtb.Selection.ApplyPropertyValue(Inline.BaselineAlignmentProperty, BaselineAlignment.Center);
                                 MainW._btnCentercript.IsChecked = true;
                                 break;
                             }
-                        case nameof(MainW._btnSubscript):
-                            {
+                        case nameof(MainW._btnSubscript): {
                                 MainW.rtb.Selection.ApplyPropertyValue(Inline.BaselineAlignmentProperty, BaselineAlignment.Subscript);
                                 MainW._btnSubscript.IsChecked = true;
                                 break;
                             }
-                        case nameof(MainW._btnTextBottomscript):
-                            {
+                        case nameof(MainW._btnTextBottomscript): {
                                 MainW.rtb.Selection.ApplyPropertyValue(Inline.BaselineAlignmentProperty, BaselineAlignment.TextBottom);
                                 MainW._btnTextBottomscript.IsChecked = true;
                                 break;
                             }
-                        case nameof(MainW._btnBottomscript):
-                            {
+                        case nameof(MainW._btnBottomscript): {
                                 MainW.rtb.Selection.ApplyPropertyValue(Inline.BaselineAlignmentProperty, BaselineAlignment.Bottom);
                                 MainW._btnBottomscript.IsChecked = true;
                                 break;
                             }
-                        case nameof(MainW._btnBasescript):
-                            {
+                        case nameof(MainW._btnBasescript): {
                                 MainW.rtb.Selection.ApplyPropertyValue(Inline.BaselineAlignmentProperty, BaselineAlignment.Baseline);
                                 MainW._btnBasescript.IsChecked = true;
                                 break;
                             }
                     }
                 }
-                else
-                {
+                else {
                     MainW._btnTopscript.IsChecked = false;
                     MainW._btnSuperscript.IsChecked = false;
                     MainW._btnTextTopscript.IsChecked = false;
@@ -2316,41 +2246,33 @@ namespace SkinText {
         }
 
         public static void ApplyFlowDir() {
-            if (MainW.rtb.Selection != null)
-            {
-                if (MainW._btnFlowDirLTR.IsChecked.Value)
-                {
+            if (MainW.rtb.Selection != null) {
+                if (MainW._btnFlowDirLTR.IsChecked.Value) {
                     MainW.rtb.Selection.ApplyPropertyValue(Block.FlowDirectionProperty, FlowDirection.LeftToRight);
                 }
-                else
-                {
+                else {
                     MainW.rtb.Selection.ApplyPropertyValue(Block.FlowDirectionProperty, FlowDirection.RightToLeft);
                 }
             }
         }
 
         public static void ApplyFontSize(System.Windows.Controls.SelectionChangedEventArgs e) {
-            try
-            {
-                if (e.AddedItems.Count > 0)
-                {
+            try {
+                if (e.AddedItems.Count > 0) {
                     ApplyPropertyValueToSelectedText(TextElement.FontSizeProperty, e.AddedItems[0]);
                 }
             }
-            catch (Exception ex)
-            {
-                #if DEBUG
+            catch (Exception ex) {
+#if DEBUG
                 MessageBox.Show(ex.ToString());
                 //throw;
-                #endif
+#endif
             }
         }
 
         public static void ApplyPropertyValueToSelectedText(DependencyProperty formattingProperty, object value) {
-            if (MainW.rtb?.Selection != null)
-            {
-                if (value == null)
-                {
+            if (MainW.rtb?.Selection != null) {
+                if (value == null) {
                     return;
                 }
                 MainW.rtb.Selection.ApplyPropertyValue(formattingProperty, value);
@@ -2358,16 +2280,14 @@ namespace SkinText {
         }
 
         public static void ApplyFontFamily(System.Windows.Controls.SelectionChangedEventArgs e) {
-            if (e.AddedItems.Count > 0)
-            {
+            if (e.AddedItems.Count > 0) {
                 FontFamily editValue = (FontFamily)e.AddedItems[0];
                 ApplyPropertyValueToSelectedText(TextElement.FontFamilyProperty, editValue);
             }
         }
 
         public static void ApplyFontColor() {
-            if (MainW.rtb != null && MainW.rtb.Selection != null && !MainW.rtb.Selection.IsEmpty)
-            {
+            if (MainW.rtb != null && MainW.rtb.Selection != null && !MainW.rtb.Selection.IsEmpty) {
                 SolidColorBrush newBrush = new SolidColorBrush(MainW.ClrPcker_Font.SelectedColor.Value);
                 newBrush.Freeze();
                 MainW.rtb.Selection.ApplyPropertyValue(TextElement.ForegroundProperty, newBrush);
@@ -2375,15 +2295,12 @@ namespace SkinText {
         }
 
         public static void ApplyFontBackColor() {
-            if (MainW.rtb != null && MainW.rtb.Selection != null && !MainW.rtb.Selection.IsEmpty)
-            {
+            if (MainW.rtb != null && MainW.rtb.Selection != null && !MainW.rtb.Selection.IsEmpty) {
                 SolidColorBrush newBrush = new SolidColorBrush(MainW.ClrPcker_FontBack.SelectedColor.Value);
-                if (newBrush.Color.A < 255)
-                {
+                if (newBrush.Color.A < 255) {
                     newBrush = Brushes.Transparent;
                 }
-                if ((newBrush != null) && (newBrush.Equals(Brushes.Transparent)))
-                {
+                if ((newBrush != null) && (newBrush.Equals(Brushes.Transparent))) {
                     newBrush = null;
                 }
                 MainW.rtb.Selection.ApplyPropertyValue(TextElement.BackgroundProperty, newBrush);
@@ -2391,22 +2308,18 @@ namespace SkinText {
         }
 
         public static void ApplyListType(object sender) {
-            if (MainW.rtb.Selection != null)
-            {
+            if (MainW.rtb.Selection != null) {
                 System.Windows.Controls.Primitives.ToggleButton btn = (System.Windows.Controls.Primitives.ToggleButton)sender;
-                if (btn != null)
-                {
+                if (btn != null) {
                     Paragraph startParagraph = MainW.rtb.Selection.Start.Paragraph;
                     Paragraph endParagraph = MainW.rtb.Selection.End.Paragraph;
-                    if (startParagraph != null && endParagraph != null && (startParagraph.Parent is ListItem) && (endParagraph.Parent is ListItem) && ReferenceEquals(((ListItem)startParagraph.Parent).List, ((ListItem)endParagraph.Parent).List))
-                    {//if there is a list only change TextMarkerStyle
+                    if (startParagraph != null && endParagraph != null && (startParagraph.Parent is ListItem) && (endParagraph.Parent is ListItem) && ReferenceEquals(((ListItem)startParagraph.Parent).List, ((ListItem)endParagraph.Parent).List)) {
+                        //if there is a list only change TextMarkerStyle
                     }
-                    else
-                    {
+                    else {
                         EditingCommands.ToggleBullets.Execute(null, MainW.rtb);
                     }
-                    if (btn.IsChecked.Value)
-                    {
+                    if (btn.IsChecked.Value) {
                         MainW._btnToggleBox.IsChecked = false;
                         MainW._btnToggleCircle.IsChecked = false;
                         MainW._btnToggleNumbering.IsChecked = false;
@@ -2416,75 +2329,62 @@ namespace SkinText {
                         MainW._btnToggleSquare.IsChecked = false;
                         MainW._btnToggleUpperLatin.IsChecked = false;
                         MainW._btnToggleUpperRoman.IsChecked = false;
-                        #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                        switch (btn.Name)
-                        {
-                            case nameof(MainW._btnToggleBox):
-                                {
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                        switch (btn.Name) {
+                            case nameof(MainW._btnToggleBox): {
                                     MainW._btnToggleBox.IsChecked = true;
                                     ListBulletTypeAsync(MainW.rtb.Selection.Start.Paragraph, MainW.rtb.Selection.End.Paragraph, TextMarkerStyle.Box);
                                     break;
                                 }
-                            case nameof(MainW._btnToggleCircle):
-                                {
+                            case nameof(MainW._btnToggleCircle): {
                                     MainW._btnToggleCircle.IsChecked = true;
                                     ListBulletTypeAsync(MainW.rtb.Selection.Start.Paragraph, MainW.rtb.Selection.End.Paragraph, TextMarkerStyle.Circle);
                                     break;
                                 }
-                            case nameof(MainW._btnToggleNumbering):
-                                {
+                            case nameof(MainW._btnToggleNumbering): {
                                     MainW._btnToggleNumbering.IsChecked = true;
                                     ListBulletTypeAsync(MainW.rtb.Selection.Start.Paragraph, MainW.rtb.Selection.End.Paragraph, TextMarkerStyle.Decimal);
                                     break;
                                 }
-                            case nameof(MainW._btnToggleBullets):
-                                {
+                            case nameof(MainW._btnToggleBullets): {
                                     MainW._btnToggleBullets.IsChecked = true;
                                     ListBulletTypeAsync(MainW.rtb.Selection.Start.Paragraph, MainW.rtb.Selection.End.Paragraph, TextMarkerStyle.Disc);
                                     break;
                                 }
-                            case nameof(MainW._btnToggleLowerLatin):
-                                {
+                            case nameof(MainW._btnToggleLowerLatin): {
                                     MainW._btnToggleLowerLatin.IsChecked = true;
                                     ListBulletTypeAsync(MainW.rtb.Selection.Start.Paragraph, MainW.rtb.Selection.End.Paragraph, TextMarkerStyle.LowerLatin);
                                     break;
                                 }
-                            case nameof(MainW._btnToggleLowerRoman):
-                                {
+                            case nameof(MainW._btnToggleLowerRoman): {
                                     MainW._btnToggleLowerRoman.IsChecked = true;
                                     ListBulletTypeAsync(MainW.rtb.Selection.Start.Paragraph, MainW.rtb.Selection.End.Paragraph, TextMarkerStyle.LowerRoman);
                                     break;
                                 }
-                            case nameof(MainW._btnToggleSquare):
-                                {
+                            case nameof(MainW._btnToggleSquare): {
                                     MainW._btnToggleSquare.IsChecked = true;
                                     ListBulletTypeAsync(MainW.rtb.Selection.Start.Paragraph, MainW.rtb.Selection.End.Paragraph, TextMarkerStyle.Square);
                                     break;
                                 }
-                            case nameof(MainW._btnToggleUpperLatin):
-                                {
+                            case nameof(MainW._btnToggleUpperLatin): {
                                     MainW._btnToggleUpperLatin.IsChecked = true;
                                     ListBulletTypeAsync(MainW.rtb.Selection.Start.Paragraph, MainW.rtb.Selection.End.Paragraph, TextMarkerStyle.UpperLatin);
                                     break;
                                 }
-                            case nameof(MainW._btnToggleUpperRoman):
-                                {
+                            case nameof(MainW._btnToggleUpperRoman): {
                                     MainW._btnToggleUpperRoman.IsChecked = true;
                                     ListBulletTypeAsync(MainW.rtb.Selection.Start.Paragraph, MainW.rtb.Selection.End.Paragraph, TextMarkerStyle.UpperRoman);
                                     break;
                                 }
                         }
-                        #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                     }
-                    else
-                    {//if unchecking
+                    else {//if unchecking
                         TextMarkerStyle markerStyle = ((ListItem)startParagraph.Parent).List.MarkerStyle;
-                        if (markerStyle != TextMarkerStyle.Disc && markerStyle != TextMarkerStyle.Box && markerStyle != TextMarkerStyle.Circle && markerStyle != TextMarkerStyle.Square)
-                        {
+                        if (markerStyle != TextMarkerStyle.Disc && markerStyle != TextMarkerStyle.Box && markerStyle != TextMarkerStyle.Circle && markerStyle != TextMarkerStyle.Square) {
                             EditingCommands.ToggleBullets.Execute(null, MainW.rtb);
                         }
                         EditingCommands.ToggleBullets.Execute(null, MainW.rtb);
-
                     }
                 }
             }
@@ -2492,15 +2392,13 @@ namespace SkinText {
 
         private async static System.Threading.Tasks.Task ListBulletTypeAsync(Paragraph startParagraph, Paragraph endParagraph, TextMarkerStyle textMarker) {
             await System.Threading.Tasks.Task.Delay(100);
-            if (startParagraph != null && endParagraph != null && (startParagraph.Parent is ListItem) && (endParagraph.Parent is ListItem) && ReferenceEquals(((ListItem)startParagraph.Parent).List, ((ListItem)endParagraph.Parent).List))
-            {
+            if (startParagraph != null && endParagraph != null && (startParagraph.Parent is ListItem) && (endParagraph.Parent is ListItem) && ReferenceEquals(((ListItem)startParagraph.Parent).List, ((ListItem)endParagraph.Parent).List)) {
                 ((ListItem)startParagraph.Parent).List.MarkerStyle = textMarker;
             }
         }
 
         public static void FilterFontFamilyComboBox() {
-            if (!MainW._fontFamily.IsDropDownOpen)
-            {
+            if (!MainW._fontFamily.IsDropDownOpen) {
                 MainW._fontFamily.IsDropDownOpen = true;
             }
 
@@ -2527,6 +2425,5 @@ namespace SkinText {
         }
 
         #endregion ToolBar functions
-
     }
 }

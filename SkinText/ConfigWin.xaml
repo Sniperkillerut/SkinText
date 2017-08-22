@@ -27,189 +27,189 @@
             <Setter Property="Control.Template">
                 <Setter.Value>
                     <ControlTemplate>
-                        <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource ButtonBorderCheckedColorBrush}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                        <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource ButtonBorderCheckedColorBrush}" StrokeThickness="1" StrokeDashArray="1 2" />
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
         <Style x:Key="TabItemStyle1" TargetType="{x:Type TabItem}">
-            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
-            <Setter Property="Foreground" Value="Black"/>
-            <Setter Property="Background" Value="{DynamicResource ButtonBackgroundColorBrush}"/>
-            <Setter Property="BorderBrush" Value="{DynamicResource MenuItem2DisabledColorBrush}"/>
-            <Setter Property="Margin" Value="0"/>
-            <Setter Property="Padding" Value="6,2,6,2"/>
-            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="Background" Value="{DynamicResource ButtonBackgroundColorBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource MenuItem2DisabledColorBrush}" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="Padding" Value="6,2,6,2" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Stretch" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type TabItem}">
                         <Grid x:Name="templateRoot" SnapsToDevicePixels="true">
                             <Border x:Name="mainBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,1,1,0" Background="{TemplateBinding Background}" Margin="0">
-                                <Border x:Name="innerBorder" BorderBrush="{DynamicResource ButtonBorderCheckedColorBrush}" BorderThickness="1,1,1,0" Background="{DynamicResource ButtonBackgroundColorBrush}" Margin="-1" Opacity="0"/>
+                                <Border x:Name="innerBorder" BorderBrush="{DynamicResource ButtonBorderCheckedColorBrush}" BorderThickness="1,1,1,0" Background="{DynamicResource ButtonBackgroundColorBrush}" Margin="-1" Opacity="0" />
                            </Border>
-                            <ContentPresenter x:Name="contentPresenter" ContentSource="Header" Focusable="False" HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                            <ContentPresenter x:Name="contentPresenter" ContentSource="Header" Focusable="False" HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
                         </Grid>
                         <ControlTemplate.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true"/>
-                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Left"/>
+                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true" />
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Left" />
                                 </MultiDataTrigger.Conditions>
-                                <Setter Property="Background" TargetName="mainBorder" Value="{DynamicResource ButtonBackgroundMouseOverColorBrush}"/>
-                                <Setter Property="BorderBrush" TargetName="mainBorder" Value="{DynamicResource ButtonBorderMouseOverColorBrush}"/>
-                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,0,1"/>
-                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,0,1"/>
+                                <Setter Property="Background" TargetName="mainBorder" Value="{DynamicResource ButtonBackgroundMouseOverColorBrush}" />
+                                <Setter Property="BorderBrush" TargetName="mainBorder" Value="{DynamicResource ButtonBorderMouseOverColorBrush}" />
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,0,1" />
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,0,1" />
                             </MultiDataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true"/>
-                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Bottom"/>
+                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true" />
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Bottom" />
                                 </MultiDataTrigger.Conditions>
-                                <Setter Property="Background" TargetName="mainBorder" Value="{DynamicResource ButtonBackgroundMouseOverColorBrush}"/>
-                                <Setter Property="BorderBrush" TargetName="mainBorder" Value="{DynamicResource ButtonBorderMouseOverColorBrush}"/>
-                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,0,1,1"/>
-                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,0,1,1"/>
+                                <Setter Property="Background" TargetName="mainBorder" Value="{DynamicResource ButtonBackgroundMouseOverColorBrush}" />
+                                <Setter Property="BorderBrush" TargetName="mainBorder" Value="{DynamicResource ButtonBorderMouseOverColorBrush}" />
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,0,1,1" />
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,0,1,1" />
                             </MultiDataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true"/>
-                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Right"/>
+                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true" />
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Right" />
                                 </MultiDataTrigger.Conditions>
-                                <Setter Property="Background" TargetName="mainBorder" Value="{DynamicResource ButtonBackgroundMouseOverColorBrush}"/>
-                                <Setter Property="BorderBrush" TargetName="mainBorder" Value="{DynamicResource ButtonBorderMouseOverColorBrush}"/>
-                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="0,1,1,1"/>
-                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="0,1,1,1"/>
+                                <Setter Property="Background" TargetName="mainBorder" Value="{DynamicResource ButtonBackgroundMouseOverColorBrush}" />
+                                <Setter Property="BorderBrush" TargetName="mainBorder" Value="{DynamicResource ButtonBorderMouseOverColorBrush}" />
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="0,1,1,1" />
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="0,1,1,1" />
                             </MultiDataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true"/>
-                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top"/>
+                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true" />
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top" />
                                 </MultiDataTrigger.Conditions>
-                                <Setter Property="Background" TargetName="mainBorder" Value="{DynamicResource ButtonBackgroundMouseOverColorBrush}"/>
-                                <Setter Property="BorderBrush" TargetName="mainBorder" Value="{DynamicResource ButtonBorderMouseOverColorBrush}"/>
-                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,1,0"/>
-                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,1,0"/>
+                                <Setter Property="Background" TargetName="mainBorder" Value="{DynamicResource ButtonBackgroundMouseOverColorBrush}" />
+                                <Setter Property="BorderBrush" TargetName="mainBorder" Value="{DynamicResource ButtonBorderMouseOverColorBrush}" />
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,1,0" />
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,1,0" />
                             </MultiDataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false"/>
-                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Left"/>
+                                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false" />
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Left" />
                                 </MultiDataTrigger.Conditions>
-                                <Setter Property="Opacity" TargetName="contentPresenter" Value="0.56"/>
-                                <Setter Property="Background" TargetName="mainBorder" Value="{DynamicResource MenuItem2DisabledColorBrush}"/>
-                                <Setter Property="BorderBrush" TargetName="mainBorder" Value="{DynamicResource MenuItem2DisabledColorBrush}"/>
-                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,0,1"/>
-                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,0,1"/>
+                                <Setter Property="Opacity" TargetName="contentPresenter" Value="0.56" />
+                                <Setter Property="Background" TargetName="mainBorder" Value="{DynamicResource MenuItem2DisabledColorBrush}" />
+                                <Setter Property="BorderBrush" TargetName="mainBorder" Value="{DynamicResource MenuItem2DisabledColorBrush}" />
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,0,1" />
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,0,1" />
                             </MultiDataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false"/>
-                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Bottom"/>
+                                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false" />
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Bottom" />
                                 </MultiDataTrigger.Conditions>
-                                <Setter Property="Opacity" TargetName="contentPresenter" Value="0.56"/>
-                                <Setter Property="Background" TargetName="mainBorder" Value="{DynamicResource MenuItem2DisabledColorBrush}"/>
-                                <Setter Property="BorderBrush" TargetName="mainBorder" Value="{DynamicResource MenuItem2DisabledColorBrush}"/>
-                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,0,1,1"/>
-                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,0,1,1"/>
+                                <Setter Property="Opacity" TargetName="contentPresenter" Value="0.56" />
+                                <Setter Property="Background" TargetName="mainBorder" Value="{DynamicResource MenuItem2DisabledColorBrush}" />
+                                <Setter Property="BorderBrush" TargetName="mainBorder" Value="{DynamicResource MenuItem2DisabledColorBrush}" />
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,0,1,1" />
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,0,1,1" />
                             </MultiDataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false"/>
-                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Right"/>
+                                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false" />
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Right" />
                                 </MultiDataTrigger.Conditions>
-                                <Setter Property="Opacity" TargetName="contentPresenter" Value="0.56"/>
-                                <Setter Property="Background" TargetName="mainBorder" Value="{DynamicResource MenuItem2DisabledColorBrush}"/>
-                                <Setter Property="BorderBrush" TargetName="mainBorder" Value="{DynamicResource MenuItem2DisabledColorBrush}"/>
-                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="0,1,1,1"/>
-                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="0,1,1,1"/>
+                                <Setter Property="Opacity" TargetName="contentPresenter" Value="0.56" />
+                                <Setter Property="Background" TargetName="mainBorder" Value="{DynamicResource MenuItem2DisabledColorBrush}" />
+                                <Setter Property="BorderBrush" TargetName="mainBorder" Value="{DynamicResource MenuItem2DisabledColorBrush}" />
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="0,1,1,1" />
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="0,1,1,1" />
                             </MultiDataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false"/>
-                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top"/>
+                                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false" />
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top" />
                                 </MultiDataTrigger.Conditions>
-                                <Setter Property="Opacity" TargetName="contentPresenter" Value="0.56"/>
-                                <Setter Property="Background" TargetName="mainBorder" Value="{DynamicResource MenuItem2DisabledColorBrush}"/>
-                                <Setter Property="BorderBrush" TargetName="mainBorder" Value="{DynamicResource MenuItem2DisabledColorBrush}"/>
-                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,1,0"/>
-                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,1,0"/>
+                                <Setter Property="Opacity" TargetName="contentPresenter" Value="0.56" />
+                                <Setter Property="Background" TargetName="mainBorder" Value="{DynamicResource MenuItem2DisabledColorBrush}" />
+                                <Setter Property="BorderBrush" TargetName="mainBorder" Value="{DynamicResource MenuItem2DisabledColorBrush}" />
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,1,0" />
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,1,0" />
                             </MultiDataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="false"/>
-                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Left"/>
+                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="false" />
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Left" />
                                 </MultiDataTrigger.Conditions>
-                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,0,1"/>
-                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,0,1"/>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,0,1" />
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,0,1" />
                             </MultiDataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true"/>
-                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Left"/>
+                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true" />
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Left" />
                                 </MultiDataTrigger.Conditions>
-                                <Setter Property="Panel.ZIndex" Value="1"/>
-                                <Setter Property="Margin" Value="-2,-2,0,-2"/>
-                                <Setter Property="Opacity" TargetName="innerBorder" Value="1"/>
-                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,0,1"/>
-                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,0,1"/>
+                                <Setter Property="Panel.ZIndex" Value="1" />
+                                <Setter Property="Margin" Value="-2,-2,0,-2" />
+                                <Setter Property="Opacity" TargetName="innerBorder" Value="1" />
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,0,1" />
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,0,1" />
                             </MultiDataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="false"/>
-                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Bottom"/>
+                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="false" />
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Bottom" />
                                 </MultiDataTrigger.Conditions>
-                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,0,1,1"/>
-                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,0,1,1"/>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,0,1,1" />
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,0,1,1" />
                             </MultiDataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true"/>
-                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Bottom"/>
+                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true" />
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Bottom" />
                                 </MultiDataTrigger.Conditions>
-                                <Setter Property="Panel.ZIndex" Value="1"/>
-                                <Setter Property="Margin" Value="-2,0,-2,-2"/>
-                                <Setter Property="Opacity" TargetName="innerBorder" Value="1"/>
-                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,0,1,1"/>
-                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,0,1,1"/>
+                                <Setter Property="Panel.ZIndex" Value="1" />
+                                <Setter Property="Margin" Value="-2,0,-2,-2" />
+                                <Setter Property="Opacity" TargetName="innerBorder" Value="1" />
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,0,1,1" />
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,0,1,1" />
                             </MultiDataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="false"/>
-                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Right"/>
+                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="false" />
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Right" />
                                 </MultiDataTrigger.Conditions>
-                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="0,1,1,1"/>
-                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="0,1,1,1"/>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="0,1,1,1" />
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="0,1,1,1" />
                             </MultiDataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true"/>
-                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Right"/>
+                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true" />
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Right" />
                                 </MultiDataTrigger.Conditions>
-                                <Setter Property="Panel.ZIndex" Value="1"/>
-                                <Setter Property="Margin" Value="0,-2,-2,-2"/>
-                                <Setter Property="Opacity" TargetName="innerBorder" Value="1"/>
-                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="0,1,1,1"/>
-                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="0,1,1,1"/>
+                                <Setter Property="Panel.ZIndex" Value="1" />
+                                <Setter Property="Margin" Value="0,-2,-2,-2" />
+                                <Setter Property="Opacity" TargetName="innerBorder" Value="1" />
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="0,1,1,1" />
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="0,1,1,1" />
                             </MultiDataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="false"/>
-                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top"/>
+                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="false" />
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top" />
                                 </MultiDataTrigger.Conditions>
-                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,1,0"/>
-                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,1,0"/>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,1,0" />
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,1,0" />
                             </MultiDataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true"/>
-                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top"/>
+                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true" />
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top" />
                                 </MultiDataTrigger.Conditions>
-                                <Setter Property="Panel.ZIndex" Value="1"/>
-                                <Setter Property="Margin" Value="-2,-2,-2,0"/>
-                                <Setter Property="Opacity" TargetName="innerBorder" Value="1"/>
-                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,1,0"/>
-                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,1,0"/>
+                                <Setter Property="Panel.ZIndex" Value="1" />
+                                <Setter Property="Margin" Value="-2,-2,-2,0" />
+                                <Setter Property="Opacity" TargetName="innerBorder" Value="1" />
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,1,0" />
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,1,0" />
                             </MultiDataTrigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -219,12 +219,12 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center">
             <TextBlock Text="Configuration Window" Style="{DynamicResource ToolTipTextStyle}" />
@@ -235,7 +235,7 @@
                                   Canvas.Left="0" Canvas.Top="0"
                                   Stretch="Uniform"
                                   Fill="{DynamicResource ButtonFrontColorBrush}"
-                                  Data="F1 M 26.9166,22.1667L 37.9999,33.25L 49.0832,22.1668L 53.8332,26.9168L 42.7499,38L 53.8332,49.0834L 49.0833,53.8334L 37.9999,42.75L 26.9166,53.8334L 22.1666,49.0833L 33.25,38L 22.1667,26.9167L 26.9166,22.1667 Z "/>
+                                  Data="F1 M 26.9166,22.1667L 37.9999,33.25L 49.0832,22.1668L 53.8332,26.9168L 42.7499,38L 53.8332,49.0834L 49.0833,53.8334L 37.9999,42.75L 26.9166,53.8334L 22.1666,49.0833L 33.25,38L 22.1667,26.9167L 26.9166,22.1667 Z " />
             </Canvas>
         </Button>
         <TabControl Grid.Row="1" Grid.ColumnSpan="2" BorderBrush="{DynamicResource ButtonBorderCheckedColorBrush}" Background="{DynamicResource BackgroundColorBrush}" TabStripPlacement="Left">
@@ -296,7 +296,7 @@
                           Grid.Column="1" Grid.Row="1"
                           SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
-                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
+                          DisplayColorAndName="True" ColorMode="ColorCanvas" />
 
                         <Label Grid.Column="0" Grid.Row="2">
                             <TextBlock Text="Button Background: " Style="{DynamicResource ToolTipTextStyle}" />
@@ -305,17 +305,17 @@
                           Grid.Column="1" Grid.Row="2"
                           SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
-                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
+                          DisplayColorAndName="True" ColorMode="ColorCanvas" />
                         <xctk:ColorPicker x:Name="ClrPcker_ButtonBackgroundMouseOverColorBrush"
                           Grid.Column="2" Grid.Row="2"
                           SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
-                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
+                          DisplayColorAndName="True" ColorMode="ColorCanvas" />
                         <xctk:ColorPicker x:Name="ClrPcker_ButtonBackgroundCheckedColorBrush"
                           Grid.Column="3" Grid.Row="2"
                           SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
-                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
+                          DisplayColorAndName="True" ColorMode="ColorCanvas" />
                         <Label Grid.Column="0" Grid.Row="3">
                             <TextBlock Text="Button Border: " Style="{DynamicResource ToolTipTextStyle}" />
                         </Label>
@@ -323,12 +323,12 @@
                           Grid.Column="2" Grid.Row="3"
                           SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
-                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
+                          DisplayColorAndName="True" ColorMode="ColorCanvas" />
                         <xctk:ColorPicker x:Name="ClrPcker_ButtonBorderCheckedColorBrush"
                           Grid.Column="3" Grid.Row="3"
                           SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
-                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
+                          DisplayColorAndName="True" ColorMode="ColorCanvas" />
                         <Label Grid.Column="0" Grid.Row="4">
                             <TextBlock Text="Button Text: " Style="{DynamicResource ToolTipTextStyle}" />
                         </Label>
@@ -336,7 +336,7 @@
                           Grid.Column="1" Grid.Row="4"
                           SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
-                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
+                          DisplayColorAndName="True" ColorMode="ColorCanvas" />
                         <Label Grid.Column="0" Grid.Row="5">
                             <TextBlock Text="Text: " Style="{DynamicResource ToolTipTextStyle}" />
                         </Label>
@@ -344,7 +344,7 @@
                           Grid.Column="1" Grid.Row="5"
                           SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
-                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
+                          DisplayColorAndName="True" ColorMode="ColorCanvas" />
 
                         <Label Grid.Column="0" Grid.Row="6">
                             <TextBlock Text="FontPicker Background: " Style="{DynamicResource ToolTipTextStyle}" />
@@ -353,17 +353,17 @@
                           Grid.Column="1" Grid.Row="6"
                           SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
-                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
+                          DisplayColorAndName="True" ColorMode="ColorCanvas" />
                         <xctk:ColorPicker x:Name="ClrPcker_FontPickMouseOverBackgroundColorBrush"
                           Grid.Column="2" Grid.Row="6"
                           SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
-                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
+                          DisplayColorAndName="True" ColorMode="ColorCanvas" />
                         <xctk:ColorPicker x:Name="ClrPcker_FontPickSelectedBackgroundColorBrush"
                           Grid.Column="3" Grid.Row="6"
                           SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
-                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
+                          DisplayColorAndName="True" ColorMode="ColorCanvas" />
                         <Label Grid.Column="0" Grid.Row="7">
                             <TextBlock Text="FontPicker Border: " Style="{DynamicResource ToolTipTextStyle}" />
                         </Label>
@@ -371,12 +371,12 @@
                           Grid.Column="2" Grid.Row="7"
                           SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
-                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
+                          DisplayColorAndName="True" ColorMode="ColorCanvas" />
                         <xctk:ColorPicker x:Name="ClrPcker_FontPickSelectedBorderColorBrush"
                           Grid.Column="3" Grid.Row="7"
                           SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
-                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
+                          DisplayColorAndName="True" ColorMode="ColorCanvas" />
                         <Label Grid.Column="0" Grid.Row="8">
                             <TextBlock Text="FontPicker Text: " Style="{DynamicResource ToolTipTextStyle}" />
                         </Label>
@@ -384,7 +384,7 @@
                           Grid.Column="1" Grid.Row="8"
                           SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
-                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
+                          DisplayColorAndName="True" ColorMode="ColorCanvas" />
                         <Label Grid.Column="0" Grid.Row="9">
                             <TextBlock Text="Menu Background: " Style="{DynamicResource ToolTipTextStyle}" />
                         </Label>
@@ -392,7 +392,7 @@
                           Grid.Column="1" Grid.Row="9"
                           SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
-                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
+                          DisplayColorAndName="True" ColorMode="ColorCanvas" />
 
                         <Label Grid.Column="0" Grid.Row="10">
                             <TextBlock Text="MenuItem1 Border: " Style="{DynamicResource ToolTipTextStyle}" />
@@ -401,7 +401,7 @@
                           Grid.Column="1" Grid.Row="10"
                           SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
-                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
+                          DisplayColorAndName="True" ColorMode="ColorCanvas" />
 
                         <Label Grid.Column="0" Grid.Row="11">
                             <TextBlock Text="MenuItem2 Text: " Style="{DynamicResource ToolTipTextStyle}" />
@@ -410,7 +410,7 @@
                           Grid.Column="2" Grid.Row="11"
                           SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
-                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
+                          DisplayColorAndName="True" ColorMode="ColorCanvas" />
 
                         <Label Grid.Column="0" Grid.Row="12">
                             <TextBlock Text="MenuItem2 Border: " Style="{DynamicResource ToolTipTextStyle}" />
@@ -419,7 +419,7 @@
                           Grid.Column="2" Grid.Row="12"
                           SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
-                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
+                          DisplayColorAndName="True" ColorMode="ColorCanvas" />
 
                         <Label Grid.Column="0" Grid.Row="13">
                             <TextBlock Text="Disabled Item Color: " Style="{DynamicResource ToolTipTextStyle}" />
@@ -428,7 +428,7 @@
                           Grid.Column="1" Grid.Row="13"
                           SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
-                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
+                          DisplayColorAndName="True" ColorMode="ColorCanvas" />
 
                         <Label Grid.Column="0" Grid.Row="14">
                             <TextBlock Text="Main Window Color: " Style="{DynamicResource ToolTipTextStyle}" />
@@ -437,7 +437,7 @@
                           Grid.Column="1" Grid.Row="14"
                           SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
-                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
+                          DisplayColorAndName="True" ColorMode="ColorCanvas" />
                         <Label Grid.Column="0" Grid.Row="15">
                             <TextBlock Text="Text Background Color: " Style="{DynamicResource ToolTipTextStyle}" />
                         </Label>
@@ -445,7 +445,7 @@
                           Grid.Column="1" Grid.Row="15"
                           SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
-                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
+                          DisplayColorAndName="True" ColorMode="ColorCanvas" />
                         <Label Grid.Column="0" Grid.Row="16">
                             <TextBlock Text="Text Border Color: " Style="{DynamicResource ToolTipTextStyle}" />
                         </Label>
@@ -453,10 +453,7 @@
                           Grid.Column="1" Grid.Row="16"
                           SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
-                          DisplayColorAndName="True" ColorMode="ColorCanvas"/>
-
-
-
+                          DisplayColorAndName="True" ColorMode="ColorCanvas" />
                     </Grid>
                 </TabItem.Content>
             </TabItem>
@@ -476,25 +473,25 @@
                 <TabItem.Content>
                     <Grid Margin="5">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="4*"/>
-                            <ColumnDefinition Width="4*"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="4*" />
+                            <ColumnDefinition Width="4*" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="10"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <Label Grid.Column="0" Grid.Row="0" Style="{DynamicResource LabelStyle}">
                             <TextBlock Text="Rotation Angle: " Style="{DynamicResource ToolTipTextStyle}" />
@@ -523,7 +520,7 @@
                                   Canvas.Left="0" Canvas.Top="0"
                                   Stretch="Uniform"
                                   Fill="{DynamicResource ButtonFrontColorBrush}"
-                                  Data="F1 M 39,16L 59,55L 39,55L 39,16 Z M 42,28.5L 42,52L 53.5,52L 42,28.5 Z M 37,16L 37,23.0801L 35.201,26.6107L 32.6005,24.579L 37,16 Z M 37,46L 34,46L 34,42L 37,42L 37,46 Z M 34,37.2663L 37,31.4805L 37,39L 34,39L 34,37.2663 Z M 30.3236,36.0126L 27.763,34.012L 30.8286,28.0342L 33.2877,29.9555L 30.3236,36.0126 Z M 25.7931,45.2705L 23.0775,43.1489L 25.9911,37.4673L 28.6103,39.5137L 25.7931,45.2705 Z M 37,55L 34,55L 34,49L 37,49L 37,55 Z M 17,55L 21.3055,46.6041L 24.0798,48.7716L 22.5,52L 24,52L 24,55L 17,55 Z M 31,52L 31,55L 27,55L 27,52L 31,52 Z "/>
+                                  Data="F1 M 39,16L 59,55L 39,55L 39,16 Z M 42,28.5L 42,52L 53.5,52L 42,28.5 Z M 37,16L 37,23.0801L 35.201,26.6107L 32.6005,24.579L 37,16 Z M 37,46L 34,46L 34,42L 37,42L 37,46 Z M 34,37.2663L 37,31.4805L 37,39L 34,39L 34,37.2663 Z M 30.3236,36.0126L 27.763,34.012L 30.8286,28.0342L 33.2877,29.9555L 30.3236,36.0126 Z M 25.7931,45.2705L 23.0775,43.1489L 25.9911,37.4673L 28.6103,39.5137L 25.7931,45.2705 Z M 37,55L 34,55L 34,49L 37,49L 37,55 Z M 17,55L 21.3055,46.6041L 24.0798,48.7716L 22.5,52L 24,52L 24,55L 17,55 Z M 31,52L 31,55L 27,55L 27,52L 31,52 Z " />
                                     </Canvas>
                                 </ToggleButton.Content>
                                 <ToggleButton.ToolTip>
@@ -542,7 +539,7 @@
                                   Canvas.Left="0" Canvas.Top="0"
                                   Stretch="Uniform"
                                   Fill="{DynamicResource ButtonFrontColorBrush}"
-                                  Data="F1 M 14,37L 53,17L 53,37L 14,37 Z M 26.5,34L 50,34L 50,22.5L 26.5,34 Z M 14,39L 21.0801,39L 24.6107,40.799L 22.579,43.3995L 14,39 Z M 44,39L 44,42L 40,42L 40,39L 44,39 Z M 35.2663,42L 29.4805,39L 37,39L 37,42L 35.2663,42 Z M 34.0126,45.6764L 32.012,48.237L 26.0342,45.1714L 27.9555,42.7123L 34.0126,45.6764 Z M 43.2705,50.2069L 41.1489,52.9225L 35.4673,50.0089L 37.5136,47.3897L 43.2705,50.2069 Z M 53,39L 53,42L 47,42L 47,39L 53,39 Z M 53,59L 44.6041,54.6945L 46.7716,51.9202L 50,53.5L 50,52L 53,52L 53,59 Z M 50,45L 53,45L 53,49L 50,49L 50,45 Z "/>
+                                  Data="F1 M 14,37L 53,17L 53,37L 14,37 Z M 26.5,34L 50,34L 50,22.5L 26.5,34 Z M 14,39L 21.0801,39L 24.6107,40.799L 22.579,43.3995L 14,39 Z M 44,39L 44,42L 40,42L 40,39L 44,39 Z M 35.2663,42L 29.4805,39L 37,39L 37,42L 35.2663,42 Z M 34.0126,45.6764L 32.012,48.237L 26.0342,45.1714L 27.9555,42.7123L 34.0126,45.6764 Z M 43.2705,50.2069L 41.1489,52.9225L 35.4673,50.0089L 37.5136,47.3897L 43.2705,50.2069 Z M 53,39L 53,42L 47,42L 47,39L 53,39 Z M 53,59L 44.6041,54.6945L 46.7716,51.9202L 50,53.5L 50,52L 53,52L 53,59 Z M 50,45L 53,45L 53,49L 50,49L 50,45 Z " />
                                     </Canvas>
                                 </ToggleButton.Content>
                                 <ToggleButton.ToolTip>
@@ -566,7 +563,7 @@
                                     Value="{Binding Value, ElementName=textopacityslider}"
                                     ScrollViewer.VerticalScrollBarVisibility="Disabled" UpdateValueOnEnterKey="False" ShowButtonSpinner="False" AutoMoveFocus="True" />
 
-                        <CheckBox x:Name="readOnlyCheck" Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" Margin="10,0,10,0" Checked="ReadOnlyCheck_Checked" Unchecked="ReadOnlyCheck_Checked" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" >
+                        <CheckBox x:Name="readOnlyCheck" Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" Margin="10,0,10,0" Checked="ReadOnlyCheck_Checked" Unchecked="ReadOnlyCheck_Checked" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center">
                             <CheckBox.ToolTip>
                                 <ToolTip Style="{DynamicResource ToolTipStyle}">
                                     <Border Style="{DynamicResource ToolTipBorderStyle}">
@@ -618,8 +615,6 @@
                                     Maximum="{Binding Maximum, ElementName=autosavetimersider}"
                                     Value="{Binding Value, ElementName=autosavetimersider}"
                                     ScrollViewer.VerticalScrollBarVisibility="Disabled" UpdateValueOnEnterKey="False" ShowButtonSpinner="False" AutoMoveFocus="True" />
-
-
 
                         <CheckBox x:Name="resizecheck" Grid.Column="0" Grid.Row="6" Margin="10,0"  Checked="ResizeCheckBoxChanged" Unchecked="ResizeCheckBoxChanged" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" VerticalAlignment="Center">
                             <CheckBox.ToolTip>
@@ -688,7 +683,7 @@
                                 Maximum="{Binding Maximum, ElementName=CornerRadius4Slider}"
                                 Value="{Binding Value, ElementName=CornerRadius4Slider}"
                                 ScrollViewer.VerticalScrollBarVisibility="Disabled" UpdateValueOnEnterKey="False" ShowButtonSpinner="False" AutoMoveFocus="True" />
-                        <CheckBox Grid.Column="0" Grid.Row="13"  x:Name="lockSlidersCheckbox" VerticalAlignment="Center" Margin="10,0,10,0"  VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" Checked="LockSlidersCheckbox_Checked" Unchecked="LockSlidersCheckbox_Checked" >
+                        <CheckBox Grid.Column="0" Grid.Row="13"  x:Name="lockSlidersCheckbox" VerticalAlignment="Center" Margin="10,0,10,0"  VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" Checked="LockSlidersCheckbox_Checked" Unchecked="LockSlidersCheckbox_Checked">
                             <CheckBox.ToolTip>
                                 <ToolTip Style="{DynamicResource ToolTipStyle}">
                                     <Border Style="{DynamicResource ToolTipBorderStyle}">
@@ -706,7 +701,6 @@
                             HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5,5,5,5"
                             ShowButtonSpinner="False" Minimum="0"  Maximum="1000000"
                             ScrollViewer.VerticalScrollBarVisibility="Disabled" UpdateValueOnEnterKey="False" AutoMoveFocus="True" DisplayDefaultValueOnEmptyText="True" DefaultValue="500" />
-
                     </Grid>
                 </TabItem.Content>
             </TabItem>
@@ -726,21 +720,21 @@
                 <TabItem.Content>
                     <Grid Margin="5">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="4*"/>
-                            <ColumnDefinition Width="4*"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="4*" />
+                            <ColumnDefinition Width="4*" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
                         <Label Grid.Column="0" Grid.Row="0" Style="{DynamicResource LabelStyle}">
@@ -797,7 +791,7 @@
                         </Label>
                         <Button x:Name="imagedir" Grid.Column="1" Grid.Row="1"  Click="Imagedir_Click" Style="{DynamicResource ButtonsStyle}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch">
                             <Button.Content>
-                                <TextBlock Text="Change Bg Img"/>
+                                <TextBlock Text="Change Bg Img" />
                             </Button.Content>
                             <Button.ToolTip>
                                 <ToolTip Style="{DynamicResource ToolTipStyle}">
@@ -821,7 +815,7 @@
                                   Canvas.Left="0" Canvas.Top="0"
                                   Stretch="Uniform"
                                   Fill="{DynamicResource ButtonFrontColorBrush}"
-                                  Data="M9.29,21H12.12L21,12.12V9.29M19,21C19.55,21 20.05,20.78 20.41,20.41C20.78,20.05 21,19.55 21,19V17L17,21M5,3A2,2 0 0,0 3,5V7L7,3M11.88,3L3,11.88V14.71L14.71,3M19.5,3.08L3.08,19.5C3.17,19.85 3.35,20.16 3.59,20.41C3.84,20.65 4.15,20.83 4.5,20.92L20.93,4.5C20.74,3.8 20.2,3.26 19.5,3.08Z"/>
+                                  Data="M9.29,21H12.12L21,12.12V9.29M19,21C19.55,21 20.05,20.78 20.41,20.41C20.78,20.05 21,19.55 21,19V17L17,21M5,3A2,2 0 0,0 3,5V7L7,3M11.88,3L3,11.88V14.71L14.71,3M19.5,3.08L3.08,19.5C3.17,19.85 3.35,20.16 3.59,20.41C3.84,20.65 4.15,20.83 4.5,20.92L20.93,4.5C20.74,3.8 20.2,3.26 19.5,3.08Z" />
                                     </Canvas>
                                 </Button.Content>
                             </Button>
@@ -904,7 +898,6 @@
                                 Maximum="{Binding Maximum, ElementName=imageopacityslider}"
                                 Value="{Binding Value, ElementName=imageopacityslider}"
                                 ScrollViewer.VerticalScrollBarVisibility="Disabled" UpdateValueOnEnterKey="False" ShowButtonSpinner="False" AutoMoveFocus="True" />
-
                     </Grid>
                 </TabItem.Content>
             </TabItem>
@@ -924,21 +917,21 @@
                 <TabItem.Content>
                     <Grid Margin="5">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="4*"/>
-                            <ColumnDefinition Width="4*"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="4*" />
+                            <ColumnDefinition Width="4*" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <Label Grid.Column="0" Grid.Row="0" Style="{DynamicResource LabelStyle}">
                             <Label.ToolTip>
@@ -958,7 +951,6 @@
                                 Maximum="{Binding Maximum, ElementName=windowopacityslider}"
                                 Value="{Binding Value, ElementName=windowopacityslider}"
                                 ScrollViewer.VerticalScrollBarVisibility="Disabled" UpdateValueOnEnterKey="False" ShowButtonSpinner="False" AutoMoveFocus="True" />
-
 
                         <CheckBox x:Name="alwaysontop" Grid.Column="0" Grid.Row="1" Margin="10,0" Checked="Alwaysontop_Unchecked" Unchecked="Alwaysontop_Unchecked" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" VerticalAlignment="Center">
                             <CheckBox.ToolTip>
@@ -1021,7 +1013,6 @@
                             <TextBlock Text="Blur Background" Style="{DynamicResource ToolTipTextStyle}" />
                         </CheckBox>
                     </Grid>
-
                 </TabItem.Content>
             </TabItem>
             <TabItem Style="{DynamicResource TabItemStyle1}">
@@ -1077,7 +1068,6 @@
                     </Label>
                 </TabItem.Content>
             </TabItem>
-
         </TabControl>
     </Grid>
 </Window>

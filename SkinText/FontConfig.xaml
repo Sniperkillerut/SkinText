@@ -17,7 +17,6 @@
         BorderThickness="2"
         MouseDown="Window_MouseDown">
     <Window.Resources>
-
     </Window.Resources>
     <Grid DataContext="{StaticResource familyCollection}">
         <Grid.ColumnDefinitions>
@@ -39,7 +38,7 @@
                                   Canvas.Left="0" Canvas.Top="0"
                                   Stretch="Uniform"
                                   Fill="{DynamicResource ButtonFrontColorBrush}"
-                                  Data="F1 M 26.9166,22.1667L 37.9999,33.25L 49.0832,22.1668L 53.8332,26.9168L 42.7499,38L 53.8332,49.0834L 49.0833,53.8334L 37.9999,42.75L 26.9166,53.8334L 22.1666,49.0833L 33.25,38L 22.1667,26.9167L 26.9166,22.1667 Z "/>
+                                  Data="F1 M 26.9166,22.1667L 37.9999,33.25L 49.0832,22.1668L 53.8332,26.9168L 42.7499,38L 53.8332,49.0834L 49.0833,53.8334L 37.9999,42.75L 26.9166,53.8334L 22.1666,49.0833L 33.25,38L 22.1667,26.9167L 26.9166,22.1667 Z " />
             </Canvas>
         </Button>
         <Label Grid.Column="1" Grid.Row="0"
@@ -61,7 +60,7 @@
                  ItemsSource="{Binding}"
                  ItemTemplate="{StaticResource fontFamilyData}"
                  Style="{DynamicResource ListBoxStyle}"
-                 IsTextSearchEnabled="False"/>
+                 IsTextSearchEnabled="False" />
 
         <Grid Grid.Column="0" Grid.Row="4" Grid.RowSpan="2" Margin="0,0,0,0">
             <Grid.RowDefinitions>
@@ -106,7 +105,7 @@
                                 Canvas.Left="0" Canvas.Top="0"
                                 Stretch="Uniform"
                                 Fill="{DynamicResource ButtonFrontColorBrush}"
-                                Data="F1 M 21,19L 55,19L 55,23L 21,23L 21,19 Z M 37.8421,56.9533C 33.356,56.9533 29.7635,55.4776 27.0648,52.5263C 24.366,49.5749 23.0167,45.7357 23.0167,41.0088C 23.0167,35.9276 24.392,31.8748 27.1427,28.8502C 29.8934,25.8256 33.6369,24.3133 38.3733,24.3133C 42.7414,24.3133 46.2606,25.7819 48.931,28.7192C 51.6015,31.6564 52.9367,35.4956 52.9367,40.2367C 52.9367,45.3886 51.5684,49.4627 48.8319,52.459C 46.0953,55.4552 42.4321,56.9533 37.8421,56.9533 Z M 38.1042,27.4867C 34.8411,27.4867 32.1908,28.6979 30.1531,31.1204C 28.1155,33.5429 27.0967,36.7257 27.0967,40.6688C 27.0967,44.6071 28.0895,47.7769 30.0752,50.1781C 32.0609,52.5794 34.6522,53.78 37.8492,53.78C 41.2586,53.78 43.9456,52.6349 45.91,50.3446C 47.8744,48.0543 48.8567,44.8503 48.8567,40.7325C 48.8567,36.5108 47.9028,33.2478 45.995,30.9433C 44.0872,28.6389 41.4569,27.4867 38.1042,27.4867 Z "/>
+                                Data="F1 M 21,19L 55,19L 55,23L 21,23L 21,19 Z M 37.8421,56.9533C 33.356,56.9533 29.7635,55.4776 27.0648,52.5263C 24.366,49.5749 23.0167,45.7357 23.0167,41.0088C 23.0167,35.9276 24.392,31.8748 27.1427,28.8502C 29.8934,25.8256 33.6369,24.3133 38.3733,24.3133C 42.7414,24.3133 46.2606,25.7819 48.931,28.7192C 51.6015,31.6564 52.9367,35.4956 52.9367,40.2367C 52.9367,45.3886 51.5684,49.4627 48.8319,52.459C 46.0953,55.4552 42.4321,56.9533 37.8421,56.9533 Z M 38.1042,27.4867C 34.8411,27.4867 32.1908,28.6979 30.1531,31.1204C 28.1155,33.5429 27.0967,36.7257 27.0967,40.6688C 27.0967,44.6071 28.0895,47.7769 30.0752,50.1781C 32.0609,52.5794 34.6522,53.78 37.8492,53.78C 41.2586,53.78 43.9456,52.6349 45.91,50.3446C 47.8744,48.0543 48.8567,44.8503 48.8567,40.7325C 48.8567,36.5108 47.9028,33.2478 45.995,30.9433C 44.0872,28.6389 41.4569,27.4867 38.1042,27.4867 Z " />
                         </Canvas>
                     </ToggleButton.Content>
                 </ToggleButton>
@@ -128,7 +127,7 @@
                                 Canvas.Left="0" Canvas.Top="0"
                                 Stretch="Uniform"
                                 Fill="{DynamicResource ButtonFrontColorBrush}"
-                                Data="F1 M 26.45,54.975L 26.45,49.8167C 27.0444,50.3944 27.7556,50.9153 28.5833,51.3792C 29.4111,51.8431 30.2833,52.2333 31.2,52.55C 32.1167,52.8667 33.0375,53.1125 33.9625,53.2875C 34.8875,53.4625 35.7417,53.55 36.525,53.55C 39.2306,53.55 41.25,53.0375 42.5833,52.0125C 43.9167,50.9875 44.5833,49.5139 44.5833,47.5917C 44.5833,46.5917 44.3597,45.7194 43.9125,44.975C 43.4653,44.2306 42.8486,43.5528 42.0625,42.9417C 41.2764,42.3306 40.3458,41.7431 39.2708,41.1792L 36.9541,40L 19,40L 19,36L 30.0803,36C 29.754,35.7361 29.4453,35.4639 29.1542,35.1833C 28.3125,34.3722 27.6514,33.4528 27.1708,32.425C 26.6903,31.3972 26.45,30.1917 26.45,28.8083C 26.45,27.1139 26.8292,25.6403 27.5875,24.3875C 28.3458,23.1347 29.3417,22.1028 30.575,21.2917C 31.8083,20.4806 33.2139,19.8764 34.7917,19.4792C 36.3694,19.082 37.9778,18.8833 39.6167,18.8833C 43.35,18.8833 46.0722,19.375 47.7833,20.3583L 47.7833,25.2833C 45.5667,23.5056 42.7194,22.6167 39.2417,22.6167C 38.2806,22.6167 37.3194,22.7195 36.3583,22.925C 35.3972,23.1306 34.5417,23.4667 33.7917,23.9333C 33.0417,24.4 32.4306,25 31.9583,25.7333C 31.4861,26.4667 31.25,27.3611 31.25,28.4167C 31.25,29.3667 31.4292,30.1875 31.7875,30.8792C 32.1458,31.5708 32.675,32.2014 33.375,32.7708C 34.075,33.3403 34.9278,33.8931 35.9333,34.4292L 39.0304,36L 57,36L 57,40L 45.6737,40C 45.9314,40.2196 46.179,40.4446 46.4167,40.675C 47.3278,41.5583 48.05,42.5347 48.5833,43.6042C 49.1167,44.6736 49.3833,45.9 49.3833,47.2833C 49.3833,49.1167 49.0181,50.6681 48.2875,51.9375C 47.5569,53.2069 46.5722,54.2389 45.3333,55.0333C 44.0944,55.8278 42.6653,56.4014 41.0458,56.7542C 39.4264,57.1069 37.7194,57.2833 35.925,57.2833L 33.7083,57.1292C 32.8306,57.0264 31.9333,56.8764 31.0167,56.6792C 30.1,56.4819 29.2333,56.2375 28.4167,55.9458C 27.6,55.6542 26.9444,55.3306 26.45,54.975 Z "/>
+                                Data="F1 M 26.45,54.975L 26.45,49.8167C 27.0444,50.3944 27.7556,50.9153 28.5833,51.3792C 29.4111,51.8431 30.2833,52.2333 31.2,52.55C 32.1167,52.8667 33.0375,53.1125 33.9625,53.2875C 34.8875,53.4625 35.7417,53.55 36.525,53.55C 39.2306,53.55 41.25,53.0375 42.5833,52.0125C 43.9167,50.9875 44.5833,49.5139 44.5833,47.5917C 44.5833,46.5917 44.3597,45.7194 43.9125,44.975C 43.4653,44.2306 42.8486,43.5528 42.0625,42.9417C 41.2764,42.3306 40.3458,41.7431 39.2708,41.1792L 36.9541,40L 19,40L 19,36L 30.0803,36C 29.754,35.7361 29.4453,35.4639 29.1542,35.1833C 28.3125,34.3722 27.6514,33.4528 27.1708,32.425C 26.6903,31.3972 26.45,30.1917 26.45,28.8083C 26.45,27.1139 26.8292,25.6403 27.5875,24.3875C 28.3458,23.1347 29.3417,22.1028 30.575,21.2917C 31.8083,20.4806 33.2139,19.8764 34.7917,19.4792C 36.3694,19.082 37.9778,18.8833 39.6167,18.8833C 43.35,18.8833 46.0722,19.375 47.7833,20.3583L 47.7833,25.2833C 45.5667,23.5056 42.7194,22.6167 39.2417,22.6167C 38.2806,22.6167 37.3194,22.7195 36.3583,22.925C 35.3972,23.1306 34.5417,23.4667 33.7917,23.9333C 33.0417,24.4 32.4306,25 31.9583,25.7333C 31.4861,26.4667 31.25,27.3611 31.25,28.4167C 31.25,29.3667 31.4292,30.1875 31.7875,30.8792C 32.1458,31.5708 32.675,32.2014 33.375,32.7708C 34.075,33.3403 34.9278,33.8931 35.9333,34.4292L 39.0304,36L 57,36L 57,40L 45.6737,40C 45.9314,40.2196 46.179,40.4446 46.4167,40.675C 47.3278,41.5583 48.05,42.5347 48.5833,43.6042C 49.1167,44.6736 49.3833,45.9 49.3833,47.2833C 49.3833,49.1167 49.0181,50.6681 48.2875,51.9375C 47.5569,53.2069 46.5722,54.2389 45.3333,55.0333C 44.0944,55.8278 42.6653,56.4014 41.0458,56.7542C 39.4264,57.1069 37.7194,57.2833 35.925,57.2833L 33.7083,57.1292C 32.8306,57.0264 31.9333,56.8764 31.0167,56.6792C 30.1,56.4819 29.2333,56.2375 28.4167,55.9458C 27.6,55.6542 26.9444,55.3306 26.45,54.975 Z " />
                     </Canvas>
                 </ToggleButton.Content>
             </ToggleButton>
@@ -151,7 +150,7 @@
                                 Canvas.Left="0" Canvas.Top="0"
                                 Stretch="Uniform"
                                 Fill="{DynamicResource ButtonFrontColorBrush}"
-                                Data="M5,18H19V20H5V21M12,15.5H10V12.5H13.5A1.5,1.5 0 0,1 15,14A1.5,1.5 0 0,1 13.5,15.5M10,6.5H13A1.5,1.5 0 0,1 14.5,8A1.5,1.5 0 0,1 13,9.5H10M15.6,10.79C16.57,10.11 17.25,9 17.25,8C17.25,5.74 15.5,4 13.25,4H7V18H14.04C16.14,18 17.75,16.3 17.75,14.21C17.75,12.69 16.89,11.39 15.6,10.79Z"/>
+                                Data="M5,18H19V20H5V21M12,15.5H10V12.5H13.5A1.5,1.5 0 0,1 15,14A1.5,1.5 0 0,1 13.5,15.5M10,6.5H13A1.5,1.5 0 0,1 14.5,8A1.5,1.5 0 0,1 13,9.5H10M15.6,10.79C16.57,10.11 17.25,9 17.25,8C17.25,5.74 15.5,4 13.25,4H7V18H14.04C16.14,18 17.75,16.3 17.75,14.21C17.75,12.69 16.89,11.39 15.6,10.79Z" />
                     </Canvas>
                 </ToggleButton.Content>
             </ToggleButton>
@@ -174,7 +173,7 @@
                                 Canvas.Left="0" Canvas.Top="0"
                                 Stretch="Uniform"
                                 Fill="{DynamicResource ButtonFrontColorBrush}"
-                                Data="M5,21H19V19H5V21M12,17A6,6 0 0,0 18,11V3H15.5V11A3.5,3.5 0 0,1 12,14.5A3.5,3.5 0 0,1 8.5,11V3H6V11A6,6 0 0,0 12,17Z"/>
+                                Data="M5,21H19V19H5V21M12,17A6,6 0 0,0 18,11V3H15.5V11A3.5,3.5 0 0,1 12,14.5A3.5,3.5 0 0,1 8.5,11V3H6V11A6,6 0 0,0 12,17Z" />
                     </Canvas>
                 </ToggleButton.Content>
             </ToggleButton>
@@ -200,7 +199,7 @@
                                   Canvas.Left="0" Canvas.Top="0"
                                   Stretch="Uniform"
                                   Fill="{DynamicResource ButtonFrontColorBrush}"
-                                  Data="M3,3H21V5H3V3M3,7H15V9H3V7M3,11H21V13H3V11M3,15H15V17H3V15M3,19H21V21H3V19Z"/>
+                                  Data="M3,3H21V5H3V3M3,7H15V9H3V7M3,11H21V13H3V11M3,15H15V17H3V15M3,19H21V21H3V19Z" />
                         </Canvas>
                     </RadioButton.Content>
                     <RadioButton.ToolTip>
@@ -219,7 +218,7 @@
                                   Canvas.Left="0" Canvas.Top="0"
                                   Stretch="Uniform"
                                   Fill="{DynamicResource ButtonFrontColorBrush}"
-                                  Data="M3,3H21V5H3V3M7,7H17V9H7V7M3,11H21V13H3V11M7,15H17V17H7V15M3,19H21V21H3V19Z"/>
+                                  Data="M3,3H21V5H3V3M7,7H17V9H7V7M3,11H21V13H3V11M7,15H17V17H7V15M3,19H21V21H3V19Z" />
                         </Canvas>
                     </RadioButton.Content>
                     <RadioButton.ToolTip>
@@ -238,7 +237,7 @@
                                   Canvas.Left="0" Canvas.Top="0"
                                   Stretch="Uniform"
                                   Fill="{DynamicResource ButtonFrontColorBrush}"
-                                  Data="M3,3H21V5H3V3M9,7H21V9H9V7M3,11H21V13H3V11M9,15H21V17H9V15M3,19H21V21H3V19Z"/>
+                                  Data="M3,3H21V5H3V3M9,7H21V9H9V7M3,11H21V13H3V11M9,15H21V17H9V15M3,19H21V21H3V19Z" />
                         </Canvas>
                     </RadioButton.Content>
                     <RadioButton.ToolTip>
@@ -257,7 +256,7 @@
                                   Canvas.Left="0" Canvas.Top="0"
                                   Stretch="Uniform"
                                   Fill="{DynamicResource ButtonFrontColorBrush}"
-                                  Data="M3,3H21V5H3V3M3,7H21V9H3V7M3,11H21V13H3V11M3,15H21V17H3V15M3,19H21V21H3V19Z"/>
+                                  Data="M3,3H21V5H3V3M3,7H21V9H3V7M3,11H21V13H3V11M3,15H21V17H3V15M3,19H21V21H3V19Z" />
                         </Canvas>
                     </RadioButton.Content>
                     <RadioButton.ToolTip>
@@ -277,8 +276,8 @@
             </Label>
             <Grid Grid.Column="0" Grid.Row="5">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
             <RadioButton x:Name="FlowDirLTR" Grid.Column="0" Grid.Row="0" Width="30" Height="30" Checked="FlowDirLTR_Checked" IsChecked="True"
                              Style="{DynamicResource RadioButtonsStyle}">
@@ -288,7 +287,7 @@
                                 Canvas.Left="0" Canvas.Top="0"
                                 Stretch="Uniform"
                                 Fill="{DynamicResource ButtonFrontColorBrush}"
-                                Data="M21,18L17,14V17H5V19H17V22M9,10V15H11V4H13V15H15V4H17V2H9A4,4 0 0,0 5,6A4,4 0 0,0 9,10Z"/>
+                                Data="M21,18L17,14V17H5V19H17V22M9,10V15H11V4H13V15H15V4H17V2H9A4,4 0 0,0 5,6A4,4 0 0,0 9,10Z" />
                     </Canvas>
                 </RadioButton.Content>
                 <RadioButton.ToolTip>
@@ -307,7 +306,7 @@
                             Canvas.Left="0" Canvas.Top="0"
                             Stretch="Uniform"
                             Fill="{DynamicResource ButtonFrontColorBrush}"
-                            Data="M8,17V14L4,18L8,22V19H20V17M10,10V15H12V4H14V15H16V4H18V2H10A4,4 0 0,0 6,6A4,4 0 0,0 10,10Z"/>
+                            Data="M8,17V14L4,18L8,22V19H20V17M10,10V15H12V4H14V15H16V4H18V2H10A4,4 0 0,0 6,6A4,4 0 0,0 10,10Z" />
                     </Canvas>
                 </RadioButton.Content>
                 <RadioButton.ToolTip>
@@ -319,9 +318,8 @@
                 </RadioButton.ToolTip>
             </RadioButton>
             </Grid>
-
         </Grid>
-        <ListBox x:Name="lstTypefaces" Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" ItemsSource="{Binding FamilyTypefaces}" Style="{DynamicResource ListBoxStyle}"/>
+        <ListBox x:Name="lstTypefaces" Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" ItemsSource="{Binding FamilyTypefaces}" Style="{DynamicResource ListBoxStyle}" />
 
         <Label Grid.Column="1" Grid.Row="1"
                        Style="{DynamicResource LabelStyle}">
@@ -329,8 +327,6 @@
                 <TextBlock Text="Font Style:" Style="{DynamicResource ToolTipTextStyle}" />
             </Label.Content>
         </Label>
-
-
 
         <Grid Grid.Column="1" Grid.Row="4" Grid.RowSpan="2">
             <Grid.RowDefinitions>
@@ -345,8 +341,8 @@
             </Grid.RowDefinitions>
             <Grid Grid.Column="1" Grid.Row="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="45"/>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="45" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0" Grid.Row="0"
                        Style="{DynamicResource LabelStyle}">
@@ -358,13 +354,13 @@
                               Grid.Column="1" Grid.Row="0"
                               SelectedColorChanged="ClrPcker_Font_SelectedColorChanged"
                               Style="{DynamicResource ColorPickerStyle2}"
-                              SelectedColor="Black"/>
+                              SelectedColor="Black" />
             </Grid>
 
             <Grid Grid.Column="0" Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="45"/>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="45" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0" Grid.Row="0"
                        Style="{DynamicResource LabelStyle}">
@@ -376,7 +372,7 @@
                                   Grid.Column="1" Grid.Row="0"
                                   SelectedColorChanged="ClrPcker_Bg_SelectedColorChanged"
                                   Style="{DynamicResource ColorPickerStyle2}"
-                                  SelectedColor="Transparent"/>
+                                  SelectedColor="Transparent" />
             </Grid>
 
                 <Label Grid.Column="0" Grid.Row="2"
@@ -405,7 +401,7 @@
                                   Canvas.Left="0" Canvas.Top="0"
                                   Stretch="Uniform"
                                   Fill="{DynamicResource ButtonFrontColorBrush}"
-                                  Data="M8,11H11V21H13V11H16L12,7L8,11M4,3V5H20V3H4Z"/>
+                                  Data="M8,11H11V21H13V11H16L12,7L8,11M4,3V5H20V3H4Z" />
                             </Canvas>
                         </RadioButton.Content>
                         <RadioButton.ToolTip>
@@ -424,7 +420,7 @@
                                   Canvas.Left="0" Canvas.Top="0"
                                   Stretch="Uniform"
                                   Fill="{DynamicResource ButtonFrontColorBrush}"
-                                  Data="M16,7.41L11.41,12L16,16.59L14.59,18L10,13.41L5.41,18L4,16.59L8.59,12L4,7.41L5.41,6L10,10.59L14.59,6L16,7.41M21.85,9H16.97V8L17.86,7.18C18.62,6.54 19.18,6 19.56,5.55C19.93,5.11 20.12,4.7 20.13,4.32C20.14,4.04 20.05,3.8 19.86,3.62C19.68,3.43 19.39,3.34 19,3.33C18.69,3.34 18.42,3.4 18.16,3.5L17.5,3.89L17.05,2.72C17.32,2.5 17.64,2.33 18.03,2.19C18.42,2.05 18.85,2 19.32,2C20.1,2 20.7,2.2 21.1,2.61C21.5,3 21.72,3.54 21.72,4.18C21.71,4.74 21.53,5.26 21.18,5.73C20.84,6.21 20.42,6.66 19.91,7.09L19.27,7.61V7.63H21.85V9Z"/>
+                                  Data="M16,7.41L11.41,12L16,16.59L14.59,18L10,13.41L5.41,18L4,16.59L8.59,12L4,7.41L5.41,6L10,10.59L14.59,6L16,7.41M21.85,9H16.97V8L17.86,7.18C18.62,6.54 19.18,6 19.56,5.55C19.93,5.11 20.12,4.7 20.13,4.32C20.14,4.04 20.05,3.8 19.86,3.62C19.68,3.43 19.39,3.34 19,3.33C18.69,3.34 18.42,3.4 18.16,3.5L17.5,3.89L17.05,2.72C17.32,2.5 17.64,2.33 18.03,2.19C18.42,2.05 18.85,2 19.32,2C20.1,2 20.7,2.2 21.1,2.61C21.5,3 21.72,3.54 21.72,4.18C21.71,4.74 21.53,5.26 21.18,5.73C20.84,6.21 20.42,6.66 19.91,7.09L19.27,7.61V7.63H21.85V9Z" />
                             </Canvas>
                         </RadioButton.Content>
                         <RadioButton.ToolTip>
@@ -443,7 +439,7 @@
                                   Canvas.Left="0" Canvas.Top="0"
                                   Stretch="Uniform"
                                   Fill="{DynamicResource ButtonFrontColorBrush}"
-                                  Data="M13,15L15.5,17.5L16.92,16.08L12,11.16L7.08,16.08L8.5,17.5L11,15V21H13V15M3,3H21V5H3V3M3,7H13V9H3V7Z"/>
+                                  Data="M13,15L15.5,17.5L16.92,16.08L12,11.16L7.08,16.08L8.5,17.5L11,15V21H13V15M3,3H21V5H3V3M3,7H13V9H3V7Z" />
                             </Canvas>
                         </RadioButton.Content>
                         <RadioButton.ToolTip>
@@ -462,7 +458,7 @@
                                   Canvas.Left="0" Canvas.Top="0"
                                   Stretch="Uniform"
                                   Fill="{DynamicResource ButtonFrontColorBrush}"
-                                  Data="M8,19H11V23H13V19H16L12,15L8,19M16,5H13V1H11V5H8L12,9L16,5M4,11V13H20V11H4Z"/>
+                                  Data="M8,19H11V23H13V19H16L12,15L8,19M16,5H13V1H11V5H8L12,9L16,5M4,11V13H20V11H4Z" />
                             </Canvas>
                         </RadioButton.Content>
                         <RadioButton.ToolTip>
@@ -482,7 +478,7 @@
                                   Canvas.Left="0" Canvas.Top="0"
                                   Stretch="Uniform"
                                   Fill="{DynamicResource ButtonFrontColorBrush}"
-                                  Data="M16,7.41L11.41,12L16,16.59L14.59,18L10,13.41L5.41,18L4,16.59L8.59,12L4,7.41L5.41,6L10,10.59L14.59,6L16,7.41M21.85,21.03H16.97V20.03L17.86,19.23C18.62,18.58 19.18,18.04 19.56,17.6C19.93,17.16 20.12,16.75 20.13,16.36C20.14,16.08 20.05,15.85 19.86,15.66C19.68,15.5 19.39,15.38 19,15.38C18.69,15.38 18.42,15.44 18.16,15.56L17.5,15.94L17.05,14.77C17.32,14.56 17.64,14.38 18.03,14.24C18.42,14.1 18.85,14 19.32,14C20.1,14.04 20.7,14.25 21.1,14.66C21.5,15.07 21.72,15.59 21.72,16.23C21.71,16.79 21.53,17.31 21.18,17.78C20.84,18.25 20.42,18.7 19.91,19.14L19.27,19.66V19.68H21.85V21.03Z"/>
+                                  Data="M16,7.41L11.41,12L16,16.59L14.59,18L10,13.41L5.41,18L4,16.59L8.59,12L4,7.41L5.41,6L10,10.59L14.59,6L16,7.41M21.85,21.03H16.97V20.03L17.86,19.23C18.62,18.58 19.18,18.04 19.56,17.6C19.93,17.16 20.12,16.75 20.13,16.36C20.14,16.08 20.05,15.85 19.86,15.66C19.68,15.5 19.39,15.38 19,15.38C18.69,15.38 18.42,15.44 18.16,15.56L17.5,15.94L17.05,14.77C17.32,14.56 17.64,14.38 18.03,14.24C18.42,14.1 18.85,14 19.32,14C20.1,14.04 20.7,14.25 21.1,14.66C21.5,15.07 21.72,15.59 21.72,16.23C21.71,16.79 21.53,17.31 21.18,17.78C20.84,18.25 20.42,18.7 19.91,19.14L19.27,19.66V19.68H21.85V21.03Z" />
                             </Canvas>
                         </RadioButton.Content>
                         <RadioButton.ToolTip>
@@ -501,7 +497,7 @@
                                   Canvas.Left="0" Canvas.Top="0"
                                   Stretch="Uniform"
                                   Fill="{DynamicResource ButtonFrontColorBrush}"
-                                  Data="M13,9L15.5,6.5L16.92,7.92L12,12.84L7.08,7.92L8.5,6.5L11,9V3H13V9M3,15H21V17H3V15M3,19H13V21H3V19Z"/>
+                                  Data="M13,9L15.5,6.5L16.92,7.92L12,12.84L7.08,7.92L8.5,6.5L11,9V3H13V9M3,15H21V17H3V15M3,19H13V21H3V19Z" />
                             </Canvas>
                         </RadioButton.Content>
                         <RadioButton.ToolTip>
@@ -520,7 +516,7 @@
                                   Canvas.Left="0" Canvas.Top="0"
                                   Stretch="Uniform"
                                   Fill="{DynamicResource ButtonFrontColorBrush}"
-                                  Data="M16,13H13V3H11V13H8L12,17L16,13M4,19V21H20V19H4Z"/>
+                                  Data="M16,13H13V3H11V13H8L12,17L16,13M4,19V21H20V19H4Z" />
                             </Canvas>
                         </RadioButton.Content>
                         <RadioButton.ToolTip>
@@ -539,7 +535,7 @@
                                   Canvas.Left="0" Canvas.Top="0"
                                   Stretch="Uniform"
                                   Fill="{DynamicResource ButtonFrontColorBrush}"
-                                  Data="M13,4A4,4 0 0,1 17,8A4,4 0 0,1 13,12H11V18H9V4H13M13,10A2,2 0 0,0 15,8A2,2 0 0,0 13,6H11V10H13Z"/>
+                                  Data="M13,4A4,4 0 0,1 17,8A4,4 0 0,1 13,12H11V18H9V4H13M13,10A2,2 0 0,0 15,8A2,2 0 0,0 13,6H11V10H13Z" />
                             </Canvas>
                         </RadioButton.Content>
                         <RadioButton.ToolTip>
@@ -551,7 +547,6 @@
                         </RadioButton.ToolTip>
                     </RadioButton>
                 </Grid>
-
             </Grid>
 
         <Label Grid.Column="3" Grid.Row="1"
@@ -645,7 +640,7 @@
                                   Canvas.Left="0" Canvas.Top="0"
                                   Stretch="Uniform"
                                   Fill="{DynamicResource ButtonFrontColorBrush}"
-                                  Data="F1 M 23.9999,54L 23.9999,29.25L 16,37.25L 16,26.75L 27.9999,14.75L 40,26.75L 40,37.25L 31.9999,29.25L 31.9999,54L 23.9999,54 Z M 52,22L 52,46.75L 60,38.75L 60,49.25L 48,61.25L 36,49.2499L 36,38.7499L 44,46.75L 44.0001,22L 52,22 Z "/>
+                                  Data="F1 M 23.9999,54L 23.9999,29.25L 16,37.25L 16,26.75L 27.9999,14.75L 40,26.75L 40,37.25L 31.9999,29.25L 31.9999,54L 23.9999,54 Z M 52,22L 52,46.75L 60,38.75L 60,49.25L 48,61.25L 36,49.2499L 36,38.7499L 44,46.75L 44.0001,22L 52,22 Z " />
                     </Canvas>
                 </Button.Content>
                 <Button.ToolTip>
@@ -675,8 +670,6 @@
                                     Value="{Binding Value, ElementName=lineHeightSlider}"
                                     ScrollViewer.VerticalScrollBarVisibility="Disabled" UpdateValueOnEnterKey="False" ShowButtonSpinner="False" AutoMoveFocus="True" />
             </Grid>
-
-
 
             <Button  Grid.Column="0" Grid.Row="5" Grid.RowSpan="2" Click="Apply_Click"
                      Style="{DynamicResource ButtonsStyle}" Width="70" Height="40">

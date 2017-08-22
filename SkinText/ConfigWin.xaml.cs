@@ -4,10 +4,12 @@ using System.Windows.Input;
 using System.Windows.Media;
 
 namespace SkinText {
+
     /// <summary>
     /// Lógica de interacción para ConfigWin.xaml
     /// </summary>
     public partial class ConfigWin : Window {
+
         public ConfigWin() {
             InitializeComponent();
         }
@@ -27,10 +29,10 @@ namespace SkinText {
                     this.DragMove();
                 }
                 catch (Exception ex) {
-                    #if DEBUG
+#if DEBUG
                     MessageBox.Show(ex.ToString());
                     //throw;
-                    #endif
+#endif
                     //System.InvalidOperationException
                     //dragdrop with only leftclick
                     //dragdrop must be with pressed click
@@ -50,6 +52,7 @@ namespace SkinText {
             CustomMethods.ChangeBrushResource(color, resource);
             color = null;
         }
+
         #endregion Colors
 
         #region Colors Legacy
@@ -128,7 +131,6 @@ namespace SkinText {
             CustomMethods.ChangeBrushResource(new SolidColorBrush(ClrPcker_ButtonBorderCheckedColorBrush.SelectedColor.Value), "ButtonBorderCheckedColorBrush");
         }
 
-
         private void ClrPcker_BorderColorBrush_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
             CustomMethods.ChangeBrushResource(new SolidColorBrush(ClrPcker_BorderColorBrush.SelectedColor.Value), "BorderColorBrush");
         }
@@ -140,6 +142,7 @@ namespace SkinText {
             CustomMethods.ChangeBrushResource(new SolidColorBrush(ClrPcker_MainWindowBackgroundColorBrush.SelectedColor.Value),"MainWindowBackgroundColorBrush");
         }
         */
+
         #endregion Colors Legacy
 
         #region Text
@@ -148,10 +151,10 @@ namespace SkinText {
             CustomMethods.RtbBorderSize(bordersize.Value);
         }
 
-
         private void FlipXButton_Checked(object sender, RoutedEventArgs e) {
             CustomMethods.RtbFlip(FlipXButton.IsChecked.Value, FlipYButton.IsChecked.Value);
         }
+
         private void ReadOnlyCheck_Checked(object sender, RoutedEventArgs e) {
             CustomMethods.RtbReadOnly(readOnlyCheck.IsChecked.Value);
         }
@@ -167,9 +170,11 @@ namespace SkinText {
         private void Spellcheck_Checked(object sender, RoutedEventArgs e) {
             CustomMethods.RtbSpellCheck(spellcheck.IsChecked.Value);
         }
+
         private void TextOpacityslider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
             CustomMethods.RtbOpacity(textopacityslider.Value / 100);
         }
+
         private void CornerRadius1Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
             CustomMethods.MainW.stackborder.CornerRadius = new CornerRadius(CornerRadius1Slider.Value, CornerRadius2Slider.Value, CornerRadius3Slider.Value, CornerRadius4Slider.Value);
         }
@@ -192,6 +197,7 @@ namespace SkinText {
                 System.Windows.Data.BindingOperations.ClearBinding(CornerRadius4Slider, System.Windows.Controls.Primitives.RangeBase.ValueProperty);
             }
         }
+
         private void TextWrap_Checked(object sender, RoutedEventArgs e) {
             CustomMethods.LineWrap(TextWrap.IsChecked.Value);
         }
@@ -201,7 +207,7 @@ namespace SkinText {
         }
 
         private void Autosavetimer_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
-            if (autosavetimersider.Value>0) {
+            if (autosavetimersider.Value > 0) {
                 CustomMethods.AutoSaveEnabled = true;
                 CustomMethods.AutoSaveTimer = (int)autosavetimersider.Value * 60 * 1000;
             }
@@ -217,15 +223,19 @@ namespace SkinText {
         private void Imagedir_Click(object sender, RoutedEventArgs e) {
             CustomMethods.OpenImage();
         }
+
         private void ClearImage_Click(object sender, RoutedEventArgs e) {
             CustomMethods.ImageClear();
         }
+
         private void Imageopacityslider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
             CustomMethods.WindowImageOpacity(imageopacityslider.Value / 100);
         }
+
         private void ImageBlurSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
             CustomMethods.BlurBgImage(imageBlurSlider.Value, ImageBlurGauss.IsChecked.Value);
         }
+
         private void ImageBlurBox_Checked(object sender, RoutedEventArgs e) {
             CustomMethods.BlurBgImage(imageBlurSlider.Value, ImageBlurGauss.IsChecked.Value);
         }
@@ -237,6 +247,7 @@ namespace SkinText {
         private void NotificationVisible_Unchecked(object sender, RoutedEventArgs e) {
             CustomMethods.WindowVisibleNotification(NotificationVisible.IsChecked.Value);
         }
+
         private void Alwaysontop_Unchecked(object sender, RoutedEventArgs e) {
             CustomMethods.WindowAlwaysOnTop(alwaysontop.IsChecked.Value);
         }
@@ -248,7 +259,6 @@ namespace SkinText {
         private void Taskbarvisible_Unchecked(object sender, RoutedEventArgs e) {
             CustomMethods.WindowVisibleTaskbar(taskbarvisible.IsChecked.Value);
         }
-
 
         private void WindowOpacityslider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
             CustomMethods.WindowOpacity(windowopacityslider.Value / 100);
@@ -263,6 +273,5 @@ namespace SkinText {
         }
 
         #endregion Window Config
-
     }
 }

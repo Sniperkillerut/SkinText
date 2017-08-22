@@ -6,14 +6,15 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace SkinText
-{
-    public class ResizingAdorner : Adorner
-    {
+namespace SkinText {
+
+    public class ResizingAdorner : Adorner {
+
         // Resizing adorner uses Thumbs for visual elements.
         // The Thumbs have built-in mouse input handling.
-        Thumb topLeft, topRight, bottomLeft, bottomRight;
-        readonly
+        private Thumb topLeft, topRight, bottomLeft, bottomRight;
+
+        private readonly
 
                 // To store and manage the adorner's visual children.
                 VisualCollection visualChildren;
@@ -38,11 +39,11 @@ namespace SkinText
         }
 
         // Handler for resizing from the bottom-right.
-        void HandleBottomRight(object sender, DragDeltaEventArgs args) {
+        private void HandleBottomRight(object sender, DragDeltaEventArgs args) {
             FrameworkElement adornedElement = this.AdornedElement as FrameworkElement;
             Thumb hitThumb = sender as Thumb;
 
-            if (adornedElement == null || hitThumb == null){
+            if (adornedElement == null || hitThumb == null) {
                 return;
             }
 
@@ -58,7 +59,7 @@ namespace SkinText
         }
 
         // Handler for resizing from the top-right.
-        void HandleTopRight(object sender, DragDeltaEventArgs args) {
+        private void HandleTopRight(object sender, DragDeltaEventArgs args) {
             FrameworkElement adornedElement = this.AdornedElement as FrameworkElement;
             Thumb hitThumb = sender as Thumb;
 
@@ -84,7 +85,7 @@ namespace SkinText
         }
 
         // Handler for resizing from the top-left.
-        void HandleTopLeft(object sender, DragDeltaEventArgs args) {
+        private void HandleTopLeft(object sender, DragDeltaEventArgs args) {
             FrameworkElement adornedElement = AdornedElement as FrameworkElement;
             Thumb hitThumb = sender as Thumb;
 
@@ -114,7 +115,7 @@ namespace SkinText
         }
 
         // Handler for resizing from the bottom-left.
-        void HandleBottomLeft(object sender, DragDeltaEventArgs args) {
+        private void HandleBottomLeft(object sender, DragDeltaEventArgs args) {
             FrameworkElement adornedElement = AdornedElement as FrameworkElement;
             Thumb hitThumb = sender as Thumb;
 
@@ -158,7 +159,7 @@ namespace SkinText
 
         // Helper method to instantiate the corner Thumbs, set the Cursor property,
         // set some appearance properties, and add the elements to the visual tree.
-        void BuildAdornerCorner(ref Thumb cornerThumb, Cursor customizedCursor) {
+        private void BuildAdornerCorner(ref Thumb cornerThumb, Cursor customizedCursor) {
             if (cornerThumb != null) {
                 return;
             }
@@ -178,7 +179,7 @@ namespace SkinText
         // This method ensures that the Widths and Heights are initialized.  Sizing to content produces
         // Width and Height values of Double.NaN.  Because this Adorner explicitly resizes, the Width and Height
         // need to be set first.  It also sets the maximum size of the adorned element.
-        void EnforceSize(FrameworkElement adornedElement) {
+        private void EnforceSize(FrameworkElement adornedElement) {
             if (adornedElement.Width.Equals(double.NaN)) {
                 adornedElement.Width = adornedElement.DesiredSize.Width;
             }
@@ -188,17 +189,18 @@ namespace SkinText
             }
 
             FrameworkElement parent = adornedElement.Parent as FrameworkElement;
-            if (parent != null)
-            {
+            if (parent != null) {
                 adornedElement.MaxHeight = parent.ActualHeight;
                 adornedElement.MaxWidth = parent.ActualWidth;
             }
         }
+
         // Override the VisualChildrenCount and GetVisualChild properties to interface with
         // the adorner's visual collection.
         protected override int VisualChildrenCount { get { return visualChildren.Count; } }
-        protected override Visual GetVisualChild(int index) { return visualChildren[index]; }
+
+        protected override Visual GetVisualChild(int index) {
+            return visualChildren[index];
+        }
     }
-
-
 }

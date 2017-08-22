@@ -36,7 +36,7 @@ namespace SkinText {
         private void Align_Checked(object sender, RoutedEventArgs e) {
             try {
                 System.Windows.Controls.RadioButton btn = (System.Windows.Controls.RadioButton)sender;
-                if (btn != null && btn.IsChecked.Value && txtSampleText!=null) {
+                if (btn != null && btn.IsChecked.Value && txtSampleText != null) {
                     switch (btn.Name) {
                         case nameof(leftAlign): {
                                 txtSampleText.Selection.Start.Paragraph.TextAlignment = TextAlignment.Left;
@@ -58,10 +58,10 @@ namespace SkinText {
                 }
             }
             catch (Exception ex) {
-                #if DEBUG
+#if DEBUG
                 MessageBox.Show(ex.ToString());
                 //throw;
-                #endif
+#endif
             }
         }
 
@@ -91,10 +91,10 @@ namespace SkinText {
                 }
             }
             catch (Exception ex) {
-                #if DEBUG
+#if DEBUG
                 MessageBox.Show(ex.ToString());
                 //throw;
-                #endif
+#endif
             }
         }
 
@@ -106,10 +106,10 @@ namespace SkinText {
                 }
             }
             catch (Exception ex) {
-                #if DEBUG
+#if DEBUG
                 MessageBox.Show(ex.ToString());
                 //throw;
-                #endif
+#endif
             }
         }
 
@@ -179,7 +179,7 @@ namespace SkinText {
         }
 
         private void FlowDirLTR_Checked(object sender, RoutedEventArgs e) {
-            if (txtSampleText !=null) {
+            if (txtSampleText != null) {
                 if (FlowDirLTR.IsChecked.Value) {
                     txtSampleText.FlowDirection = FlowDirection.LeftToRight;
                 }
@@ -188,6 +188,5 @@ namespace SkinText {
                 }
             }
         }
-
     }
 }

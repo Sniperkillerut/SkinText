@@ -6,21 +6,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Interop;
 
-namespace SkinText
-{
+namespace SkinText {
 
-    public partial class MainWindow : Window
-    {
+    public partial class MainWindow : Window {
         private FontConfig fontConf;
         private ConfigWin conf;
 
-        public MainWindow()
-        {
+        public MainWindow() {
             InitializeComponent();
         }
 
         public FontConfig FontConf { get => fontConf; set => fontConf = value; }
         public ConfigWin Conf { get => conf; set => conf = value; }
+
         public double[] FontSizes => new double[] {
             3.0, 4.0, 5.0, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5,
             10.0, 10.5, 11.0, 11.5, 12.0, 12.5, 13.0, 13.5, 14.0, 15.0,
@@ -59,7 +57,6 @@ namespace SkinText
             //set to false after the initial text_change that occur on first load
             CustomMethods.FileChanged = false;
 
-
             //Editing things
             _fontFamily.ItemsSource = System.Windows.Media.Fonts.SystemFontFamilies;
             _fontSize.ItemsSource = FontSizes;
@@ -67,7 +64,6 @@ namespace SkinText
             _fontSize.SelectedIndex = 23;
             DropDownFontColor.IsEnabled = false;
             DropDownFontBackColor.IsEnabled = false;
-
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
@@ -92,50 +88,42 @@ namespace SkinText
 
         #region menu
 
-        private void About_Click(object sender, RoutedEventArgs e)
-        {
+        private void About_Click(object sender, RoutedEventArgs e) {
             string version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
             MessageBox.Show("Version: " + version);
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        private void CharMap_Click(object sender, RoutedEventArgs e)
-        {
+        private void CharMap_Click(object sender, RoutedEventArgs e) {
             Process process = new Process();
-            try
-            {
+            try {
                 process.StartInfo.FileName = "charmap";
                 //process.StartInfo.Arguments = arguments;
                 //process.StartInfo.ErrorDialog = true;
                 //process.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
                 process.Start();
             }
-            catch (Exception ex)
-            {
-                #if DEBUG
+            catch (Exception ex) {
+#if DEBUG
                 MessageBox.Show(ex.ToString());
                 //throw;
-                #endif
+#endif
             }
-            finally
-            {
+            finally {
                 process.Dispose();
             }
             //process.WaitForExit(1000 * 60 * 5);    // Wait up to five minutes.
         }
 
-        private void Config_Click(object sender, RoutedEventArgs e)
-        {
+        private void Config_Click(object sender, RoutedEventArgs e) {
             Conf.Show();
         }
 
-        private void Donate_Click(object sender, RoutedEventArgs e)
-        {
+        private void Donate_Click(object sender, RoutedEventArgs e) {
             Process.Start("http://google.com");
         }
 
-        private void Font_Click(object sender, RoutedEventArgs e)
-        {
+        private void Font_Click(object sender, RoutedEventArgs e) {
             FontConf.Show();
         }
 
@@ -147,23 +135,20 @@ namespace SkinText
             CustomMethods.ToolBarVisible(ToolBarMenuItem.IsChecked);
         }
 
-        private void Menu_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
+        private void Menu_PreviewMouseDown(object sender, MouseButtonEventArgs e) {
             WindowInteropHelper helper = new WindowInteropHelper(window);
             IntPtr wparam = new IntPtr(2);
             IntPtr lparam = new IntPtr(0);
             NativeMethods.SendMessage(helper.Handle, 161, wparam, lparam);
         }
 
-        private void Panel_MouseLeave(object sender, MouseEventArgs e)
-        {
+        private void Panel_MouseLeave(object sender, MouseEventArgs e) {
             rtb.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
             rtb.HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden;
             menu.Visibility = Visibility.Collapsed;
         }
 
-        private void Resettodefaults_Click(object sender, RoutedEventArgs e)
-        {
+        private void Resettodefaults_Click(object sender, RoutedEventArgs e) {
             if (sender.Equals(resetToDefaultsTray)) {
                 MessageBox.Show("Ignore this");
                 //when called from tray icon the first msgbox is cancelled automaticly
@@ -172,45 +157,36 @@ namespace SkinText
             CustomMethods.SaveChanges(CustomMethods.ResetDefaults, new System.ComponentModel.CancelEventArgs(), "Reset to Defaults");
         }
 
-        private void Rtb_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.SystemKey.Equals(Key.LeftAlt) || e.Key.Equals(Key.LeftAlt) || e.SystemKey.Equals(Key.RightAlt) || e.Key.Equals(Key.RightAlt))
-            {
+        private void Rtb_KeyUp(object sender, KeyEventArgs e) {
+            if (e.SystemKey.Equals(Key.LeftAlt) || e.Key.Equals(Key.LeftAlt) || e.SystemKey.Equals(Key.RightAlt) || e.Key.Equals(Key.RightAlt)) {
                 //FIXME: fix weird menu visibility issues when pressing alt
                 menu.Visibility = Visibility.Visible;
             }
         }
 
-        private void Rtb_MouseMove(object sender, MouseEventArgs e)
-        {
+        private void Rtb_MouseMove(object sender, MouseEventArgs e) {
             Point m = e.GetPosition(rtb);
-            if (m.Y <= 10)
-            {
+            if (m.Y <= 10) {
                 menu.Visibility = Visibility.Visible;
             }
-            else if (m.Y > 20)
-            {
+            else if (m.Y > 20) {
                 menu.Visibility = Visibility.Collapsed;
             }
-            if (sender != ToolBarTray)
-            {
-                if (m.X >= panel.ActualWidth - 20)
-                {
+            if (sender != ToolBarTray) {
+                if (m.X >= panel.ActualWidth - 20) {
                     rtb.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
                 }
-                if ((rtb.Document.PageWidth >= panel.ActualWidth - 20) && (m.Y >= panel.ActualHeight - 20))
-                {
+                if ((rtb.Document.PageWidth >= panel.ActualWidth - 20) && (m.Y >= panel.ActualHeight - 20)) {
                     rtb.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
                 }
-                if ((m.X < panel.ActualWidth - 20) && (m.Y < panel.ActualHeight - 20))
-                {
+                if ((m.X < panel.ActualWidth - 20) && (m.Y < panel.ActualHeight - 20)) {
                     rtb.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
                     rtb.HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden;
                 }
             }
         }
 
-        #endregion Menu
+        #endregion menu
 
         private void Hyperlink_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
             if (Keyboard.IsKeyDown(Key.LeftCtrl)) {
@@ -221,8 +197,7 @@ namespace SkinText
             }
         }
 
-        private void Rtb_SelectionChanged(object sender, RoutedEventArgs e)
-        {
+        private void Rtb_SelectionChanged(object sender, RoutedEventArgs e) {
             //FontConf
             CustomMethods.RtbSelectionChanged();
             //ToolBar
@@ -232,22 +207,18 @@ namespace SkinText
             CustomMethods.UpdateSelectedFontSize();
             CustomMethods.UpdateSelectedFontFamily();
 
-            if (!DependencyProperty.UnsetValue.Equals(rtb.Selection.GetPropertyValue(TextElement.ForegroundProperty)))
-            {
+            if (!DependencyProperty.UnsetValue.Equals(rtb.Selection.GetPropertyValue(TextElement.ForegroundProperty))) {
                 System.Windows.Media.SolidColorBrush newBrush = (System.Windows.Media.SolidColorBrush)rtb.Selection.GetPropertyValue(TextElement.ForegroundProperty);
                 newBrush.Freeze();
                 ClrPcker_Font.SelectedColor = newBrush.Color;
             }
-            if (!DependencyProperty.UnsetValue.Equals(rtb.Selection.GetPropertyValue(TextElement.BackgroundProperty)))
-            {
+            if (!DependencyProperty.UnsetValue.Equals(rtb.Selection.GetPropertyValue(TextElement.BackgroundProperty))) {
                 System.Windows.Media.SolidColorBrush newBrush = (System.Windows.Media.SolidColorBrush)rtb.Selection.GetPropertyValue(TextElement.BackgroundProperty);
-                if (newBrush!=null)
-                {
+                if (newBrush != null) {
                     newBrush.Freeze();
                     ClrPcker_FontBack.SelectedColor = newBrush.Color;
                 }
-                else
-                {
+                else {
                     ClrPcker_FontBack.SelectedColor = System.Windows.Media.Colors.Transparent;
                 }
             }
@@ -256,21 +227,16 @@ namespace SkinText
             DropDownFontBackColor.IsEnabled = !rtb.Selection.IsEmpty;
         }
 
-        private void Rtb_TextChanged(object sender, TextChangedEventArgs e)
-        {
+        private void Rtb_TextChanged(object sender, TextChangedEventArgs e) {
             //creates a spam on first load, fixed on window_onLoad()
             CustomMethods.FileChanged = true;
-            if (CustomMethods.Filepath != null)
-            {
-                if (CustomMethods.Filepath.Length > 4)
-                {
-                    if (CustomMethods.FileChanged)
-                    {
+            if (CustomMethods.Filepath != null) {
+                if (CustomMethods.Filepath.Length > 4) {
+                    if (CustomMethods.FileChanged) {
                         if (CustomMethods.AutoSaveEnabled) {
-                            #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                             CustomMethods.DelayedSaveAsync();
-                            #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                         }
                     }
                 }
@@ -280,56 +246,47 @@ namespace SkinText
         #region Custom Commands
 
         // Check Custom Commands class
-        private void ExitCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
+        private void ExitCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
             e.CanExecute = true;
         }
 
-        private void ExitCommand_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
+        private void ExitCommand_Executed(object sender, ExecutedRoutedEventArgs e) {
             //Application.Current.Shutdown();
             this.Close();
         }
 
-        private void NewCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
+        private void NewCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
             e.CanExecute = true;
         }
 
-        private void NewCommand_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
+        private void NewCommand_Executed(object sender, ExecutedRoutedEventArgs e) {
             CustomMethods.SaveChanges(CustomMethods.NewFile, new System.ComponentModel.CancelEventArgs(), "New File");
         }
 
-        private void OpenCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
+        private void OpenCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
             e.CanExecute = true;
         }
 
-        private void OpenCommand_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
+        private void OpenCommand_Executed(object sender, ExecutedRoutedEventArgs e) {
             CustomMethods.SaveChanges(CustomMethods.OpenFile, new System.ComponentModel.CancelEventArgs(), "Open File");
         }
 
-        private void SaveAsCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
+        private void SaveAsCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
             e.CanExecute = true;
         }
 
-        private void SaveAsCommand_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
+        private void SaveAsCommand_Executed(object sender, ExecutedRoutedEventArgs e) {
             CustomMethods.Save(true);
         }
 
-        private void SaveCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
+        private void SaveCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
             e.CanExecute = true;
         }
 
-        private void SaveCommand_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
+        private void SaveCommand_Executed(object sender, ExecutedRoutedEventArgs e) {
             CustomMethods.Save(false);
         }
+
         #endregion Custom Commands
 
         #region Toolbar Buttons
@@ -345,7 +302,6 @@ namespace SkinText
         private void _btnFlowDir_Click(object sender, RoutedEventArgs e) {
             CustomMethods.ApplyFlowDir();
         }
-
 
         private void _fontSize_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             CustomMethods.ApplyFontSize(e);
@@ -387,10 +343,10 @@ namespace SkinText
                     }
                     catch (Exception ex) {
                         MessageBox.Show("Information is invalid", "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
-                        #if DEBUG
+#if DEBUG
                         MessageBox.Show(ex.ToString());
                         //throw;
-                        #endif
+#endif
                     }
                 }
                 else {
@@ -401,9 +357,10 @@ namespace SkinText
 
         #endregion Toolbar Buttons
 
-
         /////////////////////////////////////////////////////
+
         #region Easy Custom Opacity Mask
+
         /*
             <DockPanel.OpacityMask>
                 <VisualBrush>
@@ -421,6 +378,7 @@ namespace SkinText
                 </VisualBrush>
             </DockPanel.OpacityMask>
         */
+
         #endregion Easy Custom Opacity Mask
 
         #region get FileName test
@@ -513,7 +471,6 @@ namespace SkinText
 
         // Handler for element selection on the canvas providing resizing adorner
         public void MyCanvas_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
-
             Deselect();
 
             // If any element except canvas is clicked,
@@ -524,7 +481,6 @@ namespace SkinText
                 _startPoint = e.GetPosition(canvas);
 
                 selectedElement = e.Source as UIElement;
-
 
                 OriginalLeft = Canvas.GetLeft(selectedElement);
                 OriginalTop = Canvas.GetTop(selectedElement);
@@ -550,24 +506,23 @@ namespace SkinText
                 }
             }
         }
+
         ////////////////////////////////////////////
 
         public AdornerLayer aLayer;
 
-        bool _isDown;
-        bool _isDragging;
+        private bool _isDown;
+        private bool _isDragging;
         public bool selected;
         public UIElement selectedElement;
 
-        Point _startPoint;
+        private Point _startPoint;
         private double _originalLeft;
         private double _originalTop;
 
         public double OriginalLeft { get => _originalLeft; set => _originalLeft = value; }
         public double OriginalTop { get => _originalTop; set => _originalTop = value; }
 
-
         #endregion Rezise with Adorners
-
     }
 }
