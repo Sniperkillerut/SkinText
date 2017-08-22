@@ -21,6 +21,76 @@ namespace SkinText
 
         public FontConfig FontConf { get => fontConf; set => fontConf = value; }
         public ConfigWin Conf { get => conf; set => conf = value; }
+        public double[] FontSizes => new double[] {
+            3.0, 4.0, 5.0, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5,
+            10.0, 10.5, 11.0, 11.5, 12.0, 12.5, 13.0, 13.5, 14.0, 15.0,
+            16.0, 17.0, 18.0, 19.0, 20.0, 22.0, 24.0, 26.0, 28.0, 30.0,
+            32.0, 34.0, 36.0, 38.0, 40.0, 44.0, 48.0, 52.0, 56.0, 60.0, 64.0, 68.0, 72.0, 76.0,
+            80.0, 88.0, 96.0, 104.0, 112.0, 120.0, 128.0, 136.0, 144.0
+            };
+
+        #region General
+
+        private void Exit_Click(object sender, RoutedEventArgs e) {
+            this.Close();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
+            CustomMethods.SaveChanges(CustomMethods.ExitProgram, e, "Exit");
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e) {
+            CustomMethods.MainW = this;
+            FontConf = new FontConfig();
+            Conf = new ConfigWin();
+            //FontConf.Show(); FontConf.Hide();
+            //Conf.Show(); Conf.Hide();
+
+            //check what skin to use and load FrostHive/SkinText/SKIN01/skintext.ini
+            //skin information saved in FrostHive/SkinText/SKIN01/skin.ini
+            CustomMethods.AppDataPath = CustomMethods.GAppPath;
+
+            CustomMethods.GetSkin();
+
+            CustomMethods.LoadDefault();
+
+            CustomMethods.ReadConfig();
+
+            //set to false after the initial text_change that occur on first load
+            CustomMethods.FileChanged = false;
+
+
+            //Editing things
+            _fontFamily.ItemsSource = System.Windows.Media.Fonts.SystemFontFamilies;
+            _fontSize.ItemsSource = FontSizes;
+            _fontFamily.SelectedIndex = 0;
+            _fontSize.SelectedIndex = 23;
+            DropDownFontColor.IsEnabled = false;
+            DropDownFontBackColor.IsEnabled = false;
+
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e) {
+            if (Mouse.LeftButton == MouseButtonState.Pressed) {
+                try {
+                    this.DragMove();
+                }
+                catch (Exception ex) {
+#if DEBUG
+                    MessageBox.Show(ex.ToString());
+                    //throw;
+#endif
+                    //System.InvalidOperationException
+                    //dragdrop with only leftclick
+                    //dragdrop must be with pressed click
+                }
+            }
+        }
+
+        #endregion General
+
+        #region menu
 
         private void About_Click(object sender, RoutedEventArgs e)
         {
@@ -42,10 +112,10 @@ namespace SkinText
             }
             catch (Exception ex)
             {
-#if DEBUG
+                #if DEBUG
                 MessageBox.Show(ex.ToString());
                 //throw;
-#endif
+                #endif
             }
             finally
             {
@@ -64,34 +134,18 @@ namespace SkinText
             Process.Start("http://google.com");
         }
 
-        private void Exit_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
         private void Font_Click(object sender, RoutedEventArgs e)
         {
             FontConf.Show();
-        }
-
-        private void Hyperlink_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
-            if (Keyboard.IsKeyDown(Key.LeftCtrl)) {
-                Hyperlink hyperlink = (Hyperlink)sender;
-                if (hyperlink.NavigateUri != null) {
-                    Process.Start(hyperlink.NavigateUri.ToString());
-                }
-            }
         }
 
         private void LineWrapMenuItem_Click(object sender, RoutedEventArgs e) {
             CustomMethods.LineWrap(LineWrapMenuItem.IsChecked);
         }
 
-
         private void ToolBarMenuItem_Checked(object sender, RoutedEventArgs e) {
             CustomMethods.ToolBarVisible(ToolBarMenuItem.IsChecked);
         }
-
 
         private void Menu_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -112,6 +166,8 @@ namespace SkinText
         {
             if (sender.Equals(resetToDefaultsTray)) {
                 MessageBox.Show("Ignore this");
+                //when called from tray icon the first msgbox is cancelled automaticly
+                //still dont know why, seems to be a library issue, same error reported on the forum
             }
             CustomMethods.SaveChanges(CustomMethods.ResetDefaults, new System.ComponentModel.CancelEventArgs(), "Reset to Defaults");
         }
@@ -154,9 +210,22 @@ namespace SkinText
             }
         }
 
+        #endregion Menu
+
+        private void Hyperlink_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
+            if (Keyboard.IsKeyDown(Key.LeftCtrl)) {
+                Hyperlink hyperlink = (Hyperlink)sender;
+                if (hyperlink.NavigateUri != null) {
+                    Process.Start(hyperlink.NavigateUri.ToString());
+                }
+            }
+        }
+
         private void Rtb_SelectionChanged(object sender, RoutedEventArgs e)
         {
+            //FontConf
             CustomMethods.RtbSelectionChanged();
+            //ToolBar
             CustomMethods.UpdateToggleButtonState();
             CustomMethods.UpdateDecorators();
             CustomMethods.UpdateSelectionListType();
@@ -207,85 +276,6 @@ namespace SkinText
                 }
             }
         }
-
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            CustomMethods.SaveChanges(CustomMethods.ExitProgram, e, "Exit");
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            CustomMethods.MainW = this;
-            FontConf = new FontConfig();
-            Conf = new ConfigWin();
-            //FontConf.Show(); FontConf.Hide();
-            //Conf.Show(); Conf.Hide();
-            //AppDataPath = ((App)Application.Current).GAppPath;
-            //read FrostHive/SkinText/default.ini
-            //check what skin to use and load FrostHive/SkinText/SKIN01/skintext.ini
-            //skin information saved in FrostHive/SkinText/SKIN01/skin.ini
-            CustomMethods.AppDataPath = CustomMethods.GAppPath;
-
-            CustomMethods.GetSkin();
-
-            //CustomMethods.AppDataPath = App.GAppPath+@"\skinfolder";
-            CustomMethods.LoadDefault();
-
-            CustomMethods.ReadConfig();
-            //grid.UpdateLayout();
-            //set to false after the initial text_change that occur on first load
-            CustomMethods.FileChanged = false;
-
-
-            //Editing things
-            _fontFamily.ItemsSource = System.Windows.Media.Fonts.SystemFontFamilies;
-            _fontSize.ItemsSource = FontSizes;
-            _fontFamily.SelectedIndex = 0;
-            _fontSize.SelectedIndex = 23;
-            DropDownFontColor.IsEnabled = false;
-            DropDownFontBackColor.IsEnabled = false;
-
-        }
-
-        public double[] FontSizes => new double[] {
-            3.0, 4.0, 5.0, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5,
-            10.0, 10.5, 11.0, 11.5, 12.0, 12.5, 13.0, 13.5, 14.0, 15.0,
-            16.0, 17.0, 18.0, 19.0, 20.0, 22.0, 24.0, 26.0, 28.0, 30.0,
-            32.0, 34.0, 36.0, 38.0, 40.0, 44.0, 48.0, 52.0, 56.0, 60.0, 64.0, 68.0, 72.0, 76.0,
-            80.0, 88.0, 96.0, 104.0, 112.0, 120.0, 128.0, 136.0, 144.0
-            };
-
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (Mouse.LeftButton == MouseButtonState.Pressed)
-            {
-                try
-                {
-                    this.DragMove();
-                }
-                catch (Exception ex)
-                {
-                    #if DEBUG
-                    MessageBox.Show(ex.ToString());
-                    //throw;
-                    #endif
-                    //System.InvalidOperationException
-                    //dragdrop with only leftclick
-                    //dragdrop must be with pressed click
-                }
-            }
-        }
-
-
-
-
-
-
-
-
-
 
         #region Custom Commands
 
@@ -341,6 +331,8 @@ namespace SkinText
             CustomMethods.Save(false);
         }
         #endregion Custom Commands
+
+        #region Toolbar Buttons
 
         private void _btnLine_Clicked(object sender, RoutedEventArgs e) {
             CustomMethods.ApplyTextDecorators();
@@ -407,6 +399,7 @@ namespace SkinText
             }
         }
 
+        #endregion Toolbar Buttons
 
 
         /////////////////////////////////////////////////////
@@ -467,6 +460,7 @@ namespace SkinText
         #endregion get FileName test
 
         ///////////////////////////////////////////////////////////////////////////////
+
         #region Rezise with Adorners
 
         // Handler for drag stopping on leaving the window

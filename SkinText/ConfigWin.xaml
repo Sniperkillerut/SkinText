@@ -294,7 +294,7 @@
                         </Label>
                         <xctk:ColorPicker x:Name="ClrPcker_BackgroundColorBrush"
                           Grid.Column="1" Grid.Row="1"
-                          SelectedColorChanged="ClrPcker_BackgroundColorBrush_SelectedColorChanged"
+                          SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
                           DisplayColorAndName="True" ColorMode="ColorCanvas"/>
 
@@ -303,17 +303,17 @@
                         </Label>
                         <xctk:ColorPicker x:Name="ClrPcker_ButtonBackgroundColorBrush"
                           Grid.Column="1" Grid.Row="2"
-                          SelectedColorChanged="ClrPcker_ButtonBackgroundColorBrush_SelectedColorChanged"
+                          SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
                           DisplayColorAndName="True" ColorMode="ColorCanvas"/>
                         <xctk:ColorPicker x:Name="ClrPcker_ButtonBackgroundMouseOverColorBrush"
                           Grid.Column="2" Grid.Row="2"
-                          SelectedColorChanged="ClrPcker_ButtonBackgroundMouseOverColorBrush_SelectedColorChanged"
+                          SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
                           DisplayColorAndName="True" ColorMode="ColorCanvas"/>
                         <xctk:ColorPicker x:Name="ClrPcker_ButtonBackgroundCheckedColorBrush"
                           Grid.Column="3" Grid.Row="2"
-                          SelectedColorChanged="ClrPcker_ButtonBackgroundCheckedColorBrush_SelectedColorChanged"
+                          SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
                           DisplayColorAndName="True" ColorMode="ColorCanvas"/>
                         <Label Grid.Column="0" Grid.Row="3">
@@ -321,12 +321,12 @@
                         </Label>
                         <xctk:ColorPicker x:Name="ClrPcker_ButtonBorderMouseOverColorBrush"
                           Grid.Column="2" Grid.Row="3"
-                          SelectedColorChanged="ClrPcker_ButtonBorderMouseOverColorBrush_SelectedColorChanged"
+                          SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
                           DisplayColorAndName="True" ColorMode="ColorCanvas"/>
                         <xctk:ColorPicker x:Name="ClrPcker_ButtonBorderCheckedColorBrush"
                           Grid.Column="3" Grid.Row="3"
-                          SelectedColorChanged="ClrPcker_ButtonBorderCheckedColorBrush_SelectedColorChanged"
+                          SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
                           DisplayColorAndName="True" ColorMode="ColorCanvas"/>
                         <Label Grid.Column="0" Grid.Row="4">
@@ -334,7 +334,7 @@
                         </Label>
                         <xctk:ColorPicker x:Name="ClrPcker_ButtonFrontColorBrush"
                           Grid.Column="1" Grid.Row="4"
-                          SelectedColorChanged="ClrPcker_ButtonFrontColorBrush_SelectedColorChanged"
+                          SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
                           DisplayColorAndName="True" ColorMode="ColorCanvas"/>
                         <Label Grid.Column="0" Grid.Row="5">
@@ -342,7 +342,7 @@
                         </Label>
                         <xctk:ColorPicker x:Name="ClrPcker_TextColorBrush"
                           Grid.Column="1" Grid.Row="5"
-                          SelectedColorChanged="ClrPcker_TextColorBrush_SelectedColorChanged"
+                          SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
                           DisplayColorAndName="True" ColorMode="ColorCanvas"/>
 
@@ -351,17 +351,17 @@
                         </Label>
                         <xctk:ColorPicker x:Name="ClrPcker_FontPickBackgroundColorBrush"
                           Grid.Column="1" Grid.Row="6"
-                          SelectedColorChanged="ClrPcker_FontPickBackgroundColorBrush_SelectedColorChanged"
+                          SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
                           DisplayColorAndName="True" ColorMode="ColorCanvas"/>
                         <xctk:ColorPicker x:Name="ClrPcker_FontPickMouseOverBackgroundColorBrush"
                           Grid.Column="2" Grid.Row="6"
-                          SelectedColorChanged="ClrPcker_FontPickMouseOverBackgroundColorBrush_SelectedColorChanged"
+                          SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
                           DisplayColorAndName="True" ColorMode="ColorCanvas"/>
                         <xctk:ColorPicker x:Name="ClrPcker_FontPickSelectedBackgroundColorBrush"
                           Grid.Column="3" Grid.Row="6"
-                          SelectedColorChanged="ClrPcker_FontPickSelectedBackgroundColorBrush_SelectedColorChanged"
+                          SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
                           DisplayColorAndName="True" ColorMode="ColorCanvas"/>
                         <Label Grid.Column="0" Grid.Row="7">
@@ -369,20 +369,20 @@
                         </Label>
                         <xctk:ColorPicker x:Name="ClrPcker_FontPickMouseOverBorderColorBrush"
                           Grid.Column="2" Grid.Row="7"
-                          SelectedColorChanged="ClrPcker_FontPickMouseOverBorderColorBrush_SelectedColorChanged"
+                          SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
                           DisplayColorAndName="True" ColorMode="ColorCanvas"/>
                         <xctk:ColorPicker x:Name="ClrPcker_FontPickSelectedBorderColorBrush"
                           Grid.Column="3" Grid.Row="7"
-                          SelectedColorChanged="ClrPcker_FontPickSelectedBorderColorBrush_SelectedColorChanged"
+                          SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
                           DisplayColorAndName="True" ColorMode="ColorCanvas"/>
                         <Label Grid.Column="0" Grid.Row="8">
                             <TextBlock Text="FontPicker Text: " Style="{DynamicResource ToolTipTextStyle}" />
                         </Label>
                         <xctk:ColorPicker x:Name="ClrPcker_FontPickTextColorBrush"
-                          Grid.Column="1" Grid.Row="89"
-                          SelectedColorChanged="ClrPcker_FontPickTextColorBrush_SelectedColorChanged"
+                          Grid.Column="1" Grid.Row="8"
+                          SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
                           DisplayColorAndName="True" ColorMode="ColorCanvas"/>
                         <Label Grid.Column="0" Grid.Row="9">
@@ -390,7 +390,7 @@
                         </Label>
                         <xctk:ColorPicker x:Name="ClrPcker_MenuBackgroundColorBrush"
                           Grid.Column="1" Grid.Row="9"
-                          SelectedColorChanged="ClrPcker_MenuBackgroundColorBrush_SelectedColorChanged"
+                          SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
                           DisplayColorAndName="True" ColorMode="ColorCanvas"/>
 
@@ -399,7 +399,7 @@
                         </Label>
                         <xctk:ColorPicker x:Name="ClrPcker_MenuItem1BorderColorBrush"
                           Grid.Column="1" Grid.Row="10"
-                          SelectedColorChanged="ClrPcker_MenuItem1BorderColorBrush_SelectedColorChanged"
+                          SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
                           DisplayColorAndName="True" ColorMode="ColorCanvas"/>
 
@@ -408,7 +408,7 @@
                         </Label>
                         <xctk:ColorPicker x:Name="ClrPcker_MenuItem2HighlightTextColorBrush"
                           Grid.Column="2" Grid.Row="11"
-                          SelectedColorChanged="ClrPcker_MenuItem2HighlightTextColorBrush_SelectedColorChanged"
+                          SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
                           DisplayColorAndName="True" ColorMode="ColorCanvas"/>
 
@@ -417,7 +417,7 @@
                         </Label>
                         <xctk:ColorPicker x:Name="ClrPcker_MenuItem2HighlightBorderColorBrush"
                           Grid.Column="2" Grid.Row="12"
-                          SelectedColorChanged="ClrPcker_MenuItem2HighlightBorderColorBrush_SelectedColorChanged"
+                          SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
                           DisplayColorAndName="True" ColorMode="ColorCanvas"/>
 
@@ -426,7 +426,7 @@
                         </Label>
                         <xctk:ColorPicker x:Name="ClrPcker_MenuItem2DisabledColorBrush"
                           Grid.Column="1" Grid.Row="13"
-                          SelectedColorChanged="ClrPcker_MenuItem2DisabledColorBrush_SelectedColorChanged"
+                          SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
                           DisplayColorAndName="True" ColorMode="ColorCanvas"/>
 
@@ -435,7 +435,7 @@
                         </Label>
                         <xctk:ColorPicker x:Name="ClrPcker_MainWindowBackgroundColorBrush"
                           Grid.Column="1" Grid.Row="14"
-                          SelectedColorChanged="ClrPcker_MainWindowBackgroundColorBrush_SelectedColorChanged"
+                          SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
                           DisplayColorAndName="True" ColorMode="ColorCanvas"/>
                         <Label Grid.Column="0" Grid.Row="15">
@@ -443,7 +443,7 @@
                         </Label>
                         <xctk:ColorPicker x:Name="ClrPcker_RTBBackgroundColorBrush"
                           Grid.Column="1" Grid.Row="15"
-                          SelectedColorChanged="ClrPcker_RTBBackgroundColorBrush_SelectedColorChanged"
+                          SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
                           DisplayColorAndName="True" ColorMode="ColorCanvas"/>
                         <Label Grid.Column="0" Grid.Row="16">
@@ -451,7 +451,7 @@
                         </Label>
                         <xctk:ColorPicker x:Name="ClrPcker_BorderColorBrush"
                           Grid.Column="1" Grid.Row="16"
-                          SelectedColorChanged="ClrPcker_BorderColorBrush_SelectedColorChanged"
+                          SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
                           DisplayColorAndName="True" ColorMode="ColorCanvas"/>
 

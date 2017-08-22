@@ -57,6 +57,8 @@ namespace SkinText {
         public static string Imagepath { get => imagepath; set => imagepath = value; }
         public static MainWindow MainW { get => mainW; set => mainW = value; }
 
+        #region Bg Image
+
         /// <summary>
         /// Correct way to load an image and release it from the Hdd, also allows to unload it from memory effectively
         /// </summary>
@@ -75,15 +77,151 @@ namespace SkinText {
         }
 
         /// <summary>
-        /// <para>Closes <see cref="MainWindow.FontConf"/> and <see cref="ConfigWin"/>, then calls <see cref="SaveConfig"/></para>
-        /// Called from <see cref="MainWindow.Window_Closing"/>
+        /// Clears, Disposes, Makes null, Unload, Frees from memory and HDD the loaded image
         /// </summary>
-        public static void ExitProgram() {
-            MainW.FontConf.Close();
-            MainW.Conf.Close();
-            SaveConfig();
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.GC.Collect")]
+        public static void ImageClear() {
+            string oldpath = Imagepath;
+            Imagepath = "";
+            MainW.backgroundimg.Source = null;
+            WpfAnimatedGif.ImageBehavior.SetAnimatedSource(MainW.backgroundimg, null);
+            XamlAnimatedGif.AnimationBehavior.SetSourceUri(MainW.backgroundimg, null);
+            XamlAnimatedGif.AnimationBehavior.SetSourceStream(MainW.backgroundimg, null);
+            if (MainW.window.Background.ToString() == Colors.Transparent.ToString()) {
+                MainW.Conf.ClrPcker_MainWindowBackgroundColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#85949494");
+            }
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
+            try
+            {
+                if (File.Exists(oldpath))
+                {
+                    File.Delete(oldpath);
+                }
+            }
+            catch (Exception ex)
+            {
+                #if DEBUG
+                MessageBox.Show(ex.ToString());
+                //throw;
+                #endif
+            }
         }
 
+        /// <summary>
+        /// Will try to load <paramref name="imagepath"/> into <see cref="MainWindow.backgroundimg"/> and set <see cref="Imagepath"/> to either <paramref name="imagepath"/> or "" (<see cref="string.Empty"/>)
+        /// </summary>
+        /// <param name="imagepath"></param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+        public static void LoadImage(string imagepath) {
+            try {
+                if (File.Exists(imagepath)) {
+                    Uri uri = new Uri(imagepath);
+                    if (Path.GetExtension(imagepath).ToUpperInvariant() == ".GIF") {
+                        if (MainW.Conf.GifMethodCPU.IsChecked.Value) {//CPU Method
+                            XamlAnimatedGif.AnimationBehavior.SetSourceUri(MainW.backgroundimg, uri);
+                        }
+                        else {//RAM Method
+                            ImageSource bitmap = BitmapFromUri(uri);
+                            bitmap.Freeze();
+                            WpfAnimatedGif.ImageBehavior.SetAnimatedSource(MainW.backgroundimg, bitmap);
+                            bitmap = null;
+                        }
+                    }
+                    else {//default (no gif animation)
+                        ImageSource bitmap = BitmapFromUri(uri);
+                        bitmap.Freeze();
+                        MainW.backgroundimg.Source = bitmap;
+                        bitmap = null;
+                    }
+                    //imagedir.Content = newImagePath.Substring(newImagePath.LastIndexOf("\\")+1);
+                    //imagedir.ToolTip = newImagePath;
+                    if (MainW.Conf.ClrPcker_MainWindowBackgroundColorBrush.SelectedColor.Value.A == 255) {
+                        MainW.Conf.ClrPcker_MainWindowBackgroundColorBrush.SelectedColor = Color.Subtract(MainW.Conf.ClrPcker_MainWindowBackgroundColorBrush.SelectedColor.Value, Color.FromArgb(155, 0, 0, 0));
+                    }
+                    //MainW.WinConfig.ClrPcker_WindowBackground.SelectedColor = Colors.Transparent;
+                    uri = null;
+                    Imagepath = imagepath; //set Global Imagepath
+                }
+                else {
+                    throw new FileNotFoundException("Error: File not found", imagepath);
+                }
+            }
+            catch (Exception ex) {
+                if (!string.IsNullOrWhiteSpace(imagepath)) {
+                    MessageBox.Show("Failed to Load Image:\r\n " + imagepath, "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
+                }
+                ImageClear();
+#if DEBUG
+                MessageBox.Show(ex.ToString());
+                //throw;
+#endif
+            }
+        }
+
+        /// <summary>
+        /// Calls a <see cref="OpenFileDialog"/> to select the image to load
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+        public static void OpenImage() {
+            OpenFileDialog openFileDialog = new OpenFileDialog() {
+                Multiselect = false,
+                CheckFileExists = true,
+                CheckPathExists = true,
+                ValidateNames = true,
+                RestoreDirectory = true,
+                Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png, *.gif) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png; *.gif"
+            };
+            //openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            if (openFileDialog.ShowDialog() == true) {
+                try {
+                    string currentImagepath = openFileDialog.FileName;
+                    string newImagePath = AppDataPath + CurrentSkin + @"\bgImg" + Path.GetExtension(currentImagepath);//+ Path.GetFileName(imagepath);
+                    ImageClear();
+                    File.Copy(currentImagepath, newImagePath, true);
+
+                    LoadImage(newImagePath);
+                }
+                catch (Exception ex) {
+                    #if DEBUG
+                        MessageBox.Show(ex.ToString());
+                        //throw;
+                    #endif
+                }
+            }
+            else {
+                ImageClear();
+                //imagedir.Content = par.imagepath.Substring(par.imagepath.LastIndexOf("\\") + 1); // "" when imagepath is empty
+                //imagedir.ToolTip = par.imagepath;
+            }
+        }
+
+        /// <summary>
+        /// Sets the <see cref="MainWindow.backgroundimg"/> opacity to <paramref name="opacity"/>
+        /// </summary>
+        /// <param name="opacity"></param>
+        public static void WindowImageOpacity(double opacity) {
+            MainW.backgroundimg.Opacity = opacity;
+        }
+
+        public static void BlurBgImage(double blurVal, bool gauss) {
+            System.Windows.Media.Effects.BlurEffect blur = new System.Windows.Media.Effects.BlurEffect {
+                Radius = blurVal
+            };
+            if (gauss) {
+                blur.KernelType = System.Windows.Media.Effects.KernelType.Gaussian;
+
+            }
+            else {
+                blur.KernelType = System.Windows.Media.Effects.KernelType.Box;
+            }
+            mainW.backgroundimg.Effect = blur;
+
+        }
+
+        #endregion Bg Image
+
+        #region Config File
 
         /// <summary>
         /// Reads Config.ini and sets wich skin to use
@@ -119,38 +257,6 @@ namespace SkinText {
                 // The appdata folders dont exist
                 //can be first open, let default values
                 CurrentSkin = @"\Default";
-                #if DEBUG
-                MessageBox.Show(ex.ToString());
-                //throw;
-                #endif
-            }
-        }
-
-        /// <summary>
-        /// Clears, Disposes, Makes null, Unload, Frees from memory and HDD the loaded image
-        /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.GC.Collect")]
-        public static void ImageClear() {
-            string oldpath = Imagepath;
-            Imagepath = "";
-            MainW.backgroundimg.Source = null;
-            WpfAnimatedGif.ImageBehavior.SetAnimatedSource(MainW.backgroundimg, null);
-            XamlAnimatedGif.AnimationBehavior.SetSourceUri(MainW.backgroundimg, null);
-            XamlAnimatedGif.AnimationBehavior.SetSourceStream(MainW.backgroundimg, null);
-            if (MainW.window.Background.ToString() == Colors.Transparent.ToString()) {
-                MainW.Conf.ClrPcker_MainWindowBackgroundColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#85949494");
-            }
-            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
-            try
-            {
-                if (File.Exists(oldpath))
-                {
-                    File.Delete(oldpath);
-                }
-            }
-            catch (Exception ex)
-            {
                 #if DEBUG
                 MessageBox.Show(ex.ToString());
                 //throw;
@@ -223,10 +329,11 @@ namespace SkinText {
             */
             #endregion Legacy styles
 
+            #region Legacy color reset method
+            /*
             Application.Current.Resources["BorderColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF424242"));
             Application.Current.Resources["MainWindowBackgroundColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#55FFFFFF"));
             Application.Current.Resources["RTBBackgroundColor"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#7DFFFFFF"));
-
             Application.Current.Resources["BackgroundColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF1C1C1C"));
             Application.Current.Resources["ButtonBackgroundColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF262626"));
             Application.Current.Resources["ButtonFrontColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFE6E6E6"));
@@ -249,8 +356,6 @@ namespace SkinText {
             Application.Current.Resources["MenuItem2HighlightBorderColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFDB6929"));
             Application.Current.Resources["MenuItem2DisabledColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#73696969"));
 
-
-
             //text bg color
 
             //Colors:
@@ -262,6 +367,10 @@ namespace SkinText {
                 MainW.Conf.ClrPcker_ButtonBackgroundCheckedColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("ButtonBackgroundCheckedColorBrush")).Color;
                 MainW.Conf.ClrPcker_ButtonBackgroundColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("ButtonBackgroundColorBrush")).Color;
                 MainW.Conf.ClrPcker_ButtonBackgroundMouseOverColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("ButtonBackgroundMouseOverColorBrush")).Color;
+
+                MainW.Conf.ClrPcker_ButtonBorderMouseOverColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("ButtonBorderMouseOverColorBrush")).Color;
+                MainW.Conf.ClrPcker_ButtonBorderCheckedColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("ButtonBorderCheckedColorBrush")).Color;
+                MainW.Conf.ClrPcker_ButtonFrontColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("ButtonFrontColorBrush")).Color;
                 MainW.Conf.ClrPcker_FontPickBackgroundColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("FontPickBackgroundColorBrush")).Color;
                 MainW.Conf.ClrPcker_FontPickMouseOverBackgroundColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("FontPickMouseOverBackgroundColorBrush")).Color;
                 MainW.Conf.ClrPcker_FontPickMouseOverBorderColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("FontPickMouseOverBorderColorBrush")).Color;
@@ -274,9 +383,35 @@ namespace SkinText {
                 MainW.Conf.ClrPcker_MenuItem2HighlightTextColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("MenuItem2HighlightTextColorBrush")).Color;
                 MainW.Conf.ClrPcker_TextColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("TextColorBrush")).Color;
                 MainW.Conf.ClrPcker_FontPickTextColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("FontPickTextColorBrush")).Color;
-                MainW.Conf.ClrPcker_ButtonFrontColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("ButtonFrontColorBrush")).Color;
-                MainW.Conf.ClrPcker_ButtonBorderMouseOverColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("ButtonBorderMouseOverColorBrush")).Color;
-                MainW.Conf.ClrPcker_ButtonBorderCheckedColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("ButtonBorderCheckedColorBrush")).Color;
+            */
+            #endregion Legacy color reset method
+
+            MainW.Conf.ClrPcker_BorderColorBrush.SelectedColor                      = (Color)ColorConverter.ConvertFromString("#FF424242");
+            MainW.Conf.ClrPcker_MainWindowBackgroundColorBrush.SelectedColor        = (Color)ColorConverter.ConvertFromString("#55FFFFFF");
+            MainW.Conf.ClrPcker_RTBBackgroundColorBrush.SelectedColor               = (Color)ColorConverter.ConvertFromString("#7DFFFFFF");
+
+            MainW.Conf.ClrPcker_BackgroundColorBrush.SelectedColor                  = (Color)ColorConverter.ConvertFromString("#FF1C1C1C");
+            MainW.Conf.ClrPcker_ButtonBackgroundColorBrush.SelectedColor            = (Color)ColorConverter.ConvertFromString("#FF262626");
+            MainW.Conf.ClrPcker_ButtonFrontColorBrush.SelectedColor                 = (Color)ColorConverter.ConvertFromString("#FFE6E6E6");
+            MainW.Conf.ClrPcker_ButtonBackgroundMouseOverColorBrush.SelectedColor   = (Color)ColorConverter.ConvertFromString("#FF00B5FF");
+            MainW.Conf.ClrPcker_ButtonBorderMouseOverColorBrush.SelectedColor       = (Color)ColorConverter.ConvertFromString("#FFE6E6E6");
+            MainW.Conf.ClrPcker_ButtonBackgroundCheckedColorBrush.SelectedColor     = (Color)ColorConverter.ConvertFromString("#CD000000");
+            MainW.Conf.ClrPcker_ButtonBorderCheckedColorBrush.SelectedColor         = (Color)ColorConverter.ConvertFromString("#FF808080");
+            MainW.Conf.ClrPcker_TextColorBrush.SelectedColor                        = (Color)ColorConverter.ConvertFromString("#FF808080");
+
+            MainW.Conf.ClrPcker_FontPickBackgroundColorBrush.SelectedColor          = (Color)ColorConverter.ConvertFromString("#23696969");
+            MainW.Conf.ClrPcker_FontPickTextColorBrush.SelectedColor                = (Color)ColorConverter.ConvertFromString("#FFE6E6E6");
+            MainW.Conf.ClrPcker_FontPickMouseOverBackgroundColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#FF000000");
+            MainW.Conf.ClrPcker_FontPickMouseOverBorderColorBrush.SelectedColor     = (Color)ColorConverter.ConvertFromString("#FF00B5FF");
+            MainW.Conf.ClrPcker_FontPickSelectedBackgroundColorBrush.SelectedColor  = (Color)ColorConverter.ConvertFromString("#8C000000");
+            MainW.Conf.ClrPcker_FontPickSelectedBorderColorBrush.SelectedColor      = (Color)ColorConverter.ConvertFromString("#FFDB6929");
+
+            MainW.Conf.ClrPcker_MenuBackgroundColorBrush.SelectedColor              = (Color)ColorConverter.ConvertFromString("#C9000000");
+            MainW.Conf.ClrPcker_MenuItem1BorderColorBrush.SelectedColor             = (Color)ColorConverter.ConvertFromString("#00FFFFFF");
+            MainW.Conf.ClrPcker_MenuItem2HighlightTextColorBrush.SelectedColor      = (Color)ColorConverter.ConvertFromString("#FF00B5FF");
+            MainW.Conf.ClrPcker_MenuItem2HighlightBorderColorBrush.SelectedColor    = (Color)ColorConverter.ConvertFromString("#FFDB6929");
+            MainW.Conf.ClrPcker_MenuItem2DisabledColorBrush.SelectedColor           = (Color)ColorConverter.ConvertFromString("#73696969");
+
 
             //rotation angle
                 MainW.Conf.slValue.Value = 0;
@@ -298,8 +433,6 @@ namespace SkinText {
                 MainW.Conf.textopacityslider.Value = 100;
 
             //Auto Save Timer
-                AutoSaveTimer = 5 * 60 * 1000;
-                AutoSaveEnabled = true;
                 MainW.Conf.autosavetimersider.Value = 5;
 
             //window Checkboxes
@@ -327,125 +460,6 @@ namespace SkinText {
                 MainW.Conf.FlipXButton.IsChecked = false;
                 MainW.Conf.FlipYButton.IsChecked = false;
 
-        }
-
-        /// <summary>
-        /// Will try to load <paramref name="imagepath"/> into <see cref="MainWindow.backgroundimg"/> and set <see cref="Imagepath"/> to either <paramref name="imagepath"/> or "" (<see cref="string.Empty"/>)
-        /// </summary>
-        /// <param name="imagepath"></param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        public static void LoadImage(string imagepath) {
-            try {
-                if (File.Exists(imagepath)) {
-                    Uri uri = new Uri(imagepath);
-                    if (Path.GetExtension(imagepath).ToUpperInvariant() == ".GIF") {
-                        if (MainW.Conf.GifMethodCPU.IsChecked.Value) {//CPU Method
-                            XamlAnimatedGif.AnimationBehavior.SetSourceUri(MainW.backgroundimg, uri);
-                        }
-                        else {//RAM Method
-                            ImageSource bitmap = BitmapFromUri(uri);
-                            bitmap.Freeze();
-                            WpfAnimatedGif.ImageBehavior.SetAnimatedSource(MainW.backgroundimg, bitmap);
-                            bitmap = null;
-                        }
-                    }
-                    else {//default (no gif animation)
-                        ImageSource bitmap = BitmapFromUri(uri);
-                        bitmap.Freeze();
-                        MainW.backgroundimg.Source = bitmap;
-                        bitmap = null;
-                    }
-                    //imagedir.Content = newImagePath.Substring(newImagePath.LastIndexOf("\\")+1);
-                    //imagedir.ToolTip = newImagePath;
-                    if (MainW.Conf.ClrPcker_MainWindowBackgroundColorBrush.SelectedColor.Value.A == 255) {
-                        MainW.Conf.ClrPcker_MainWindowBackgroundColorBrush.SelectedColor = Color.Subtract(MainW.Conf.ClrPcker_MainWindowBackgroundColorBrush.SelectedColor.Value, Color.FromArgb(155, 0, 0, 0));
-                    }
-                    //MainW.WinConfig.ClrPcker_WindowBackground.SelectedColor = Colors.Transparent;
-                    uri = null;
-                    Imagepath = imagepath; //set Global Imagepath
-                }
-                else {
-                    throw new FileNotFoundException("Error: File not found", imagepath);
-                }
-            }
-            catch (Exception ex) {
-                if (!string.IsNullOrWhiteSpace(imagepath)) {
-                    MessageBox.Show("Failed to Load Image:\r\n " + imagepath, "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
-                }
-                ImageClear();
-#if DEBUG
-                MessageBox.Show(ex.ToString());
-                //throw;
-#endif
-            }
-        }
-
-        /// <summary>
-        /// <para>Sets internal vars ready for empty file usage</para>
-        /// Called from <see cref="MainWindow.NewCommand_Executed"/>
-        /// </summary>
-        public static void NewFile() {
-            Filepath = "";
-            MainW.MenuFileName.Header = "";
-            MainW.rtb.Document = new FlowDocument() {
-                LineStackingStrategy = LineStackingStrategy.BlockLineHeight
-            };
-            FileChanged = false;
-        }
-
-        /// <summary>
-        /// <para>Calls an <see cref="OpenFileDialog"/> then calls <see cref="ReadFile"/></para>
-        /// Called from <see cref="MainWindow.OpenCommand_Executed"/>
-        /// </summary>
-        public static void OpenFile() {
-            OpenFileDialog openFileDialog = new OpenFileDialog() {
-                Multiselect = false,
-                CheckFileExists = true,
-                CheckPathExists = true,
-                ValidateNames = true,
-                RestoreDirectory = true,
-                Filter = "Text files (*.txt, *.rtf, *.xaml, *.xamlp) | *.txt; *.rtf; *.xaml; *.xamlp"
-            };
-            if (openFileDialog.ShowDialog() == true) {
-                ReadFile(openFileDialog.FileName);
-            }
-        }
-
-        /// <summary>
-        /// Calls a <see cref="OpenFileDialog"/> to select the image to load
-        /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        public static void OpenImage() {
-            OpenFileDialog openFileDialog = new OpenFileDialog() {
-                Multiselect = false,
-                CheckFileExists = true,
-                CheckPathExists = true,
-                ValidateNames = true,
-                RestoreDirectory = true,
-                Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png, *.gif) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png; *.gif"
-            };
-            //openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            if (openFileDialog.ShowDialog() == true) {
-                try {
-                    string currentImagepath = openFileDialog.FileName;
-                    string newImagePath = AppDataPath + CurrentSkin + @"\bgImg" + Path.GetExtension(currentImagepath);//+ Path.GetFileName(imagepath);
-                    ImageClear();
-                    File.Copy(currentImagepath, newImagePath, true);
-
-                    LoadImage(newImagePath);
-                }
-                catch (Exception ex) {
-                    #if DEBUG
-                        MessageBox.Show(ex.ToString());
-                        //throw;
-                    #endif
-                }
-            }
-            else {
-                ImageClear();
-                //imagedir.Content = par.imagepath.Substring(par.imagepath.LastIndexOf("\\") + 1); // "" when imagepath is empty
-                //imagedir.ToolTip = par.imagepath;
-            }
         }
 
         /// <summary>
@@ -884,302 +898,6 @@ namespace SkinText {
         }
 
         /// <summary>
-        /// <para>
-        /// Checks if <paramref name="pathToFile"/> is valid and then loads it to <see cref="MainWindow.rtb"/>
-        /// </para>
-        /// Called from <see cref="OpenFile"/> and <see cref="ReadConfig"/>
-        /// </summary>
-        /// <param name="pathToFile"></param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        public static void ReadFile(string pathToFile) {
-            try {
-                if (File.Exists(pathToFile)) {
-                    TextRange range = new TextRange(MainW.rtb.Document.ContentStart, MainW.rtb.Document.ContentEnd);
-                    using (FileStream fStream = new FileStream(pathToFile, FileMode.OpenOrCreate)) {
-                        switch (Path.GetExtension(pathToFile).ToUpperInvariant()) {
-                            case (".RTF"): {
-                                    range.Load(fStream, DataFormats.Rtf);
-                                    break;
-                                }
-                            case (".TXT"): {
-                                    range.Load(fStream, DataFormats.Text);
-                                    break;
-                                }
-                            case (".XAML"): {
-                                    range.Load(fStream, DataFormats.Xaml);
-                                    break;
-                                }
-                            case (".XAMLP"): {
-                                    range.Load(fStream, DataFormats.XamlPackage);
-                                    break;
-                                }
-                            default: {//TODO: if no format open as txt, or should throw error?
-                                    range.Load(fStream, DataFormats.Text);
-                                    break;
-                                }
-                        }
-                        //set global vars
-                        Filepath = pathToFile;
-                        MainW.MenuFileName.Header = Path.GetFileName(pathToFile);
-                        FileChanged = false;
-                        MainW.rtb.Document.LineStackingStrategy = LineStackingStrategy.BlockLineHeight;
-                    }
-                }
-                else {
-                    throw new FileNotFoundException("Error: File not found", pathToFile);
-                }
-            }
-            catch (Exception ex) {
-                if (!string.IsNullOrWhiteSpace(pathToFile)) {
-                    MessageBox.Show("Failed to Open File:\r\n " + pathToFile, "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
-                }
-                NewFile();
-                #if DEBUG
-                MessageBox.Show(ex.ToString());
-                //throw;
-                #endif
-            }
-        }
-
-        /// <summary>
-        /// <para>Called from <see cref="MainWindow.Resettodefaults_Click"/> using <see cref="SaveChanges"/></para>
-        /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:No pasar cadenas literal como parámetros localizados", MessageId = "System.Windows.MessageBox.Show(System.String,System.String,System.Windows.MessageBoxButton,System.Windows.MessageBoxImage,System.Windows.MessageBoxResult)")]
-        public static void ResetDefaults() {
-            switch (MessageBox.Show("This will reset ALL configuration\r\n Are you sure?", "Reset To Defaults", MessageBoxButton.YesNo, MessageBoxImage.Exclamation,MessageBoxResult.No))
-            {
-                case (MessageBoxResult.Yes):
-                    {
-                        LoadDefault();
-                        //MainW.grid.UpdateLayout();
-                        break;
-                    }
-                case MessageBoxResult.No:
-                    {
-                        break;
-                    }
-            }
-        }
-
-        /// <summary>
-        /// Flips the <see cref="MainWindow.rtb"/>
-        /// <para>
-        /// <see cref="ScaleTransform"/> takes doubles and scale the RTB to those values, with -1 fliping it and 1 being default
-        /// </para>
-        /// </summary>
-        /// <param name="flipX"></param>
-        /// <param name="flipY"></param>
-        public static void RtbFlip(bool flipX, bool flipY) {
-            MainW.FontConf.txtSampleText.RenderTransform = MainW.stackborder.RenderTransform = new ScaleTransform(flipX ? -1 : 1, flipY ? -1 : 1);
-        }
-
-        /// <summary>
-        /// Sets the <see cref="MainWindow.rtb"/> opacity to <paramref name="opacity"/>
-        /// </summary>
-        /// <param name="opacity"></param>
-        public static void RtbOpacity(double opacity) {
-            MainW.rtb.Opacity = opacity;
-        }
-
-        /// <summary>
-        /// Sets the <see cref="MainWindow.rtb"/> IsReadOnly state
-        /// </summary>
-        /// <param name="readOnly"></param>
-        public static void RtbReadOnly(bool readOnly) {
-            MainW.rtb.IsReadOnly = readOnly;
-            MainW.rtb.IsReadOnlyCaretVisible = !readOnly;
-            MainW.rtb.IsInactiveSelectionHighlightEnabled = !readOnly;
-        }
-
-        /// <summary>
-        ///Rotates the <see cref="MainWindow.grid"/> to <paramref name="angle"/> and <see cref="MainWindow.backgroundimg"/> to the oposite direction to mantain it straight
-        ///<para>On some cases bugs <see cref="MainWindow.backgroundimg"/> when resize borders are enabled</para>
-        /// </summary>
-        /// <param name="angle"></param>
-        public static void RtbRotate(double angle) {
-            MainW.TitleBorder.RenderTransform = new RotateTransform(angle);
-            //rotateTransform = new RotateTransform(-angle);
-            //MainW.backgroundimg.RenderTransform = rotateTransform;
-        }
-
-        /// <summary>
-        /// Whenever the <see cref="MainWindow.rtb"/> selection is changed, it is neccesary to read current text selection information and display it on <see cref="FontConfig"/> window
-        /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        public static void RtbSelectionChanged() {
-            if (MainW.FontConf.Visibility == Visibility.Visible) {
-                try {
-                    if (MainW.rtb.Selection != null && MainW.rtb.Selection.Start.Paragraph != null) {
-                        TextRange selectionTextRange = new TextRange(MainW.rtb.Selection.Start, MainW.rtb.Selection.End);
-
-                        RtbSelectionChangedBGColor(selectionTextRange);
-                        RtbSelectionChangedFontColor(selectionTextRange);
-                        RtbSelectionChangedFontSize(selectionTextRange);
-                        RtbSelectionChangedLineHeight(selectionTextRange);
-                        RtbSelectionChangedFontFamily(selectionTextRange);
-                        RtbSelectionChangedFontType(selectionTextRange);
-                        RtbSelectionChangedTextAlignment(selectionTextRange);
-                        RtbSelectionChangedFlowDirection(selectionTextRange);
-                        RtbSelectionChangedBaselineAlignment(selectionTextRange);
-                        RtbSelectionChangedTextDecorations(selectionTextRange);
-                    }
-                }
-                catch (Exception ex) {
-                    #if DEBUG
-                    MessageBox.Show(ex.ToString());
-                    //throw;
-                    #endif
-                }
-            }
-        }
-
-        /// <summary>
-        /// Sets the <see cref="MainWindow.rtb"/> SpellCheck.IsEnabled state
-        /// </summary>
-        /// <param name="enabled"></param>
-        public static void RtbSpellCheck(bool enabled) {
-            MainW.rtb.SpellCheck.IsEnabled = enabled;
-        }
-
-        /// <summary>
-        /// Saves the Open File, default extension: .xalmp
-        /// <para>
-        /// <paramref name="saveas"/>: True = Save As, False = save as <see cref="Filepath"/> name
-        /// </para>
-        /// </summary>
-        /// <param name="saveas"> True = Save As, False = save as <see cref="Filepath"/> name</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:No pasar cadenas literal como parámetros localizados", MessageId = "System.Windows.MessageBox.Show(System.String,System.String,System.Windows.MessageBoxButton,System.Windows.MessageBoxImage,System.Windows.MessageBoxResult,System.Windows.MessageBoxOptions)")]
-        public static void Save(bool saveas) {
-            bool skip = false;
-            if (!saveas && Filepath.Length < 4) {//checks for complete filenames instead of just .rtf or .xaml //should be "" because it is validated in other places too but just in case
-                saveas = true;
-            }
-            if (saveas) {
-                SaveFileDialog savedialog = new SaveFileDialog() {
-                    CreatePrompt = true,
-                    OverwritePrompt = true,
-                    CheckPathExists = true,
-                    ValidateNames = true,
-                    RestoreDirectory = true,
-                    Filter = "XAML Package (*.xamlp)|*.xamlp|Rich Text File (*.rtf)|*.rtf|XAML File (*.xaml)|*.xaml|Text file (*.txt)|*.txt"
-                };
-                if (Filepath.Length < 4) {//checks for complete filenames instead of just .rtf or .xaml //should be "" because it is validate in other places too but just in case
-                    savedialog.FileName = "Notes";
-                }
-                else {
-                    savedialog.FileName = Path.GetFileName(Filepath);
-                }
-
-                if (savedialog.ShowDialog() == true) {
-                    Filepath = savedialog.FileName;
-                    MainW.MenuFileName.Header = Path.GetFileName(Filepath);
-                }
-                else
-                {
-                    skip = true;
-                }
-            }
-            if (!skip)
-            {
-                try
-                {
-                    TextRange t = new TextRange(MainW.rtb.Document.ContentStart, MainW.rtb.Document.ContentEnd);
-                    using (FileStream file = new FileStream(Filepath, FileMode.Create))
-                    {
-                        switch (Path.GetExtension(Filepath).ToUpperInvariant())
-                        {
-                            case (".RTF"):
-                                {
-                                    t.Save(file, DataFormats.Rtf);
-                                    break;
-                                }
-                            case (".TXT"):
-                                {
-                                    t.Save(file, DataFormats.Text);
-                                    break;
-                                }
-                            case (".XAML"):
-                                {
-                                    t.Save(file, DataFormats.Xaml);
-                                    break;
-                                }
-                            case (".XAMLP"):
-                                {//TODO: change extension to skintext and register it to open with defaults
-                                    t.Save(file, DataFormats.XamlPackage);
-                                    break;
-                                }
-                            default:
-                                {//ths should never hapen
-                                    throw new FileFormatException();
-                                }
-                        }
-                        FileChanged = false;
-                        SaveConfig();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Failed to Write File", "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
-                    #if DEBUG
-                    MessageBox.Show(ex.ToString());
-                    //throw;
-                    #endif
-                }
-            }
-        }
-
-        private static bool _isSaving;
-        public static bool AutoSaveEnabled=true;
-        public async static System.Threading.Tasks.Task DelayedSaveAsync() {
-            // if already waiting, get out
-            if (_isSaving) {
-                return;
-            }
-            _isSaving = true;
-            await System.Threading.Tasks.Task.Delay(AutoSaveTimer);
-            Save(false);
-            _isSaving = false;
-        }
-
-        /// <summary>
-        /// Checks if there are unsaved changes and asks the user what to do, then calls the <paramref name="fileFunc"/> sent (must be <see cref="void"/>)
-        /// <para>
-        /// <paramref name="txtBoxTitle"/> is the <see cref="MessageBox"/> Caption <see cref="string"/>
-        /// </para>
-        /// </summary>
-        /// <param name="fileFunc"> <see cref="Action"/> Method to be called must be <see cref="void"/></param>
-        /// <param name="e"> <see cref="System.ComponentModel.CancelEventArgs"/> to cancel <see cref="Window.Close"/></param>
-        /// <param name="txtBoxTitle"> <see cref="MessageBox"/> Caption <see cref="string"/></param>
-        public static void SaveChanges(Action fileFunc, System.ComponentModel.CancelEventArgs e, string txtBoxTitle) {
-            if (fileFunc != null) {
-                if (FileChanged) {
-                    switch (MessageBox.Show("There are unsaved Changes to: \r\n" + Filepath + "\r\nDo you want to save?", txtBoxTitle, MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation, MessageBoxResult.Cancel)) {
-                        case (MessageBoxResult.Yes): {
-                                Save(false);
-                                fileFunc();
-                                break;
-                            }
-                        case MessageBoxResult.No: {
-                                fileFunc();
-                                break;
-                            }
-                        case MessageBoxResult.Cancel: {
-                                //do nothing
-                                if (e != null) {
-                                    e.Cancel = true;
-                                }
-                                break;
-                            }
-                    }
-                }
-                else {
-                    fileFunc();
-                }
-            }
-        }
-
-        /// <summary>
         /// Saves SkinText config into SkinText.ini in /appdata
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
@@ -1194,46 +912,46 @@ namespace SkinText {
                     string data;
 
                     //window_position
-                        data = "window_position = " + MainW.window.Top.ToString(System.Globalization.CultureInfo.InvariantCulture) + " , " + MainW.window.Left.ToString(System.Globalization.CultureInfo.InvariantCulture);
-                        writer.WriteLine(data);
+                    data = "window_position = " + MainW.window.Top.ToString(System.Globalization.CultureInfo.InvariantCulture) + " , " + MainW.window.Left.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                    writer.WriteLine(data);
 
                     //window_size
-                        data = "window_size = " + MainW.window.Width.ToString(System.Globalization.CultureInfo.InvariantCulture) + " , " + MainW.window.Height.ToString(System.Globalization.CultureInfo.InvariantCulture);
-                        writer.WriteLine(data);
+                    data = "window_size = " + MainW.window.Width.ToString(System.Globalization.CultureInfo.InvariantCulture) + " , " + MainW.window.Height.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                    writer.WriteLine(data);
 
                     //border_size
-                        data = "border_size = " + Math.Floor(MainW.Conf.bordersize.Value).ToString(System.Globalization.CultureInfo.InvariantCulture);
-                        writer.WriteLine(data);
+                    data = "border_size = " + Math.Floor(MainW.Conf.bordersize.Value).ToString(System.Globalization.CultureInfo.InvariantCulture);
+                    writer.WriteLine(data);
 
                     //text_size
-                        data = "text_size = " +
-                        MainW.TitleBorder.Width.ToString() + " , " +
-                        MainW.TitleBorder.Height.ToString();
-                        writer.WriteLine(data);
+                    data = "text_size = " +
+                    MainW.TitleBorder.Width.ToString() + " , " +
+                    MainW.TitleBorder.Height.ToString();
+                    writer.WriteLine(data);
 
                     //text_position
-                        data = "text_position = " +
-                        System.Windows.Controls.Canvas.GetLeft(MainW.TitleBorder).ToString() + " , " +
-                        System.Windows.Controls.Canvas.GetTop(MainW.TitleBorder).ToString();
-                        writer.WriteLine(data);
+                    data = "text_position = " +
+                    System.Windows.Controls.Canvas.GetLeft(MainW.TitleBorder).ToString() + " , " +
+                    System.Windows.Controls.Canvas.GetTop(MainW.TitleBorder).ToString();
+                    writer.WriteLine(data);
 
                     //text_corner_radius_locked
-                        data = "text_corner_radius_locked = " +
-                        MainW.Conf.lockSlidersCheckbox.IsChecked.Value.ToString();
-                        writer.WriteLine(data);
+                    data = "text_corner_radius_locked = " +
+                    MainW.Conf.lockSlidersCheckbox.IsChecked.Value.ToString();
+                    writer.WriteLine(data);
 
                     //text_max_corner_radius
-                        data = "text_max_corner_radius = " +
-                        MainW.Conf.CornerMax.Value.ToString();
-                        writer.WriteLine(data);
+                    data = "text_max_corner_radius = " +
+                    MainW.Conf.CornerMax.Value.ToString();
+                    writer.WriteLine(data);
 
                     //text_corner_radius
-                        data = "text_corner_radius = " +
-                        MainW.Conf.CornerRadius1Slider.Value.ToString() + " , " +
-                        MainW.Conf.CornerRadius2Slider.Value.ToString() + " , " +
-                        MainW.Conf.CornerRadius3Slider.Value.ToString() + " , " +
-                        MainW.Conf.CornerRadius4Slider.Value.ToString();
-                        writer.WriteLine(data);
+                    data = "text_corner_radius = " +
+                    MainW.Conf.CornerRadius1Slider.Value.ToString() + " , " +
+                    MainW.Conf.CornerRadius2Slider.Value.ToString() + " , " +
+                    MainW.Conf.CornerRadius3Slider.Value.ToString() + " , " +
+                    MainW.Conf.CornerRadius4Slider.Value.ToString();
+                    writer.WriteLine(data);
 
 
 
@@ -1452,15 +1170,463 @@ namespace SkinText {
                     */
             }
             catch (Exception ex) {
-                #if DEBUG
+#if DEBUG
                 MessageBox.Show(ex.ToString());
                 //throw;
-                #endif
+#endif
             }
             finally {
                 fs?.Dispose();
             }
         }
+
+        #endregion Config File
+
+        #region File
+
+        /// <summary>
+        /// <para>Sets internal vars ready for empty file usage</para>
+        /// Called from <see cref="MainWindow.NewCommand_Executed"/>
+        /// </summary>
+        public static void NewFile() {
+            Filepath = "";
+            MainW.MenuFileName.Header = "";
+            MainW.rtb.Document = new FlowDocument() {
+                LineStackingStrategy = LineStackingStrategy.BlockLineHeight
+            };
+            FileChanged = false;
+        }
+
+        /// <summary>
+        /// <para>Calls an <see cref="OpenFileDialog"/> then calls <see cref="ReadFile"/></para>
+        /// Called from <see cref="MainWindow.OpenCommand_Executed"/>
+        /// </summary>
+        public static void OpenFile() {
+            OpenFileDialog openFileDialog = new OpenFileDialog() {
+                Multiselect = false,
+                CheckFileExists = true,
+                CheckPathExists = true,
+                ValidateNames = true,
+                RestoreDirectory = true,
+                Filter = "Text files (*.txt, *.rtf, *.xaml, *.xamlp) | *.txt; *.rtf; *.xaml; *.xamlp"
+            };
+            if (openFileDialog.ShowDialog() == true) {
+                ReadFile(openFileDialog.FileName);
+            }
+        }
+
+        /// <summary>
+        /// <para>
+        /// Checks if <paramref name="pathToFile"/> is valid and then loads it to <see cref="MainWindow.rtb"/>
+        /// </para>
+        /// Called from <see cref="OpenFile"/> and <see cref="ReadConfig"/>
+        /// </summary>
+        /// <param name="pathToFile"></param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+        public static void ReadFile(string pathToFile) {
+            try {
+                if (File.Exists(pathToFile)) {
+                    TextRange range = new TextRange(MainW.rtb.Document.ContentStart, MainW.rtb.Document.ContentEnd);
+                    using (FileStream fStream = new FileStream(pathToFile, FileMode.OpenOrCreate)) {
+                        switch (Path.GetExtension(pathToFile).ToUpperInvariant()) {
+                            case (".RTF"): {
+                                    range.Load(fStream, DataFormats.Rtf);
+                                    break;
+                                }
+                            case (".TXT"): {
+                                    range.Load(fStream, DataFormats.Text);
+                                    break;
+                                }
+                            case (".XAML"): {
+                                    range.Load(fStream, DataFormats.Xaml);
+                                    break;
+                                }
+                            case (".XAMLP"): {
+                                    range.Load(fStream, DataFormats.XamlPackage);
+                                    break;
+                                }
+                            default: {//TODO: if no format open as txt, or should throw error?
+                                    range.Load(fStream, DataFormats.Text);
+                                    break;
+                                }
+                        }
+                        //set global vars
+                        Filepath = pathToFile;
+                        MainW.MenuFileName.Header = Path.GetFileName(pathToFile);
+                        FileChanged = false;
+                        MainW.rtb.Document.LineStackingStrategy = LineStackingStrategy.BlockLineHeight;
+                    }
+                }
+                else {
+                    throw new FileNotFoundException("Error: File not found", pathToFile);
+                }
+            }
+            catch (Exception ex) {
+                if (!string.IsNullOrWhiteSpace(pathToFile)) {
+                    MessageBox.Show("Failed to Open File:\r\n " + pathToFile, "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
+                }
+                NewFile();
+                #if DEBUG
+                MessageBox.Show(ex.ToString());
+                //throw;
+                #endif
+            }
+        }
+
+        /// <summary>
+        /// Saves the Open File, default extension: .xalmp
+        /// <para>
+        /// <paramref name="saveas"/>: True = Save As, False = save as <see cref="Filepath"/> name
+        /// </para>
+        /// </summary>
+        /// <param name="saveas"> True = Save As, False = save as <see cref="Filepath"/> name</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:No pasar cadenas literal como parámetros localizados", MessageId = "System.Windows.MessageBox.Show(System.String,System.String,System.Windows.MessageBoxButton,System.Windows.MessageBoxImage,System.Windows.MessageBoxResult,System.Windows.MessageBoxOptions)")]
+        public static void Save(bool saveas) {
+            bool skip = false;
+            if (!saveas && Filepath.Length < 4) {//checks for complete filenames instead of just .rtf or .xaml //should be "" because it is validated in other places too but just in case
+                saveas = true;
+            }
+            if (saveas) {
+                SaveFileDialog savedialog = new SaveFileDialog() {
+                    CreatePrompt = true,
+                    OverwritePrompt = true,
+                    CheckPathExists = true,
+                    ValidateNames = true,
+                    RestoreDirectory = true,
+                    Filter = "XAML Package (*.xamlp)|*.xamlp|Rich Text File (*.rtf)|*.rtf|XAML File (*.xaml)|*.xaml|Text file (*.txt)|*.txt"
+                };
+                if (Filepath.Length < 4) {//checks for complete filenames instead of just .rtf or .xaml //should be "" because it is validate in other places too but just in case
+                    savedialog.FileName = "Notes";
+                }
+                else {
+                    savedialog.FileName = Path.GetFileName(Filepath);
+                }
+
+                if (savedialog.ShowDialog() == true) {
+                    Filepath = savedialog.FileName;
+                    MainW.MenuFileName.Header = Path.GetFileName(Filepath);
+                }
+                else {
+                    skip = true;
+                }
+            }
+            if (!skip) {
+                try {
+                    TextRange t = new TextRange(MainW.rtb.Document.ContentStart, MainW.rtb.Document.ContentEnd);
+                    using (FileStream file = new FileStream(Filepath, FileMode.Create)) {
+                        switch (Path.GetExtension(Filepath).ToUpperInvariant()) {
+                            case (".RTF"): {
+                                    t.Save(file, DataFormats.Rtf);
+                                    break;
+                                }
+                            case (".TXT"): {
+                                    t.Save(file, DataFormats.Text);
+                                    break;
+                                }
+                            case (".XAML"): {
+                                    t.Save(file, DataFormats.Xaml);
+                                    break;
+                                }
+                            case (".XAMLP"): {//TODO: change extension to skintext and register it to open with defaults
+                                    t.Save(file, DataFormats.XamlPackage);
+                                    break;
+                                }
+                            default: {//ths should never hapen
+                                    throw new FileFormatException();
+                                }
+                        }
+                        FileChanged = false;
+                        SaveConfig();
+                    }
+                }
+                catch (Exception ex) {
+                    MessageBox.Show("Failed to Write File", "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
+#if DEBUG
+                    MessageBox.Show(ex.ToString());
+                    //throw;
+#endif
+                }
+            }
+        }
+
+        private static bool _isSaving;
+        public static bool AutoSaveEnabled = true;
+        public async static System.Threading.Tasks.Task DelayedSaveAsync() {
+            // if already waiting, get out
+            if (_isSaving) {
+                return;
+            }
+            _isSaving = true;
+            await System.Threading.Tasks.Task.Delay(AutoSaveTimer);
+            Save(false);
+            _isSaving = false;
+        }
+
+        #endregion File
+
+        #region General
+
+        /// <summary>
+        /// <para>Closes <see cref="MainWindow.FontConf"/> and <see cref="ConfigWin"/>, then calls <see cref="SaveConfig"/></para>
+        /// Called from <see cref="MainWindow.Window_Closing"/>
+        /// </summary>
+        public static void ExitProgram() {
+            MainW.FontConf.Close();
+            MainW.Conf.Close();
+            SaveConfig();
+        }
+
+        /// <summary>
+        /// <para>Called from <see cref="MainWindow.Resettodefaults_Click"/> using <see cref="SaveChanges"/></para>
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:No pasar cadenas literal como parámetros localizados", MessageId = "System.Windows.MessageBox.Show(System.String,System.String,System.Windows.MessageBoxButton,System.Windows.MessageBoxImage,System.Windows.MessageBoxResult)")]
+        public static void ResetDefaults() {
+            switch (MessageBox.Show("This will reset ALL configuration\r\n Are you sure?", "Reset To Defaults", MessageBoxButton.YesNo, MessageBoxImage.Exclamation,MessageBoxResult.No))
+            {
+                case (MessageBoxResult.Yes):
+                    {
+                        LoadDefault();
+                        //MainW.grid.UpdateLayout();
+                        break;
+                    }
+                case MessageBoxResult.No:
+                    {
+                        break;
+                    }
+            }
+        }
+
+        /// <summary>
+        /// Checks if there are unsaved changes and asks the user what to do, then calls the <paramref name="fileFunc"/> sent (must be <see cref="void"/>)
+        /// <para>
+        /// <paramref name="txtBoxTitle"/> is the <see cref="MessageBox"/> Caption <see cref="string"/>
+        /// </para>
+        /// </summary>
+        /// <param name="fileFunc"> <see cref="Action"/> Method to be called must be <see cref="void"/></param>
+        /// <param name="e"> <see cref="System.ComponentModel.CancelEventArgs"/> to cancel <see cref="Window.Close"/></param>
+        /// <param name="txtBoxTitle"> <see cref="MessageBox"/> Caption <see cref="string"/></param>
+        public static void SaveChanges(Action fileFunc, System.ComponentModel.CancelEventArgs e, string txtBoxTitle) {
+            if (fileFunc != null) {
+                if (FileChanged) {
+                    switch (MessageBox.Show("There are unsaved Changes to: \r\n" + Filepath + "\r\nDo you want to save?", txtBoxTitle, MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation, MessageBoxResult.Cancel)) {
+                        case (MessageBoxResult.Yes): {
+                                Save(false);
+                                fileFunc();
+                                break;
+                            }
+                        case MessageBoxResult.No: {
+                                fileFunc();
+                                break;
+                            }
+                        case MessageBoxResult.Cancel: {
+                                //do nothing
+                                if (e != null) {
+                                    e.Cancel = true;
+                                }
+                                break;
+                            }
+                    }
+                }
+                else {
+                    fileFunc();
+                }
+            }
+        }
+
+        #endregion General
+
+        #region Window Config
+
+        /// <summary>
+        /// Flips the <see cref="MainWindow.rtb"/>
+        /// <para>
+        /// <see cref="ScaleTransform"/> takes doubles and scale the RTB to those values, with -1 fliping it and 1 being default
+        /// </para>
+        /// </summary>
+        /// <param name="flipX"></param>
+        /// <param name="flipY"></param>
+        public static void RtbFlip(bool flipX, bool flipY) {
+            MainW.FontConf.txtSampleText.RenderTransform = MainW.stackborder.RenderTransform = new ScaleTransform(flipX ? -1 : 1, flipY ? -1 : 1);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="MainWindow.rtb"/> opacity to <paramref name="opacity"/>
+        /// </summary>
+        /// <param name="opacity"></param>
+        public static void RtbOpacity(double opacity) {
+            MainW.rtb.Opacity = opacity;
+        }
+
+        /// <summary>
+        /// Sets the <see cref="MainWindow.rtb"/> IsReadOnly state
+        /// </summary>
+        /// <param name="readOnly"></param>
+        public static void RtbReadOnly(bool readOnly) {
+            MainW.rtb.IsReadOnly = readOnly;
+            MainW.rtb.IsReadOnlyCaretVisible = !readOnly;
+            MainW.rtb.IsInactiveSelectionHighlightEnabled = !readOnly;
+        }
+
+        /// <summary>
+        ///Rotates the <see cref="MainWindow.grid"/> to <paramref name="angle"/> and <see cref="MainWindow.backgroundimg"/> to the oposite direction to mantain it straight
+        ///<para>On some cases bugs <see cref="MainWindow.backgroundimg"/> when resize borders are enabled</para>
+        /// </summary>
+        /// <param name="angle"></param>
+        public static void RtbRotate(double angle) {
+            MainW.TitleBorder.RenderTransform = new RotateTransform(angle);
+            //rotateTransform = new RotateTransform(-angle);
+            //MainW.backgroundimg.RenderTransform = rotateTransform;
+        }
+
+        /// <summary>
+        /// Sets the <see cref="MainWindow.rtb"/> SpellCheck.IsEnabled state
+        /// </summary>
+        /// <param name="enabled"></param>
+        public static void RtbSpellCheck(bool enabled) {
+            MainW.rtb.SpellCheck.IsEnabled = enabled;
+        }
+
+        /// <summary>
+        /// Sets the <see cref="MainWindow.window"/> Topmost state
+        /// </summary>
+        /// <param name="visible"></param>
+        ///
+        public static void WindowAlwaysOnTop(bool visible) {
+            MainW.window.Topmost = visible;
+        }
+
+        /// <summary>
+        /// Sets the <see cref="MainWindow.window"/> opacity to <paramref name="opacity"/>
+        /// </summary>
+        /// <param name="opacity"></param>
+        public static void WindowOpacity(double opacity) {
+            MainW.window.Opacity = opacity;
+        }
+
+        /// <summary>
+        /// Sets the <see cref="MainWindow.MyNotifyIcon"/> Visibility state
+        /// </summary>
+        /// <param name="visible"></param>
+        public static void WindowVisibleNotification(bool visible) {
+            MainW.MyNotifyIcon.Visibility = visible ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// Sets the <see cref="MainWindow.MyNotifyIcon"/> ResizeMode state
+        /// </summary>
+        /// <param name="visible"></param>
+        public static void WindowVisibleResize(bool visible) {
+            MainW.window.ResizeMode = visible ? ResizeMode.CanResizeWithGrip : ResizeMode.NoResize;
+        }
+
+        /// <summary>
+        /// Sets the <see cref="MainWindow.window"/> ShowInTaskbar state
+        /// </summary>
+        /// <param name="visible"></param>
+        public static void WindowVisibleTaskbar(bool visible) {
+            MainW.window.ShowInTaskbar = visible;
+        }
+
+        public static void BlurBG(bool EnableBlur) {
+            if (MainW?.FontConf != null && MainW?.Conf != null) {
+                if (EnableBlur) {
+                    BgBlur.EnableBlur(AccentState.ACCENT_ENABLE_BLURBEHIND, MainW);
+                    BgBlur.EnableBlur(AccentState.ACCENT_ENABLE_BLURBEHIND, MainW.FontConf);
+                    BgBlur.EnableBlur(AccentState.ACCENT_ENABLE_BLURBEHIND, MainW.Conf);
+                }
+                else {
+                    BgBlur.EnableBlur(AccentState.ACCENT_INVALID_STATE, MainW);
+                    BgBlur.EnableBlur(AccentState.ACCENT_INVALID_STATE, MainW.FontConf);
+                    BgBlur.EnableBlur(AccentState.ACCENT_INVALID_STATE, MainW.Conf);
+                }
+            }
+        }
+
+        public static void RtbBorderSize(double val) {
+            MainW.stackborder.BorderThickness = new Thickness(val);
+        }
+
+        public static void ResizeRtb(bool ResizeEnabled) {
+            if (ResizeEnabled) {
+                MainW.panel.IsEnabled = false;
+
+                MainW.MouseLeftButtonDown += MainW.Window1_MouseLeftButtonDown;
+                MainW.MouseLeftButtonUp += MainW.DragFinishedMouseHandler;
+                MainW.MouseMove += MainW.Window1_MouseMove;
+                MainW.MouseLeave += MainW.Window1_MouseLeave;
+
+                MainW.canvas.PreviewMouseLeftButtonDown += MainW.MyCanvas_PreviewMouseLeftButtonDown;
+                MainW.canvas.PreviewMouseLeftButtonUp += MainW.DragFinishedMouseHandler;
+
+
+                MainW.selectedElement = MainW.TitleBorder as UIElement;
+                MainW.OriginalLeft = System.Windows.Controls.Canvas.GetLeft(MainW.selectedElement);
+                MainW.OriginalTop = System.Windows.Controls.Canvas.GetTop(MainW.selectedElement);
+                MainW.aLayer = AdornerLayer.GetAdornerLayer(MainW.selectedElement);
+                MainW.aLayer.Add(new ResizingAdorner(MainW.selectedElement));
+                MainW.selected = true;
+
+            }
+            else {
+                MainW.Deselect();
+                MainW.MouseLeftButtonDown -= MainW.Window1_MouseLeftButtonDown;
+                MainW.MouseLeftButtonUp -= MainW.DragFinishedMouseHandler;
+                MainW.MouseMove -= MainW.Window1_MouseMove;
+                MainW.MouseLeave -= MainW.Window1_MouseLeave;
+
+                MainW.canvas.PreviewMouseLeftButtonDown -= MainW.MyCanvas_PreviewMouseLeftButtonDown;
+                MainW.canvas.PreviewMouseLeftButtonUp -= MainW.DragFinishedMouseHandler;
+
+                MainW.panel.IsEnabled = true;
+            }
+        }
+
+        public static void LineWrap(bool WrapEnabled) {
+            if (WrapEnabled) {
+                MainW.rtb.Document.PageWidth = double.NaN;
+            }
+            else {
+                MainW.rtb.Document.PageWidth = 1000;
+            }
+            MainW.LineWrapMenuItem.IsChecked = WrapEnabled;
+            if (MainW.Conf != null) {
+                MainW.Conf.TextWrap.IsChecked = WrapEnabled;
+            }
+        }
+
+        public static void ToolBarVisible(bool ToolBarEnabled) {
+            if (ToolBarEnabled) {
+                MainW.ToolBarTray.Visibility = Visibility.Visible;
+            }
+            else {
+                MainW.ToolBarTray.Visibility = Visibility.Collapsed;
+            }
+            MainW.ToolBarMenuItem.IsChecked = ToolBarEnabled;
+            if (MainW.Conf != null) {
+                MainW.Conf.ToolBarEnabled.IsChecked = ToolBarEnabled;
+            }
+        }
+
+        public static void ToolsAlwaysOnTop(bool onTop) {
+            if (MainW?.Conf != null && MainW?.FontConf != null) {
+                MainW.Conf.Topmost = onTop;
+                MainW.FontConf.Topmost = onTop;
+            }
+        }
+
+        public static void ChangeBrushResource(Brush brush, string resource) {
+            if (brush != null) {
+                brush.Freeze();
+                Application.Current.Resources[resource] = brush;
+                brush = null;
+            }
+        }
+
+
+        #endregion Window Config
+
+        #region Text Functions
 
         /// <summary>
         /// Sets the format to the selected text
@@ -1607,10 +1773,10 @@ namespace SkinText {
                     }
                     catch (Exception ex) {
                         //crashes when changing hyperLink properties
-                        #if DEBUG
+#if DEBUG
                         MessageBox.Show(ex.ToString());
                         //throw;
-                        #endif
+#endif
                     }
                 }
             }
@@ -1620,52 +1786,34 @@ namespace SkinText {
         }
 
         /// <summary>
-        /// Sets the <see cref="MainWindow.window"/> Topmost state
+        /// Whenever the <see cref="MainWindow.rtb"/> selection is changed, it is neccesary to read current text selection information and display it on <see cref="FontConfig"/> window
         /// </summary>
-        /// <param name="visible"></param>
-        ///
-        public static void WindowAlwaysOnTop(bool visible) {
-            MainW.window.Topmost = visible;
-        }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+        public static void RtbSelectionChanged() {
+            if (MainW.FontConf.Visibility == Visibility.Visible) {
+                try {
+                    if (MainW.rtb.Selection != null && MainW.rtb.Selection.Start.Paragraph != null) {
+                        TextRange selectionTextRange = new TextRange(MainW.rtb.Selection.Start, MainW.rtb.Selection.End);
 
-        /// <summary>
-        /// Sets the <see cref="MainWindow.backgroundimg"/> opacity to <paramref name="opacity"/>
-        /// </summary>
-        /// <param name="opacity"></param>
-        public static void WindowImageOpacity(double opacity) {
-            MainW.backgroundimg.Opacity = opacity;
-        }
-
-        /// <summary>
-        /// Sets the <see cref="MainWindow.window"/> opacity to <paramref name="opacity"/>
-        /// </summary>
-        /// <param name="opacity"></param>
-        public static void WindowOpacity(double opacity) {
-            MainW.window.Opacity = opacity;
-        }
-
-        /// <summary>
-        /// Sets the <see cref="MainWindow.MyNotifyIcon"/> Visibility state
-        /// </summary>
-        /// <param name="visible"></param>
-        public static void WindowVisibleNotification(bool visible) {
-            MainW.MyNotifyIcon.Visibility = visible ? Visibility.Visible : Visibility.Collapsed;
-        }
-
-        /// <summary>
-        /// Sets the <see cref="MainWindow.MyNotifyIcon"/> ResizeMode state
-        /// </summary>
-        /// <param name="visible"></param>
-        public static void WindowVisibleResize(bool visible) {
-            MainW.window.ResizeMode = visible ? ResizeMode.CanResizeWithGrip : ResizeMode.NoResize;
-        }
-
-        /// <summary>
-        /// Sets the <see cref="MainWindow.window"/> ShowInTaskbar state
-        /// </summary>
-        /// <param name="visible"></param>
-        public static void WindowVisibleTaskbar(bool visible) {
-            MainW.window.ShowInTaskbar = visible;
+                        RtbSelectionChangedBGColor(selectionTextRange);
+                        RtbSelectionChangedFontColor(selectionTextRange);
+                        RtbSelectionChangedFontSize(selectionTextRange);
+                        RtbSelectionChangedLineHeight(selectionTextRange);
+                        RtbSelectionChangedFontFamily(selectionTextRange);
+                        RtbSelectionChangedFontType(selectionTextRange);
+                        RtbSelectionChangedTextAlignment(selectionTextRange);
+                        RtbSelectionChangedFlowDirection(selectionTextRange);
+                        RtbSelectionChangedBaselineAlignment(selectionTextRange);
+                        RtbSelectionChangedTextDecorations(selectionTextRange);
+                    }
+                }
+                catch (Exception ex) {
+#if DEBUG
+                    MessageBox.Show(ex.ToString());
+                    //throw;
+#endif
+                }
+            }
         }
 
         private static void RtbSelectionChangedBaselineAlignment(TextRange selectionTextRange) {
@@ -1862,113 +2010,7 @@ namespace SkinText {
             }
         }
 
-
-        public static void BlurBgImage(double blurVal, bool gauss) {
-            System.Windows.Media.Effects.BlurEffect blur = new System.Windows.Media.Effects.BlurEffect {
-                Radius = blurVal
-            };
-            if (gauss) {
-                blur.KernelType = System.Windows.Media.Effects.KernelType.Gaussian;
-
-            }
-            else {
-                blur.KernelType = System.Windows.Media.Effects.KernelType.Box;
-            }
-            mainW.backgroundimg.Effect = blur;
-
-        }
-        public static void BlurBG (bool EnableBlur) {
-            if (MainW?.FontConf!=null && MainW?.Conf !=null) {
-                if (EnableBlur)
-                {
-                    BgBlur.EnableBlur(AccentState.ACCENT_ENABLE_BLURBEHIND, MainW);
-                    BgBlur.EnableBlur(AccentState.ACCENT_ENABLE_BLURBEHIND, MainW.FontConf);
-                    BgBlur.EnableBlur(AccentState.ACCENT_ENABLE_BLURBEHIND, MainW.Conf);
-                }
-                else
-                {
-                    BgBlur.EnableBlur(AccentState.ACCENT_INVALID_STATE, MainW);
-                    BgBlur.EnableBlur(AccentState.ACCENT_INVALID_STATE, MainW.FontConf);
-                    BgBlur.EnableBlur(AccentState.ACCENT_INVALID_STATE, MainW.Conf);
-                }
-            }
-        }
-        public static void ShowAdvancedConfig() {
-            mainW.Conf.Show();
-        }
-
-
-        public static void RtbBorderSize(double val) {
-            MainW.stackborder.BorderThickness = new Thickness(val);
-        }
-        public static void ResizeRtb(bool ResizeEnabled) {
-            if (ResizeEnabled) {
-                MainW.panel.IsEnabled = false;
-
-                MainW.MouseLeftButtonDown += MainW.Window1_MouseLeftButtonDown;
-                MainW.MouseLeftButtonUp += MainW.DragFinishedMouseHandler;
-                MainW.MouseMove += MainW.Window1_MouseMove;
-                MainW.MouseLeave += MainW.Window1_MouseLeave;
-
-                MainW.canvas.PreviewMouseLeftButtonDown += MainW.MyCanvas_PreviewMouseLeftButtonDown;
-                MainW.canvas.PreviewMouseLeftButtonUp += MainW.DragFinishedMouseHandler;
-
-
-                MainW.selectedElement = MainW.TitleBorder as UIElement;
-                MainW.OriginalLeft = System.Windows.Controls.Canvas.GetLeft(MainW.selectedElement);
-                MainW.OriginalTop = System.Windows.Controls.Canvas.GetTop(MainW.selectedElement);
-                MainW.aLayer = AdornerLayer.GetAdornerLayer(MainW.selectedElement);
-                MainW.aLayer.Add(new ResizingAdorner(MainW.selectedElement));
-                MainW.selected = true;
-
-            }
-            else {
-                MainW.Deselect();
-                MainW.MouseLeftButtonDown -= MainW.Window1_MouseLeftButtonDown;
-                MainW.MouseLeftButtonUp -= MainW.DragFinishedMouseHandler;
-                MainW.MouseMove -= MainW.Window1_MouseMove;
-                MainW.MouseLeave -= MainW.Window1_MouseLeave;
-
-                MainW.canvas.PreviewMouseLeftButtonDown -= MainW.MyCanvas_PreviewMouseLeftButtonDown;
-                MainW.canvas.PreviewMouseLeftButtonUp -= MainW.DragFinishedMouseHandler;
-
-                MainW.panel.IsEnabled = true;
-            }
-        }
-
-
-        public static void LineWrap(bool WrapEnabled) {
-            if (WrapEnabled) {
-                MainW.rtb.Document.PageWidth = double.NaN;
-            }
-            else {
-                MainW.rtb.Document.PageWidth = 1000;
-            }
-            MainW.LineWrapMenuItem.IsChecked = WrapEnabled;
-            if (MainW.Conf != null) {
-                MainW.Conf.TextWrap.IsChecked = WrapEnabled;
-            }
-        }
-
-        public static void ToolBarVisible(bool ToolBarEnabled) {
-            if (ToolBarEnabled) {
-                MainW.ToolBarTray.Visibility = Visibility.Visible;
-            }
-            else {
-                MainW.ToolBarTray.Visibility = Visibility.Collapsed;
-            }
-            MainW.ToolBarMenuItem.IsChecked = ToolBarEnabled;
-            if (MainW.Conf != null) {
-                MainW.Conf.ToolBarEnabled.IsChecked = ToolBarEnabled;
-            }
-        }
-
-        public static void ToolsAlwaysOnTop(bool onTop) {
-            if (MainW?.Conf != null && MainW?.FontConf!=null) {
-                MainW.Conf.Topmost = onTop;
-                MainW.FontConf.Topmost = onTop;
-            }
-        }
+        #endregion Text Functions
 
         #region ToolBar functions
 
@@ -2005,7 +2047,6 @@ namespace SkinText {
             UpdateItemCheckedState(_btnUnderline       , Inline.TextDecorationsProperty, TextDecorations.Underline);
             */
         }
-
 
         public static void UpdateDecorators() {
             if (MainW.rtb.Selection != null)
@@ -2162,6 +2203,7 @@ namespace SkinText {
                 #pragma warning restore RECS0026 // Possible unassigned object created by 'new'
             }
         }
+
         public static void ApplyTextDecorators() {
             if (MainW.rtb.Selection != null)
             {
@@ -2191,6 +2233,7 @@ namespace SkinText {
                 }
             }
         }
+
         public static void ApplyTextScript(object sender) {
             if (MainW.rtb.Selection != null)
             {
@@ -2271,6 +2314,7 @@ namespace SkinText {
                 }
             }
         }
+
         public static void ApplyFlowDir() {
             if (MainW.rtb.Selection != null)
             {
@@ -2284,6 +2328,7 @@ namespace SkinText {
                 }
             }
         }
+
         public static void ApplyFontSize(System.Windows.Controls.SelectionChangedEventArgs e) {
             try
             {
@@ -2300,6 +2345,7 @@ namespace SkinText {
                 #endif
             }
         }
+
         public static void ApplyPropertyValueToSelectedText(DependencyProperty formattingProperty, object value) {
             if (MainW.rtb?.Selection != null)
             {
@@ -2310,6 +2356,7 @@ namespace SkinText {
                 MainW.rtb.Selection.ApplyPropertyValue(formattingProperty, value);
             }
         }
+
         public static void ApplyFontFamily(System.Windows.Controls.SelectionChangedEventArgs e) {
             if (e.AddedItems.Count > 0)
             {
@@ -2317,6 +2364,7 @@ namespace SkinText {
                 ApplyPropertyValueToSelectedText(TextElement.FontFamilyProperty, editValue);
             }
         }
+
         public static void ApplyFontColor() {
             if (MainW.rtb != null && MainW.rtb.Selection != null && !MainW.rtb.Selection.IsEmpty)
             {
@@ -2325,6 +2373,7 @@ namespace SkinText {
                 MainW.rtb.Selection.ApplyPropertyValue(TextElement.ForegroundProperty, newBrush);
             }
         }
+
         public static void ApplyFontBackColor() {
             if (MainW.rtb != null && MainW.rtb.Selection != null && !MainW.rtb.Selection.IsEmpty)
             {
@@ -2340,6 +2389,7 @@ namespace SkinText {
                 MainW.rtb.Selection.ApplyPropertyValue(TextElement.BackgroundProperty, newBrush);
             }
         }
+
         public static void ApplyListType(object sender) {
             if (MainW.rtb.Selection != null)
             {
@@ -2447,6 +2497,7 @@ namespace SkinText {
                 ((ListItem)startParagraph.Parent).List.MarkerStyle = textMarker;
             }
         }
+
         public static void FilterFontFamilyComboBox() {
             if (!MainW._fontFamily.IsDropDownOpen)
             {

@@ -12,12 +12,14 @@ namespace SkinText {
             InitializeComponent();
         }
 
+        #region General
 
         private void CloseButt_Click(object sender, RoutedEventArgs e) {
             resizecheck.IsChecked = false;
             this.Hide();
             CustomMethods.SaveConfig();
         }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         private void Window_MouseDown(object sender, MouseButtonEventArgs e) {
             if (Mouse.LeftButton == MouseButtonState.Pressed) {
@@ -36,105 +38,109 @@ namespace SkinText {
             }
         }
 
+        #endregion General
+
         #region Colors
 
-        private void ChangeBrushResource(Brush brush, string resource ) {
-            if (brush != null) {
-                brush.Freeze();
-                Application.Current.Resources[resource] = brush;
-                brush = null;
-            }
+        private void ClrPcker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
+            Xceed.Wpf.Toolkit.ColorPicker picker = (Xceed.Wpf.Toolkit.ColorPicker)sender;
+            string resource = picker.Name.Substring(picker.Name.IndexOf("_", StringComparison.InvariantCultureIgnoreCase) + 1);
+            SolidColorBrush color = new SolidColorBrush(picker.SelectedColor.Value);
+            color.Freeze();
+            CustomMethods.ChangeBrushResource(color, resource);
+            color = null;
         }
+        #endregion Colors
 
+        #region Colors Legacy
+
+        /*
         private void ClrPcker_BackgroundColorBrush_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
-            ChangeBrushResource(new SolidColorBrush(ClrPcker_BackgroundColorBrush.SelectedColor.Value), "BackgroundColorBrush");
+            CustomMethods.ChangeBrushResource(new SolidColorBrush(ClrPcker_BackgroundColorBrush.SelectedColor.Value), "BackgroundColorBrush");
         }
-
         private void ClrPcker_ButtonBackgroundColorBrush_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
-            ChangeBrushResource(new SolidColorBrush(ClrPcker_ButtonBackgroundColorBrush.SelectedColor.Value), "ButtonBackgroundColorBrush");
+            CustomMethods.ChangeBrushResource(new SolidColorBrush(ClrPcker_ButtonBackgroundColorBrush.SelectedColor.Value), "ButtonBackgroundColorBrush");
         }
-
         private void ClrPcker_ButtonBackgroundMouseOverColorBrush_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
-            ChangeBrushResource(new SolidColorBrush(ClrPcker_ButtonBackgroundMouseOverColorBrush.SelectedColor.Value), "ButtonBackgroundMouseOverColorBrush");
+            CustomMethods.ChangeBrushResource(new SolidColorBrush(ClrPcker_ButtonBackgroundMouseOverColorBrush.SelectedColor.Value), "ButtonBackgroundMouseOverColorBrush");
         }
-
         private void ClrPcker_ButtonBackgroundCheckedColorBrush_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
-            ChangeBrushResource(new SolidColorBrush(ClrPcker_ButtonBackgroundCheckedColorBrush.SelectedColor.Value), "ButtonBackgroundCheckedColorBrush");
+            CustomMethods.ChangeBrushResource(new SolidColorBrush(ClrPcker_ButtonBackgroundCheckedColorBrush.SelectedColor.Value), "ButtonBackgroundCheckedColorBrush");
         }
 
         private void ClrPcker_TextColorBrush_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
-            ChangeBrushResource(new SolidColorBrush(ClrPcker_TextColorBrush.SelectedColor.Value), "TextColorBrush");
+            CustomMethods.ChangeBrushResource(new SolidColorBrush(ClrPcker_TextColorBrush.SelectedColor.Value), "TextColorBrush");
         }
 
         private void ClrPcker_FontPickBackgroundColorBrush_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
-            ChangeBrushResource(new SolidColorBrush(ClrPcker_FontPickBackgroundColorBrush.SelectedColor.Value), "FontPickBackgroundColorBrush");
+            CustomMethods.ChangeBrushResource(new SolidColorBrush(ClrPcker_FontPickBackgroundColorBrush.SelectedColor.Value), "FontPickBackgroundColorBrush");
         }
 
         private void ClrPcker_FontPickMouseOverBackgroundColorBrush_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
-            ChangeBrushResource(new SolidColorBrush(ClrPcker_FontPickMouseOverBackgroundColorBrush.SelectedColor.Value), "FontPickMouseOverBackgroundColorBrush");
+            CustomMethods.ChangeBrushResource(new SolidColorBrush(ClrPcker_FontPickMouseOverBackgroundColorBrush.SelectedColor.Value), "FontPickMouseOverBackgroundColorBrush");
         }
 
         private void ClrPcker_FontPickMouseOverBorderColorBrush_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
-            ChangeBrushResource(new SolidColorBrush(ClrPcker_FontPickMouseOverBorderColorBrush.SelectedColor.Value), "FontPickMouseOverBorderColorBrush");
+            CustomMethods.ChangeBrushResource(new SolidColorBrush(ClrPcker_FontPickMouseOverBorderColorBrush.SelectedColor.Value), "FontPickMouseOverBorderColorBrush");
         }
 
         private void ClrPcker_FontPickSelectedBackgroundColorBrush_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
-            ChangeBrushResource(new SolidColorBrush(ClrPcker_FontPickSelectedBackgroundColorBrush.SelectedColor.Value), "FontPickSelectedBackgroundColorBrush");
+            CustomMethods.ChangeBrushResource(new SolidColorBrush(ClrPcker_FontPickSelectedBackgroundColorBrush.SelectedColor.Value), "FontPickSelectedBackgroundColorBrush");
         }
 
         private void ClrPcker_FontPickSelectedBorderColorBrush_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
-            ChangeBrushResource(new SolidColorBrush(ClrPcker_FontPickSelectedBorderColorBrush.SelectedColor.Value), "FontPickSelectedBorderColorBrush");
+            CustomMethods.ChangeBrushResource(new SolidColorBrush(ClrPcker_FontPickSelectedBorderColorBrush.SelectedColor.Value), "FontPickSelectedBorderColorBrush");
         }
 
         private void ClrPcker_MenuBackgroundColorBrush_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
-            ChangeBrushResource(new SolidColorBrush(ClrPcker_MenuBackgroundColorBrush.SelectedColor.Value), "MenuBackgroundColorBrush");
+            CustomMethods.ChangeBrushResource(new SolidColorBrush(ClrPcker_MenuBackgroundColorBrush.SelectedColor.Value), "MenuBackgroundColorBrush");
         }
 
         private void ClrPcker_MenuItem1BorderColorBrush_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
-            ChangeBrushResource(new SolidColorBrush(ClrPcker_MenuItem1BorderColorBrush.SelectedColor.Value), "MenuItem1BorderColorBrush");
+            CustomMethods.ChangeBrushResource(new SolidColorBrush(ClrPcker_MenuItem1BorderColorBrush.SelectedColor.Value), "MenuItem1BorderColorBrush");
         }
 
         private void ClrPcker_MenuItem2HighlightTextColorBrush_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
-            ChangeBrushResource(new SolidColorBrush(ClrPcker_MenuItem2HighlightTextColorBrush.SelectedColor.Value), "MenuItem2HighlightTextColorBrush");
+            CustomMethods.ChangeBrushResource(new SolidColorBrush(ClrPcker_MenuItem2HighlightTextColorBrush.SelectedColor.Value), "MenuItem2HighlightTextColorBrush");
         }
 
         private void ClrPcker_MenuItem2HighlightBorderColorBrush_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
-            ChangeBrushResource(new SolidColorBrush(ClrPcker_MenuItem2HighlightBorderColorBrush.SelectedColor.Value), "MenuItem2HighlightBorderColorBrush");
+            CustomMethods.ChangeBrushResource(new SolidColorBrush(ClrPcker_MenuItem2HighlightBorderColorBrush.SelectedColor.Value), "MenuItem2HighlightBorderColorBrush");
         }
 
         private void ClrPcker_MenuItem2DisabledColorBrush_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
-            ChangeBrushResource(new SolidColorBrush(ClrPcker_MenuItem2DisabledColorBrush.SelectedColor.Value), "MenuItem2DisabledColorBrush");
+            CustomMethods.ChangeBrushResource(new SolidColorBrush(ClrPcker_MenuItem2DisabledColorBrush.SelectedColor.Value), "MenuItem2DisabledColorBrush");
         }
 
         private void ClrPcker_FontPickTextColorBrush_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
-            ChangeBrushResource(new SolidColorBrush(ClrPcker_FontPickTextColorBrush.SelectedColor.Value), "FontPickTextColorBrush");
+            CustomMethods.ChangeBrushResource(new SolidColorBrush(ClrPcker_FontPickTextColorBrush.SelectedColor.Value), "FontPickTextColorBrush");
         }
 
         private void ClrPcker_ButtonFrontColorBrush_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
-            ChangeBrushResource(new SolidColorBrush(ClrPcker_ButtonFrontColorBrush.SelectedColor.Value), "ButtonFrontColorBrush");
+            CustomMethods.ChangeBrushResource(new SolidColorBrush(ClrPcker_ButtonFrontColorBrush.SelectedColor.Value), "ButtonFrontColorBrush");
         }
 
         private void ClrPcker_ButtonBorderMouseOverColorBrush_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
-            ChangeBrushResource(new SolidColorBrush(ClrPcker_ButtonBorderMouseOverColorBrush.SelectedColor.Value), "ButtonBorderMouseOverColorBrush");
+            CustomMethods.ChangeBrushResource(new SolidColorBrush(ClrPcker_ButtonBorderMouseOverColorBrush.SelectedColor.Value), "ButtonBorderMouseOverColorBrush");
         }
 
         private void ClrPcker_ButtonBorderCheckedColorBrush_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
-            ChangeBrushResource(new SolidColorBrush(ClrPcker_ButtonBorderCheckedColorBrush.SelectedColor.Value), "ButtonBorderCheckedColorBrush");
+            CustomMethods.ChangeBrushResource(new SolidColorBrush(ClrPcker_ButtonBorderCheckedColorBrush.SelectedColor.Value), "ButtonBorderCheckedColorBrush");
         }
 
 
         private void ClrPcker_BorderColorBrush_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
-            ChangeBrushResource(new SolidColorBrush(ClrPcker_BorderColorBrush.SelectedColor.Value), "BorderColorBrush");
+            CustomMethods.ChangeBrushResource(new SolidColorBrush(ClrPcker_BorderColorBrush.SelectedColor.Value), "BorderColorBrush");
         }
         private void ClrPcker_RTBBackgroundColorBrush_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
-            ChangeBrushResource(new SolidColorBrush(ClrPcker_RTBBackgroundColorBrush.SelectedColor.Value), "RTBBackgroundColorBrush");
+            CustomMethods.ChangeBrushResource(new SolidColorBrush(ClrPcker_RTBBackgroundColorBrush.SelectedColor.Value), "RTBBackgroundColorBrush");
         }
 
         private void ClrPcker_MainWindowBackgroundColorBrush_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
-            ChangeBrushResource(new SolidColorBrush(ClrPcker_MainWindowBackgroundColorBrush.SelectedColor.Value),"MainWindowBackgroundColorBrush");
+            CustomMethods.ChangeBrushResource(new SolidColorBrush(ClrPcker_MainWindowBackgroundColorBrush.SelectedColor.Value),"MainWindowBackgroundColorBrush");
         }
-
-        #endregion Colors
+        */
+        #endregion Colors Legacy
 
         #region Text
 
@@ -153,8 +159,6 @@ namespace SkinText {
         private void ResizeCheckBoxChanged(object sender, RoutedEventArgs e) {
             CustomMethods.ResizeRtb(resizecheck.IsChecked.Value);
         }
-
-
 
         private void SlValue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
             CustomMethods.RtbRotate(slValue.Value);
@@ -208,9 +212,7 @@ namespace SkinText {
 
         #endregion Text
 
-
         #region BG Image
-
 
         private void Imagedir_Click(object sender, RoutedEventArgs e) {
             CustomMethods.OpenImage();
@@ -239,7 +241,6 @@ namespace SkinText {
             CustomMethods.WindowAlwaysOnTop(alwaysontop.IsChecked.Value);
         }
 
-
         private void ResizeVisible_Unchecked(object sender, RoutedEventArgs e) {
             CustomMethods.WindowVisibleResize(ResizeVisible.IsChecked.Value);
         }
@@ -260,7 +261,6 @@ namespace SkinText {
         private void Toolsalwaysontop_Checked(object sender, RoutedEventArgs e) {
             CustomMethods.ToolsAlwaysOnTop(toolsalwaysontop.IsChecked.Value);
         }
-
 
         #endregion Window Config
 

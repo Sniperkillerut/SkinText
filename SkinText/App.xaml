@@ -11,76 +11,32 @@
              StartupUri="MainWindow.xaml" Startup="Application_Startup">
     <Application.Resources>
 
-        <SolidColorBrush x:Key="BorderColorBrush">
-            <SolidColorBrush.Color>#FF424242</SolidColorBrush.Color>
-        </SolidColorBrush>
-        <SolidColorBrush x:Key="MainWindowBackgroundColorBrush">
-            <SolidColorBrush.Color>#55FFFFFF</SolidColorBrush.Color>
-        </SolidColorBrush>
-        <SolidColorBrush x:Key="RTBBackgroundColorBrush">
-            <SolidColorBrush.Color>#7DFFFFFF</SolidColorBrush.Color>
-        </SolidColorBrush>
+        <SolidColorBrush x:Key="BorderColorBrush" Color="#FF424242"/>
+        <SolidColorBrush x:Key="MainWindowBackgroundColorBrush" Color="#55FFFFFF"/>
+        <SolidColorBrush x:Key="RTBBackgroundColorBrush" Color="#7DFFFFFF"/>
 
-        <SolidColorBrush x:Key="BackgroundColorBrush">
-            <SolidColorBrush.Color>#FF1C1C1C</SolidColorBrush.Color>
-        </SolidColorBrush>
-        <SolidColorBrush x:Key="ButtonBackgroundColorBrush">
-            <SolidColorBrush.Color>#FF262626</SolidColorBrush.Color>
-        </SolidColorBrush>
-        <SolidColorBrush x:Key="ButtonFrontColorBrush">
-            <SolidColorBrush.Color>#FFE6E6E6</SolidColorBrush.Color>
-        </SolidColorBrush>
-        <SolidColorBrush x:Key="ButtonBackgroundMouseOverColorBrush">
-            <SolidColorBrush.Color>#FF00B5FF</SolidColorBrush.Color>
-        </SolidColorBrush>
-        <SolidColorBrush x:Key="ButtonBorderMouseOverColorBrush">
-            <SolidColorBrush.Color>#FFE6E6E6</SolidColorBrush.Color>
-        </SolidColorBrush>
-        <SolidColorBrush x:Key="ButtonBackgroundCheckedColorBrush">
-            <SolidColorBrush.Color>#CD000000</SolidColorBrush.Color>
-        </SolidColorBrush>
-        <SolidColorBrush x:Key="ButtonBorderCheckedColorBrush">
-            <SolidColorBrush.Color>#FF808080</SolidColorBrush.Color>
-        </SolidColorBrush>
-        <SolidColorBrush x:Key="TextColorBrush">
-            <SolidColorBrush.Color>#FF808080</SolidColorBrush.Color>
-        </SolidColorBrush>
+        <SolidColorBrush x:Key="BackgroundColorBrush" Color="#FF1C1C1C"/>
+        <SolidColorBrush x:Key="ButtonBackgroundColorBrush" Color="#FF262626"/>
+        <SolidColorBrush x:Key="ButtonFrontColorBrush" Color="#FFE6E6E6"/>
+        <SolidColorBrush x:Key="ButtonBackgroundMouseOverColorBrush" Color="#FF00B5FF"/>
+        <SolidColorBrush x:Key="ButtonBorderMouseOverColorBrush" Color="#FFE6E6E6"/>
+        <SolidColorBrush x:Key="ButtonBackgroundCheckedColorBrush" Color="#CD000000"/>
+        <SolidColorBrush x:Key="ButtonBorderCheckedColorBrush" Color="#FF808080"/>
+        <SolidColorBrush x:Key="TextColorBrush" Color="#FF808080" />
 
-        <SolidColorBrush x:Key="FontPickBackgroundColorBrush">
-            <SolidColorBrush.Color>#23696969</SolidColorBrush.Color>
-        </SolidColorBrush>
-        <SolidColorBrush x:Key="FontPickTextColorBrush">
-            <SolidColorBrush.Color>#FFE6E6E6</SolidColorBrush.Color>
-        </SolidColorBrush>
-        <SolidColorBrush x:Key="FontPickMouseOverBackgroundColorBrush">
-            <SolidColorBrush.Color>#FF000000</SolidColorBrush.Color>
-        </SolidColorBrush>
-        <SolidColorBrush x:Key="FontPickMouseOverBorderColorBrush">
-            <SolidColorBrush.Color>#FF00B5FF</SolidColorBrush.Color>
-        </SolidColorBrush>
-        <SolidColorBrush x:Key="FontPickSelectedBackgroundColorBrush">
-            <SolidColorBrush.Color>#8C000000</SolidColorBrush.Color>
-        </SolidColorBrush>
-        <SolidColorBrush x:Key="FontPickSelectedBorderColorBrush">
-            <SolidColorBrush.Color>#FFDB6929</SolidColorBrush.Color>
-        </SolidColorBrush>
+        <SolidColorBrush x:Key="FontPickBackgroundColorBrush" Color="#23696969"/>
+        <SolidColorBrush x:Key="FontPickTextColorBrush" Color="#FFE6E6E6"/>
+        <SolidColorBrush x:Key="FontPickMouseOverBackgroundColorBrush" Color="#FF000000"/>
+        <SolidColorBrush x:Key="FontPickMouseOverBorderColorBrush" Color="#FF00B5FF"/>
+        <SolidColorBrush x:Key="FontPickSelectedBackgroundColorBrush" Color="#8C000000"/>
+        <SolidColorBrush x:Key="FontPickSelectedBorderColorBrush" Color="#FFDB6929"/>
 
+        <SolidColorBrush x:Key="MenuBackgroundColorBrush" Color="#C9000000"/>
+        <SolidColorBrush x:Key="MenuItem1BorderColorBrush" Color="#00FFFFFF"/>
+        <SolidColorBrush x:Key="MenuItem2HighlightTextColorBrush" Color="#FF00B5FF"/>
+        <SolidColorBrush x:Key="MenuItem2HighlightBorderColorBrush" Color="#FFDB6929"/>
+        <SolidColorBrush x:Key="MenuItem2DisabledColorBrush" Color="#73696969"/>
 
-        <SolidColorBrush x:Key="MenuBackgroundColorBrush">
-            <SolidColorBrush.Color>#C9000000</SolidColorBrush.Color>
-        </SolidColorBrush>
-        <SolidColorBrush x:Key="MenuItem1BorderColorBrush">
-            <SolidColorBrush.Color>#00FFFFFF</SolidColorBrush.Color>
-        </SolidColorBrush>
-        <SolidColorBrush x:Key="MenuItem2HighlightTextColorBrush">
-            <SolidColorBrush.Color>#FF00B5FF</SolidColorBrush.Color>
-        </SolidColorBrush>
-        <SolidColorBrush x:Key="MenuItem2HighlightBorderColorBrush">
-            <SolidColorBrush.Color>#FFDB6929</SolidColorBrush.Color>
-        </SolidColorBrush>
-        <SolidColorBrush x:Key="MenuItem2DisabledColorBrush">
-            <SolidColorBrush.Color>#73696969</SolidColorBrush.Color>
-        </SolidColorBrush>
 
         <Style x:Key="ToolTipStyle" TargetType="{x:Type ToolTip}">
             <Setter Property="Background"              Value="Transparent" />
