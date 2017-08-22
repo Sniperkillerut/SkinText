@@ -19,7 +19,8 @@ namespace SkinText {
         public FontConfig FontConf { get => fontConf; set => fontConf = value; }
         public ConfigWin Conf { get => conf; set => conf = value; }
 
-        public double[] FontSizes => new double[] {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public double[] GetFontSizes() => new double[] {
             3.0, 4.0, 5.0, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5,
             10.0, 10.5, 11.0, 11.5, 12.0, 12.5, 13.0, 13.5, 14.0, 15.0,
             16.0, 17.0, 18.0, 19.0, 20.0, 22.0, 24.0, 26.0, 28.0, 30.0,
@@ -50,7 +51,7 @@ namespace SkinText {
 
             CustomMethods.GetSkin();
 
-            CustomMethods.LoadDefault();
+            //CustomMethods.LoadDefault();
 
             CustomMethods.ReadConfig();
 
@@ -59,11 +60,12 @@ namespace SkinText {
 
             //Editing things
             _fontFamily.ItemsSource = System.Windows.Media.Fonts.SystemFontFamilies;
-            _fontSize.ItemsSource = FontSizes;
+            _fontSize.ItemsSource = GetFontSizes();
             _fontFamily.SelectedIndex = 0;
             _fontSize.SelectedIndex = 23;
             DropDownFontColor.IsEnabled = false;
             DropDownFontBackColor.IsEnabled = false;
+            rtb.Focus();
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
@@ -331,15 +333,19 @@ namespace SkinText {
             CustomMethods.FilterFontFamilyComboBox();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:No pasar cadenas literal como parámetros localizados", MessageId = "System.Windows.MessageBox.Show(System.String,System.String,System.Windows.MessageBoxButton,System.Windows.MessageBoxImage,System.Windows.MessageBoxResult,System.Windows.MessageBoxOptions)")]
         private void _btn_addhyperlink_Click(object sender, RoutedEventArgs e) {
             HyperLinkWindow link = new HyperLinkWindow();
             if (link.ShowDialog() == true) {
                 if (!string.IsNullOrWhiteSpace(link.HyperNameResult) && !string.IsNullOrWhiteSpace(link.HyperLinkResult)) {
                     try {
-                        Hyperlink textlink = new Hyperlink(new Run(link.HyperNameResult), rtb.CaretPosition.GetInsertionPosition(LogicalDirection.Forward)) {
+#pragma warning disable RECS0026 // Possible unassigned object created by 'new'
+                        new Hyperlink(new Run(link.HyperNameResult), rtb.CaretPosition.GetInsertionPosition(LogicalDirection.Forward)) {
                             NavigateUri = new Uri(link.HyperLinkResult),
                             Cursor = Cursors.Hand
                         };
+#pragma warning restore RECS0026 // Possible unassigned object created by 'new'
                     }
                     catch (Exception ex) {
                         MessageBox.Show("Information is invalid", "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
@@ -422,13 +428,13 @@ namespace SkinText {
         #region Rezise with Adorners
 
         // Handler for drag stopping on leaving the window
-        public void Window1_MouseLeave(object sender, MouseEventArgs e) {
+        public void Window1MouseLeave(object sender, RoutedEventArgs e) {
             StopDragging();
             e.Handled = true;
         }
 
         // Handler for drag stopping on user choise
-        public void DragFinishedMouseHandler(object sender, MouseButtonEventArgs e) {
+        public void DragFinishedMouseHandler(object sender, RoutedEventArgs e) {
             StopDragging();
             e.Handled = true;
         }
@@ -442,24 +448,26 @@ namespace SkinText {
         }
 
         // Hanler for providing drag operation with selected element
-        public void Window1_MouseMove(object sender, MouseEventArgs e) {
-            if (_isDown) {
-                if ((!_isDragging) &&
-                    ((Math.Abs(e.GetPosition(canvas).X - _startPoint.X) > SystemParameters.MinimumHorizontalDragDistance) ||
-                    (Math.Abs(e.GetPosition(canvas).Y - _startPoint.Y) > SystemParameters.MinimumVerticalDragDistance))) {
-                    _isDragging = true;
-                }
+        public void Window1MouseMove(object sender, MouseEventArgs e) {
+            if (e != null) {
+                if (_isDown) {
+                    if ((!_isDragging) &&
+                        ((Math.Abs(e.GetPosition(canvas).X - _startPoint.X) > SystemParameters.MinimumHorizontalDragDistance) ||
+                        (Math.Abs(e.GetPosition(canvas).Y - _startPoint.Y) > SystemParameters.MinimumVerticalDragDistance))) {
+                        _isDragging = true;
+                    }
 
-                if (_isDragging) {
-                    Point position = Mouse.GetPosition(canvas);
-                    Canvas.SetTop(selectedElement, position.Y - (_startPoint.Y - OriginalTop));
-                    Canvas.SetLeft(selectedElement, position.X - (_startPoint.X - OriginalLeft));
+                    if (_isDragging) {
+                        Point position = Mouse.GetPosition(canvas);
+                        Canvas.SetTop(selectedElement, position.Y - (_startPoint.Y - OriginalTop));
+                        Canvas.SetLeft(selectedElement, position.X - (_startPoint.X - OriginalLeft));
+                    }
                 }
             }
         }
 
         // Handler for clearing element selection, adorner removal
-        public void Window1_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
+        public void Window1MouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
             if (selected) {
                 selected = false;
                 if (selectedElement != null) {
@@ -470,28 +478,30 @@ namespace SkinText {
         }
 
         // Handler for element selection on the canvas providing resizing adorner
-        public void MyCanvas_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
+        public void MyCanvasPreviewMouseLeftButtonDown(object sender, MouseEventArgs e) {
             Deselect();
 
             // If any element except canvas is clicked,
             // assign the selected element and add the adorner
             //if (e.Source != canvas)
-            if (e.Source == TitleBorder) {
-                _isDown = true;
-                _startPoint = e.GetPosition(canvas);
+            if (e != null) {
+                if (e.Source == TitleBorder) {
+                    _isDown = true;
+                    _startPoint = e.GetPosition(canvas);
 
-                selectedElement = e.Source as UIElement;
+                    selectedElement = e.Source as UIElement;
 
-                OriginalLeft = Canvas.GetLeft(selectedElement);
-                OriginalTop = Canvas.GetTop(selectedElement);
+                    OriginalLeft = Canvas.GetLeft(selectedElement);
+                    OriginalTop = Canvas.GetTop(selectedElement);
 
-                aLayer = AdornerLayer.GetAdornerLayer(selectedElement);
-                aLayer.Add(new ResizingAdorner(selectedElement));
-                selected = true;
-                e.Handled = true;
-            }
-            else {
-                e.Handled = true;
+                    aLayer = AdornerLayer.GetAdornerLayer(selectedElement);
+                    aLayer.Add(new ResizingAdorner(selectedElement));
+                    selected = true;
+                    e.Handled = true;
+                }
+                else {
+                    e.Handled = true;
+                }
             }
         }
 

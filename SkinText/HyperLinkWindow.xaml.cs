@@ -38,12 +38,8 @@ namespace SkinText {
             this.DialogResult = true;
         }
 
-        public string HyperNameResult {
-            get { return HyperName.Text; }
-        }
+        public string HyperNameResult => HyperName.Text;
 
-        public string HyperLinkResult {
-            get { return HyperLink.Text; }
-        }
+        public string HyperLinkResult => HyperLink.Text;
     }
 }

@@ -88,7 +88,7 @@ namespace SkinText {
             WpfAnimatedGif.ImageBehavior.SetAnimatedSource(MainW.backgroundimg, null);
             XamlAnimatedGif.AnimationBehavior.SetSourceUri(MainW.backgroundimg, null);
             XamlAnimatedGif.AnimationBehavior.SetSourceStream(MainW.backgroundimg, null);
-            if (MainW.window.Background.ToString() == Colors.Transparent.ToString()) {
+            if (((SolidColorBrush)MainW.window.Background).Color.A == 0 ) {
                 MainW.Conf.ClrPcker_MainWindowBackgroundColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#85949494");
             }
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
@@ -98,10 +98,10 @@ namespace SkinText {
                 }
             }
             catch (Exception ex) {
-#if DEBUG
+                #if DEBUG
                 MessageBox.Show(ex.ToString());
                 //throw;
-#endif
+                #endif
             }
         }
 
@@ -149,10 +149,10 @@ namespace SkinText {
                     MessageBox.Show("Failed to Load Image:\r\n " + imagepath, "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
                 }
                 ImageClear();
-#if DEBUG
+                #if DEBUG
                 MessageBox.Show(ex.ToString());
                 //throw;
-#endif
+                #endif
             }
         }
 
@@ -201,7 +201,7 @@ namespace SkinText {
             MainW.backgroundimg.Opacity = opacity;
         }
 
-        public static void BlurBgImage(double blurVal, bool gauss) {
+        public static void BlurBGImage(double blurVal, bool gauss) {
             System.Windows.Media.Effects.BlurEffect blur = new System.Windows.Media.Effects.BlurEffect {
                 Radius = blurVal
             };
@@ -599,16 +599,16 @@ namespace SkinText {
                                     double.TryParse(array[2], out double double3) &&  //right-bottom
                                     double.TryParse(array[3], out double double4))    //left-bottom
                                 {
-                                    if (double1 >= 0 && double1 <= double.Parse(MainW.Conf.CornerMax.Value.ToString())) {
+                                    if (double1 >= 0 && double1 <= Convert.ToDouble(MainW.Conf.CornerMax.Value, System.Globalization.CultureInfo.InvariantCulture)) {
                                         MainW.Conf.CornerRadius1Slider.Value = double1;
                                     }
-                                    if (double2 >= 0 && double2 <= double.Parse(MainW.Conf.CornerMax.Value.ToString())) {
+                                    if (double2 >= 0 && double2 <= Convert.ToDouble(MainW.Conf.CornerMax.Value, System.Globalization.CultureInfo.InvariantCulture)) {
                                         MainW.Conf.CornerRadius2Slider.Value = double2;
                                     }
-                                    if (double3 >= 0 && double3 <= double.Parse(MainW.Conf.CornerMax.Value.ToString())) {
+                                    if (double3 >= 0 && double3 <= Convert.ToDouble(MainW.Conf.CornerMax.Value, System.Globalization.CultureInfo.InvariantCulture)) {
                                         MainW.Conf.CornerRadius3Slider.Value = double3;
                                     }
-                                    if (double4 >= 0 && double4 <= double.Parse(MainW.Conf.CornerMax.Value.ToString())) {
+                                    if (double4 >= 0 && double4 <= Convert.ToDouble(MainW.Conf.CornerMax.Value, System.Globalization.CultureInfo.InvariantCulture)) {
                                         MainW.Conf.CornerRadius4Slider.Value = double4;
                                     }
                                 }
@@ -852,14 +852,12 @@ namespace SkinText {
                                 }
                                 break;
                             }
-
                         case "AUTOSAVE_ENABLED": {
                                 if (bool.TryParse(line[1], out bool1)) {
                                     AutoSaveEnabled = bool1;
                                 }
                                 break;
                             }
-
                         case "AUTOSAVE_TIMER": {
                                 if (double.TryParse(line[1], out double1)) {
                                     if (double1 <= MainW.Conf.autosavetimersider.Maximum && double1 >= MainW.Conf.autosavetimersider.Minimum) {
@@ -872,10 +870,10 @@ namespace SkinText {
                 }
                 catch (Exception ex) {
                     //System.FormatException catched from BORDER_COLOR, WINDOW_COLOR, TEXT_BG_COLOR
-#if DEBUG
+                    #if DEBUG
                     MessageBox.Show(ex.ToString());
                     //throw;
-#endif
+                    #endif
                 }
             }
         }
@@ -895,45 +893,50 @@ namespace SkinText {
                     string data;
 
                     //window_position
-                    data = "window_position = " + MainW.window.Top.ToString(System.Globalization.CultureInfo.InvariantCulture) + " , " + MainW.window.Left.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                    data = "window_position = " +
+                        Math.Truncate(MainW.window.Top).ToString(System.Globalization.CultureInfo.InvariantCulture) + " , " +
+                         Math.Truncate(MainW.window.Left).ToString(System.Globalization.CultureInfo.InvariantCulture);
                     writer.WriteLine(data);
 
                     //window_size
-                    data = "window_size = " + MainW.window.Width.ToString(System.Globalization.CultureInfo.InvariantCulture) + " , " + MainW.window.Height.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                    data = "window_size = " +
+                         Math.Truncate(MainW.window.Width).ToString(System.Globalization.CultureInfo.InvariantCulture) + " , " +
+                         Math.Truncate(MainW.window.Height).ToString(System.Globalization.CultureInfo.InvariantCulture);
                     writer.WriteLine(data);
 
                     //border_size
-                    data = "border_size = " + Math.Floor(MainW.Conf.bordersize.Value).ToString(System.Globalization.CultureInfo.InvariantCulture);
+                    data = "border_size = " +
+                        Math.Truncate(MainW.Conf.bordersize.Value).ToString(System.Globalization.CultureInfo.InvariantCulture);
                     writer.WriteLine(data);
 
                     //text_size
                     data = "text_size = " +
-                    MainW.TitleBorder.Width.ToString() + " , " +
-                    MainW.TitleBorder.Height.ToString();
+                        Math.Truncate(MainW.TitleBorder.Width).ToString(System.Globalization.CultureInfo.InvariantCulture) + " , " +
+                        Math.Truncate(MainW.TitleBorder.Height).ToString(System.Globalization.CultureInfo.InvariantCulture);
                     writer.WriteLine(data);
 
                     //text_position
                     data = "text_position = " +
-                    System.Windows.Controls.Canvas.GetLeft(MainW.TitleBorder).ToString() + " , " +
-                    System.Windows.Controls.Canvas.GetTop(MainW.TitleBorder).ToString();
+                        Math.Truncate(System.Windows.Controls.Canvas.GetLeft(MainW.TitleBorder)).ToString(System.Globalization.CultureInfo.InvariantCulture) + " , " +
+                        Math.Truncate(System.Windows.Controls.Canvas.GetTop(MainW.TitleBorder)).ToString(System.Globalization.CultureInfo.InvariantCulture);
                     writer.WriteLine(data);
 
                     //text_corner_radius_locked
                     data = "text_corner_radius_locked = " +
-                    MainW.Conf.lockSlidersCheckbox.IsChecked.Value.ToString();
+                        MainW.Conf.lockSlidersCheckbox.IsChecked.Value.ToString(System.Globalization.CultureInfo.InvariantCulture);
                     writer.WriteLine(data);
 
                     //text_max_corner_radius
                     data = "text_max_corner_radius = " +
-                    MainW.Conf.CornerMax.Value.ToString();
+                        MainW.Conf.CornerMax.Value.ToString();
                     writer.WriteLine(data);
 
                     //text_corner_radius
                     data = "text_corner_radius = " +
-                    MainW.Conf.CornerRadius1Slider.Value.ToString() + " , " +
-                    MainW.Conf.CornerRadius2Slider.Value.ToString() + " , " +
-                    MainW.Conf.CornerRadius3Slider.Value.ToString() + " , " +
-                    MainW.Conf.CornerRadius4Slider.Value.ToString();
+                    MainW.Conf.CornerRadius1Slider.Value.ToString(System.Globalization.CultureInfo.InvariantCulture) + " , " +
+                    MainW.Conf.CornerRadius2Slider.Value.ToString(System.Globalization.CultureInfo.InvariantCulture) + " , " +
+                    MainW.Conf.CornerRadius3Slider.Value.ToString(System.Globalization.CultureInfo.InvariantCulture) + " , " +
+                    MainW.Conf.CornerRadius4Slider.Value.ToString(System.Globalization.CultureInfo.InvariantCulture);
                     writer.WriteLine(data);
 
                     //filetry
@@ -1062,19 +1065,19 @@ namespace SkinText {
                     writer.WriteLine(data);
 
                     //Line Wrap
-                    data = "line_wrap = " + MainW.LineWrapMenuItem.IsChecked.ToString();
+                    data = "line_wrap = " + MainW.LineWrapMenuItem.IsChecked.ToString(System.Globalization.CultureInfo.InvariantCulture);
                     writer.WriteLine(data);
 
                     //Image Blur Value
-                    data = "img_blur_val = " + MainW.Conf.imageBlurSlider.Value.ToString();
+                    data = "img_blur_val = " + MainW.Conf.imageBlurSlider.Value.ToString(System.Globalization.CultureInfo.InvariantCulture);
                     writer.WriteLine(data);
 
                     //Image Blur Mehod (Gauss, Box)
-                    data = "img_blur_gauss = " + MainW.Conf.ImageBlurGauss.IsChecked.Value.ToString();
+                    data = "img_blur_gauss = " + MainW.Conf.ImageBlurGauss.IsChecked.Value.ToString(System.Globalization.CultureInfo.InvariantCulture);
                     writer.WriteLine(data);
 
                     //Window Blur Enabled
-                    data = "window_blur = " + MainW.Conf.BgBlur.IsChecked.Value.ToString();
+                    data = "window_blur = " + MainW.Conf.BgBlur.IsChecked.Value.ToString(System.Globalization.CultureInfo.InvariantCulture);
                     writer.WriteLine(data);
 
                     //ToolBar Enabled
@@ -1127,7 +1130,7 @@ namespace SkinText {
 
                     data = "autosave_enabled = " + AutoSaveEnabled.ToString();
                     writer.WriteLine(data);
-                    data = "autosave_timer = " + MainW.Conf.autosavetimersider.Value.ToString();
+                    data = "autosave_timer = " + MainW.Conf.autosavetimersider.Value.ToString(System.Globalization.CultureInfo.InvariantCulture);
                     writer.WriteLine(data);
                 }
 
@@ -1504,9 +1507,9 @@ namespace SkinText {
             MainW.window.ShowInTaskbar = visible;
         }
 
-        public static void BlurBG(bool EnableBlur) {
+        public static void BlurBG(bool enableBlur) {
             if (MainW?.FontConf != null && MainW?.Conf != null) {
-                if (EnableBlur) {
+                if (enableBlur) {
                     BgBlur.EnableBlur(AccentState.ACCENT_ENABLE_BLURBEHIND, MainW);
                     BgBlur.EnableBlur(AccentState.ACCENT_ENABLE_BLURBEHIND, MainW.FontConf);
                     BgBlur.EnableBlur(AccentState.ACCENT_ENABLE_BLURBEHIND, MainW.Conf);
@@ -1523,16 +1526,16 @@ namespace SkinText {
             MainW.stackborder.BorderThickness = new Thickness(val);
         }
 
-        public static void ResizeRtb(bool ResizeEnabled) {
-            if (ResizeEnabled) {
+        public static void ResizeRtb(bool resizeEnabled) {
+            if (resizeEnabled) {
                 MainW.panel.IsEnabled = false;
 
-                MainW.MouseLeftButtonDown += MainW.Window1_MouseLeftButtonDown;
+                MainW.MouseLeftButtonDown += MainW.Window1MouseLeftButtonDown;
                 MainW.MouseLeftButtonUp += MainW.DragFinishedMouseHandler;
-                MainW.MouseMove += MainW.Window1_MouseMove;
-                MainW.MouseLeave += MainW.Window1_MouseLeave;
+                MainW.MouseMove += MainW.Window1MouseMove;
+                MainW.MouseLeave += MainW.Window1MouseLeave;
 
-                MainW.canvas.PreviewMouseLeftButtonDown += MainW.MyCanvas_PreviewMouseLeftButtonDown;
+                MainW.canvas.PreviewMouseLeftButtonDown += MainW.MyCanvasPreviewMouseLeftButtonDown;
                 MainW.canvas.PreviewMouseLeftButtonUp += MainW.DragFinishedMouseHandler;
 
                 MainW.selectedElement = MainW.TitleBorder as UIElement;
@@ -1544,41 +1547,41 @@ namespace SkinText {
             }
             else {
                 MainW.Deselect();
-                MainW.MouseLeftButtonDown -= MainW.Window1_MouseLeftButtonDown;
+                MainW.MouseLeftButtonDown -= MainW.Window1MouseLeftButtonDown;
                 MainW.MouseLeftButtonUp -= MainW.DragFinishedMouseHandler;
-                MainW.MouseMove -= MainW.Window1_MouseMove;
-                MainW.MouseLeave -= MainW.Window1_MouseLeave;
+                MainW.MouseMove -= MainW.Window1MouseMove;
+                MainW.MouseLeave -= MainW.Window1MouseLeave;
 
-                MainW.canvas.PreviewMouseLeftButtonDown -= MainW.MyCanvas_PreviewMouseLeftButtonDown;
+                MainW.canvas.PreviewMouseLeftButtonDown -= MainW.MyCanvasPreviewMouseLeftButtonDown;
                 MainW.canvas.PreviewMouseLeftButtonUp -= MainW.DragFinishedMouseHandler;
 
                 MainW.panel.IsEnabled = true;
             }
         }
 
-        public static void LineWrap(bool WrapEnabled) {
-            if (WrapEnabled) {
+        public static void LineWrap(bool wrapEnabled) {
+            if (wrapEnabled) {
                 MainW.rtb.Document.PageWidth = double.NaN;
             }
             else {
                 MainW.rtb.Document.PageWidth = 1000;
             }
-            MainW.LineWrapMenuItem.IsChecked = WrapEnabled;
+            MainW.LineWrapMenuItem.IsChecked = wrapEnabled;
             if (MainW.Conf != null) {
-                MainW.Conf.TextWrap.IsChecked = WrapEnabled;
+                MainW.Conf.TextWrap.IsChecked = wrapEnabled;
             }
         }
 
-        public static void ToolBarVisible(bool ToolBarEnabled) {
-            if (ToolBarEnabled) {
+        public static void ToolBarVisible(bool toolBarEnabled) {
+            if (toolBarEnabled) {
                 MainW.ToolBarTray.Visibility = Visibility.Visible;
             }
             else {
                 MainW.ToolBarTray.Visibility = Visibility.Collapsed;
             }
-            MainW.ToolBarMenuItem.IsChecked = ToolBarEnabled;
+            MainW.ToolBarMenuItem.IsChecked = toolBarEnabled;
             if (MainW.Conf != null) {
-                MainW.Conf.ToolBarEnabled.IsChecked = ToolBarEnabled;
+                MainW.Conf.ToolBarEnabled.IsChecked = toolBarEnabled;
             }
         }
 
@@ -1986,8 +1989,10 @@ namespace SkinText {
         #region ToolBar functions
 
         public static void UpdateItemCheckedState(System.Windows.Controls.Primitives.ToggleButton button, DependencyProperty formattingProperty, object expectedValue) {
-            object currentValue = MainW.rtb.Selection.GetPropertyValue(formattingProperty);
-            button.IsChecked = (currentValue != DependencyProperty.UnsetValue) && currentValue != null && currentValue.Equals(expectedValue);
+            if (button != null) {
+                object currentValue = MainW.rtb.Selection.GetPropertyValue(formattingProperty);
+                button.IsChecked = (currentValue != DependencyProperty.UnsetValue) && currentValue != null && currentValue.Equals(expectedValue);
+            }
         }
 
         public static void UpdateToggleButtonState() {
@@ -2131,6 +2136,7 @@ namespace SkinText {
             MainW._fontSize.SelectedValue = (value == DependencyProperty.UnsetValue) ? null : value;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "System.Windows.Documents.InlineUIContainer")]
         public static void SelectImg() {
             OpenFileDialog dlg = new OpenFileDialog {
                 Filter = "Image files (*.jpg, *.jpeg,*.gif, *.png) | *.jpg; *.jpeg; *.gif; *.png"
@@ -2256,10 +2262,13 @@ namespace SkinText {
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public static void ApplyFontSize(System.Windows.Controls.SelectionChangedEventArgs e) {
             try {
-                if (e.AddedItems.Count > 0) {
-                    ApplyPropertyValueToSelectedText(TextElement.FontSizeProperty, e.AddedItems[0]);
+                if (e != null) {
+                    if (e.AddedItems.Count > 0) {
+                        ApplyPropertyValueToSelectedText(TextElement.FontSizeProperty, e.AddedItems[0]);
+                    }
                 }
             }
             catch (Exception ex) {
@@ -2280,9 +2289,11 @@ namespace SkinText {
         }
 
         public static void ApplyFontFamily(System.Windows.Controls.SelectionChangedEventArgs e) {
-            if (e.AddedItems.Count > 0) {
-                FontFamily editValue = (FontFamily)e.AddedItems[0];
-                ApplyPropertyValueToSelectedText(TextElement.FontFamilyProperty, editValue);
+            if (e != null) {
+                if (e.AddedItems.Count > 0) {
+                    FontFamily editValue = (FontFamily)e.AddedItems[0];
+                    ApplyPropertyValueToSelectedText(TextElement.FontFamilyProperty, editValue);
+                }
             }
         }
 
@@ -2307,6 +2318,7 @@ namespace SkinText {
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public static void ApplyListType(object sender) {
             if (MainW.rtb.Selection != null) {
                 System.Windows.Controls.Primitives.ToggleButton btn = (System.Windows.Controls.Primitives.ToggleButton)sender;

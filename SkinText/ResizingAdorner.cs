@@ -197,10 +197,8 @@ namespace SkinText {
 
         // Override the VisualChildrenCount and GetVisualChild properties to interface with
         // the adorner's visual collection.
-        protected override int VisualChildrenCount { get { return visualChildren.Count; } }
+        protected override int VisualChildrenCount => visualChildren.Count;
 
-        protected override Visual GetVisualChild(int index) {
-            return visualChildren[index];
-        }
+        protected override Visual GetVisualChild(int index) => visualChildren[index];
     }
 }

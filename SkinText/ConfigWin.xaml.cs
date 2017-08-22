@@ -46,7 +46,7 @@ namespace SkinText {
 
         private void ClrPcker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
             Xceed.Wpf.Toolkit.ColorPicker picker = (Xceed.Wpf.Toolkit.ColorPicker)sender;
-            string resource = picker.Name.Substring(picker.Name.IndexOf("_", StringComparison.InvariantCultureIgnoreCase) + 1);
+            string resource = picker.Name.Substring(picker.Name.IndexOf("_", StringComparison.Ordinal) + 1);
             SolidColorBrush color = new SolidColorBrush(picker.SelectedColor.Value);
             color.Freeze();
             CustomMethods.ChangeBrushResource(color, resource);
@@ -233,11 +233,11 @@ namespace SkinText {
         }
 
         private void ImageBlurSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
-            CustomMethods.BlurBgImage(imageBlurSlider.Value, ImageBlurGauss.IsChecked.Value);
+            CustomMethods.BlurBGImage(imageBlurSlider.Value, ImageBlurGauss.IsChecked.Value);
         }
 
         private void ImageBlurBox_Checked(object sender, RoutedEventArgs e) {
-            CustomMethods.BlurBgImage(imageBlurSlider.Value, ImageBlurGauss.IsChecked.Value);
+            CustomMethods.BlurBGImage(imageBlurSlider.Value, ImageBlurGauss.IsChecked.Value);
         }
 
         #endregion BG Image
