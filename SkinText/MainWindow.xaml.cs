@@ -19,7 +19,6 @@ namespace SkinText {
         public FontConfig FontConf { get => fontConf; set => fontConf = value; }
         public ConfigWin Conf { get => conf; set => conf = value; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         public double[] GetFontSizes() => new double[] {
             3.0, 4.0, 5.0, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5,
             10.0, 10.5, 11.0, 11.5, 12.0, 12.5, 13.0, 13.5, 14.0, 15.0,
@@ -51,7 +50,7 @@ namespace SkinText {
 
             CustomMethods.GetSkin();
 
-            //CustomMethods.LoadDefault();
+            CustomMethods.LoadDefault();
 
             CustomMethods.ReadConfig();
 
@@ -87,6 +86,30 @@ namespace SkinText {
         }
 
         #endregion General
+
+        #region DragDrop
+        //http://xcalibursystems.com/2011/12/wpf-drag-and-drop-textbox-for-windows-explorer-files/
+        private void Window_Drop(object sender, DragEventArgs e) {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                CustomMethods.ReadFile(files[0]);
+            }
+        }
+
+        private void Rtb_PreviewDragEnter(object sender, DragEventArgs e) {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) {
+                e.Effects = DragDropEffects.All;
+            }
+            else {
+                e.Effects = DragDropEffects.None;
+            }
+        }
+
+        private void Rtb_PreviewDragOver(object sender, DragEventArgs e) {
+            e.Handled = true;
+        }
+
+        #endregion DragDrop
 
         #region menu
 
@@ -190,6 +213,8 @@ namespace SkinText {
 
         #endregion menu
 
+        #region RTB functions
+
         private void Hyperlink_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
             if (Keyboard.IsKeyDown(Key.LeftCtrl)) {
                 Hyperlink hyperlink = (Hyperlink)sender;
@@ -244,6 +269,8 @@ namespace SkinText {
                 }
             }
         }
+
+        #endregion RTB functions
 
         #region Custom Commands
 
@@ -425,7 +452,7 @@ namespace SkinText {
 
         ///////////////////////////////////////////////////////////////////////////////
 
-        #region Rezise with Adorners
+        #region Resize with Adorners
 
         // Handler for drag stopping on leaving the window
         public void Window1MouseLeave(object sender, RoutedEventArgs e) {
@@ -533,6 +560,8 @@ namespace SkinText {
         public double OriginalLeft { get => _originalLeft; set => _originalLeft = value; }
         public double OriginalTop { get => _originalTop; set => _originalTop = value; }
 
-        #endregion Rezise with Adorners
+
+        #endregion Resize with Adorners
+
     }
 }

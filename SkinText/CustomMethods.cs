@@ -758,7 +758,7 @@ namespace SkinText {
                                 MainW.Conf.ClrPcker_ButtonBackgroundColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString(line[1]);
                                 break;
                             }
-                        case "ButtonFrontColorBrush": {
+                        case "BUTTONFRONTCOLORBRUSH": {
                                 MainW.Conf.ClrPcker_ButtonFrontColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString(line[1]);
                                 break;
                             }
@@ -1114,7 +1114,7 @@ namespace SkinText {
                     writer.WriteLine(data);
                     data = "MenuItem1BorderColorBrush = " + MainW.Conf.ClrPcker_MenuItem1BorderColorBrush.SelectedColor.ToString();
                     writer.WriteLine(data);
-                    data = "ClrPcker_MenuItem2DisabledColorBrush = " + MainW.Conf.ClrPcker_MenuItem2DisabledColorBrush.SelectedColor.ToString();
+                    data = "MenuItem2DisabledColorBrush = " + MainW.Conf.ClrPcker_MenuItem2DisabledColorBrush.SelectedColor.ToString();
                     writer.WriteLine(data);
                     data = "MenuItem2HighlightBorderColorBrush = " + MainW.Conf.ClrPcker_MenuItem2HighlightBorderColorBrush.SelectedColor.ToString();
                     writer.WriteLine(data);
