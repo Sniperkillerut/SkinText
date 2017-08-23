@@ -15,7 +15,7 @@ namespace SkinText {
                 Directory.CreateDirectory(path);
                 string curFileNamePath = Process.GetCurrentProcess().MainModule.FileName;
                 string curFileName = Path.GetFileName(curFileNamePath);
-                File.Copy(curFileName, path + "\\" + curFileName);
+                File.Copy(curFileName, path + "\\" + "SkinText.exe");
                 MessageBox.Show("Config complete!", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex) {
@@ -55,7 +55,7 @@ namespace SkinText {
                 MessageBox.Show("Welcome to the SkinText Family! \r\nFor the first run we need to do a quick config", "Welcome!", MessageBoxButton.OK, MessageBoxImage.Information);
                 try {
                     Directory.CreateDirectory(path);
-                    File.Copy(curFileName, path + "\\" + curFileName);
+                    File.Copy(curFileName, path + "\\" + "SkinText.exe");
                     Directory.CreateDirectory(path + @"\Default");
                     MessageBox.Show("Config complete!", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
@@ -83,9 +83,9 @@ namespace SkinText {
                     }
                 }
             }
-            if (!File.Exists(path + "\\" + curFileName)) {
+            if (!File.Exists(path + "\\" + "SkinText.exe")) {
                 try {
-                    File.Copy(curFileName, path + "\\" + curFileName, true);
+                    File.Copy(curFileName, path + "\\" + "SkinText.exe", true);
                     MessageBox.Show("Detected a missing file and created it", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 catch (Exception ex) {
@@ -117,33 +117,29 @@ namespace SkinText {
             else {
                 try {
                     //check version for update
-                    FileVersionInfo oldFileVersionInfo = FileVersionInfo.GetVersionInfo(path + "\\" + curFileName);
+                    FileVersionInfo oldFileVersionInfo = FileVersionInfo.GetVersionInfo(path + "\\" + "SkinText.exe");
                     FileVersionInfo currentFileVersionInfo = FileVersionInfo.GetVersionInfo(curFileNamePath);
-                    //oldFileVersionInfo.FileMajorPart 0
-                    //oldFileVersionInfo.FileMinorPart 1
-                    //oldFileVersionInfo.FileBuildPart 20
-                    //oldFileVersionInfo.FilePrivatePart 0
                     if (currentFileVersionInfo.FileMajorPart > oldFileVersionInfo.FileMajorPart) {
                         //MessageBox.Show("Thanks for updating!");
-                        File.Copy(curFileName, path + "\\" + curFileName, true);
+                        File.Copy(curFileName, path + "\\" + "SkinText.exe", true);
                     }
                     else {
                         if (currentFileVersionInfo.FileMajorPart == oldFileVersionInfo.FileMajorPart) {
                             if (currentFileVersionInfo.FileMinorPart > oldFileVersionInfo.FileMinorPart) {
                                 //MessageBox.Show("Thanks for updating!");
-                                File.Copy(curFileName, path + "\\" + curFileName, true);
+                                File.Copy(curFileName, path + "\\" + "SkinText.exe", true);
                             }
                             else {
                                 if (currentFileVersionInfo.FileMinorPart == oldFileVersionInfo.FileMinorPart) {
                                     if (currentFileVersionInfo.FileBuildPart > oldFileVersionInfo.FileBuildPart) {
                                         //MessageBox.Show("Thanks for updating!");
-                                        File.Copy(curFileName, path + "\\" + curFileName, true);
+                                        File.Copy(curFileName, path + "\\" + "SkinText.exe", true);
                                     }
                                     else {
                                         if (currentFileVersionInfo.FileBuildPart == oldFileVersionInfo.FileBuildPart) {
                                             if (currentFileVersionInfo.FilePrivatePart > oldFileVersionInfo.FilePrivatePart) {
                                                 //MessageBox.Show("Thanks for updating!");
-                                                File.Copy(curFileName, path + "\\" + curFileName, true);
+                                                File.Copy(curFileName, path + "\\" + "SkinText.exe", true);
                                             }
                                         }
                                     }

@@ -1076,7 +1076,7 @@
                                     VerticalScrollBarVisibility="Auto"
                                     SelectionChanged="Rtb_SelectionChanged" IsDocumentEnabled="True" KeyUp="Rtb_KeyUp" TextChanged="Rtb_TextChanged"
                                     IsInactiveSelectionHighlightEnabled="True"
-                                    Drop="Window_Drop" AllowDrop="True" PreviewDrop="Window_Drop" PreviewDragOver="Rtb_PreviewDragOver" PreviewDragEnter="Rtb_PreviewDragEnter">
+                                    AllowDrop="True" PreviewDragEnter="Rtb_PreviewDragEnter" Drop="Window_Drop" PreviewDragOver="Rtb_PreviewDragOver" >
                             <FlowDocument LineStackingStrategy="BlockLineHeight" />
                                 <RichTextBox.Resources>
                                     <Style TargetType="{x:Type Paragraph}">

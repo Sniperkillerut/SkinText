@@ -92,7 +92,17 @@ namespace SkinText {
         private void Window_Drop(object sender, DragEventArgs e) {
             if (e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                CustomMethods.ReadFile(files[0]);
+
+                string ext = System.IO.Path.GetExtension(files[0]).ToUpperInvariant();
+
+                if (Array.Exists(new string[] { ".JPG", ".JPEG", ".JPE", ".JFIF", ".PNG", ".GIF" }, element => element == ext)) {
+                    CustomMethods.LoadImage(files[0]);
+                }
+                else {
+                    CustomMethods.ReadFile(files[0]);
+                }
+                //to stop calling multiple times on drop
+                e.Handled = true;
             }
         }
 

@@ -111,10 +111,16 @@ namespace SkinText {
         /// <param name="imagepath"></param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public static void LoadImage(string imagepath) {
+            ImageClear();
+            string newImagePath = AppDataPath + CurrentSkin + @"\bgImg" + Path.GetExtension(imagepath);//+ Path.GetFileName(imagepath);
             try {
-                if (File.Exists(imagepath)) {
-                    Uri uri = new Uri(imagepath);
-                    if (Path.GetExtension(imagepath).ToUpperInvariant() == ".GIF") {
+                File.Copy(imagepath, newImagePath, true);
+                imagepath = newImagePath;
+                //first copy the img to appdata, then load it
+
+                if (File.Exists(newImagePath)) {
+                    Uri uri = new Uri(newImagePath);
+                    if (Path.GetExtension(newImagePath).ToUpperInvariant() == ".GIF") {
                         if (MainW.Conf.GifMethodCPU.IsChecked.Value) {//CPU Method
                             XamlAnimatedGif.AnimationBehavior.SetSourceUri(MainW.backgroundimg, uri);
                         }
@@ -138,15 +144,15 @@ namespace SkinText {
                     }
                     //MainW.WinConfig.ClrPcker_WindowBackground.SelectedColor = Colors.Transparent;
                     uri = null;
-                    Imagepath = imagepath; //set Global Imagepath
+                    Imagepath = newImagePath; //set Global Imagepath
                 }
                 else {
-                    throw new FileNotFoundException("Error: File not found", imagepath);
+                    throw new FileNotFoundException("Error: File not found", newImagePath);
                 }
             }
             catch (Exception ex) {
-                if (!string.IsNullOrWhiteSpace(imagepath)) {
-                    MessageBox.Show("Failed to Load Image:\r\n " + imagepath, "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
+                if (!string.IsNullOrWhiteSpace(newImagePath)) {
+                    MessageBox.Show("Failed to Load Image:\r\n " + newImagePath, "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
                 }
                 ImageClear();
                 #if DEBUG
@@ -171,20 +177,8 @@ namespace SkinText {
             };
             //openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             if (openFileDialog.ShowDialog() == true) {
-                try {
-                    string currentImagepath = openFileDialog.FileName;
-                    string newImagePath = AppDataPath + CurrentSkin + @"\bgImg" + Path.GetExtension(currentImagepath);//+ Path.GetFileName(imagepath);
-                    ImageClear();
-                    File.Copy(currentImagepath, newImagePath, true);
-
-                    LoadImage(newImagePath);
-                }
-                catch (Exception ex) {
-#if DEBUG
-                    MessageBox.Show(ex.ToString());
-                    //throw;
-#endif
-                }
+                
+                LoadImage(openFileDialog.FileName);
             }
             else {
                 ImageClear();
