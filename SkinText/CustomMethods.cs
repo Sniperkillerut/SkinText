@@ -1,8 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using Microsoft.Win32;
@@ -16,13 +18,18 @@ namespace SkinText {
         private static string currentSkin;
         private static bool fileChanged;
         private static string filepath;
+        private static string filepathAsociated;
         private static string imagepath;
+        private static string screenShotPath;
+        private static string oldScreenShotPath;
+        private static bool screenshotUpload;
         private static MainWindow mainW;
         public static string AppDataPath { get => appDataPath; set => appDataPath = value; }
         public static int AutoSaveTimer { get => autoSaveTimer; set => autoSaveTimer = value; }
         public static string CurrentSkin { get => currentSkin; set => currentSkin = value; }
         public static bool FileChanged { get => fileChanged; set => fileChanged = value; }
         public static string Filepath { get => filepath; set => filepath = value; }
+        public static string FilepathAssociated { get => filepathAsociated; set => filepathAsociated = value; }
 
         public static string GAppPath {
             get {
@@ -56,6 +63,9 @@ namespace SkinText {
 
         public static string Imagepath { get => imagepath; set => imagepath = value; }
         public static MainWindow MainW { get => mainW; set => mainW = value; }
+        public static string ScreenShotPath { get => screenShotPath; set => screenShotPath = value; }
+        public static string OldScreenShotPath { get => oldScreenShotPath; set => oldScreenShotPath = value; }
+        public static bool ScreenshotUpload { get => screenshotUpload; set => screenshotUpload = value; }
 
         #region Bg Image
 
@@ -88,7 +98,7 @@ namespace SkinText {
             WpfAnimatedGif.ImageBehavior.SetAnimatedSource(MainW.backgroundimg, null);
             XamlAnimatedGif.AnimationBehavior.SetSourceUri(MainW.backgroundimg, null);
             XamlAnimatedGif.AnimationBehavior.SetSourceStream(MainW.backgroundimg, null);
-            if (((SolidColorBrush)MainW.window.Background).Color.A == 0 ) {
+            if (((SolidColorBrush)MainW.window.Background).Color.A == 0) {
                 MainW.Conf.ClrPcker_MainWindowBackgroundColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#85949494");
             }
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
@@ -98,10 +108,10 @@ namespace SkinText {
                 }
             }
             catch (Exception ex) {
-                #if DEBUG
-                MessageBox.Show(ex.ToString());
+#if DEBUG
+                MessageBox.Show("DEBUG: "+ex.ToString());
                 //throw;
-                #endif
+#endif
             }
         }
 
@@ -111,12 +121,14 @@ namespace SkinText {
         /// <param name="imagepath"></param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public static void LoadImage(string imagepath) {
-            ImageClear();
             string newImagePath = AppDataPath + CurrentSkin + @"\bgImg" + Path.GetExtension(imagepath);//+ Path.GetFileName(imagepath);
             try {
-                File.Copy(imagepath, newImagePath, true);
-                imagepath = newImagePath;
-                //first copy the img to appdata, then load it
+                if (imagepath != newImagePath) {
+                    ImageClear();
+                    File.Copy(imagepath, newImagePath, true);
+                    //imagepath = newImagePath;
+                    //first copy the img to appdata, then load it
+                }
 
                 if (File.Exists(newImagePath)) {
                     Uri uri = new Uri(newImagePath);
@@ -155,10 +167,10 @@ namespace SkinText {
                     MessageBox.Show("Failed to Load Image:\r\n " + newImagePath, "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
                 }
                 ImageClear();
-                #if DEBUG
-                MessageBox.Show(ex.ToString());
+#if DEBUG
+                MessageBox.Show("DEBUG: "+ex.ToString());
                 //throw;
-                #endif
+#endif
             }
         }
 
@@ -177,7 +189,6 @@ namespace SkinText {
             };
             //openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             if (openFileDialog.ShowDialog() == true) {
-                
                 LoadImage(openFileDialog.FileName);
             }
             else {
@@ -211,47 +222,6 @@ namespace SkinText {
         #endregion Bg Image
 
         #region Config File
-
-        /// <summary>
-        /// Reads Config.ini and sets wich skin to use
-        /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        public static void GetSkin() {
-            CurrentSkin = @"\Default";
-            try {
-                if (File.Exists(AppDataPath + @"\config.ini")) {
-                    using (StreamReader reader = new StreamReader(AppDataPath + @"\config.ini", System.Text.Encoding.UTF8)) {
-                        string currentLine;
-                        string[] line;
-                        if ((currentLine = reader.ReadLine()) != null) {
-                            line = currentLine.Split('=');
-                            line[0] = line[0].Trim();
-                            line[0] = line[0].ToUpperInvariant();
-                            if (!string.IsNullOrEmpty(line[0]) && !string.IsNullOrEmpty(line[1])) {
-                                if (line[0] == "SKIN") {
-                                    line[1] = line[1].Trim();
-                                    if (!string.IsNullOrWhiteSpace(line[1])) {
-                                        CurrentSkin = @"\" + line[1];//A Folder
-                                        if (!File.Exists(AppDataPath + CurrentSkin + @"\skintext.ini")) {
-                                            CurrentSkin = @"\Default";
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex) {
-                // The appdata folders dont exist
-                //can be first open, let default values
-                CurrentSkin = @"\Default";
-#if DEBUG
-                MessageBox.Show(ex.ToString());
-                //throw;
-#endif
-            }
-        }
 
         /// <summary>
         /// Loads Default Values
@@ -383,7 +353,7 @@ namespace SkinText {
             MainW.Conf.ClrPcker_MainWindowBackgroundColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#55FFFFFF");
             MainW.Conf.ClrPcker_RTBBackgroundColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#7DFFFFFF");
 
-            MainW.Conf.ClrPcker_BackgroundColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#FF1C1C1C");
+            MainW.Conf.ClrPcker_BackgroundColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#CA1C1C1C");
             MainW.Conf.ClrPcker_ButtonBackgroundColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#FF262626");
             MainW.Conf.ClrPcker_ButtonFrontColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#FFE6E6E6");
             MainW.Conf.ClrPcker_ButtonBackgroundMouseOverColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#FF00B5FF");
@@ -467,11 +437,9 @@ namespace SkinText {
                             line = currentLine.Split('=');
                             line[0] = line[0].Trim();
                             line[0] = line[0].ToUpperInvariant();
-                            if (!string.IsNullOrEmpty(line[0]) && !string.IsNullOrEmpty(line[1])) {
+                            if (!string.IsNullOrEmpty(line[0]) && line.Length > 1 && !string.IsNullOrWhiteSpace(line[1])) {
                                 line[1] = line[1].Trim();
-                                if (!string.IsNullOrWhiteSpace(line[1])) {
-                                    ReadConfigLine(line);
-                                }
+                                ReadConfigLine(line);
                             }
                         }
                     }
@@ -481,7 +449,7 @@ namespace SkinText {
                 // The appdata folders dont exist
                 //can be first open, let default values
 #if DEBUG
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show("DEBUG: "+ex.ToString());
                 //throw;
 #endif
             }
@@ -821,9 +789,9 @@ namespace SkinText {
                                 }
                                 break;
                             }
-                        case "IMG_BLUR_GAUSS": {
+                        case "IMG_BLUR_BOX": {
                                 if (bool.TryParse(line[1], out bool1)) {// true = Gauss (DEFAULT) false = Box
-                                    MainW.Conf.ImageBlurGauss.IsChecked = bool1;
+                                    MainW.Conf.ImageBlurBox.IsChecked = bool1;
                                 }
                                 break;
                             }
@@ -860,14 +828,20 @@ namespace SkinText {
                                 }
                                 break;
                             }
+                        default: {
+#if DEBUG
+                                MessageBox.Show("Not recognized:  \"" + line[0] + "\" in SkinConfig file");
+#endif
+                                break;
+                            }
                     }
                 }
                 catch (Exception ex) {
-                    //System.FormatException catched from BORDER_COLOR, WINDOW_COLOR, TEXT_BG_COLOR
-                    #if DEBUG
-                    MessageBox.Show(ex.ToString());
+                    //System.FormatException catched from COLOR converters
+#if DEBUG
+                    MessageBox.Show("DEBUG: "+ex.ToString());
                     //throw;
-                    #endif
+#endif
                 }
             }
         }
@@ -1067,7 +1041,7 @@ namespace SkinText {
                     writer.WriteLine(data);
 
                     //Image Blur Mehod (Gauss, Box)
-                    data = "img_blur_gauss = " + MainW.Conf.ImageBlurGauss.IsChecked.Value.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                    data = "img_blur_Box = " + MainW.Conf.ImageBlurBox.IsChecked.Value.ToString(System.Globalization.CultureInfo.InvariantCulture);
                     writer.WriteLine(data);
 
                     //Window Blur Enabled
@@ -1133,20 +1107,10 @@ namespace SkinText {
                 //info = new FileInfo("skintext.ini");
                 //info.Attributes = FileAttributes.Hidden;
 
-                /*TODO: skinfile
-                    * Skin install config
-                    * Same file?, other file?
-                    * probably other is best
-                    *
-                    SkinName = Circuitous
-                    SkinAuthor = Col-Darby
-                    SkinVersion = 1.0
-                    SkinTextVer = 1.3.0.560
-                    */
             }
             catch (Exception ex) {
 #if DEBUG
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show("DEBUG: "+ex.ToString());
                 //throw;
 #endif
             }
@@ -1220,7 +1184,7 @@ namespace SkinText {
                                     range.Load(fStream, DataFormats.XamlPackage);
                                     break;
                                 }
-                            default: {//TODO: if no format open as txt, or should throw error?
+                            default: {//NOTE: if no format open as txt, or should throw error?
                                     range.Load(fStream, DataFormats.Text);
                                     break;
                                 }
@@ -1242,9 +1206,25 @@ namespace SkinText {
                 }
                 NewFile();
 #if DEBUG
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show("DEBUG: "+ex.ToString());
                 //throw;
 #endif
+            }
+        }
+
+        public static void ReadAssociatedFile() {
+            if (!string.IsNullOrWhiteSpace(FilepathAssociated)) {
+                if (Path.GetExtension(FilepathAssociated).ToUpperInvariant() == ".SKTSKIN") {
+                    ImportSkin(FilepathAssociated);
+                    MainW.Conf.Show();
+                    MainW.Conf.skinmgmt.IsSelected = true;
+                    CheckBlurBG();
+                    //GetSkinList(); //is run on mainWindow.load()
+                }
+                else {
+                    ReadFile(FilepathAssociated);
+                }
+                FilepathAssociated = null;
             }
         }
 
@@ -1303,7 +1283,7 @@ namespace SkinText {
                                     t.Save(file, DataFormats.Xaml);
                                     break;
                                 }
-                            case (".XAMLP"): {//TODO: change extension to skintext and register it to open with defaults
+                            case (".XAMLP"): {//NOTE: change extension to skintext and register it to open with defaults
                                     t.Save(file, DataFormats.XamlPackage);
                                     break;
                                 }
@@ -1318,7 +1298,7 @@ namespace SkinText {
                 catch (Exception ex) {
                     MessageBox.Show("Failed to Write File", "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
 #if DEBUG
-                    MessageBox.Show(ex.ToString());
+                    MessageBox.Show("DEBUG: "+ex.ToString());
                     //throw;
 #endif
                 }
@@ -1351,6 +1331,8 @@ namespace SkinText {
             MainW.FontConf.Close();
             MainW.Conf.Close();
             SaveConfig();
+            SaveCurrentSkin();
+
         }
 
         /// <summary>
@@ -1501,6 +1483,10 @@ namespace SkinText {
             MainW.window.ShowInTaskbar = visible;
         }
 
+        public static void CheckBlurBG() {
+            CustomMethods.BlurBG(MainW.Conf.BgBlur.IsChecked.Value);
+        }
+
         public static void BlurBG(bool enableBlur) {
             if (MainW?.FontConf != null && MainW?.Conf != null) {
                 if (enableBlur) {
@@ -1595,6 +1581,439 @@ namespace SkinText {
         }
 
         #endregion Window Config
+
+        #region Skins
+
+        /// <summary>
+        /// Reads Config.ini and sets wich skin to use
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+        public static void GetSkin() {
+            CurrentSkin = @"\Default";
+            try {
+                if (File.Exists(AppDataPath + @"\config.ini")) {
+                    using (StreamReader reader = new StreamReader(AppDataPath + @"\config.ini", System.Text.Encoding.UTF8)) {
+                        string currentLine;
+                        string[] line;
+                        if ((currentLine = reader.ReadLine()) != null) {
+                            line = currentLine.Split('=');
+                            line[0] = line[0].Trim();
+                            line[0] = line[0].ToUpperInvariant();
+                            if (!string.IsNullOrEmpty(line[0]) && !string.IsNullOrEmpty(line[1])) {
+                                if (line[0] == "SKIN") {
+                                    line[1] = line[1].Trim();
+                                    if (!string.IsNullOrWhiteSpace(line[1])) {
+                                        CurrentSkin = @"\" + line[1];//A Folder
+                                        if (!File.Exists(AppDataPath + CurrentSkin + @"\skintext.ini")) {
+                                            CurrentSkin = @"\Default";
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) {
+                // The appdata folders dont exist
+                //can be first open, let default values
+                CurrentSkin = @"\Default";
+#if DEBUG
+                MessageBox.Show("DEBUG: "+ex.ToString());
+                //throw;
+#endif
+            }
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+        public static void SaveCurrentSkin() {
+            FileStream fs = null;
+            try {
+                string configFile = AppDataPath + @"\config.ini";
+                fs = new FileStream(configFile, FileMode.Create, FileAccess.Write);
+                using (TextWriter writer = new StreamWriter(fs, System.Text.Encoding.UTF8)) {
+                    fs = null; //is no longer needed
+                    string data = "Skin = " + CurrentSkin.Replace(@"\", "");
+                    writer.WriteLine(data);
+                }
+            }
+            catch (Exception ex2) {
+#if DEBUG
+                MessageBox.Show("DEBUG: "+ex2.ToString());
+                //throw;
+#endif
+            }
+            finally {
+                fs?.Dispose();
+            }
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:No pasar cadenas literal como parámetros localizados", MessageId = "System.Windows.MessageBox.Show(System.String,System.String,System.Windows.MessageBoxButton,System.Windows.MessageBoxImage)")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+        public static void CreateModifySkin(string skin, string skinName, string skinAuthor, string skinVersion, string screenshotPath, string notes) {
+            FileStream fs = null;
+            try {
+                Directory.CreateDirectory(AppDataPath + @"\" + skin);
+                string configFile = AppDataPath + @"\" + skin + @"\skininfo.ini";
+                fs = new FileStream(configFile, FileMode.Create, FileAccess.Write);
+                using (TextWriter writer = new StreamWriter(fs, System.Text.Encoding.UTF8)) {
+                    fs = null; //is no longer needed
+                    string data = "Skin Name = " + skinName;
+                    writer.WriteLine(data);
+                    data = "Skin Author = " + skinAuthor;
+                    writer.WriteLine(data);
+                    data = "Skin Version = " + skinVersion;
+                    writer.WriteLine(data);
+                    data = "SkinText Version = " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                    writer.WriteLine(data);
+
+                    if (string.IsNullOrWhiteSpace(screenshotPath) || screenshotPath == "pack://application:,,,/SkinText;component/Resources/icon_01.ico") {
+                        screenshotPath = "DefaultIcon";
+                        if (File.Exists(OldScreenShotPath)) {
+                            DeleteOldScreenshot(OldScreenShotPath);
+                        }
+                    }
+                    else {
+                        if (Path.GetFileNameWithoutExtension(screenshotPath).Contains("_temp")){
+                            try {
+                                ScreenShotClear();
+                                if (File.Exists(OldScreenShotPath)) {
+                                    DeleteOldScreenshot(OldScreenShotPath);
+                                }
+                                File.Move(screenshotPath, screenshotPath.Replace("_temp", ""));
+                                screenshotPath = screenshotPath.Replace("_temp", "");
+                                LoadScreenshot(screenshotPath);
+                                OldScreenShotPath = screenshotPath;
+                            }
+                            catch (Exception ex) {
+                                MessageBox.Show("Error creating Screenshot, Please try again", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                #if DEBUG
+                                MessageBox.Show("DEBUG: "+ex.ToString());
+                                //throw;
+                                #endif
+                            }
+                        }
+                        screenshotPath = Path.GetFileName(screenshotPath);
+                    }
+                    data = "ScreenShot = " + screenshotPath;
+                    writer.WriteLine(data);
+
+                    data = "Notes = " + notes?.Replace("\r\n", @"   ");
+                    writer.WriteLine(data);
+                }
+                ScreenshotUpload = false;
+            }
+            catch (Exception ex) {
+                #if DEBUG
+                MessageBox.Show("DEBUG: "+ex.ToString());
+                //throw;
+                #endif
+            }
+            finally {
+                fs?.Dispose();
+            }
+        }
+
+        public static void GetSkinList() {
+            MainW.Conf.SkinsListbox.Items.Clear();
+            ListBoxItem itm2 = new ListBoxItem {
+                Content = "Create New Skin"
+            };
+            MainW.Conf.SkinsListbox.Items.Add(itm2);
+            System.Collections.Generic.IEnumerable<string> skinList = Directory.EnumerateDirectories(appDataPath);
+            foreach (string item in skinList) {
+                ListBoxItem itm = new ListBoxItem {
+                    Content = Path.GetFileName(item)
+                };
+                MainW.Conf.SkinsListbox.Items.Add(itm);
+                if (itm.Content.ToString() == CurrentSkin.Replace("\\", "")) {
+                    MainW.Conf.SkinsListbox.SelectedItem = itm;
+                }
+            }
+            if (MainW.Conf.SkinsListbox.SelectedItem == null) {
+                MainW.Conf.SkinsListbox.SelectedIndex = 0;
+            }
+
+            //MainW.Conf.SkinsListbox.SelectedItem=CurrentSkin.Replace("\\","");
+        }
+
+        public static void SkinList_Information(string SelectedSkin) {
+            MainW.Conf.SkinName_TextBox.Text = "";
+            MainW.Conf.SkinAuthor_TextBox.Text = "";
+            MainW.Conf.SkinVersion_TextBox.Text = "";
+            //MainW.Conf.SkinTextVersion_TextBox.Text = "";
+            ScreenShotClear();
+            DeleteOldScreenshot(ScreenShotPath);
+            //ScreenshotUpload = false;
+            ScreenShotPath = "";
+            MainW.Conf.SkinTextVersion_TextBox.Text = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            MainW.Conf.SkinScreenshot_IMG.Source = (System.Windows.Media.Imaging.BitmapImage)Application.Current.Resources["ImageSource1icon"];
+            MainW.Conf.SkinNotes_TextBox.Text = "";
+
+            if (SelectedSkin != "Create New Skin") {
+                MainW.Conf.LoadSkin.Visibility = Visibility.Visible;
+                MainW.Conf.CreateSkin.Content = "Modify Skin";
+
+                string infoPath = AppDataPath + @"\" + SelectedSkin;
+                if (File.Exists(infoPath + @"\skininfo.ini")) {
+                    try {
+                        using (StreamReader reader = new StreamReader(infoPath + @"\SkinInfo.ini", System.Text.Encoding.UTF8)) {
+                            string currentLine;
+                            string[] line;
+                            while ((currentLine = reader.ReadLine()) != null) {
+                                line = currentLine.Split('=');
+                                line[0] = line[0].Trim();
+                                line[0] = line[0].ToUpperInvariant();
+                                if (!string.IsNullOrEmpty(line[0]) && line.Length > 1 && !string.IsNullOrWhiteSpace(line[1])) {
+                                    line[1] = line[1].Trim();
+                                    switch (line[0]) {
+                                        case ("SKIN NAME"): {
+                                                MainW.Conf.SkinName_TextBox.Text = line[1];
+                                                break;
+                                            }
+                                        case ("SKIN AUTHOR"): {
+                                                MainW.Conf.SkinAuthor_TextBox.Text = line[1];
+                                                break;
+                                            }
+                                        case ("SKIN VERSION"): {
+                                                MainW.Conf.SkinVersion_TextBox.Text = line[1];
+                                                break;
+                                            }
+                                        case ("SKINTEXT VERSION"): {
+                                                MainW.Conf.SkinTextVersion_TextBox.Text = line[1];
+                                                break;
+                                            }
+                                        case ("SCREENSHOT"): {
+                                                LoadScreenshot(infoPath + @"\" + line[1]);
+                                                OldScreenShotPath = ScreenShotPath;
+                                                break;
+                                            }
+                                        case ("NOTES"): {
+                                                MainW.Conf.SkinNotes_TextBox.Text = line[1].Replace(@"   ", "\r\n");
+                                                break;
+                                            }
+                                        default: {
+                                                #if DEBUG
+                                                MessageBox.Show("Not recognized:  \"" + line[0] + "\" in SkinInfo file");
+                                                #endif
+                                                break;
+                                            }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex) {
+                        #if DEBUG
+                        MessageBox.Show("DEBUG: "+ex.ToString());
+                        //throw;
+                        #endif
+                    }
+                }
+                else {
+                    MessageBox.Show("Can not find SkinInfo.ini of this Skin", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else {
+                MainW.Conf.LoadSkin.Visibility = Visibility.Hidden;
+                MainW.Conf.CreateSkin.Content = "Create Skin";
+            }
+        }
+
+        public static void LoadScreenshot(string screenshotPath) {
+            if (Path.GetFileNameWithoutExtension(screenshotPath) == "DefaultIcon") {
+                //MainW.Conf.SkinScreenshot_IMG.Source = (System.Windows.Media.Imaging.BitmapImage)Application.Current.Resources["ImageSource1icon"];
+                //do nothing, is already loaded the default
+            }
+            else {
+                try {
+                    if (File.Exists(screenshotPath)) {
+                        ScreenShotClear();
+                        Uri uri = new Uri(screenshotPath);
+                        if (Path.GetExtension(screenshotPath).ToUpperInvariant() == ".GIF") {
+                            if (MainW.Conf.GifMethodCPU.IsChecked.Value) {//CPU Method
+                                XamlAnimatedGif.AnimationBehavior.SetSourceUri(MainW.Conf.SkinScreenshot_IMG, uri);
+                            }
+                            else {//RAM Method
+                                ImageSource bitmap = BitmapFromUri(uri);
+                                bitmap.Freeze();
+                                WpfAnimatedGif.ImageBehavior.SetAnimatedSource(MainW.Conf.SkinScreenshot_IMG, bitmap);
+                                bitmap = null;
+                            }
+                        }
+                        else {//default (no gif animation)
+                            ImageSource bitmap = BitmapFromUri(uri);
+                            bitmap.Freeze();
+                            MainW.Conf.SkinScreenshot_IMG.Source = bitmap;
+                            bitmap = null;
+                        }
+                        uri = null;
+                        ScreenShotPath = screenshotPath;
+                    }
+                    else {
+                        throw new FileNotFoundException("Error: File not found", screenshotPath);
+                    }
+                }
+                catch (Exception ex) {
+                    if (!string.IsNullOrWhiteSpace(screenshotPath)) {
+                        MessageBox.Show("Failed to Load ScreenShot:\r\n " + screenshotPath, "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
+                    }
+                    ScreenShotClear();
+                    MainW.Conf.SkinScreenshot_IMG.Source = (System.Windows.Media.Imaging.BitmapImage)Application.Current.Resources["ImageSource1icon"];
+                    ScreenShotPath = "";
+#if DEBUG
+                    MessageBox.Show("DEBUG: "+ex.ToString());
+                    //throw;
+#endif
+                }
+            }
+        }
+
+        public static void SaveScreenshot(string skinName, string screenShotFile) {
+            try {
+                string newImagePath = AppDataPath + @"\" + skinName + @"\screenshot_temp" + Path.GetExtension(screenShotFile);
+                if (screenShotFile != newImagePath) {
+                    ScreenShotClear();
+                    DeleteOldScreenshot(ScreenShotPath);
+                    ScreenShotPath = "";
+                    Directory.CreateDirectory(AppDataPath + @"\" + skinName);
+                    File.Copy(screenShotFile, newImagePath, true);
+                }
+                //first copy the screenshot to appdata/skin, then load it
+                LoadScreenshot(newImagePath);
+            }
+            catch (Exception ex) {
+                #if DEBUG
+                MessageBox.Show("DEBUG: "+ex.ToString());
+                //throw;
+                #endif
+            }
+        }
+
+        public static void SelectScreenshot(string skin) {
+            OpenFileDialog openFileDialog = new OpenFileDialog() {
+                Multiselect = false,
+                CheckFileExists = true,
+                CheckPathExists = true,
+                ValidateNames = true,
+                RestoreDirectory = true,
+                Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png, *.gif) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png; *.gif"
+            };
+            //openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            if (openFileDialog.ShowDialog() == true) {
+
+                SaveScreenshot(skin, openFileDialog.FileName);
+            }
+            else {
+                ScreenShotClear();
+                MainW.Conf.SkinScreenshot_IMG.Source = (System.Windows.Media.Imaging.BitmapImage)Application.Current.Resources["ImageSource1icon"];
+                DeleteOldScreenshot(ScreenShotPath);
+                ScreenShotPath = "";
+            }
+            ScreenshotUpload = true;
+        }
+
+        private static void DeleteOldScreenshot(string deletepath) {
+            try {
+                if (File.Exists(deletepath) && ScreenshotUpload) {
+                    File.Delete(deletepath);
+                    ScreenshotUpload = false;
+                }
+            }
+            catch (Exception ex) {
+                //MessageBox.Show("Error deleting temporal file, please try again", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                #if DEBUG
+                MessageBox.Show("DEBUG: "+ex.ToString());
+                //throw;
+                #endif
+            }
+        }
+
+        public static void ScreenShotClear() {
+            MainW.Conf.SkinScreenshot_IMG.Source = null;
+            WpfAnimatedGif.ImageBehavior.SetAnimatedSource(MainW.Conf.SkinScreenshot_IMG, null);
+            XamlAnimatedGif.AnimationBehavior.SetSourceUri(MainW.Conf.SkinScreenshot_IMG, null);
+            XamlAnimatedGif.AnimationBehavior.SetSourceStream(MainW.Conf.SkinScreenshot_IMG, null);
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
+        }
+
+        public static void ExportSkin(string skin) {
+            SaveFileDialog savedialog = new SaveFileDialog {
+                CreatePrompt = true,
+                OverwritePrompt = true,
+                CheckPathExists = true,
+                ValidateNames = true,
+                RestoreDirectory = true,
+                Filter = "SkinText Skin (*.sktskin)|*.sktskin",
+                FileName = Path.GetFileName(skin)
+            };
+
+            if (savedialog.ShowDialog() == true) {
+                try {
+                    ZipFile.CreateFromDirectory(AppDataPath+@"\"+skin, savedialog.FileName, CompressionLevel.Optimal,false);
+                    MessageBox.Show("Export of skin: " + skin + " complete!", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch (Exception ex) {
+                    MessageBox.Show("Failed to Export skin", "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
+                    #if DEBUG
+                    MessageBox.Show("DEBUG: "+ex.ToString());
+                    //throw;
+                    #endif
+                }
+            }
+        }
+
+        public static void OpenImportSkin() {
+            OpenFileDialog openFileDialog = new OpenFileDialog() {
+                Multiselect = false,
+                CheckFileExists = true,
+                CheckPathExists = true,
+                ValidateNames = true,
+                RestoreDirectory = true,
+                Filter = "SkinText Skin (*.sktskin)|*.sktskin",
+            };
+            if (openFileDialog.ShowDialog() == true) {
+                ImportSkin(openFileDialog.FileName);
+            }
+        }
+
+        public static void ImportSkin(string skin) {
+            try {
+                string newSkinPath =  Path.GetFileNameWithoutExtension(skin);
+                Directory.CreateDirectory(AppDataPath + @"\" + newSkinPath);
+                ZipFile.ExtractToDirectory(skin, AppDataPath + @"\" + newSkinPath);
+                MessageBox.Show("Import of skin: " + newSkinPath + " complete!", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
+                GetSkinList();
+            }
+            catch (Exception ex) {
+                MessageBox.Show("Failed to Import skin", "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
+                #if DEBUG
+                MessageBox.Show("DEBUG: "+ex.ToString());
+                //throw;
+                #endif
+            }
+        }
+
+        public static void DeleteSkin(string skin) {
+            if (@"\" + skin == CurrentSkin) {
+                MessageBox.Show("Cant Delete Skin Currently in use","Error",MessageBoxButton.OK,MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
+            }
+            else {
+                try {
+                    Directory.Delete(AppDataPath + @"\" + skin, true);
+                    MessageBox.Show("Skin: " + skin + " Deleted Sucsefully!", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch (Exception ex) {
+                    MessageBox.Show("Failed to Delete skin", "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
+                    #if DEBUG
+                    MessageBox.Show("DEBUG: "+ex.ToString());
+                    //throw;
+                    #endif
+                }
+            }
+        }
+
+        #endregion Skins
 
         #region Text Functions
 
@@ -1743,7 +2162,7 @@ namespace SkinText {
                     catch (Exception ex) {
                         //crashes when changing hyperLink properties
 #if DEBUG
-                        MessageBox.Show(ex.ToString());
+                        MessageBox.Show("DEBUG: "+ex.ToString());
                         //throw;
 #endif
                     }
@@ -1778,7 +2197,7 @@ namespace SkinText {
                 }
                 catch (Exception ex) {
 #if DEBUG
-                    MessageBox.Show(ex.ToString());
+                    MessageBox.Show("DEBUG: "+ex.ToString());
                     //throw;
 #endif
                 }
@@ -1837,8 +2256,8 @@ namespace SkinText {
                 }
                 catch (Exception ex) {
 #if DEBUG
-                    //MessageBox.Show(ex.ToString());
-                    System.Diagnostics.Debug.WriteLine(ex.ToString());
+                    //MessageBox.Show("DEBUG: "+ex.ToString());
+                    System.Diagnostics.Debug.WriteLine("DEBUG: "+ex.ToString());
                     //throw;
 #endif
                 }
@@ -2267,7 +2686,7 @@ namespace SkinText {
             }
             catch (Exception ex) {
 #if DEBUG
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show("DEBUG: "+ex.ToString());
                 //throw;
 #endif
             }

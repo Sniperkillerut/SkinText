@@ -216,6 +216,25 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="TextBoxStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="AcceptsReturn" Value="False"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderColorBrush}"/>
+            <Setter Property="Background" Value="{DynamicResource ButtonBackgroundColorBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource ButtonFrontColorBrush}"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver"     Value="True">
+                    <Setter Property="Background"   Value="{DynamicResource ButtonBackgroundMouseOverColorBrush}" />
+                    <Setter Property="BorderBrush" Value="{DynamicResource ButtonBorderMouseOverColorBrush}" />
+                </Trigger>
+                <Trigger Property="IsEnabled"       Value="false">
+                    <Setter Property="Background" Value="{DynamicResource MenuItem2DisabledColorBrush}" />
+                    <Setter Property="BorderBrush" Value="{DynamicResource MenuItem2DisabledColorBrush}" />
+                    <Setter Property="Opacity" Value="0.6" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -554,8 +573,8 @@
                         <Label Grid.Column="0" Grid.Row="2" Style="{DynamicResource LabelStyle}">
                             <TextBlock Text="Text Opacity: " Style="{DynamicResource ToolTipTextStyle}" />
                         </Label>
-                            <Slider Grid.Column="1" Grid.Row="2" Minimum="0" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center"  x:Name="textopacityslider" ValueChanged="TextOpacityslider_ValueChanged" IsMoveToPointEnabled="True" />
-                            <xctk:DecimalUpDown Grid.Column="2" Grid.Row="2"
+                        <Slider Grid.Column="1" Grid.Row="2" Minimum="0" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center"  x:Name="textopacityslider" ValueChanged="TextOpacityslider_ValueChanged" IsMoveToPointEnabled="True" />
+                        <xctk:DecimalUpDown Grid.Column="2" Grid.Row="2"
                                     FormatString="G" ClipValueToMinMax="True" TextAlignment="Center"
                                     HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5,5,5,5"
                                     Minimum="{Binding Minimum, ElementName=textopacityslider}"
@@ -605,6 +624,13 @@
                         </CheckBox>
 
                         <Label Grid.Column="0" Grid.Row="5" Style="{DynamicResource LabelStyle}">
+                            <Label.ToolTip>
+                                <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                    <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                        <TextBlock Text="Time in minutes to auto-save" Style="{DynamicResource ToolTipTextStyle}" />
+                                    </Border>
+                                </ToolTip>
+                            </Label.ToolTip>
                             <TextBlock Text="Auto Save (0 to disable): " Style="{DynamicResource ToolTipTextStyle}" />
                         </Label>
                         <Slider Grid.Column="1" Grid.Row="5" Value="5" Minimum="0" Maximum="60" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center"  x:Name="autosavetimersider" ValueChanged="Autosavetimer_ValueChanged" IsMoveToPointEnabled="True" />
@@ -642,8 +668,8 @@
                         <Label Grid.Column="0" Grid.Row="9" Style="{DynamicResource LabelStyle}">
                             <TextBlock Text="Left-Top Corner Radius: " Style="{DynamicResource ToolTipTextStyle}" />
                         </Label>
-                            <Slider Grid.Column="1" Grid.Row="9" Minimum="0" Maximum="{Binding Value, ElementName=CornerMax}" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center" x:Name="CornerRadius1Slider" ValueChanged="CornerRadius1Slider_ValueChanged" IsMoveToPointEnabled="True" />
-                            <xctk:DecimalUpDown Grid.Column="2" Grid.Row="9"
+                        <Slider Grid.Column="1" Grid.Row="9" Minimum="0" Maximum="{Binding Value, ElementName=CornerMax}" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center" x:Name="CornerRadius1Slider" ValueChanged="CornerRadius1Slider_ValueChanged" IsMoveToPointEnabled="True" />
+                        <xctk:DecimalUpDown Grid.Column="2" Grid.Row="9"
                                 FormatString="G" ClipValueToMinMax="True" TextAlignment="Center"
                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5,5,5,5"
                                 Minimum="{Binding Minimum, ElementName=CornerRadius1Slider}"
@@ -653,8 +679,8 @@
                         <Label Grid.Column="0" Grid.Row="10" Style="{DynamicResource LabelStyle}">
                             <TextBlock Text="Right-Top Corner Radius: " Style="{DynamicResource ToolTipTextStyle}" />
                         </Label>
-                            <Slider Grid.Column="1" Grid.Row="10" Minimum="0" Maximum="{Binding Value, ElementName=CornerMax}" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center" x:Name="CornerRadius2Slider" ValueChanged="CornerRadius1Slider_ValueChanged" IsMoveToPointEnabled="True" />
-                            <xctk:DecimalUpDown Grid.Column="2" Grid.Row="10"
+                        <Slider Grid.Column="1" Grid.Row="10" Minimum="0" Maximum="{Binding Value, ElementName=CornerMax}" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center" x:Name="CornerRadius2Slider" ValueChanged="CornerRadius1Slider_ValueChanged" IsMoveToPointEnabled="True" />
+                        <xctk:DecimalUpDown Grid.Column="2" Grid.Row="10"
                                 FormatString="G" ClipValueToMinMax="True" TextAlignment="Center"
                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5,5,5,5"
                                 Minimum="{Binding Minimum, ElementName=CornerRadius2Slider}"
@@ -664,8 +690,8 @@
                         <Label Grid.Column="0" Grid.Row="11" Style="{DynamicResource LabelStyle}">
                             <TextBlock Text="Right-Bottom Corner Radius: " Style="{DynamicResource ToolTipTextStyle}" />
                         </Label>
-                            <Slider Grid.Column="1" Grid.Row="11" Minimum="0" Maximum="{Binding Value, ElementName=CornerMax}" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center" x:Name="CornerRadius3Slider" ValueChanged="CornerRadius1Slider_ValueChanged" IsMoveToPointEnabled="True" />
-                            <xctk:DecimalUpDown Grid.Column="2" Grid.Row="11"
+                        <Slider Grid.Column="1" Grid.Row="11" Minimum="0" Maximum="{Binding Value, ElementName=CornerMax}" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center" x:Name="CornerRadius3Slider" ValueChanged="CornerRadius1Slider_ValueChanged" IsMoveToPointEnabled="True" />
+                        <xctk:DecimalUpDown Grid.Column="2" Grid.Row="11"
                                 FormatString="G" ClipValueToMinMax="True" TextAlignment="Center"
                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5,5,5,5"
                                 Minimum="{Binding Minimum, ElementName=CornerRadius3Slider}"
@@ -675,8 +701,8 @@
                         <Label Grid.Column="0" Grid.Row="12" Style="{DynamicResource LabelStyle}">
                             <TextBlock Text="Left-Bottom Corner Radius: " Style="{DynamicResource ToolTipTextStyle}" />
                         </Label>
-                            <Slider Grid.Column="1" Grid.Row="12" Minimum="0" Maximum="{Binding Value, ElementName=CornerMax}" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center" x:Name="CornerRadius4Slider" ValueChanged="CornerRadius1Slider_ValueChanged" IsMoveToPointEnabled="True" />
-                            <xctk:DecimalUpDown Grid.Column="2" Grid.Row="12"
+                        <Slider Grid.Column="1" Grid.Row="12" Minimum="0" Maximum="{Binding Value, ElementName=CornerMax}" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center" x:Name="CornerRadius4Slider" ValueChanged="CornerRadius1Slider_ValueChanged" IsMoveToPointEnabled="True" />
+                        <xctk:DecimalUpDown Grid.Column="2" Grid.Row="12"
                                 FormatString="G" ClipValueToMinMax="True" TextAlignment="Center"
                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5,5,5,5"
                                 Minimum="{Binding Minimum, ElementName=CornerRadius4Slider}"
@@ -802,23 +828,23 @@
                             </Button.ToolTip>
                         </Button>
                         <Button Grid.Column="2" Grid.Row="1" Style="{DynamicResource ButtonsStyle}" BorderBrush="{DynamicResource ButtonBorderCheckedColorBrush}" BorderThickness="1" Click="ClearImage_Click">
-                                <Button.ToolTip>
-                                    <ToolTip Style="{DynamicResource ToolTipStyle}">
-                                        <Border Style="{DynamicResource ToolTipBorderStyle}">
-                                            <TextBlock Text="Clear Background Image" Style="{DynamicResource ToolTipTextStyle}" />
-                                        </Border>
-                                    </ToolTip>
-                                </Button.ToolTip>
-                                <Button.Content>
-                                    <Canvas Width="22" Height="22" Clip="F1 M 0,0L 22,0L 22,22L 0,22L 0,0">
-                                        <Path Width="22" Height="22"
+                            <Button.ToolTip>
+                                <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                    <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                        <TextBlock Text="Clear Background Image" Style="{DynamicResource ToolTipTextStyle}" />
+                                    </Border>
+                                </ToolTip>
+                            </Button.ToolTip>
+                            <Button.Content>
+                                <Canvas Width="22" Height="22" Clip="F1 M 0,0L 22,0L 22,22L 0,22L 0,0">
+                                    <Path Width="22" Height="22"
                                   Canvas.Left="0" Canvas.Top="0"
                                   Stretch="Uniform"
                                   Fill="{DynamicResource ButtonFrontColorBrush}"
                                   Data="M9.29,21H12.12L21,12.12V9.29M19,21C19.55,21 20.05,20.78 20.41,20.41C20.78,20.05 21,19.55 21,19V17L17,21M5,3A2,2 0 0,0 3,5V7L7,3M11.88,3L3,11.88V14.71L14.71,3M19.5,3.08L3.08,19.5C3.17,19.85 3.35,20.16 3.59,20.41C3.84,20.65 4.15,20.83 4.5,20.92L20.93,4.5C20.74,3.8 20.2,3.26 19.5,3.08Z" />
-                                    </Canvas>
-                                </Button.Content>
-                            </Button>
+                                </Canvas>
+                            </Button.Content>
+                        </Button>
                         <Label Grid.Column="0" Grid.Row="2" Style="{DynamicResource LabelStyle}">
                             <Label.ToolTip>
                                 <ToolTip Style="{DynamicResource ToolTipStyle}">
@@ -890,8 +916,8 @@
                             </Label.ToolTip>
                             <TextBlock Text="Image Opacity: " Style="{DynamicResource ToolTipTextStyle}" />
                         </Label>
-                            <Slider Grid.Column="1" Grid.Row="4" Minimum="0" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center" x:Name="imageopacityslider" ValueChanged="Imageopacityslider_ValueChanged" IsMoveToPointEnabled="True" />
-                            <xctk:DecimalUpDown Grid.Column="2" Grid.Row="4"
+                        <Slider Grid.Column="1" Grid.Row="4" Minimum="0" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center" x:Name="imageopacityslider" ValueChanged="Imageopacityslider_ValueChanged" IsMoveToPointEnabled="True" />
+                        <xctk:DecimalUpDown Grid.Column="2" Grid.Row="4"
                                 FormatString="G" ClipValueToMinMax="True" TextAlignment="Center"
                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5,5,5,5"
                                 Minimum="{Binding Minimum, ElementName=imageopacityslider}"
@@ -943,8 +969,8 @@
                             </Label.ToolTip>
                             <TextBlock Text="Window Opacity: " Style="{DynamicResource ToolTipTextStyle}" />
                         </Label>
-                            <Slider Grid.Column="1" Grid.Row="0" Minimum="0" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center" x:Name="windowopacityslider" ValueChanged="WindowOpacityslider_ValueChanged" IsMoveToPointEnabled="True" />
-                            <xctk:DecimalUpDown Grid.Column="2" Grid.Row="0"
+                        <Slider Grid.Column="1" Grid.Row="0" Minimum="0" Maximum="100" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center" x:Name="windowopacityslider" ValueChanged="WindowOpacityslider_ValueChanged" IsMoveToPointEnabled="True" />
+                        <xctk:DecimalUpDown Grid.Column="2" Grid.Row="0"
                                 FormatString="G" ClipValueToMinMax="True" TextAlignment="Center"
                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5,5,5,5"
                                 Minimum="{Binding Minimum, ElementName=windowopacityslider}"
@@ -1015,13 +1041,171 @@
                     </Grid>
                 </TabItem.Content>
             </TabItem>
+
+            <TabItem Style="{DynamicResource TabItemStyle1}" x:Name="skinmgmt">
+                <TabItem.Header>
+                    <Label>
+                        <Label.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="Manage Skins" Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </Label.ToolTip>
+                        <TextBlock Text="Skin Manager" Style="{DynamicResource ToolTipTextStyle}" />
+                    </Label>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <Grid Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="2*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="100" />
+                            <RowDefinition Height="45" />
+                        </Grid.RowDefinitions>
+                        <ListBox Grid.Column="0" Grid.Row="0" Grid.RowSpan="6"
+                                 Style="{DynamicResource ListBoxStyle}"
+                                 x:Name="SkinsListbox"
+                                 SelectionChanged="SkinsListbox_SelectionChanged" KeyUp="SkinsListbox_KeyUp">
+                        </ListBox>
+                        <Label Grid.Column="1" Grid.Row="0" Style="{DynamicResource LabelStyle}">
+                            <TextBlock Text="Skin Name: " Style="{DynamicResource ToolTipTextStyle}" />
+                        </Label>
+                        <TextBox Grid.Column="2" Grid.Row="0"
+                                 Style="{DynamicResource TextBoxStyle}"
+                                 x:Name="SkinName_TextBox">
+                        </TextBox>
+
+                        <Label Grid.Column="1" Grid.Row="1" Style="{DynamicResource LabelStyle}">
+                            <TextBlock Text="Skin Author: " Style="{DynamicResource ToolTipTextStyle}" />
+                        </Label>
+                        <TextBox Grid.Column="2" Grid.Row="1"
+                                 Style="{DynamicResource TextBoxStyle}"
+                                 x:Name="SkinAuthor_TextBox">
+                        </TextBox>
+                        <Label Grid.Column="1" Grid.Row="2" Style="{DynamicResource LabelStyle}">
+                            <TextBlock Text="Skin Version: " Style="{DynamicResource ToolTipTextStyle}" />
+                        </Label>
+                        <TextBox Grid.Column="2" Grid.Row="2"
+                                 Style="{DynamicResource TextBoxStyle}"
+                                 x:Name="SkinVersion_TextBox"></TextBox>
+                        <Label Grid.Column="1" Grid.Row="3" Style="{DynamicResource LabelStyle}">
+                            <TextBlock Text="SkinText Version: " Style="{DynamicResource ToolTipTextStyle}" />
+                        </Label>
+                        <TextBox Grid.Column="2" Grid.Row="3"
+                                 IsEnabled="False"
+                                 Style="{DynamicResource TextBoxStyle}"
+                                 x:Name="SkinTextVersion_TextBox"></TextBox>
+                        <Label Grid.Column="1" Grid.Row="4" Style="{DynamicResource LabelStyle}">
+                            <TextBlock Text="ScreenShot: " Style="{DynamicResource ToolTipTextStyle}" />
+                        </Label>
+                        <Button  Grid.Column="2" Grid.Row="4"
+                                 Style="{DynamicResource ButtonsStyle}"
+                                 HorizontalAlignment="Stretch"
+                                 HorizontalContentAlignment="Stretch"
+                                 VerticalContentAlignment="Stretch"
+                                 VerticalAlignment="Stretch"
+                                 Margin="5"
+                                 Click="SkinScreenshot_Button_Click"
+                                 x:Name="SkinScreenshot_Button">
+                            <Button.Content>
+                                <Image x:Name="SkinScreenshot_IMG" Source="{DynamicResource ImageSource1icon}"></Image>
+                            </Button.Content>
+                        </Button>
+                        <Label Grid.Column="1" Grid.Row="5" Style="{DynamicResource LabelStyle}">
+                            <TextBlock Text="Notes: " Style="{DynamicResource ToolTipTextStyle}" />
+                        </Label>
+                        <TextBox Grid.Column="2" Grid.Row="5"
+                                 AcceptsReturn="True" AcceptsTab="True"
+                                 TextWrapping="NoWrap" VerticalScrollBarVisibility="Auto"
+                                 HorizontalScrollBarVisibility="Auto"
+                                 VerticalContentAlignment="Stretch"
+                                 Style="{DynamicResource TextBoxStyle}"
+                                 x:Name="SkinNotes_TextBox"></TextBox>
+
+                        <Grid Grid.Column="0" Grid.Row="6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button x:Name="ImportSkin" Grid.Column="0"
+                                    Margin="5"
+                                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch"
+                                Style="{DynamicResource ButtonsStyle}"
+                                Click="ImportSkin_Click">
+                                <Button.ToolTip>
+                                    <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                        <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                            <TextBlock Text="Import Skin" Style="{DynamicResource ToolTipTextStyle}" />
+                                        </Border>
+                                    </ToolTip>
+                                </Button.ToolTip>
+                                <Button.Content>
+                                    <Canvas Width="22" Height="22" Clip="F1 M 0,0L 22,0L 22,22L 0,22L 0,0">
+                                        <Path Width="22" Height="22"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M14,12L10,8V11H2V13H10V16M20,18V6C20,4.89 19.1,4 18,4H6A2,2 0 0,0 4,6V9H6V6H18V18H6V15H4V18A2,2 0 0,0 6,20H18A2,2 0 0,0 20,18Z" />
+                                    </Canvas>
+                                </Button.Content>
+                            </Button>
+                            <Button x:Name="ExportSkin" Grid.Column="1"
+                                    Margin="5"
+                                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch"
+                                Style="{DynamicResource ButtonsStyle}"
+                                Click="ExportSkin_Click">
+                                <Button.ToolTip>
+                                    <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                        <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                            <TextBlock Text="Export Skin" Style="{DynamicResource ToolTipTextStyle}" />
+                                        </Border>
+                                    </ToolTip>
+                                </Button.ToolTip>
+                                <Button.Content>
+                                    <Canvas Width="22" Height="22" Clip="F1 M 0,0L 22,0L 22,22L 0,22L 0,0">
+                                        <Path Width="22" Height="22"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M23,12L19,8V11H10V13H19V16M1,18V6C1,4.89 1.9,4 3,4H15A2,2 0 0,1 17,6V9H15V6H3V18H15V15H17V18A2,2 0 0,1 15,20H3A2,2 0 0,1 1,18Z" />
+                                    </Canvas>
+                                </Button.Content>
+                            </Button>
+                        </Grid>
+
+                        <Button x:Name="LoadSkin" Grid.Column="1" Grid.Row="6"
+                                Style="{DynamicResource ButtonsStyle}"
+                                HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch"
+                                Click="LoadSkin_Click">
+                            <Button.Content>
+                                <TextBlock Text="Load Skin" />
+                            </Button.Content>
+                        </Button>
+                        <Button x:Name="CreateSkin" Grid.Column="2" Grid.Row="6" Style="{DynamicResource ButtonsStyle}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" Click="CreateSkin_Click">
+                            <Button.Content>
+                                <TextBlock Text="Create Skin" />
+                            </Button.Content>
+                        </Button>
+                    </Grid>
+                </TabItem.Content>
+            </TabItem>
+
             <TabItem Style="{DynamicResource TabItemStyle1}">
                 <TabItem.Header>
                     <Label>
                         <Label.ToolTip>
                             <ToolTip Style="{DynamicResource ToolTipStyle}">
                                 <Border Style="{DynamicResource ToolTipBorderStyle}">
-                                    <TextBlock Text="Set background Image Blur Type" Style="{DynamicResource ToolTipTextStyle}" />
+                                    <TextBlock Text="Help" Style="{DynamicResource ToolTipTextStyle}" />
                                 </Border>
                             </ToolTip>
                         </Label.ToolTip>
@@ -1029,16 +1213,65 @@
                     </Label>
                 </TabItem.Header>
                 <TabItem.Content>
-                    <Label>
-                        <Label.ToolTip>
-                            <ToolTip Style="{DynamicResource ToolTipStyle}">
-                                <Border Style="{DynamicResource ToolTipBorderStyle}">
-                                    <TextBlock Text="Set background Image Blur Type" Style="{DynamicResource ToolTipTextStyle}" />
-                                </Border>
-                            </ToolTip>
-                        </Label.ToolTip>
-                        <TextBlock Text="Help" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Label>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4*"/>
+                            <ColumnDefinition Width="4*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Column="0" Grid.Row="0" Style="{DynamicResource LabelStyle}">
+                            <Label.ToolTip>
+                                <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                    <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                        <TextBlock Text="Set Line Height to see changes" Style="{DynamicResource ToolTipTextStyle}" />
+                                    </Border>
+                                </ToolTip>
+                            </Label.ToolTip>
+                            <TextBlock Text="Baseline alignments: " Style="{DynamicResource ToolTipTextStyle}" />
+                        </Label>
+                        <Slider Grid.Column="1" Grid.Row="0" Minimum="0" Maximum="200" Value="60" TickFrequency="1" IsSnapToTickEnabled="True" SmallChange="1" Margin="10,0,10,0" AutoToolTipPlacement="BottomRight" VerticalAlignment="Center"
+                                x:Name="LineHeightSlider" IsMoveToPointEnabled="True" />
+                        <xctk:DecimalUpDown Grid.Column="2" Grid.Row="0"
+                                    FormatString="G" ClipValueToMinMax="True" TextAlignment="Center"
+                                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5,5,5,5"
+                                    Minimum="{Binding Minimum, ElementName=LineHeightSlider}"
+                                    Maximum="{Binding Maximum, ElementName=LineHeightSlider}"
+                                    Value="{Binding Value, ElementName=LineHeightSlider}"
+                                    ScrollViewer.VerticalScrollBarVisibility="Disabled" UpdateValueOnEnterKey="False" ShowButtonSpinner="False" AutoMoveFocus="True" />
+                        <RichTextBox Grid.Row="1" Grid.ColumnSpan="3" IsReadOnly="True"
+                                     VerticalAlignment="Center"
+                                     FontSize="35"
+                                     VerticalScrollBarVisibility="Auto"
+                                     HorizontalScrollBarVisibility="Auto">
+                            <FlowDocument LineStackingStrategy="BlockLineHeight">
+                                <Paragraph LineHeight="{Binding Value, ElementName=LineHeightSlider}" Background="#FFFFFF00" >
+                                    <Paragraph.TextDecorations>
+                                        <TextDecorationCollection xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                                            <TextDecoration Location="OverLine" />
+                                            <TextDecoration Location="Baseline" />
+                                        </TextDecorationCollection>
+                                    </Paragraph.TextDecorations>
+                                    <Run FontSize="35" BaselineAlignment="Baseline" Background="#FF00FFFF">Baseline:</Run>
+                                    <Run FontSize="10" BaselineAlignment="Top" Background="#FF00FFFF">Top</Run>
+                                    <Run FontSize="10" BaselineAlignment="Superscript" Background="#FF00FFFF">Superscript</Run>
+                                    <Run FontSize="10" BaselineAlignment="TextTop" Background="#FF00FFFF">TextTop</Run>
+                                    <Run FontSize="10" BaselineAlignment="Center" Background="#FF00FFFF">Center</Run>
+                                    <Run FontSize="10" BaselineAlignment="Baseline" Background="#FF00FFFF">Baseline</Run>
+                                    <Run FontSize="10" BaselineAlignment="Subscript" Background="#FF00FFFF">Subscript</Run>
+                                    <Run FontSize="10" BaselineAlignment="TextBottom" Background="#FF00FFFF">TextBottom</Run>
+                                    <Run FontSize="10" BaselineAlignment="Bottom" Background="#FF00FFFF">Bottom</Run>
+                                </Paragraph>
+                            </FlowDocument>
+                        </RichTextBox>
+                    </Grid>
                 </TabItem.Content>
             </TabItem>
 

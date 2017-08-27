@@ -1,7 +1,9 @@
 ﻿using System;
+using System.IO.Compression;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using Microsoft.Win32;
 
 namespace SkinText {
 
@@ -18,6 +20,7 @@ namespace SkinText {
 
         private void CloseButt_Click(object sender, RoutedEventArgs e) {
             resizecheck.IsChecked = false;
+            SkinsListbox.SelectedIndex = 0;
             this.Hide();
             CustomMethods.SaveConfig();
         }
@@ -30,7 +33,7 @@ namespace SkinText {
                 }
                 catch (Exception ex) {
 #if DEBUG
-                    MessageBox.Show(ex.ToString());
+                    MessageBox.Show("DEBUG: "+ex.ToString());
                     //throw;
 #endif
                     //System.InvalidOperationException
@@ -273,5 +276,73 @@ namespace SkinText {
         }
 
         #endregion Window Config
+
+        #region Skins
+
+        private void SkinsListbox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e) {
+            if (SkinsListbox.SelectedItem!=null) {
+                CustomMethods.SkinList_Information(((System.Windows.Controls.ListBoxItem)(SkinsListbox.SelectedItem)).Content.ToString());
+            }
+        }
+
+        private void LoadSkin_Click(object sender, RoutedEventArgs e) {
+            //LoadDefault calls ClearImage that deletes the bgimg so first clear the path
+            CustomMethods.Imagepath = "";
+            CustomMethods.LoadDefault();
+            string skin = ((System.Windows.Controls.ListBoxItem)(SkinsListbox.SelectedItem)).Content.ToString();
+            CustomMethods.CurrentSkin = @"\"+skin;
+            CustomMethods.ReadConfig();
+            CustomMethods.SaveCurrentSkin();
+        }
+
+        private void CreateSkin_Click(object sender, RoutedEventArgs e) {
+            string skin = ((System.Windows.Controls.ListBoxItem)(SkinsListbox.SelectedItem)).Content.ToString();
+
+            if (skin == "Create New Skin") {
+                CustomMethods.CreateModifySkin(@"\" + SkinName_TextBox.Text, SkinName_TextBox.Text, SkinAuthor_TextBox.Text, SkinVersion_TextBox.Text, CustomMethods.ScreenShotPath, SkinNotes_TextBox.Text);
+
+                CustomMethods.CurrentSkin = @"\" + SkinName_TextBox.Text;
+                CustomMethods.SaveCurrentSkin();
+                CustomMethods.SaveConfig();
+                CustomMethods.GetSkinList();
+            }
+            else {
+                if ((@"\" + skin) == CustomMethods.CurrentSkin) {
+                    CustomMethods.SaveConfig();
+                }
+                CustomMethods.CreateModifySkin(skin, SkinName_TextBox.Text, SkinAuthor_TextBox.Text, SkinVersion_TextBox.Text, CustomMethods.ScreenShotPath, SkinNotes_TextBox.Text);
+            }
+        }
+
+        private void SkinScreenshot_Button_Click(object sender, RoutedEventArgs e) {
+            string skin = ((System.Windows.Controls.ListBoxItem)(SkinsListbox.SelectedItem)).Content.ToString();
+            if (!string.IsNullOrWhiteSpace(skin) && skin == "Create New Skin") {
+                skin = SkinName_TextBox.Text;
+            }
+            CustomMethods.SelectScreenshot(skin);
+        }
+
+        private void ExportSkin_Click(object sender, RoutedEventArgs e) {
+            string skin = ((System.Windows.Controls.ListBoxItem)(SkinsListbox.SelectedItem)).Content.ToString();
+            //TODO: check if skin is null on all function calls
+            if (!string.IsNullOrWhiteSpace(skin) && skin != "Create New Skin") {
+                CustomMethods.ExportSkin(skin);
+            }
+        }
+        private void ImportSkin_Click(object sender, RoutedEventArgs e) {
+            CustomMethods.OpenImportSkin();
+        }
+
+        #endregion Skins
+
+        private void SkinsListbox_KeyUp(object sender, KeyEventArgs e) {
+            if (e.SystemKey.Equals(Key.Delete) || e.Key.Equals(Key.Delete)) {
+                string skin = ((System.Windows.Controls.ListBoxItem)(SkinsListbox.SelectedItem)).Content.ToString();
+                if (!string.IsNullOrWhiteSpace(skin) && skin != "Create New Skin") {
+                    CustomMethods.DeleteSkin(skin);
+                    CustomMethods.GetSkinList();
+                }
+            }
+        }
     }
 }
