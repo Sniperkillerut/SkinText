@@ -59,7 +59,7 @@ namespace SkinText {
             }
             catch (Exception ex) {
 #if DEBUG
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show("DEBUG: "+ex.ToString());
                 //throw;
 #endif
             }
@@ -87,14 +87,14 @@ namespace SkinText {
                     }*/
                     textrun.Background = brush;
                     //ClrPcker_Bg.SelectedColor = brush.Color;
-                    //TODO: is this aplied twice on transparent?
+                    //NOTE: is this aplied twice on transparent? (no longer necessary to check since this was a RTF fix no longer in use)
                 }
             }
             catch (Exception ex) {
-#if DEBUG
-                MessageBox.Show(ex.ToString());
+                #if DEBUG
+                MessageBox.Show("DEBUG: "+ex.ToString());
                 //throw;
-#endif
+                #endif
             }
         }
 
@@ -107,7 +107,7 @@ namespace SkinText {
             }
             catch (Exception ex) {
 #if DEBUG
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show("DEBUG: "+ex.ToString());
                 //throw;
 #endif
             }
@@ -166,7 +166,7 @@ namespace SkinText {
             }
             catch (Exception ex) {
 #if DEBUG
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show("DEBUG: "+ex.ToString());
                 //throw;
 #endif
             }

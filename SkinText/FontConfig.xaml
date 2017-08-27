@@ -646,7 +646,7 @@
                 <Button.ToolTip>
                     <ToolTip Style="{DynamicResource ToolTipStyle}">
                         <Border Style="{DynamicResource ToolTipBorderStyle}">
-                            <TextBlock Text="Align Center" Style="{DynamicResource ToolTipTextStyle}" />
+                            <TextBlock Text="Set Line Height = Font Size" Style="{DynamicResource ToolTipTextStyle}" />
                         </Border>
                     </ToolTip>
                 </Button.ToolTip>
