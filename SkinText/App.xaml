@@ -15,7 +15,7 @@
         <SolidColorBrush x:Key="MainWindowBackgroundColorBrush" Color="#55FFFFFF" />
         <SolidColorBrush x:Key="RTBBackgroundColorBrush" Color="#7DFFFFFF" />
 
-        <SolidColorBrush x:Key="BackgroundColorBrush" Color="#FF1C1C1C" />
+        <SolidColorBrush x:Key="BackgroundColorBrush" Color="#CA1C1C1C" />
         <SolidColorBrush x:Key="ButtonBackgroundColorBrush" Color="#FF262626" />
         <SolidColorBrush x:Key="ButtonFrontColorBrush" Color="#FFE6E6E6" />
         <SolidColorBrush x:Key="ButtonBackgroundMouseOverColorBrush" Color="#FF00B5FF" />
