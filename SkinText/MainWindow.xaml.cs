@@ -54,6 +54,9 @@ namespace SkinText {
 
             CustomMethods.ReadConfig();
 
+            //if there is an associated file it will read it instead of the config one
+            CustomMethods.ReadAssociatedFile();
+
             //set to false after the initial text_change that occur on first load
             CustomMethods.FileChanged = false;
 
@@ -65,6 +68,8 @@ namespace SkinText {
             DropDownFontColor.IsEnabled = false;
             DropDownFontBackColor.IsEnabled = false;
             rtb.Focus();
+
+            CustomMethods.GetSkinList();
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
@@ -75,7 +80,7 @@ namespace SkinText {
                 }
                 catch (Exception ex) {
 #if DEBUG
-                    MessageBox.Show(ex.ToString());
+                    MessageBox.Show("DEBUG: "+ex.ToString());
                     //throw;
 #endif
                     //System.InvalidOperationException
@@ -140,7 +145,7 @@ namespace SkinText {
             }
             catch (Exception ex) {
 #if DEBUG
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show("DEBUG: "+ex.ToString());
                 //throw;
 #endif
             }
@@ -152,6 +157,7 @@ namespace SkinText {
 
         private void Config_Click(object sender, RoutedEventArgs e) {
             Conf.Show();
+            CustomMethods.CheckBlurBG();
         }
 
         private void Donate_Click(object sender, RoutedEventArgs e) {
@@ -160,6 +166,7 @@ namespace SkinText {
 
         private void Font_Click(object sender, RoutedEventArgs e) {
             FontConf.Show();
+            CustomMethods.CheckBlurBG();
         }
 
         private void LineWrapMenuItem_Click(object sender, RoutedEventArgs e) {
@@ -199,15 +206,25 @@ namespace SkinText {
             }
         }
 
+        private void MouseMove_Menu(object sender, MouseEventArgs e) {
+            Point m = e.GetPosition(panel);
+            if (!e.Source.GetType().Equals(typeof(Menu)) && !e.Source.GetType().Equals(typeof(MenuItem))) {
+                if (m.Y <= 10) {
+                    menu.Visibility = Visibility.Visible;
+                }
+                else if (m.Y > 20) {
+                    menu.Visibility = Visibility.Collapsed;
+                }
+            }
+        }
+
+        #endregion menu
+
+        #region RTB functions
+
         private void Rtb_MouseMove(object sender, MouseEventArgs e) {
-            Point m = e.GetPosition(rtb);
-            if (m.Y <= 10) {
-                menu.Visibility = Visibility.Visible;
-            }
-            else if (m.Y > 20) {
-                menu.Visibility = Visibility.Collapsed;
-            }
             if (sender != ToolBarTray) {
+                Point m = e.GetPosition(rtb);
                 if (m.X >= panel.ActualWidth - 20) {
                     rtb.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
                 }
@@ -220,10 +237,6 @@ namespace SkinText {
                 }
             }
         }
-
-        #endregion menu
-
-        #region RTB functions
 
         private void Hyperlink_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
             if (Keyboard.IsKeyDown(Key.LeftCtrl)) {
@@ -387,7 +400,7 @@ namespace SkinText {
                     catch (Exception ex) {
                         MessageBox.Show("Information is invalid", "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
 #if DEBUG
-                        MessageBox.Show(ex.ToString());
+                        MessageBox.Show("DEBUG: "+ex.ToString());
                         //throw;
 #endif
                     }
@@ -543,14 +556,22 @@ namespace SkinText {
         }
 
         public void Deselect() {
-            // Remove selection on clicking anywhere the window
-            if (selected) {
-                selected = false;
-                if (selectedElement != null) {
-                    // Remove the adorner from the selected element
-                    aLayer.Remove(aLayer.GetAdorners(selectedElement)[0]);
-                    selectedElement = null;
+            try {
+                // Remove selection on clicking anywhere the window
+                if (selected) {
+                    selected = false;
+                    if (selectedElement != null) {
+                        // Remove the adorner from the selected element
+                        aLayer.Remove(aLayer.GetAdorners(selectedElement)[0]);
+                        selectedElement = null;
+                    }
                 }
+            }
+            catch (Exception ex) {
+                #if DEBUG
+                MessageBox.Show("DEBUG: "+ex.ToString());
+                //throw;
+                #endif
             }
         }
 
