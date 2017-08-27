@@ -21,7 +21,7 @@ namespace SkinText {
                 }
                 catch (Exception ex) {
 #if DEBUG
-                    MessageBox.Show(ex.ToString());
+                    MessageBox.Show("DEBUG: "+ex.ToString());
                     //throw;
 #endif
                     //System.InvalidOperationException
