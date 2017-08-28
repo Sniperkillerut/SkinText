@@ -70,6 +70,8 @@ namespace SkinText {
             rtb.Focus();
 
             CustomMethods.GetSkinList();
+            string version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            Conf.TxtBloqVersion.Text = version;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
@@ -129,8 +131,9 @@ namespace SkinText {
         #region menu
 
         private void About_Click(object sender, RoutedEventArgs e) {
-            string version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            MessageBox.Show("Version: " + version);
+            Conf.Show();
+            CustomMethods.CheckBlurBG();
+            Conf.AboutItem.IsSelected = true;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
