@@ -109,8 +109,7 @@ namespace SkinText {
                     CloseThis();
                 }
                 //update
-                //TODO: Remove comment below (enable updates)
-                //UpdateFile(curFileNamePath, curFileName, appdatapath);
+                UpdateFile(curFileNamePath, curFileName, appdatapath);
                 //if update not neccesary it will not auto-close and continue to use current exe isntead of appdata exe
             }
 
