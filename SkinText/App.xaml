@@ -37,6 +37,11 @@
         <SolidColorBrush x:Key="MenuItem2HighlightBorderColorBrush" Color="#FFDB6929" />
         <SolidColorBrush x:Key="MenuItem2DisabledColorBrush" Color="#73696969" />
 
+        <BitmapImage x:Key="ImageSource1CC" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="Resources\CC88x31.png" />
+        <BitmapImage x:Key="ImageSource1X" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="Resources\X.png" />
+        <BitmapImage x:Key="ImageSource1CharMap" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="Resources\CharMap.png" />
+        <BitmapImage x:Key="ImageSource1icon" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="Resources\icon_01.ico" />
+
         <Style x:Key="ToolTipStyle" TargetType="{x:Type ToolTip}">
             <Setter Property="Background"              Value="Transparent" />
             <Setter Property="BorderBrush"             Value="Transparent" />
@@ -1076,9 +1081,7 @@
                 <TextBlock Text="{Binding Stretch}" FontStyle="{Binding Style}" FontWeight="{Binding Weight}" FontStretch="{Binding Stretch}" FontFamily="{Binding SelectedItem, ElementName=lstFamily, FallbackValue=Arial }" />
             </WrapPanel>
         </DataTemplate>
-        <BitmapImage x:Key="ImageSource1X" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="Resources\X.png" />
-        <BitmapImage x:Key="ImageSource1CharMap" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="Resources\CharMap.png" />
-        <BitmapImage x:Key="ImageSource1icon" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="Resources\icon_01.ico" />
+
         <!--Font Family Area-->
 
         <!--Combox Style Area-->
