@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO.Compression;
 using System.Windows;
 using System.Windows.Input;
@@ -333,8 +334,6 @@ namespace SkinText {
             CustomMethods.OpenImportSkin();
         }
 
-        #endregion Skins
-
         private void SkinsListbox_KeyUp(object sender, KeyEventArgs e) {
             if (e.SystemKey.Equals(Key.Delete) || e.Key.Equals(Key.Delete)) {
                 string skin = ((System.Windows.Controls.ListBoxItem)(SkinsListbox.SelectedItem)).Content.ToString();
@@ -343,6 +342,41 @@ namespace SkinText {
                     CustomMethods.GetSkinList();
                 }
             }
+        }
+        #endregion Skins
+
+        private void GoToReddit_Click(object sender, RoutedEventArgs e) {
+            //TODO: Reddit link
+            //Process.Start("http://google.com");
+        }
+
+        private void GoToWebPage_Click(object sender, RoutedEventArgs e) {
+            //TODO: WebPage link
+            //Process.Start("http://google.com");
+        }
+
+        private void GoToDeviantArt_Click(object sender, RoutedEventArgs e) {
+            //TODO: DeviantArt link
+            //Process.Start("http://google.com");
+        }
+
+        private void GoToLicense_Click(object sender, RoutedEventArgs e) {
+            Process.Start("https://creativecommons.org/licenses/by-nc-sa/4.0/");
+        }
+
+        private void GoToEdefex_Click(object sender, RoutedEventArgs e) {
+            //TODO: EdeFex link
+            //Process.Start("http://google.com");
+        }
+
+        private void GoToMacku_Click(object sender, RoutedEventArgs e) {
+            //TODO: Macku link
+            //Process.Start("http://google.com");
+        }
+
+        private void GoToPoisonbleed_Click(object sender, RoutedEventArgs e) {
+            //TODO: PoisonBleed link
+            //Process.Start("http://google.com");
         }
     }
 }

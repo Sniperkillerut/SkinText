@@ -1226,6 +1226,9 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Label Grid.Column="0" Grid.Row="0" Style="{DynamicResource LabelStyle}">
                             <Label.ToolTip>
@@ -1246,7 +1249,7 @@
                                     Maximum="{Binding Maximum, ElementName=LineHeightSlider}"
                                     Value="{Binding Value, ElementName=LineHeightSlider}"
                                     ScrollViewer.VerticalScrollBarVisibility="Disabled" UpdateValueOnEnterKey="False" ShowButtonSpinner="False" AutoMoveFocus="True" />
-                        <RichTextBox Grid.Row="1" Grid.ColumnSpan="3" IsReadOnly="True"
+                        <RichTextBox Grid.Row="1" Grid.ColumnSpan="3" Grid.RowSpan="2" IsReadOnly="True" IsManipulationEnabled="False" IsUndoEnabled="False"
                                      VerticalAlignment="Center"
                                      FontSize="35"
                                      VerticalScrollBarVisibility="Auto"
@@ -1271,17 +1274,212 @@
                                 </Paragraph>
                             </FlowDocument>
                         </RichTextBox>
+                        <Label Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3" Style="{DynamicResource LabelStyle}">
+                            <TextBlock Text="Some of SkinText Features can only be used in XAML/XAMLP format: " Style="{DynamicResource ToolTipTextStyle}" TextWrapping="Wrap"/>
+                        </Label>
+                        <Grid Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3" Grid.RowSpan="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                        <RichTextBox Grid.Column="0" HorizontalScrollBarVisibility="Auto"
+                                     IsReadOnly="True" IsManipulationEnabled="False" IsUndoEnabled="False"
+                                     Background="{DynamicResource FontPickBackgroundColorBrush}" Foreground="{DynamicResource FontPickTextColorBrush}">
+                            <FlowDocument PageWidth="405">
+                                <Paragraph Margin="0">
+                                    <Run FontWeight="Black">RTF:</Run>
+                                </Paragraph>
+                                    <Paragraph Background="#FF00FF00" Margin="0" Foreground="Black">
+                                    <Run Foreground="#FFFF0000">Text trasnparency</Run>
+                                    <Run Background="#FFFF0000">Background trasnparency</Run>
+                                </Paragraph>
+                                    <Paragraph Background="#FFFFFF00" Margin="0" Foreground="Black">
+                                    <Run FontSize="15" BaselineAlignment="Baseline" Background="#FF00FFFF">Baseline:</Run>
+                                    <Run FontSize="10" BaselineAlignment="Baseline" Background="#FF00FFFF">Top</Run>
+                                    <Run FontSize="10" BaselineAlignment="Superscript" Background="#FF00FFFF">Superscript</Run>
+                                    <Run FontSize="10" BaselineAlignment="Baseline" Background="#FF00FFFF">TextTop</Run>
+                                    <Run FontSize="10" BaselineAlignment="Baseline" Background="#FF00FFFF">Center</Run>
+                                    <Run FontSize="10" BaselineAlignment="Baseline" Background="#FF00FFFF">Baseline</Run>
+                                    <Run FontSize="10" BaselineAlignment="Subscript" Background="#FF00FFFF">Subscript</Run>
+                                    <Run FontSize="10" BaselineAlignment="Baseline" Background="#FF00FFFF">TextBottom</Run>
+                                    <Run FontSize="10" BaselineAlignment="Baseline" Background="#FF00FFFF">Bottom</Run>
+                                </Paragraph>
+                                    <Paragraph Background="#FF00FF90" Margin="0,2,0,0" Foreground="Black">
+                                    <Run >Overline</Run>
+                                    <Run TextDecorations="Strikethrough" >Strikethrough</Run>
+                                    <Run >Baseline</Run>
+                                    <Run TextDecorations="Underline" >Underline</Run>
+                                </Paragraph>
+                                    <List MarkerStyle="Disc" Margin="0" Padding="30,0,0,0">
+                                        <ListItem>
+                                            <Paragraph Margin="0">
+                                                <Run>Disc</Run>
+                                            </Paragraph>
+                                        </ListItem>
+                                    </List>
+                                    <List MarkerStyle="Disc" Margin="0" Padding="30,0,0,0">
+                                        <ListItem>
+                                            <Paragraph Margin="0">
+                                                <Run>Box</Run>
+                                            </Paragraph>
+                                        </ListItem>
+                                    </List>
+                                    <List MarkerStyle="LowerRoman" Margin="0" Padding="30,0,0,0">
+                                        <ListItem>
+                                            <Paragraph Margin="0">
+                                                <Run>LowerRoman</Run>
+                                            </Paragraph>
+                                        </ListItem>
+                                    </List>
+                                    <List MarkerStyle="UpperRoman" Margin="0" Padding="30,0,0,0">
+                                        <ListItem>
+                                            <Paragraph Margin="0">
+                                                <Run>UpperRoman</Run>
+                                            </Paragraph>
+                                        </ListItem>
+                                    </List>
+                                    <List MarkerStyle="LowerLatin" Margin="0" Padding="30,0,0,0">
+                                        <ListItem>
+                                            <Paragraph Margin="0">
+                                                <Run>LowerLatin</Run>
+                                            </Paragraph>
+                                        </ListItem>
+                                    </List>
+                                    <List MarkerStyle="UpperLatin" Margin="0" Padding="30,0,0,0">
+                                        <ListItem>
+                                            <Paragraph Margin="0">
+                                                <Run>UpperLatin</Run>
+                                            </Paragraph>
+                                        </ListItem>
+                                    </List>
+                                    <List MarkerStyle="Decimal" Margin="0" Padding="30,0,0,0">
+                                        <ListItem>
+                                            <Paragraph Margin="0">
+                                                <Run>Decimal</Run>
+                                            </Paragraph>
+                                        </ListItem>
+                                    </List>
+                                    <List MarkerStyle="Disc" Margin="0" Padding="30,0,0,0">
+                                        <ListItem>
+                                            <Paragraph Margin="0">
+                                                <Run>Circle</Run>
+                                            </Paragraph>
+                                        </ListItem>
+                                    </List>
+                                    <List MarkerStyle="Disc" Margin="0" Padding="30,0,0,0">
+                                        <ListItem>
+                                            <Paragraph Margin="0">
+                                                <Run>Square</Run>
+                                            </Paragraph>
+                                        </ListItem>
+                                    </List>
+                                </FlowDocument>
+                        </RichTextBox>
+                        <RichTextBox Grid.Column="1" HorizontalScrollBarVisibility="Auto"
+                                     IsReadOnly="True" IsManipulationEnabled="False" IsUndoEnabled="False"
+                                     Background="{DynamicResource FontPickBackgroundColorBrush}" Foreground="{DynamicResource FontPickTextColorBrush}">
+                            <FlowDocument PageWidth="405">
+                                <Paragraph Margin="0">
+                                    <Run FontWeight="Black">XAML/XAMLP (SkinText Default):</Run>
+                                </Paragraph>
+                                <Paragraph Background="#9000FF00" Margin="0" Foreground="Black">
+                                    <Run Foreground="#90FF0000">Text trasnparency</Run>
+                                    <Run Background="#90FF0000">Background trasnparency</Run>
+                                </Paragraph>
+                                    <Paragraph Background="#FFFFFF00" Margin="0" Foreground="Black">
+                                    <Run FontSize="15" BaselineAlignment="Baseline" Background="#FF00FFFF">Baseline:</Run>
+                                    <Run FontSize="10" BaselineAlignment="Top" Background="#FF00FFFF">Top</Run>
+                                    <Run FontSize="10" BaselineAlignment="Superscript" Background="#FF00FFFF">Superscript</Run>
+                                    <Run FontSize="10" BaselineAlignment="TextTop" Background="#FF00FFFF">TextTop</Run>
+                                    <Run FontSize="10" BaselineAlignment="Center" Background="#FF00FFFF">Center</Run>
+                                    <Run FontSize="10" BaselineAlignment="Baseline" Background="#FF00FFFF">Baseline</Run>
+                                    <Run FontSize="10" BaselineAlignment="Subscript" Background="#FF00FFFF">Subscript</Run>
+                                    <Run FontSize="10" BaselineAlignment="TextBottom" Background="#FF00FFFF">TextBottom</Run>
+                                    <Run FontSize="10" BaselineAlignment="Bottom" Background="#FF00FFFF">Bottom</Run>
+                                </Paragraph>
+                                    <Paragraph Background="#FF00FF90" Margin="0,2,0,0" Foreground="Black">
+                                    <Run TextDecorations="Overline" >Overline</Run>
+                                    <Run TextDecorations="Strikethrough" >Strikethrough</Run>
+                                    <Run TextDecorations="Baseline" >Baseline</Run>
+                                    <Run TextDecorations="Underline" >Underline</Run>
+                                </Paragraph>
+                                    <List MarkerStyle="Disc" Margin="0" Padding="30,0,0,0">
+                                    <ListItem>
+                                        <Paragraph Margin="0">
+                                                <Run>Disc</Run>
+                                        </Paragraph>
+                                    </ListItem>
+                                </List>
+                                    <List MarkerStyle="Box" Margin="0" Padding="30,0,0,0">
+                                    <ListItem>
+                                        <Paragraph Margin="0">
+                                                <Run>Box</Run>
+                                        </Paragraph>
+                                    </ListItem>
+                                </List>
+                                    <List MarkerStyle="LowerRoman" Margin="0" Padding="30,0,0,0">
+                                    <ListItem>
+                                        <Paragraph Margin="0">
+                                                <Run>LowerRoman</Run>
+                                        </Paragraph>
+                                    </ListItem>
+                                </List>
+                                    <List MarkerStyle="UpperRoman" Margin="0" Padding="30,0,0,0">
+                                    <ListItem>
+                                        <Paragraph Margin="0">
+                                                <Run>UpperRoman</Run>
+                                        </Paragraph>
+                                    </ListItem>
+                                </List>
+                                    <List MarkerStyle="LowerLatin" Margin="0" Padding="30,0,0,0">
+                                    <ListItem>
+                                        <Paragraph Margin="0">
+                                                <Run>LowerLatin</Run>
+                                        </Paragraph>
+                                    </ListItem>
+                                </List>
+                                    <List MarkerStyle="UpperLatin" Margin="0" Padding="30,0,0,0">
+                                    <ListItem>
+                                        <Paragraph Margin="0">
+                                                <Run>UpperLatin</Run>
+                                        </Paragraph>
+                                    </ListItem>
+                                </List>
+                                    <List MarkerStyle="Decimal" Margin="0" Padding="30,0,0,0">
+                                    <ListItem>
+                                        <Paragraph Margin="0">
+                                                <Run>Decimal</Run>
+                                        </Paragraph>
+                                    </ListItem>
+                                </List>
+                                    <List MarkerStyle="Circle" Margin="0" Padding="30,0,0,0">
+                                    <ListItem>
+                                        <Paragraph Margin="0">
+                                                <Run>Circle</Run>
+                                        </Paragraph>
+                                    </ListItem>
+                                </List>
+                                <List MarkerStyle="Square" Margin="0" Padding="30,0,0,0">
+                                    <ListItem>
+                                        <Paragraph Margin="0">
+                                                <Run>Square</Run>
+                                        </Paragraph>
+                                    </ListItem>
+                                </List>
+                            </FlowDocument>
+                        </RichTextBox>
+                        </Grid>
                     </Grid>
                 </TabItem.Content>
             </TabItem>
 
-            <TabItem Style="{DynamicResource TabItemStyle1}">
+            <TabItem Style="{DynamicResource TabItemStyle1}" x:Name="AboutItem">
                 <TabItem.Header>
                     <Label>
                         <Label.ToolTip>
                             <ToolTip Style="{DynamicResource ToolTipStyle}">
                                 <Border Style="{DynamicResource ToolTipBorderStyle}">
-                                    <TextBlock Text="Set background Image Blur Type" Style="{DynamicResource ToolTipTextStyle}" />
+                                    <TextBlock Text="About SkinText" Style="{DynamicResource ToolTipTextStyle}" />
                                 </Border>
                             </ToolTip>
                         </Label.ToolTip>
@@ -1289,16 +1487,162 @@
                     </Label>
                 </TabItem.Header>
                 <TabItem.Content>
-                    <Label>
-                        <Label.ToolTip>
-                            <ToolTip Style="{DynamicResource ToolTipStyle}">
-                                <Border Style="{DynamicResource ToolTipBorderStyle}">
-                                    <TextBlock Text="Set background Image Blur Type" Style="{DynamicResource ToolTipTextStyle}" />
-                                </Border>
-                            </ToolTip>
-                        </Label.ToolTip>
-                        <TextBlock Text="About" Style="{DynamicResource ToolTipTextStyle}" />
-                    </Label>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Image Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="4" Source="{StaticResource ImageSource1icon}"/>
+                        <Label Grid.Column="2" Grid.Row="1">
+                            <TextBlock Text="Version: " Style="{DynamicResource ToolTipTextStyle}" />
+                        </Label>
+                        <Label Grid.Column="2" Grid.Row="2">
+                            <TextBlock x:Name="TxtBloqVersion" Text="" Style="{DynamicResource ToolTipTextStyle}" />
+                        </Label>
+                        <Label Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3" Grid.RowSpan="1" HorizontalContentAlignment="Center">
+                            <TextBlock FontSize="30" Text="SkinText" Style="{DynamicResource ToolTipTextStyle}" />
+                        </Label>
+
+                        <Label Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="3" HorizontalContentAlignment="Center">
+                            <TextBlock TextWrapping="Wrap" Text="Developed By Sniperkiller from the FrostHive Team. with love, for You!" Style="{DynamicResource ToolTipTextStyle}" />
+                        </Label>
+
+                        <Label Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="3" Grid.RowSpan="2" HorizontalContentAlignment="Center">
+                            <TextBlock TextWrapping="Wrap" Text="SkinText by Sniperkiller is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License." Style="{DynamicResource ToolTipTextStyle}" />
+                        </Label>
+
+                        <Button x:Name="GoToLicense" Grid.Column="1" Grid.Row="7"
+                                Margin="2"
+                                Style="{DynamicResource ButtonsStyle}"
+                                Click="GoToLicense_Click">
+                            <Button.ToolTip>
+                                <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                    <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                        <TextBlock Text="Creative Commons License" Style="{DynamicResource ToolTipTextStyle}" />
+                                    </Border>
+                                </ToolTip>
+                            </Button.ToolTip>
+                            <Button.Content>
+                                <Image Source="{StaticResource ImageSource1CC}"></Image>
+                            </Button.Content>
+                        </Button>
+                        <Label Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                            <TextBlock TextWrapping="Wrap" Text="Thanks to:" Style="{DynamicResource ToolTipTextStyle}" />
+                        </Label>
+                        <Button x:Name="GoToEdefex" Grid.Column="0" Grid.Row="9" Grid.RowSpan="1"
+                                    Margin="5"
+                                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch"
+                                Style="{DynamicResource ButtonsStyle}"
+                                Click="GoToEdefex_Click">
+                            <Button.Content>
+                                <TextBlock Text="EdeFex" Style="{DynamicResource ToolTipTextStyle}" />
+                            </Button.Content>
+                        </Button>
+                        <Button x:Name="GoToMacku" Grid.Column="1" Grid.Row="9" Grid.RowSpan="1"
+                                    Margin="5"
+                                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch"
+                                Style="{DynamicResource ButtonsStyle}"
+                                Click="GoToMacku_Click">
+                            <Button.Content>
+                                <TextBlock Text="Macku" Style="{DynamicResource ToolTipTextStyle}" />
+                            </Button.Content>
+                        </Button>
+                        <Button x:Name="GoToPoisonbleed" Grid.Column="2" Grid.Row="9" Grid.RowSpan="1"
+                                    Margin="5"
+                                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch"
+                                Style="{DynamicResource ButtonsStyle}"
+                                Click="GoToPoisonbleed_Click">
+                            <Button.Content>
+                                <TextBlock Text="Poisonblood" Style="{DynamicResource ToolTipTextStyle}" />
+                            </Button.Content>
+                        </Button>
+
+                        <Label Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                            <TextBlock TextWrapping="Wrap" Text="Check SkinText In:" Style="{DynamicResource ToolTipTextStyle}" />
+                        </Label>
+                        <Button x:Name="GoToReddit" Grid.Column="0" Grid.Row="11" Grid.RowSpan="2"
+                                    Margin="5"
+                                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch"
+                                Style="{DynamicResource ButtonsStyle}"
+                                Click="GoToReddit_Click">
+                            <Button.ToolTip>
+                                <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                    <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                        <TextBlock Text="Reddit" Style="{DynamicResource ToolTipTextStyle}" />
+                                    </Border>
+                                </ToolTip>
+                            </Button.ToolTip>
+                            <Button.Content>
+                                <Canvas Width="55" Height="55" Clip="F1 M 0,0L 55,0L 55,55L 0,55L 0,0">
+                                    <Path Width="55" Height="55"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M22,11.5C22,10.1 20.9,9 19.5,9C18.9,9 18.3,9.2 17.9,9.6C16.4,8.7 14.6,8.1 12.5,8L13.6,4L17,5A2,2 0 0,0 19,7A2,2 0 0,0 21,5A2,2 0 0,0 19,3C18.3,3 17.6,3.4 17.3,4L13.3,3C13,2.9 12.8,3.1 12.7,3.4L11.5,8C9.5,8.1 7.6,8.7 6.1,9.6C5.7,9.2 5.1,9 4.5,9C3.1,9 2,10.1 2,11.5C2,12.4 2.4,13.1 3.1,13.6L3,14.5C3,18.1 7,21 12,21C17,21 21,18.1 21,14.5L20.9,13.6C21.6,13.1 22,12.4 22,11.5M9,11.8C9.7,11.8 10.2,12.4 10.2,13C10.2,13.6 9.7,14.2 9,14.2C8.3,14.2 7.8,13.7 7.8,13C7.8,12.3 8.3,11.8 9,11.8M15.8,17.2C14,18.3 10,18.3 8.2,17.2C8,17 7.9,16.7 8.1,16.5C8.3,16.3 8.6,16.2 8.8,16.4C10,17.3 14,17.3 15.2,16.4C15.4,16.2 15.7,16.3 15.9,16.5C16.1,16.7 16,17 15.8,17.2M15,14.2C14.3,14.2 13.8,13.6 13.8,13C13.8,12.3 14.4,11.8 15,11.8C15.7,11.8 16.2,12.4 16.2,13C16.2,13.7 15.7,14.2 15,14.2Z" />
+                                </Canvas>
+                            </Button.Content>
+                        </Button>
+                        <Button x:Name="GoToWebPage" Grid.Column="1" Grid.Row="11" Grid.RowSpan="2"
+                                    Margin="5"
+                                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch"
+                                Style="{DynamicResource ButtonsStyle}"
+                                Click="GoToWebPage_Click">
+                            <Button.ToolTip>
+                                <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                    <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                        <TextBlock Text="SkinText WebPage" Style="{DynamicResource ToolTipTextStyle}" />
+                                    </Border>
+                                </ToolTip>
+                            </Button.ToolTip>
+                            <Button.Content>
+                                <Canvas Width="55" Height="55" Clip="F1 M 0,0L 55,0L 55,55L 0,55L 0,0">
+                                    <Path Width="55" Height="55"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M16.36,14C16.44,13.34 16.5,12.68 16.5,12C16.5,11.32 16.44,10.66 16.36,10H19.74C19.9,10.64 20,11.31 20,12C20,12.69 19.9,13.36 19.74,14M14.59,19.56C15.19,18.45 15.65,17.25 15.97,16H18.92C17.96,17.65 16.43,18.93 14.59,19.56M14.34,14H9.66C9.56,13.34 9.5,12.68 9.5,12C9.5,11.32 9.56,10.65 9.66,10H14.34C14.43,10.65 14.5,11.32 14.5,12C14.5,12.68 14.43,13.34 14.34,14M12,19.96C11.17,18.76 10.5,17.43 10.09,16H13.91C13.5,17.43 12.83,18.76 12,19.96M8,8H5.08C6.03,6.34 7.57,5.06 9.4,4.44C8.8,5.55 8.35,6.75 8,8M5.08,16H8C8.35,17.25 8.8,18.45 9.4,19.56C7.57,18.93 6.03,17.65 5.08,16M4.26,14C4.1,13.36 4,12.69 4,12C4,11.31 4.1,10.64 4.26,10H7.64C7.56,10.66 7.5,11.32 7.5,12C7.5,12.68 7.56,13.34 7.64,14M12,4.03C12.83,5.23 13.5,6.57 13.91,8H10.09C10.5,6.57 11.17,5.23 12,4.03M18.92,8H15.97C15.65,6.75 15.19,5.55 14.59,4.44C16.43,5.07 17.96,6.34 18.92,8M12,2C6.47,2 2,6.5 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
+                                </Canvas>
+                            </Button.Content>
+                        </Button>
+                        <Button x:Name="GoToDeviantArt" Grid.Column="2" Grid.Row="11" Grid.RowSpan="2"
+                                    Margin="5"
+                                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch"
+                                Style="{DynamicResource ButtonsStyle}"
+                                Click="GoToDeviantArt_Click">
+                            <Button.ToolTip>
+                                <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                    <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                        <TextBlock Text="DeviantArt" Style="{DynamicResource ToolTipTextStyle}" />
+                                    </Border>
+                                </ToolTip>
+                            </Button.ToolTip>
+                            <Button.Content>
+                                <Canvas Width="55" Height="55" Clip="F1 M 0,0L 55,0L 55,55L 0,55L 0,0">
+                                    <Path Width="55" Height="55"
+                                  Canvas.Left="0" Canvas.Top="0"
+                                  Stretch="Uniform"
+                                  Fill="{DynamicResource ButtonFrontColorBrush}"
+                                  Data="M6,6H12L14,2H18V6L14.5,13H18V18H12L10,22H6V18L9.5,11H6V6Z" />
+                                </Canvas>
+                            </Button.Content>
+                        </Button>
+                    </Grid>
                 </TabItem.Content>
             </TabItem>
         </TabControl>
