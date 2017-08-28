@@ -2033,7 +2033,7 @@ namespace SkinText {
         /// <param name="lineHeight">Line Height</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public static void TextFormat(Brush foreColor, Brush backgroundColor, FontFamily fontFamily, double fontSize, TextDecorationCollection decor, FontStyle fontStyle, FontWeight fontWeight, TextAlignment textalign, FlowDirection flow, BaselineAlignment basealign, double lineHeight) {
-            if ((backgroundColor != null) && (backgroundColor.Equals(Brushes.Transparent))) {
+            if ((backgroundColor != null) && (((SolidColorBrush)backgroundColor).Color.A == 0)) {
                 backgroundColor = null;
             }
             // Make sure we have a selection. Should have one even if there is no text selected.
@@ -2143,6 +2143,34 @@ namespace SkinText {
                 else // There is selected text, so change the font properties of the selection
                 {
                     try {
+
+                        //fix for sticky bg color
+                        //if this is above the ApplyPropertyValue block, it works on the first apply, but will remove whole paragraph always
+                        //but when it is below, it is neccesary to click apply twice, but it will not remove whole line color, just part of it
+                        SolidColorBrush newBrush2 = null;
+                        newBrush2 = (SolidColorBrush)MainW.rtb.Selection.Start.Paragraph.Background;
+                        if (newBrush2 != null) {
+                            MainW.rtb.Selection.Start.Paragraph.Background = null;
+                        }
+                        try {
+                            SolidColorBrush newBrush3 = null;
+                            DependencyObject spanOrParagraph = ((Run)MainW.rtb.Selection.Start.Parent).Parent;
+                            if (!(spanOrParagraph is Paragraph)) {
+                                newBrush3 = (SolidColorBrush)((Span)spanOrParagraph).Background;
+                            }
+
+                            if (newBrush3 != null) {
+                                ((Span)spanOrParagraph).Background = null;
+                            }
+                        }
+                        catch (Exception ex2) {
+                            #if DEBUG
+                            MessageBox.Show("DEBUG: " + ex2.ToString());
+                            //throw;
+                            #endif
+                        }
+                        //end fix
+
                         TextRange selectionTextRange = new TextRange(MainW.rtb.Selection.Start, MainW.rtb.Selection.End);
                         selectionTextRange.ApplyPropertyValue(TextElement.ForegroundProperty, foreColor);
                         selectionTextRange.ApplyPropertyValue(TextElement.BackgroundProperty, backgroundColor);
@@ -2158,13 +2186,14 @@ namespace SkinText {
                         selectionTextRange.ApplyPropertyValue(Block.FlowDirectionProperty, flow);
                         selectionTextRange.ApplyPropertyValue(Block.LineHeightProperty, lineHeight);
                         selectionTextRange.ApplyPropertyValue(Inline.BaselineAlignmentProperty, basealign);
+
                     }
                     catch (Exception ex) {
                         //crashes when changing hyperLink properties
-#if DEBUG
+                        #if DEBUG
                         MessageBox.Show("DEBUG: "+ex.ToString());
                         //throw;
-#endif
+                        #endif
                     }
                 }
             }
@@ -2721,10 +2750,7 @@ namespace SkinText {
         public static void ApplyFontBackColor() {
             if (MainW.rtb != null && MainW.rtb.Selection != null && !MainW.rtb.Selection.IsEmpty) {
                 SolidColorBrush newBrush = new SolidColorBrush(MainW.ClrPcker_FontBack.SelectedColor.Value);
-                if (newBrush.Color.A < 255) {
-                    newBrush = Brushes.Transparent;
-                }
-                if ((newBrush != null) && (newBrush.Equals(Brushes.Transparent))) {
+                if ((newBrush != null) && (newBrush.Color.A == 0)) {
                     newBrush = null;
                 }
                 MainW.rtb.Selection.ApplyPropertyValue(TextElement.BackgroundProperty, newBrush);
