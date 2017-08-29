@@ -167,7 +167,7 @@ namespace SkinText {
                     if (update) {
                         //File.Copy(curFileName, appdatapath + "\\" + "SkinText.exe", true);
                         FirstRun(appdatapath, curFileName);
-                        //MessageBox.Show("Thanks for updating!");
+                        MessageBox.Show("Thanks for updating!");
                         RunAppdata(appdatapath);
                         DeleteSelf();
                         CloseThis();
