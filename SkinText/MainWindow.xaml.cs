@@ -134,6 +134,7 @@ namespace SkinText {
             Conf.Show();
             CustomMethods.CheckBlurBG();
             Conf.AboutItem.IsSelected = true;
+            Conf.Focus();
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
@@ -161,6 +162,7 @@ namespace SkinText {
         private void Config_Click(object sender, RoutedEventArgs e) {
             Conf.Show();
             CustomMethods.CheckBlurBG();
+            Conf.Focus();
         }
 
         private void Donate_Click(object sender, RoutedEventArgs e) {
@@ -170,6 +172,7 @@ namespace SkinText {
         private void Font_Click(object sender, RoutedEventArgs e) {
             FontConf.Show();
             CustomMethods.CheckBlurBG();
+            FontConf.Focus();
         }
 
         private void LineWrapMenuItem_Click(object sender, RoutedEventArgs e) {
