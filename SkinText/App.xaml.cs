@@ -85,7 +85,7 @@ namespace SkinText {
             //check if runing from appdata
             if (curPath == appdatapath) {
                 #if DEBUG
-                MessageBox.Show("DEBUG: runing from appdata");
+                //MessageBox.Show("DEBUG: runing from appdata");
                 #endif
                 //if yes run acording to parameters (Open Files)
             }
@@ -189,7 +189,6 @@ namespace SkinText {
             bool firstRun = false;
             bool Update = false;
             for (int i = 0; i != e.Args.Length; ++i) {
-                MessageBox.Show("Args:  "+e.Args[i]);
                 firstRun |= (e.Args[i] == "-FirstRun");
                 Update   |= (e.Args[i] == "-Update");
             }
