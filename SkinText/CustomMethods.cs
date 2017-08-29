@@ -1315,7 +1315,9 @@ namespace SkinText {
             }
             _isSaving = true;
             await System.Threading.Tasks.Task.Delay(AutoSaveTimer);
-            Save(false);
+            if (FileChanged) {//if already saved while this was waiting, dont save
+                Save(false);
+            }
             _isSaving = false;
         }
 
