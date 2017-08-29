@@ -13,7 +13,7 @@
         SnapsToDevicePixels="True"
         UseLayoutRounding="True"
         ResizeMode="NoResize"
-        ShowInTaskbar="False"
+        ShowInTaskbar="True"
         Topmost="True"
         WindowStartupLocation="CenterOwner"
         AllowsTransparency="True"
@@ -1253,7 +1253,8 @@
                                      VerticalAlignment="Center"
                                      FontSize="35"
                                      VerticalScrollBarVisibility="Auto"
-                                     HorizontalScrollBarVisibility="Auto">
+                                     HorizontalScrollBarVisibility="Auto"
+                                     Background="{DynamicResource FontPickBackgroundColorBrush}" >
                             <FlowDocument LineStackingStrategy="BlockLineHeight">
                                 <Paragraph LineHeight="{Binding Value, ElementName=LineHeightSlider}" Background="#FFFFFF00" >
                                     <Paragraph.TextDecorations>
@@ -1286,14 +1287,14 @@
                                      IsReadOnly="True" IsManipulationEnabled="False" IsUndoEnabled="False"
                                      Background="{DynamicResource FontPickBackgroundColorBrush}" Foreground="{DynamicResource FontPickTextColorBrush}">
                             <FlowDocument PageWidth="405">
-                                <Paragraph Margin="0">
+                                    <Paragraph Margin="0" Padding="2">
                                     <Run FontWeight="Black">RTF:</Run>
                                 </Paragraph>
-                                    <Paragraph Background="#FF00FF00" Margin="0" Foreground="Black">
-                                    <Run Foreground="#FFFF0000">Text trasnparency</Run>
-                                    <Run Background="#FFFF0000">Background trasnparency</Run>
+                                    <Paragraph Background="#FF00FF00" Margin="0" Foreground="Black" Padding="2">
+                                    <Run Foreground="#FFFF0000">Text transparency</Run>
+                                    <Run Background="#FFFF0000">Background transparency</Run>
                                 </Paragraph>
-                                    <Paragraph Background="#FFFFFF00" Margin="0" Foreground="Black">
+                                    <Paragraph Background="#FFFFFF00" Margin="0" Foreground="Black" Padding="2">
                                     <Run FontSize="15" BaselineAlignment="Baseline" Background="#FF00FFFF">Baseline:</Run>
                                     <Run FontSize="10" BaselineAlignment="Baseline" Background="#FF00FFFF">Top</Run>
                                     <Run FontSize="10" BaselineAlignment="Superscript" Background="#FF00FFFF">Superscript</Run>
@@ -1304,7 +1305,7 @@
                                     <Run FontSize="10" BaselineAlignment="Baseline" Background="#FF00FFFF">TextBottom</Run>
                                     <Run FontSize="10" BaselineAlignment="Baseline" Background="#FF00FFFF">Bottom</Run>
                                 </Paragraph>
-                                    <Paragraph Background="#FF00FF90" Margin="0,2,0,0" Foreground="Black">
+                                    <Paragraph Background="#FF00FF90" Margin="0,2,0,0" Foreground="Black" Padding="2">
                                     <Run >Overline</Run>
                                     <Run TextDecorations="Strikethrough" >Strikethrough</Run>
                                     <Run >Baseline</Run>
@@ -1379,14 +1380,14 @@
                                      IsReadOnly="True" IsManipulationEnabled="False" IsUndoEnabled="False"
                                      Background="{DynamicResource FontPickBackgroundColorBrush}" Foreground="{DynamicResource FontPickTextColorBrush}">
                             <FlowDocument PageWidth="405">
-                                <Paragraph Margin="0">
+                                    <Paragraph Margin="0" Padding="2">
                                     <Run FontWeight="Black">XAML/XAMLP (SkinText Default):</Run>
                                 </Paragraph>
-                                <Paragraph Background="#9000FF00" Margin="0" Foreground="Black">
-                                    <Run Foreground="#90FF0000">Text trasnparency</Run>
-                                    <Run Background="#90FF0000">Background trasnparency</Run>
+                                    <Paragraph Background="#FF00FF00" Margin="0" Foreground="Black" Padding="2">
+                                    <Run Foreground="#90FF0000">Text transparency</Run>
+                                    <Run Background="#90FF0000">Background transparency</Run>
                                 </Paragraph>
-                                    <Paragraph Background="#FFFFFF00" Margin="0" Foreground="Black">
+                                    <Paragraph Background="#FFFFFF00" Margin="0" Foreground="Black" Padding="2">
                                     <Run FontSize="15" BaselineAlignment="Baseline" Background="#FF00FFFF">Baseline:</Run>
                                     <Run FontSize="10" BaselineAlignment="Top" Background="#FF00FFFF">Top</Run>
                                     <Run FontSize="10" BaselineAlignment="Superscript" Background="#FF00FFFF">Superscript</Run>
@@ -1397,7 +1398,7 @@
                                     <Run FontSize="10" BaselineAlignment="TextBottom" Background="#FF00FFFF">TextBottom</Run>
                                     <Run FontSize="10" BaselineAlignment="Bottom" Background="#FF00FFFF">Bottom</Run>
                                 </Paragraph>
-                                    <Paragraph Background="#FF00FF90" Margin="0,2,0,0" Foreground="Black">
+                                <Paragraph Background="#FF00FF90" Margin="0,2,0,0" Foreground="Black" Padding="2">
                                     <Run TextDecorations="Overline" >Overline</Run>
                                     <Run TextDecorations="Strikethrough" >Strikethrough</Run>
                                     <Run TextDecorations="Baseline" >Baseline</Run>
