@@ -40,191 +40,191 @@
                            MouseLeave="Panel_MouseLeave"
                           MouseMove="MouseMove_Menu"
                            LastChildFill="true">
-                    <Menu x:Name="menu" IsMainMenu="True" DockPanel.Dock="Top" PreviewMouseDown="Menu_PreviewMouseDown">
-                            <MenuItem Header="_File" Template="{DynamicResource MenuItemControlTemplate1}">
-                                <MenuItem Header="_New..." Command="local:CustomCommands.New" Template="{DynamicResource MenuItemControlTemplate2}">
-                                    <MenuItem.Icon>
-                                        <Canvas Width="15" Height="15" Clip="F1 M 0,0L 15,0L 15,15L 0,15L 0,0">
-                                            <Path Width="15" Height="15"
-                                      Canvas.Left="0" Canvas.Top="0"
-                                      Stretch="Uniform"
-                                      Fill="{DynamicResource ButtonFrontColorBrush}"
-                                      Data="F1 M 51.5487,37.9814L 56.814,41.0534L 50.3383,48.7636L 50.3383,48.8841L 60.0205,46.9565L 60.0205,53.0403L 50.2777,51.414L 50.2777,51.5344L 56.814,59.0037L 51.4882,62.0757L 47.978,52.7994L 47.8569,52.7994L 44.4072,62.0757L 39.2025,59.0037L 45.6782,51.4742L 45.6177,51.3537L 36.1159,53.0403L 36.1159,46.9565L 45.5571,48.8841L 45.5571,48.7636L 39.2025,41.1137L 44.5888,37.9814L 47.9174,47.3179L 48.0385,47.3179L 51.5487,37.9814 Z M 20,17L 43.25,17L 56,29.75L 56,39L 52,36.75L 52,34L 39,34L 39,21L 24,21L 24,55L 41,55L 37.5,59L 20,59L 20,17 Z M 43,22.25L 43,30L 50.75,30L 43,22.25 Z " />
-                                        </Canvas>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <Separator />
-                                <MenuItem Header="_Open..." Command="local:CustomCommands.Open" Template="{DynamicResource MenuItemControlTemplate2}">
-                                    <MenuItem.Icon>
-                                        <Canvas Width="15" Height="15" Clip="F1 M 0,0L 15,0L 15,15L 0,15L 0,0">
-                                            <Path Width="15" Height="15"
-                                      Canvas.Left="0" Canvas.Top="0"
-                                      Stretch="Uniform"
-                                      Fill="{DynamicResource ButtonFrontColorBrush}"
-                                      Data="M19,20H4C2.89,20 2,19.1 2,18V6C2,4.89 2.89,4 4,4H10L12,6H19A2,2 0 0,1 21,8H21L4,8V18L6.14,10H23.21L20.93,18.5C20.7,19.37 19.92,20 19,20Z" />
-                                        </Canvas>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <Separator />
-                                <MenuItem Header="_Save" Command="local:CustomCommands.Save" Template="{DynamicResource MenuItemControlTemplate2}">
-                                    <MenuItem.Icon>
-                                        <Canvas Width="15" Height="15" Clip="F1 M 0,0L 15,0L 15,15L 0,15L 0,0">
-                                            <Path Width="15" Height="15"
-                                      Canvas.Left="0" Canvas.Top="0"
-                                      Stretch="Uniform"
-                                      Fill="{DynamicResource ButtonFrontColorBrush}"
-                                      Data="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" />
-                                        </Canvas>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="_Save As..." Command="local:CustomCommands.SaveAs" Template="{DynamicResource MenuItemControlTemplate2}">
-                                    <MenuItem.Icon>
-                                        <Canvas Width="15" Height="15" Clip="F1 M 0,0L 15,0L 15,15L 0,15L 0,0">
-                                            <Path Width="15" Height="15"
-                                      Canvas.Left="0" Canvas.Top="0"
-                                      Stretch="Uniform"
-                                      Fill="{DynamicResource ButtonFrontColorBrush}"
-                                      Data="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" />
-                                        </Canvas>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <Separator />
-                                <MenuItem Header="_Exit" Command="local:CustomCommands.Exit" Template="{DynamicResource MenuItemControlTemplate2}">
-                                    <MenuItem.Icon>
-                                        <Canvas Width="15" Height="15" Clip="F1 M 0,0L 15,0L 15,15L 0,15L 0,0">
-                                            <Path Width="15" Height="15"
-                                      Canvas.Left="0" Canvas.Top="0"
-                                      Stretch="Uniform"
-                                      Fill="{DynamicResource ButtonFrontColorBrush}"
-                                      Data="F1 M 26.9166,22.1667L 37.9999,33.25L 49.0832,22.1668L 53.8332,26.9168L 42.7499,38L 53.8332,49.0834L 49.0833,53.8334L 37.9999,42.75L 26.9166,53.8334L 22.1666,49.0833L 33.25,38L 22.1667,26.9167L 26.9166,22.1667 Z " />
-                                        </Canvas>
-                                    </MenuItem.Icon>
-                                </MenuItem>
+                    <Menu x:Name="menu" IsMainMenu="True" DockPanel.Dock="Top" PreviewMouseDown="Menu_PreviewMouseDown" >
+                        <MenuItem Header="_File" Template="{DynamicResource MenuItemControlTemplate1}">
+                            <MenuItem Header="_New..." Command="local:CustomCommands.New" Template="{DynamicResource MenuItemControlTemplate2}">
+                                <MenuItem.Icon>
+                                    <Canvas Width="15" Height="15" Clip="F1 M 0,0L 15,0L 15,15L 0,15L 0,0">
+                                        <Path Width="15" Height="15"
+                                    Canvas.Left="0" Canvas.Top="0"
+                                    Stretch="Uniform"
+                                    Fill="{DynamicResource ButtonFrontColorBrush}"
+                                    Data="F1 M 51.5487,37.9814L 56.814,41.0534L 50.3383,48.7636L 50.3383,48.8841L 60.0205,46.9565L 60.0205,53.0403L 50.2777,51.414L 50.2777,51.5344L 56.814,59.0037L 51.4882,62.0757L 47.978,52.7994L 47.8569,52.7994L 44.4072,62.0757L 39.2025,59.0037L 45.6782,51.4742L 45.6177,51.3537L 36.1159,53.0403L 36.1159,46.9565L 45.5571,48.8841L 45.5571,48.7636L 39.2025,41.1137L 44.5888,37.9814L 47.9174,47.3179L 48.0385,47.3179L 51.5487,37.9814 Z M 20,17L 43.25,17L 56,29.75L 56,39L 52,36.75L 52,34L 39,34L 39,21L 24,21L 24,55L 41,55L 37.5,59L 20,59L 20,17 Z M 43,22.25L 43,30L 50.75,30L 43,22.25 Z " />
+                                    </Canvas>
+                                </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="_Edit" Template="{DynamicResource MenuItemControlTemplate1}">
-                                <MenuItem Header="_Cut" Command="Cut" Template="{DynamicResource MenuItemControlTemplate2}">
-                                    <MenuItem.Icon>
-                                        <Canvas Width="15" Height="15" Clip="F1 M 0,0L 15,0L 15,20L 0,15L 0,0">
-                                            <Path Width="15" Height="15"
-                                      Canvas.Left="0" Canvas.Top="0"
-                                      Stretch="Uniform"
-                                      Fill="{DynamicResource ButtonFrontColorBrush}"
-                                      Data="M19,3L13,9L15,11L22,4V3M12,12.5A0.5,0.5 0 0,1 11.5,12A0.5,0.5 0 0,1 12,11.5A0.5,0.5 0 0,1 12.5,12A0.5,0.5 0 0,1 12,12.5M6,20A2,2 0 0,1 4,18C4,16.89 4.9,16 6,16A2,2 0 0,1 8,18C8,19.11 7.1,20 6,20M6,8A2,2 0 0,1 4,6C4,4.89 4.9,4 6,4A2,2 0 0,1 8,6C8,7.11 7.1,8 6,8M9.64,7.64C9.87,7.14 10,6.59 10,6A4,4 0 0,0 6,2A4,4 0 0,0 2,6A4,4 0 0,0 6,10C6.59,10 7.14,9.87 7.64,9.64L10,12L7.64,14.36C7.14,14.13 6.59,14 6,14A4,4 0 0,0 2,18A4,4 0 0,0 6,22A4,4 0 0,0 10,18C10,17.41 9.87,16.86 9.64,16.36L12,14L19,21H22V20L9.64,7.64Z" />
-                                        </Canvas>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="_Copy" Command="Copy" Template="{DynamicResource MenuItemControlTemplate2}">
-                                    <MenuItem.Icon>
-                                        <Canvas Width="15" Height="15" Clip="F1 M 0,0L 15,0L 15,20L 0,15L 0,0">
-                                            <Path Width="15" Height="15"
-                                      Canvas.Left="0" Canvas.Top="0"
-                                      Stretch="Uniform"
-                                      Fill="{DynamicResource ButtonFrontColorBrush}"
-                                      Data="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z" />
-                                        </Canvas>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="_Paste" Command="Paste" Template="{DynamicResource MenuItemControlTemplate2}">
-                                    <MenuItem.Icon>
-                                        <Canvas Width="15" Height="15" Clip="F1 M 0,0L 15,0L 15,20L 0,15L 0,0">
-                                            <Path Width="15" Height="15"
-                                      Canvas.Left="0" Canvas.Top="0"
-                                      Stretch="Uniform"
-                                      Fill="{DynamicResource ButtonFrontColorBrush}"
-                                      Data="M19,20H5V4H7V7H17V4H19M12,2A1,1 0 0,1 13,3A1,1 0 0,1 12,4A1,1 0 0,1 11,3A1,1 0 0,1 12,2M19,2H14.82C14.4,0.84 13.3,0 12,0C10.7,0 9.6,0.84 9.18,2H5A2,2 0 0,0 3,4V20A2,2 0 0,0 5,22H19A2,2 0 0,0 21,20V4A2,2 0 0,0 19,2Z" />
-                                        </Canvas>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <Separator />
-                                <MenuItem Header="_Undo" Command="Undo" Template="{DynamicResource MenuItemControlTemplate2}">
-                                    <MenuItem.Icon>
-                                        <Canvas Width="15" Height="15" Clip="F1 M 0,0L 15,0L 15,20L 0,15L 0,0">
-                                            <Path Width="15" Height="15"
-                                      Canvas.Left="0" Canvas.Top="0"
-                                      Stretch="Uniform"
-                                      Fill="{DynamicResource ButtonFrontColorBrush}"
-                                      Data="M12.5,8C9.85,8 7.45,9 5.6,10.6L2,7V16H11L7.38,12.38C8.77,11.22 10.54,10.5 12.5,10.5C16.04,10.5 19.05,12.81 20.1,16L22.47,15.22C21.08,11.03 17.15,8 12.5,8Z" />
-                                        </Canvas>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="_Redo" Command="Redo" Template="{DynamicResource MenuItemControlTemplate2}">
-                                    <MenuItem.Icon>
-                                        <Canvas Width="15" Height="15" Clip="F1 M 0,0L 15,0L 15,20L 0,15L 0,0">
-                                            <Path Width="15" Height="15"
-                                      Canvas.Left="0" Canvas.Top="0"
-                                      Stretch="Uniform"
-                                      Fill="{DynamicResource ButtonFrontColorBrush}"
-                                      Data="M18.4,10.6C16.55,9 14.15,8 11.5,8C6.85,8 2.92,11.03 1.54,15.22L3.9,16C4.95,12.81 7.95,10.5 11.5,10.5C13.45,10.5 15.23,11.22 16.62,12.38L13,16H22V7L18.4,10.6Z" />
-                                        </Canvas>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <Separator />
-                                <MenuItem x:Name="LineWrapMenuItem" Header="Line Wrap" Template="{DynamicResource MenuItemControlTemplate2}" Click="LineWrapMenuItem_Click" IsCheckable="true" IsChecked="True">
-                                </MenuItem>
-                            <MenuItem x:Name="ToolBarMenuItem" Header="Tool Bars" Template="{DynamicResource MenuItemControlTemplate2}" Checked="ToolBarMenuItem_Checked" Unchecked="ToolBarMenuItem_Checked" IsCheckable="true">
-                                </MenuItem>
-                                <Separator />
-                                <MenuItem Header="Open Character _Map" Template="{DynamicResource MenuItemControlTemplate2}" Click="CharMap_Click">
-                                    <MenuItem.Icon>
-                                        <Image Source="{DynamicResource ImageSource1CharMap}" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="_Font Properties" Template="{DynamicResource MenuItemControlTemplate2}" Click="Font_Click">
-                                    <MenuItem.Icon>
-                                        <Canvas Width="15" Height="15" Clip="F1 M 0,0L 15,0L 15,20L 0,15L 0,0">
-                                            <Path Width="15" Height="15"
-                                      Canvas.Left="0" Canvas.Top="0"
-                                      Stretch="Uniform"
-                                      Fill="{DynamicResource ButtonFrontColorBrush}"
-                                      Data="M17,8H20V20H21V21H17V20H18V17H14L12.5,20H14V21H10V20H11L17,8M18,9L14.5,16H18V9M5,3H10C11.11,3 12,3.89 12,5V16H9V11H6V16H3V5C3,3.89 3.89,3 5,3M6,5V9H9V5H6Z" />
-                                        </Canvas>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="_Window Configuration" Template="{DynamicResource MenuItemControlTemplate2}" Click="Config_Click">
-                                    <MenuItem.Icon>
-                                        <Canvas Width="15" Height="15" Clip="F1 M 0,0L 15,0L 15,20L 0,15L 0,0">
-                                            <Path Width="15" Height="15"
-                                      Canvas.Left="0" Canvas.Top="0"
-                                      Stretch="Uniform"
-                                      Fill="{DynamicResource ButtonFrontColorBrush}"
-                                      Data="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" />
-                                        </Canvas>
-                                    </MenuItem.Icon>
-                                </MenuItem>
+                            <Separator />
+                            <MenuItem Header="_Open..." Command="local:CustomCommands.Open" Template="{DynamicResource MenuItemControlTemplate2}">
+                                <MenuItem.Icon>
+                                    <Canvas Width="15" Height="15" Clip="F1 M 0,0L 15,0L 15,15L 0,15L 0,0">
+                                        <Path Width="15" Height="15"
+                                    Canvas.Left="0" Canvas.Top="0"
+                                    Stretch="Uniform"
+                                    Fill="{DynamicResource ButtonFrontColorBrush}"
+                                    Data="M19,20H4C2.89,20 2,19.1 2,18V6C2,4.89 2.89,4 4,4H10L12,6H19A2,2 0 0,1 21,8H21L4,8V18L6.14,10H23.21L20.93,18.5C20.7,19.37 19.92,20 19,20Z" />
+                                    </Canvas>
+                                </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="_Help" Template="{DynamicResource MenuItemControlTemplate1}">
-                                <MenuItem Header="About SkinText" Template="{DynamicResource MenuItemControlTemplate2}" Click="About_Click">
-                                    <MenuItem.Icon>
-                                        <Image Source="{DynamicResource ImageSource1icon}" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem x:Name="resetToDefaultsMenu" Header="Reset to defaults" Template="{DynamicResource MenuItemControlTemplate2}" Click="Resettodefaults_Click">
-                                    <MenuItem.Icon>
-                                        <Canvas Width="15" Height="15" Clip="F1 M 0,0L 15,0L 15,20L 0,15L 0,0">
-                                            <Path Width="15" Height="15"
-                                      Canvas.Left="0" Canvas.Top="0"
-                                      Stretch="Uniform"
-                                      Fill="{DynamicResource ButtonFrontColorBrush}"
-                                      Data="M12,3A9,9 0 0,0 3,12H0L4,16L8,12H5A7,7 0 0,1 12,5A7,7 0 0,1 19,12A7,7 0 0,1 12,19C10.5,19 9.09,18.5 7.94,17.7L6.5,19.14C8.04,20.3 9.94,21 12,21A9,9 0 0,0 21,12A9,9 0 0,0 12,3M14,12A2,2 0 0,0 12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12Z" />
-                                        </Canvas>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <Separator />
-                                <MenuItem Header="Buy me a drink!" Template="{DynamicResource MenuItemControlTemplate2}" Click="Donate_Click">
-                                    <MenuItem.Icon>
-                                        <Canvas Width="15" Height="15" Clip="F1 M 0,0L 15,0L 15,20L 0,15L 0,0">
-                                            <Path Width="15" Height="15"
-                                      Canvas.Left="0" Canvas.Top="0"
-                                      Stretch="Uniform"
-                                      Fill="{DynamicResource ButtonFrontColorBrush}"
-                                      Data="F1 M 24,20L 49,20L 49.0833,26.9167C 53.4556,26.9167 57,30.4611 57,34.8334L 57,42.75C 57,47.1223 53.4556,50.6667 49.0833,50.6667L 49,59L 24,59L 24,20 Z M 49,46C 50.7489,46 53,43.7489 53,42L 53,36C 53,34.2511 50.7489,31 49,31L 49,46 Z M 27,23L 27,25L 46,25L 46,23L 27,23 Z M 46,56L 46,54L 27,54L 27,56L 46,56 Z M 30.5,28C 29.6256,28 29,29.1255 29,30L 29,49C 29,49.8745 29.6255,51 30.5,51C 31.3744,51 32,49.8745 32,49L 32,30C 32,29.1255 31.3745,28 30.5,28 Z M 36.5,28C 35.6256,28 35,29.1255 35,30L 35,49C 35,49.8745 35.6255,51 36.5,51C 37.3744,51 38,49.9578 38,49.0833L 38,30C 38,29.1255 37.3745,28 36.5,28 Z M 42.5,28C 41.6255,28 41,29.1255 41,30L 41,49C 41,49.8745 41.6255,51 42.5,51C 43.3745,51 44,49.8745 44,49L 44,30C 44,29.1255 43.3744,28 42.5,28 Z M 23.75,17.2292C 25,17 31.6667,13.6667 33.25,15.25C 34.8333,16.8333 36.4167,16.8333 38,16.8333C 39.5833,16.8333 41.1667,15.25 44.3333,15.25C 45.9167,15.25 49.0833,16.0417 49.0833,17.625C 49,21 47.8958,18.8125 47.8958,18.8125C 47.8958,18.8125 47.1041,17.2292 43.9375,17.2292C 40.7708,17.2292 39.5833,18.8125 38,18.8125C 36.4167,18.8125 33.6458,17.2292 30.4792,17.2292C 27.3125,17.2292 26.875,18.8334 24.9375,18.4167C 23,18 21,20 21.7708,21.9792C 23,24 22.1666,25.2817 22.1667,27.5209C 22.1667,27.9167 21.75,27.875 21.375,25.9375C 21,24 19,23.1667 19,21.5833C 19,20 19.1667,19.8333 20.5833,18.4167C 22,17 22.5,17.4584 23.75,17.2292 Z " />
-                                        </Canvas>
-                                    </MenuItem.Icon>
-                                </MenuItem>
+                            <Separator />
+                            <MenuItem Header="_Save" Command="local:CustomCommands.Save" Template="{DynamicResource MenuItemControlTemplate2}">
+                                <MenuItem.Icon>
+                                    <Canvas Width="15" Height="15" Clip="F1 M 0,0L 15,0L 15,15L 0,15L 0,0">
+                                        <Path Width="15" Height="15"
+                                    Canvas.Left="0" Canvas.Top="0"
+                                    Stretch="Uniform"
+                                    Fill="{DynamicResource ButtonFrontColorBrush}"
+                                    Data="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" />
+                                    </Canvas>
+                                </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem x:Name="MenuFileName" Header="Name" IsEnabled="False" Template="{DynamicResource MenuItemControlTemplate1}">
+                            <MenuItem Header="_Save As..." Command="local:CustomCommands.SaveAs" Template="{DynamicResource MenuItemControlTemplate2}">
+                                <MenuItem.Icon>
+                                    <Canvas Width="15" Height="15" Clip="F1 M 0,0L 15,0L 15,15L 0,15L 0,0">
+                                        <Path Width="15" Height="15"
+                                    Canvas.Left="0" Canvas.Top="0"
+                                    Stretch="Uniform"
+                                    Fill="{DynamicResource ButtonFrontColorBrush}"
+                                    Data="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" />
+                                    </Canvas>
+                                </MenuItem.Icon>
                             </MenuItem>
-                        </Menu>
+                            <Separator />
+                            <MenuItem Header="_Exit" Command="local:CustomCommands.Exit" Template="{DynamicResource MenuItemControlTemplate2}">
+                                <MenuItem.Icon>
+                                    <Canvas Width="15" Height="15" Clip="F1 M 0,0L 15,0L 15,15L 0,15L 0,0">
+                                        <Path Width="15" Height="15"
+                                    Canvas.Left="0" Canvas.Top="0"
+                                    Stretch="Uniform"
+                                    Fill="{DynamicResource ButtonFrontColorBrush}"
+                                    Data="F1 M 26.9166,22.1667L 37.9999,33.25L 49.0832,22.1668L 53.8332,26.9168L 42.7499,38L 53.8332,49.0834L 49.0833,53.8334L 37.9999,42.75L 26.9166,53.8334L 22.1666,49.0833L 33.25,38L 22.1667,26.9167L 26.9166,22.1667 Z " />
+                                    </Canvas>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </MenuItem>
+                        <MenuItem Header="_Edit" Template="{DynamicResource MenuItemControlTemplate1}">
+                            <MenuItem Header="_Cut" Command="Cut" Template="{DynamicResource MenuItemControlTemplate2}">
+                                <MenuItem.Icon>
+                                    <Canvas Width="15" Height="15" Clip="F1 M 0,0L 15,0L 15,20L 0,15L 0,0">
+                                        <Path Width="15" Height="15"
+                                    Canvas.Left="0" Canvas.Top="0"
+                                    Stretch="Uniform"
+                                    Fill="{DynamicResource ButtonFrontColorBrush}"
+                                    Data="M19,3L13,9L15,11L22,4V3M12,12.5A0.5,0.5 0 0,1 11.5,12A0.5,0.5 0 0,1 12,11.5A0.5,0.5 0 0,1 12.5,12A0.5,0.5 0 0,1 12,12.5M6,20A2,2 0 0,1 4,18C4,16.89 4.9,16 6,16A2,2 0 0,1 8,18C8,19.11 7.1,20 6,20M6,8A2,2 0 0,1 4,6C4,4.89 4.9,4 6,4A2,2 0 0,1 8,6C8,7.11 7.1,8 6,8M9.64,7.64C9.87,7.14 10,6.59 10,6A4,4 0 0,0 6,2A4,4 0 0,0 2,6A4,4 0 0,0 6,10C6.59,10 7.14,9.87 7.64,9.64L10,12L7.64,14.36C7.14,14.13 6.59,14 6,14A4,4 0 0,0 2,18A4,4 0 0,0 6,22A4,4 0 0,0 10,18C10,17.41 9.87,16.86 9.64,16.36L12,14L19,21H22V20L9.64,7.64Z" />
+                                    </Canvas>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="_Copy" Command="Copy" Template="{DynamicResource MenuItemControlTemplate2}">
+                                <MenuItem.Icon>
+                                    <Canvas Width="15" Height="15" Clip="F1 M 0,0L 15,0L 15,20L 0,15L 0,0">
+                                        <Path Width="15" Height="15"
+                                    Canvas.Left="0" Canvas.Top="0"
+                                    Stretch="Uniform"
+                                    Fill="{DynamicResource ButtonFrontColorBrush}"
+                                    Data="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z" />
+                                    </Canvas>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="_Paste" Command="Paste" Template="{DynamicResource MenuItemControlTemplate2}">
+                                <MenuItem.Icon>
+                                    <Canvas Width="15" Height="15" Clip="F1 M 0,0L 15,0L 15,20L 0,15L 0,0">
+                                        <Path Width="15" Height="15"
+                                    Canvas.Left="0" Canvas.Top="0"
+                                    Stretch="Uniform"
+                                    Fill="{DynamicResource ButtonFrontColorBrush}"
+                                    Data="M19,20H5V4H7V7H17V4H19M12,2A1,1 0 0,1 13,3A1,1 0 0,1 12,4A1,1 0 0,1 11,3A1,1 0 0,1 12,2M19,2H14.82C14.4,0.84 13.3,0 12,0C10.7,0 9.6,0.84 9.18,2H5A2,2 0 0,0 3,4V20A2,2 0 0,0 5,22H19A2,2 0 0,0 21,20V4A2,2 0 0,0 19,2Z" />
+                                    </Canvas>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Header="_Undo" Command="Undo" Template="{DynamicResource MenuItemControlTemplate2}">
+                                <MenuItem.Icon>
+                                    <Canvas Width="15" Height="15" Clip="F1 M 0,0L 15,0L 15,20L 0,15L 0,0">
+                                        <Path Width="15" Height="15"
+                                    Canvas.Left="0" Canvas.Top="0"
+                                    Stretch="Uniform"
+                                    Fill="{DynamicResource ButtonFrontColorBrush}"
+                                    Data="M12.5,8C9.85,8 7.45,9 5.6,10.6L2,7V16H11L7.38,12.38C8.77,11.22 10.54,10.5 12.5,10.5C16.04,10.5 19.05,12.81 20.1,16L22.47,15.22C21.08,11.03 17.15,8 12.5,8Z" />
+                                    </Canvas>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="_Redo" Command="Redo" Template="{DynamicResource MenuItemControlTemplate2}">
+                                <MenuItem.Icon>
+                                    <Canvas Width="15" Height="15" Clip="F1 M 0,0L 15,0L 15,20L 0,15L 0,0">
+                                        <Path Width="15" Height="15"
+                                    Canvas.Left="0" Canvas.Top="0"
+                                    Stretch="Uniform"
+                                    Fill="{DynamicResource ButtonFrontColorBrush}"
+                                    Data="M18.4,10.6C16.55,9 14.15,8 11.5,8C6.85,8 2.92,11.03 1.54,15.22L3.9,16C4.95,12.81 7.95,10.5 11.5,10.5C13.45,10.5 15.23,11.22 16.62,12.38L13,16H22V7L18.4,10.6Z" />
+                                    </Canvas>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem x:Name="LineWrapMenuItem" Header="Line Wrap" Template="{DynamicResource MenuItemControlTemplate2}" Click="LineWrapMenuItem_Click" IsCheckable="true" IsChecked="True">
+                            </MenuItem>
+                        <MenuItem x:Name="ToolBarMenuItem" Header="Tool Bars" Template="{DynamicResource MenuItemControlTemplate2}" Checked="ToolBarMenuItem_Checked" Unchecked="ToolBarMenuItem_Checked" IsCheckable="true">
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Header="Open Character _Map" Template="{DynamicResource MenuItemControlTemplate2}" Click="CharMap_Click">
+                                <MenuItem.Icon>
+                                    <Image Source="{DynamicResource ImageSource1CharMap}" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="_Font Properties" Template="{DynamicResource MenuItemControlTemplate2}" Click="Font_Click">
+                                <MenuItem.Icon>
+                                    <Canvas Width="15" Height="15" Clip="F1 M 0,0L 15,0L 15,20L 0,15L 0,0">
+                                        <Path Width="15" Height="15"
+                                    Canvas.Left="0" Canvas.Top="0"
+                                    Stretch="Uniform"
+                                    Fill="{DynamicResource ButtonFrontColorBrush}"
+                                    Data="M17,8H20V20H21V21H17V20H18V17H14L12.5,20H14V21H10V20H11L17,8M18,9L14.5,16H18V9M5,3H10C11.11,3 12,3.89 12,5V16H9V11H6V16H3V5C3,3.89 3.89,3 5,3M6,5V9H9V5H6Z" />
+                                    </Canvas>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="_Window Configuration" Template="{DynamicResource MenuItemControlTemplate2}" Click="Config_Click">
+                                <MenuItem.Icon>
+                                    <Canvas Width="15" Height="15" Clip="F1 M 0,0L 15,0L 15,20L 0,15L 0,0">
+                                        <Path Width="15" Height="15"
+                                    Canvas.Left="0" Canvas.Top="0"
+                                    Stretch="Uniform"
+                                    Fill="{DynamicResource ButtonFrontColorBrush}"
+                                    Data="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" />
+                                    </Canvas>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </MenuItem>
+                        <MenuItem Header="_Help" Template="{DynamicResource MenuItemControlTemplate1}">
+                            <MenuItem Header="About SkinText" Template="{DynamicResource MenuItemControlTemplate2}" Click="About_Click">
+                                <MenuItem.Icon>
+                                    <Image Source="{DynamicResource ImageSource1icon}" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem x:Name="resetToDefaultsMenu" Header="Reset to defaults" Template="{DynamicResource MenuItemControlTemplate2}" Click="Resettodefaults_Click">
+                                <MenuItem.Icon>
+                                    <Canvas Width="15" Height="15" Clip="F1 M 0,0L 15,0L 15,20L 0,15L 0,0">
+                                        <Path Width="15" Height="15"
+                                    Canvas.Left="0" Canvas.Top="0"
+                                    Stretch="Uniform"
+                                    Fill="{DynamicResource ButtonFrontColorBrush}"
+                                    Data="M12,3A9,9 0 0,0 3,12H0L4,16L8,12H5A7,7 0 0,1 12,5A7,7 0 0,1 19,12A7,7 0 0,1 12,19C10.5,19 9.09,18.5 7.94,17.7L6.5,19.14C8.04,20.3 9.94,21 12,21A9,9 0 0,0 21,12A9,9 0 0,0 12,3M14,12A2,2 0 0,0 12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12Z" />
+                                    </Canvas>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Header="Buy me a drink!" Template="{DynamicResource MenuItemControlTemplate2}" Click="Donate_Click">
+                                <MenuItem.Icon>
+                                    <Canvas Width="15" Height="15" Clip="F1 M 0,0L 15,0L 15,20L 0,15L 0,0">
+                                        <Path Width="15" Height="15"
+                                    Canvas.Left="0" Canvas.Top="0"
+                                    Stretch="Uniform"
+                                    Fill="{DynamicResource ButtonFrontColorBrush}"
+                                    Data="F1 M 24,20L 49,20L 49.0833,26.9167C 53.4556,26.9167 57,30.4611 57,34.8334L 57,42.75C 57,47.1223 53.4556,50.6667 49.0833,50.6667L 49,59L 24,59L 24,20 Z M 49,46C 50.7489,46 53,43.7489 53,42L 53,36C 53,34.2511 50.7489,31 49,31L 49,46 Z M 27,23L 27,25L 46,25L 46,23L 27,23 Z M 46,56L 46,54L 27,54L 27,56L 46,56 Z M 30.5,28C 29.6256,28 29,29.1255 29,30L 29,49C 29,49.8745 29.6255,51 30.5,51C 31.3744,51 32,49.8745 32,49L 32,30C 32,29.1255 31.3745,28 30.5,28 Z M 36.5,28C 35.6256,28 35,29.1255 35,30L 35,49C 35,49.8745 35.6255,51 36.5,51C 37.3744,51 38,49.9578 38,49.0833L 38,30C 38,29.1255 37.3745,28 36.5,28 Z M 42.5,28C 41.6255,28 41,29.1255 41,30L 41,49C 41,49.8745 41.6255,51 42.5,51C 43.3745,51 44,49.8745 44,49L 44,30C 44,29.1255 43.3744,28 42.5,28 Z M 23.75,17.2292C 25,17 31.6667,13.6667 33.25,15.25C 34.8333,16.8333 36.4167,16.8333 38,16.8333C 39.5833,16.8333 41.1667,15.25 44.3333,15.25C 45.9167,15.25 49.0833,16.0417 49.0833,17.625C 49,21 47.8958,18.8125 47.8958,18.8125C 47.8958,18.8125 47.1041,17.2292 43.9375,17.2292C 40.7708,17.2292 39.5833,18.8125 38,18.8125C 36.4167,18.8125 33.6458,17.2292 30.4792,17.2292C 27.3125,17.2292 26.875,18.8334 24.9375,18.4167C 23,18 21,20 21.7708,21.9792C 23,24 22.1666,25.2817 22.1667,27.5209C 22.1667,27.9167 21.75,27.875 21.375,25.9375C 21,24 19,23.1667 19,21.5833C 19,20 19.1667,19.8333 20.5833,18.4167C 22,17 22.5,17.4584 23.75,17.2292 Z " />
+                                    </Canvas>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </MenuItem>
+                        <MenuItem x:Name="MenuFileName" Header="No Title" IsEnabled="False" Template="{DynamicResource MenuItemControlTemplate1}" HorizontalAlignment="Right">
+                        </MenuItem>
+                    </Menu>
                     <ToolBarTray x:Name="ToolBarTray" DockPanel.Dock="Top" MouseMove="Rtb_MouseMove" Visibility="Visible">
                         <ToolBar x:Name="ToolBarClip" Band="0">
                             <Button Command="Cut">

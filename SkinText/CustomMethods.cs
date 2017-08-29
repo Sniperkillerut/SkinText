@@ -1129,7 +1129,7 @@ namespace SkinText {
         /// </summary>
         public static void NewFile() {
             Filepath = "";
-            MainW.MenuFileName.Header = "";
+            MainW.MenuFileName.Header = "No Title";
             MainW.rtb.Document = new FlowDocument() {
                 LineStackingStrategy = LineStackingStrategy.BlockLineHeight
             };
@@ -1481,8 +1481,10 @@ namespace SkinText {
         /// <param name="visible"></param>
         public static void WindowVisibleTaskbar(bool visible) {
             MainW.window.ShowInTaskbar = visible;
-            MainW.Conf.ShowInTaskbar = visible;
-            MainW.FontConf.ShowInTaskbar = visible;
+            if (MainW.Conf!=null && MainW.FontConf!=null) {
+                MainW.Conf.ShowInTaskbar = visible;
+                MainW.FontConf.ShowInTaskbar = visible;
+            }
         }
 
         public static void CheckBlurBG() {

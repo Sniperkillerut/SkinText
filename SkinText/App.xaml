@@ -236,7 +236,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Menu">
                         <Border x:Name="MainMenu" Background="{DynamicResource MenuBackgroundColorBrush}">
-                            <StackPanel ClipToBounds="True" Orientation="Horizontal" IsItemsHost="True" />
+                            <DockPanel ClipToBounds="True" HorizontalAlignment="Stretch" IsItemsHost="True" />
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
