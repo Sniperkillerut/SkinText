@@ -10,7 +10,7 @@
         MinHeight="480" MinWidth="580"
         MaxHeight="480" MaxWidth="580"
         WindowStyle="None" SnapsToDevicePixels="True" UseLayoutRounding="True"
-        ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True"
+        ResizeMode="NoResize" ShowInTaskbar="True" Topmost="True"
         WindowStartupLocation="CenterOwner" AllowsTransparency="True"
         Background="{DynamicResource BackgroundColorBrush}"
         BorderBrush="{DynamicResource BorderColorBrush}"

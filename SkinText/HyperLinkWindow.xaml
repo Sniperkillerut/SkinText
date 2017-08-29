@@ -13,7 +13,7 @@
         SnapsToDevicePixels="True"
         UseLayoutRounding="True"
         ResizeMode="NoResize"
-        ShowInTaskbar="False"
+        ShowInTaskbar="True"
         Topmost="True"
         WindowStartupLocation="CenterOwner"
         ContentRendered="Window_ContentRendered"
