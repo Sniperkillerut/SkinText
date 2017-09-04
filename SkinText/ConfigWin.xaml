@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SkinText"
+        xmlns:ncore="http://schemas.ncore.com/wpf/xaml/colorbox"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="Window Config"
@@ -473,6 +474,14 @@
                           SelectedColorChanged="ClrPcker_SelectedColorChanged"
                           Style="{DynamicResource ColorPickerStyle2}"
                           DisplayColorAndName="True" ColorMode="ColorCanvas" />
+
+                        <!-- ncore:ColorBox x:Name="GradientPicker1"
+                                        Grid.Column="2" Grid.Row="16"
+                                        ColorChanged="GradientPicker1_ColorChanged"
+                                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                        HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                                        -->
+
                     </Grid>
                 </TabItem.Content>
             </TabItem>

@@ -366,7 +366,7 @@ namespace SkinText {
 
         private void GoToEdefex_Click(object sender, RoutedEventArgs e) {
             //TODO: EdeFex link
-            //Process.Start("http://google.com");
+            Process.Start("https://www.twitch.tv/edefexarts");
         }
 
         private void GoToMacku_Click(object sender, RoutedEventArgs e) {
@@ -377,6 +377,11 @@ namespace SkinText {
         private void GoToPoisonbleed_Click(object sender, RoutedEventArgs e) {
             //TODO: PoisonBleed link
             //Process.Start("http://google.com");
+        }
+
+        private void GradientPicker1_ColorChanged(object sender, ColorBox.ColorChangedEventArgs e) {
+            //change color changed to other less spammy event and that actually changes the brush, not the selected color
+            //CustomMethods.ChangeBrushResource(GradientPicker1.Brush.Clone(), "BackgroundColorBrush");
         }
     }
 }
