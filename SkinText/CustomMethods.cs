@@ -33,6 +33,7 @@ namespace SkinText {
 
         public static string GAppPath {
             get {
+                #if !PORTABLE
                 Assembly assm;
                 Type at;
                 Type at2;
@@ -58,6 +59,8 @@ namespace SkinText {
                 //path += @"\" + assm.GetName().Name.ToString();
                 //path += @"\" + assm.GetName().Version.ToString();
                 return path;
+                #endif
+                return Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
             }
         }
 
@@ -67,7 +70,7 @@ namespace SkinText {
         public static string OldScreenShotPath { get => oldScreenShotPath; set => oldScreenShotPath = value; }
         public static bool ScreenshotUpload { get => screenshotUpload; set => screenshotUpload = value; }
 
-        #region Bg Image
+#region Bg Image
 
         /// <summary>
         /// Correct way to load an image and release it from the Hdd, also allows to unload it from memory effectively
@@ -219,9 +222,9 @@ namespace SkinText {
             mainW.backgroundimg.Effect = blur;
         }
 
-        #endregion Bg Image
+#endregion Bg Image
 
-        #region Config File
+#region Config File
 
         /// <summary>
         /// Loads Default Values
@@ -259,7 +262,7 @@ namespace SkinText {
             //Text border size
             MainW.Conf.bordersize.Value = 5;
 
-            #region Legacy styles
+#region Legacy styles
 
             /*Application.Current.Resources["BorderColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#997E7E7E"));
             Application.Current.Resources["MainWindowBackgroundColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#85949494"));
@@ -288,9 +291,9 @@ namespace SkinText {
             Application.Current.Resources["MenuItem2DisabledColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF2C2C2C"));
             */
 
-            #endregion Legacy styles
+#endregion Legacy styles
 
-            #region Legacy color reset method
+#region Legacy color reset method
 
             /*
             Application.Current.Resources["BorderColorBrush"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF424242"));
@@ -347,7 +350,7 @@ namespace SkinText {
                 MainW.Conf.ClrPcker_FontPickTextColorBrush.SelectedColor = ((SolidColorBrush)MainW.TryFindResource("FontPickTextColorBrush")).Color;
             */
 
-            #endregion Legacy color reset method
+#endregion Legacy color reset method
 
             MainW.Conf.ClrPcker_BorderColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#FF424242");
             MainW.Conf.ClrPcker_MainWindowBackgroundColorBrush.SelectedColor = (Color)ColorConverter.ConvertFromString("#55FFFFFF");
@@ -909,7 +912,7 @@ namespace SkinText {
 
                     //filetry
 
-                    #region relative Path (Disabled)
+#region relative Path (Disabled)
 
                     /*
                         //To store as relative Path
@@ -930,7 +933,7 @@ namespace SkinText {
                         }
                     */
 
-                    #endregion relative Path (Disabled)
+#endregion relative Path (Disabled)
 
                     data = "file = " + Filepath;
                     writer.WriteLine(data);
@@ -961,7 +964,7 @@ namespace SkinText {
 
                     //bg_image (always after GIF method)
 
-                    #region relative Path (Disabled)
+#region relative Path (Disabled)
 
                     /*
                         //To store as relative Path
@@ -982,7 +985,7 @@ namespace SkinText {
                         }
                     */
 
-                    #endregion relative Path (Disabled)
+#endregion relative Path (Disabled)
 
                     data = "bg_image = " + Imagepath;
                     writer.WriteLine(data);
@@ -1119,9 +1122,9 @@ namespace SkinText {
             }
         }
 
-        #endregion Config File
+#endregion Config File
 
-        #region File
+#region File
 
         /// <summary>
         /// <para>Sets internal vars ready for empty file usage</para>
@@ -1321,9 +1324,9 @@ namespace SkinText {
             _isSaving = false;
         }
 
-        #endregion File
+#endregion File
 
-        #region General
+#region General
 
         /// <summary>
         /// <para>Closes <see cref="MainWindow.FontConf"/> and <see cref="ConfigWin"/>, then calls <see cref="SaveConfig"/></para>
@@ -1334,7 +1337,9 @@ namespace SkinText {
             MainW.Conf.Close();
             SaveConfig();
             SaveCurrentSkin();
-
+            if (CurrentSkin =="\\Default") {
+                CreateModifySkin("Default", "Default", "FrostHive", "2.0.0", "DefaultIcon", "SkinText Default Skin");
+            }
         }
 
         /// <summary>
@@ -1391,9 +1396,9 @@ namespace SkinText {
             }
         }
 
-        #endregion General
+#endregion General
 
-        #region Window Config
+#region Window Config
 
         /// <summary>
         /// Flips the <see cref="MainWindow.rtb"/>
@@ -1586,9 +1591,9 @@ namespace SkinText {
             }
         }
 
-        #endregion Window Config
+#endregion Window Config
 
-        #region Skins
+#region Skins
 
         /// <summary>
         /// Reads Config.ini and sets wich skin to use
@@ -1693,10 +1698,10 @@ namespace SkinText {
                             }
                             catch (Exception ex) {
                                 MessageBox.Show("Error creating Screenshot, Please try again", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                                #if DEBUG
+#if DEBUG
                                 MessageBox.Show("DEBUG: "+ex.ToString());
                                 //throw;
-                                #endif
+#endif
                             }
                         }
                         screenshotPath = Path.GetFileName(screenshotPath);
@@ -1710,10 +1715,10 @@ namespace SkinText {
                 ScreenshotUpload = false;
             }
             catch (Exception ex) {
-                #if DEBUG
+#if DEBUG
                 MessageBox.Show("DEBUG: "+ex.ToString());
                 //throw;
-                #endif
+#endif
             }
             finally {
                 fs?.Dispose();
@@ -1799,9 +1804,9 @@ namespace SkinText {
                                                 break;
                                             }
                                         default: {
-                                                #if DEBUG
+#if DEBUG
                                                 MessageBox.Show("Not recognized:  \"" + line[0] + "\" in SkinInfo file");
-                                                #endif
+#endif
                                                 break;
                                             }
                                     }
@@ -1810,10 +1815,10 @@ namespace SkinText {
                         }
                     }
                     catch (Exception ex) {
-                        #if DEBUG
+#if DEBUG
                         MessageBox.Show("DEBUG: "+ex.ToString());
                         //throw;
-                        #endif
+#endif
                     }
                 }
                 else {
@@ -1889,10 +1894,10 @@ namespace SkinText {
                 LoadScreenshot(newImagePath);
             }
             catch (Exception ex) {
-                #if DEBUG
+#if DEBUG
                 MessageBox.Show("DEBUG: "+ex.ToString());
                 //throw;
-                #endif
+#endif
             }
         }
 
@@ -1928,10 +1933,10 @@ namespace SkinText {
             }
             catch (Exception ex) {
                 //MessageBox.Show("Error deleting temporal file, please try again", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                #if DEBUG
+#if DEBUG
                 MessageBox.Show("DEBUG: "+ex.ToString());
                 //throw;
-                #endif
+#endif
             }
         }
 
@@ -1961,10 +1966,10 @@ namespace SkinText {
                 }
                 catch (Exception ex) {
                     MessageBox.Show("Failed to Export skin", "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
-                    #if DEBUG
+#if DEBUG
                     MessageBox.Show("DEBUG: "+ex.ToString());
                     //throw;
-                    #endif
+#endif
                 }
             }
         }
@@ -1993,10 +1998,10 @@ namespace SkinText {
             }
             catch (Exception ex) {
                 MessageBox.Show("Failed to Import skin", "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
-                #if DEBUG
+#if DEBUG
                 MessageBox.Show("DEBUG: "+ex.ToString());
                 //throw;
-                #endif
+#endif
             }
         }
 
@@ -2011,17 +2016,17 @@ namespace SkinText {
                 }
                 catch (Exception ex) {
                     MessageBox.Show("Failed to Delete skin", "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
-                    #if DEBUG
+#if DEBUG
                     MessageBox.Show("DEBUG: "+ex.ToString());
                     //throw;
-                    #endif
+#endif
                 }
             }
         }
 
-        #endregion Skins
+#endregion Skins
 
-        #region Text Functions
+#region Text Functions
 
         /// <summary>
         /// Sets the format to the selected text
@@ -2170,10 +2175,10 @@ namespace SkinText {
                             }
                         }
                         catch (Exception ex2) {
-                            #if DEBUG
+#if DEBUG
                             MessageBox.Show("DEBUG: " + ex2.ToString());
                             //throw;
-                            #endif
+#endif
                         }
                         //end fix
 
@@ -2196,10 +2201,10 @@ namespace SkinText {
                     }
                     catch (Exception ex) {
                         //crashes when changing hyperLink properties
-                        #if DEBUG
+#if DEBUG
                         MessageBox.Show("DEBUG: "+ex.ToString());
                         //throw;
-                        #endif
+#endif
                     }
                 }
             }
@@ -2432,9 +2437,9 @@ namespace SkinText {
             }
         }
 
-        #endregion Text Functions
+#endregion Text Functions
 
-        #region ToolBar functions
+#region ToolBar functions
 
         public static void UpdateItemCheckedState(System.Windows.Controls.Primitives.ToggleButton button, DependencyProperty formattingProperty, object expectedValue) {
             if (button != null) {
@@ -2881,6 +2886,6 @@ namespace SkinText {
             */
         }
 
-        #endregion ToolBar functions
+#endregion ToolBar functions
     }
 }
