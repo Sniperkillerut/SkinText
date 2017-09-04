@@ -13,22 +13,29 @@ namespace SkinText {
 
         private static void FirstRun(string appdatapath, string curFileName) {
             try {
+                MessageBox.Show("DEBUG: creating folder");
                 Directory.CreateDirectory(appdatapath);
+                MessageBox.Show("DEBUG: copying exe file");
                 System.IO.File.Copy(curFileName, appdatapath + "\\" + "SkinText.exe", true);
+                MessageBox.Show("DEBUG: creating default skin folder");
                 Directory.CreateDirectory(appdatapath + @"\Default");
+                MessageBox.Show("DEBUG: registering in registry");
                 FileAssociaton(appdatapath + "\\" + "SkinText.exe");
+                MessageBox.Show("DEBUG: creating desktop shortcut");
                 CreateShortcut(appdatapath);
                 CustomMethods.CurrentSkin = @"\Default";
+                MessageBox.Show("DEBUG: setting default skin");
                 CustomMethods.SaveCurrentSkin();
                 //skininfo.ini Area
+                MessageBox.Show("DEBUG: creating default skin config");
                 CustomMethods.CreateModifySkin("Default", "Default", "FrostHive", "2.0.0", "DefaultIcon", "SkinText Default Skin");
                 //skininfo.ini Area
             }
             catch (Exception ex) {
                 //MessageBox.Show("Error creating Initial Config", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                #if DEBUG
+#if DEBUG
                 MessageBox.Show("DEBUG: "+ex.ToString());
-                #endif
+#endif
                 throw;
             }
         }
@@ -52,10 +59,21 @@ namespace SkinText {
              */
 
         private static void FileAssociaton(string path) {
+            IllusoryStudios.Wpf.LostControls.Win32.StartupSettings startupSettings = new IllusoryStudios.Wpf.LostControls.Win32.StartupSettings(nameof(SkinText)) {
+                CurrentPath = path,
+                DesiredPath = path,
+                StartsWithSystem = true
+            };
             IllusoryStudios.Wpf.LostControls.Win32.FileAssociationHelper.RegisterHandlerForPath(nameof(SkinText), "SkinText File", path);
             IllusoryStudios.Wpf.LostControls.Win32.FileAssociationHelper.RegisterAssociation(".xamlp", nameof(SkinText));
             IllusoryStudios.Wpf.LostControls.Win32.FileAssociationHelper.RegisterAssociation(".xaml", nameof(SkinText));
             IllusoryStudios.Wpf.LostControls.Win32.FileAssociationHelper.RegisterAssociation(".sktskin", nameof(SkinText));
+
+            /*IllusoryStudios.Wpf.LostControls.Win32.StartupSettings startupSettings2 = new IllusoryStudios.Wpf.LostControls.Win32.StartupSettings(nameof(SkinText)) {
+                CurrentPath = path,
+                DesiredPath = path,
+                StartsWithSystem = false
+            };*/
         }
         private static void CreateShortcut(string appdatapath) {
             string link = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
@@ -80,9 +98,13 @@ namespace SkinText {
             CustomMethods.AppDataPath = appdatapath;
             string curPath = Path.GetDirectoryName(curFileNamePath);
 
+
+            MessageBox.Show("DEBUG:\r\n AppDatapath: " +appdatapath+"\r\n curPath: " + curPath);
+
+
             CheckCmdParameters(e, appdatapath, curFileName);
 
-            //check if runing from appdata
+            //check if runing from appdata or if portable
             if (curPath == appdatapath) {
                 #if DEBUG
                 //MessageBox.Show("DEBUG: runing from appdata");
@@ -126,10 +148,10 @@ namespace SkinText {
                     DeleteSelf();
                 }
                 catch (Exception ex) {
-                    #if DEBUG
+#if DEBUG
                     MessageBox.Show("DEBUG: "+ex.ToString());
                     //throw;
-                    #endif
+#endif
                     FirstRunAdmin(curFileName);
                 }
                 CloseThis();
@@ -175,10 +197,10 @@ namespace SkinText {
 
                 }
                 catch (Exception ex) {
-                    #if DEBUG
+#if DEBUG
                     MessageBox.Show("DEBUG: "+ex.ToString());
                     //throw;
-                    #endif
+#endif
                 }
             }
         }
@@ -199,7 +221,7 @@ namespace SkinText {
                     MessageBox.Show("Config complete!", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
                     RunAppdata(appdatapath);
                     DeleteSelf();
-                    CloseThis();
+                CloseThis();
                 }
                 catch (Exception ex) {
                     //if admin and still crashes
@@ -213,14 +235,15 @@ namespace SkinText {
             else {
                 if (e.Args.Length>0) {
                     if (System.IO.File.Exists(e.Args[0])) {
-                        if (Path.GetExtension(e.Args[0]).ToUpperInvariant() == ".SKTSKIN") {
+                        CustomMethods.FilepathAssociated = e.Args[0];
+                        /*if (Path.GetExtension(e.Args[0]).ToUpperInvariant() == ".SKTSKIN") {
                             //open skin package
                             CustomMethods.FilepathAssociated = e.Args[0];
                         }
                         else {
                             //if double clicked an assosiated file
                             CustomMethods.FilepathAssociated = e.Args[0];
-                        }
+                        }*/
                     }
                 }
             }
@@ -263,10 +286,10 @@ namespace SkinText {
             catch (Exception ex) {
                 //if failed to launch as admin
                 MessageBox.Show("Detected a missing file and could not fix it, file associations will not work", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                #if DEBUG
+#if DEBUG
                 MessageBox.Show("DEBUG: "+ex.ToString());
                 //throw;
-                #endif
+#endif
             }
         }
 
