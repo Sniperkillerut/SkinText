@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.13
+VisualStudioVersion = 15.0.26730.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkinText", "SkinText\SkinText.csproj", "{CAA7F968-B42B-44CE-8822-5DE9AA24B6F7}"
 EndProject
@@ -9,6 +9,8 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x86 = Debug|x86
+		Portable|Any CPU = Portable|Any CPU
+		Portable|x86 = Portable|x86
 		Release|Any CPU = Release|Any CPU
 		Release|x86 = Release|x86
 	EndGlobalSection
@@ -17,6 +19,10 @@ Global
 		{CAA7F968-B42B-44CE-8822-5DE9AA24B6F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CAA7F968-B42B-44CE-8822-5DE9AA24B6F7}.Debug|x86.ActiveCfg = Debug|x86
 		{CAA7F968-B42B-44CE-8822-5DE9AA24B6F7}.Debug|x86.Build.0 = Debug|x86
+		{CAA7F968-B42B-44CE-8822-5DE9AA24B6F7}.Portable|Any CPU.ActiveCfg = Portable|Any CPU
+		{CAA7F968-B42B-44CE-8822-5DE9AA24B6F7}.Portable|Any CPU.Build.0 = Portable|Any CPU
+		{CAA7F968-B42B-44CE-8822-5DE9AA24B6F7}.Portable|x86.ActiveCfg = Portable|x86
+		{CAA7F968-B42B-44CE-8822-5DE9AA24B6F7}.Portable|x86.Build.0 = Portable|x86
 		{CAA7F968-B42B-44CE-8822-5DE9AA24B6F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CAA7F968-B42B-44CE-8822-5DE9AA24B6F7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CAA7F968-B42B-44CE-8822-5DE9AA24B6F7}.Release|x86.ActiveCfg = Release|x86
@@ -24,5 +30,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7AA8414F-4419-4E5B-BD6E-08D4F67B3656}
 	EndGlobalSection
 EndGlobal
