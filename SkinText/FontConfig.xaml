@@ -353,7 +353,7 @@
                 <xctk:ColorPicker Name="ClrPcker_Font"
                               Grid.Column="1" Grid.Row="0"
                               SelectedColorChanged="ClrPcker_Font_SelectedColorChanged"
-                              Style="{DynamicResource ColorPickerStyle2}"
+                              Style="{DynamicResource ColorPickerStyle}"
                               SelectedColor="Black" />
             </Grid>
 
@@ -371,7 +371,7 @@
                 <xctk:ColorPicker Name="ClrPcker_Bg"
                                   Grid.Column="1" Grid.Row="0"
                                   SelectedColorChanged="ClrPcker_Bg_SelectedColorChanged"
-                                  Style="{DynamicResource ColorPickerStyle2}"
+                                  Style="{DynamicResource ColorPickerStyle}"
                                   SelectedColor="Transparent" />
             </Grid>
 
