@@ -3,11 +3,13 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using Microsoft.Win32;
+using static SkinText.NativeMethods;
 
 namespace SkinText {
 
@@ -33,6 +35,7 @@ namespace SkinText {
 
         public static string GAppPath {
             get {
+                string path = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
                 #if !PORTABLE
                 Assembly assm;
                 Type at;
@@ -51,16 +54,15 @@ namespace SkinText {
                 AssemblyCompanyAttribute ct = ((AssemblyCompanyAttribute)(r[0]));
                 AssemblyTitleAttribute ct2 = ((AssemblyTitleAttribute)(r2[0]));
                 // Build the User App Data Path
-                string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
                 //path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
                 path += @"\" + ct.Company;
                 path += @"\" + ct2.Title;
                 //path += @"\Default";
                 //path += @"\" + assm.GetName().Name.ToString();
                 //path += @"\" + assm.GetName().Version.ToString();
-                return path;
                 #endif
-                return Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+                return path;
             }
         }
 
@@ -1501,14 +1503,14 @@ namespace SkinText {
         public static void BlurBG(bool enableBlur) {
             if (MainW?.FontConf != null && MainW?.Conf != null) {
                 if (enableBlur) {
-                    BgBlur.EnableBlur(AccentState.ACCENT_ENABLE_BLURBEHIND, MainW);
-                    BgBlur.EnableBlur(AccentState.ACCENT_ENABLE_BLURBEHIND, MainW.FontConf);
-                    BgBlur.EnableBlur(AccentState.ACCENT_ENABLE_BLURBEHIND, MainW.Conf);
+                    NativeMethods.EnableBlur(AccentState.ACCENT_ENABLE_BLURBEHIND, MainW);
+                    NativeMethods.EnableBlur(AccentState.ACCENT_ENABLE_BLURBEHIND, MainW.FontConf);
+                    NativeMethods.EnableBlur(AccentState.ACCENT_ENABLE_BLURBEHIND, MainW.Conf);
                 }
                 else {
-                    BgBlur.EnableBlur(AccentState.ACCENT_INVALID_STATE, MainW);
-                    BgBlur.EnableBlur(AccentState.ACCENT_INVALID_STATE, MainW.FontConf);
-                    BgBlur.EnableBlur(AccentState.ACCENT_INVALID_STATE, MainW.Conf);
+                    NativeMethods.EnableBlur(AccentState.ACCENT_ENABLE_GRADIENT, MainW);
+                    NativeMethods.EnableBlur(AccentState.ACCENT_ENABLE_GRADIENT, MainW.FontConf);
+                    NativeMethods.EnableBlur(AccentState.ACCENT_ENABLE_GRADIENT, MainW.Conf);
                 }
             }
         }
@@ -2886,6 +2888,105 @@ namespace SkinText {
             */
         }
 
-#endregion ToolBar functions
+        #endregion ToolBar functions
+
+
+        private static readonly Regex UrlRegex = new Regex(@"(?#Protocol)(?:(?:ht|f)tp(?:s?)\:\/\/|~/|/)?(?#Username:Password)(?:\w+:\w+@)?(?#Subdomains)(?:(?:[-\w]+\.)+(?#TopLevel Domains)(?:com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum|travel|[a-z]{2}))(?#Port)(?::[\d]{1,5})?(?#Directories)(?:(?:(?:/(?:[-\w~!$+|.,=]|%[a-f\d]{2})+)+|/)+|\?|#)?(?#Query)(?:(?:\?(?:[-\w~!$+|.,*:]|%[a-f\d{2}])+=(?:[-\w~!$+|.,*:=]|%[a-f\d]{2})*)(?:&amp;(?:[-\w~!$+|.,*:]|%[a-f\d{2}])+=(?:[-\w~!$+|.,*:=]|%[a-f\d]{2})*)*)*(?#Anchor)(?:#(?:[-\w~!$+|.,*:=]|%[a-f\d]{2})*)?");
+
+        public static bool IsHyperlink(string word) {
+            // First check to make sure the word has at least one of the characters we need to make a hyperlink
+            if (word.IndexOfAny(@":.\/".ToCharArray()) != -1) {
+                if ((Uri.TryCreate(word, UriKind.Absolute, out Uri result)) && (result.Scheme == Uri.UriSchemeHttp || result.Scheme == Uri.UriSchemeHttps || result.Scheme == Uri.UriSchemeFile || result.Scheme == Uri.UriSchemeFtp || result.Scheme == Uri.UriSchemeMailto)) {
+                    // The string is an Absolute URI
+                    return true;
+                }
+                else if (UrlRegex.IsMatch(word)) {
+                    Uri uri = new Uri(word, UriKind.RelativeOrAbsolute);
+
+                    if (!uri.IsAbsoluteUri)
+                    {
+                        // rebuild it it with http to turn it into an Absolute URI
+                        uri = new Uri(@"http://" + word, UriKind.Absolute);
+                    }
+
+                    if (uri.IsAbsoluteUri) {
+                        return true;
+                    }
+                }
+                /*else {
+
+                    try {
+                        Uri wordUri = new Uri(word);
+
+                        // Check to see if URL is a network path
+                        if (wordUri.IsUnc || wordUri.IsFile) {
+                            return true;
+                        }
+                    }
+                    catch (Exception ex) {
+                        #if DEBUG
+                        MessageBox.Show("DEBUG: " + word+"   :"+ ex.ToString());
+                        System.Diagnostics.Debug.WriteLine(ex.ToString());
+                        //throw;
+                        #endif
+                    }
+                }*/
+            }
+
+            return false;
+        }
+        public static void DetectURLs(Paragraph par) {
+            string paragraphText = new TextRange(par.ContentStart, par.ContentEnd).Text;
+
+            // Split the paragraph by words
+            foreach (string word in paragraphText.Split(' ').ToList()) {
+                if (IsHyperlink(word)) {
+                    Uri uri = new Uri(word, UriKind.RelativeOrAbsolute);
+
+                    if (!uri.IsAbsoluteUri) {
+                        // Prepend it with http
+                        uri = new Uri(@"http://" + word, UriKind.Absolute);
+                    }
+
+                    if (uri != null) {
+                        TextPointer position = par.ContentStart;
+
+                        // Find the word in the paragraph
+                        while (position != null && position.Paragraph!=null && position.Paragraph.Equals(par)) {
+                            if ( typeof(Run).Equals(position.Parent.GetType()) && !((Inline)position.Parent).Parent.GetType().Equals(typeof(Hyperlink))) {
+                                if (position.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.Text) {
+                                    string textRun = position.GetTextInRun(LogicalDirection.Forward);
+
+                                    // Find the starting index of any substring that matches "word".
+                                    int indexInRun = textRun.IndexOf(word, StringComparison.Ordinal);
+                                    if (indexInRun != -1) {
+                                        TextPointer start = position.GetPositionAtOffset(indexInRun);
+                                        TextPointer end = start.GetPositionAtOffset(word.Length);
+                                        try {
+                                            var link = new Hyperlink(start, end) {
+                                                NavigateUri = uri,
+                                            };
+                                        }
+                                        catch (Exception ex) {
+                                            #if DEBUG
+                                            //MessageBox.Show("DEBUG: " + ex.ToString());
+                                            System.Diagnostics.Debug.WriteLine(ex.ToString());
+                                            //throw;
+                                            #endif
+                                        }
+                                        //link.Click += Hyperlink_Click;
+                                    }
+                                }
+                            }
+                            //FIXME: this continues to the next paragraph
+                            position = position.GetNextContextPosition(LogicalDirection.Forward);
+                        }
+                    }
+                }
+            }
+        }
+
+
+
     }
 }
