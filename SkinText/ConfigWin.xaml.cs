@@ -383,5 +383,10 @@ namespace SkinText {
             //change color changed to other less spammy event and that actually changes the brush, not the selected color
             //CustomMethods.ChangeBrushResource(GradientPicker1.Brush.Clone(), "BackgroundColorBrush");
         }
+
+        private void StartWithWindows_Checked(object sender, RoutedEventArgs e)
+        {
+            CustomMethods.StartWithWindows(StartWithWindows.IsChecked.Value);
+        }
     }
 }

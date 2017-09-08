@@ -13,23 +13,26 @@ namespace SkinText {
 
         private static void FirstRun(string appdatapath, string curFileName) {
             try {
-                MessageBox.Show("DEBUG: creating folder");
+                //MessageBox.Show("DEBUG: creating folder");
                 Directory.CreateDirectory(appdatapath);
-                MessageBox.Show("DEBUG: copying exe file");
+                //MessageBox.Show("DEBUG: copying exe file");
                 System.IO.File.Copy(curFileName, appdatapath + "\\" + "SkinText.exe", true);
-                MessageBox.Show("DEBUG: creating default skin folder");
+                //MessageBox.Show("DEBUG: creating default skin folder");
                 Directory.CreateDirectory(appdatapath + @"\Default");
-                MessageBox.Show("DEBUG: registering in registry");
+                //MessageBox.Show("DEBUG: registering in registry");
                 FileAssociaton(appdatapath + "\\" + "SkinText.exe");
-                MessageBox.Show("DEBUG: creating desktop shortcut");
+                //MessageBox.Show("DEBUG: creating desktop shortcut");
                 CreateShortcut(appdatapath);
-                CustomMethods.CurrentSkin = @"\Default";
-                MessageBox.Show("DEBUG: setting default skin");
-                CustomMethods.SaveCurrentSkin();
-                //skininfo.ini Area
-                MessageBox.Show("DEBUG: creating default skin config");
-                CustomMethods.CreateModifySkin("Default", "Default", "FrostHive", "2.0.0", "DefaultIcon", "SkinText Default Skin");
-                //skininfo.ini Area
+                if (!System.IO.File.Exists(appdatapath + "\\" + "config.ini"))
+                {
+                    CustomMethods.CurrentSkin = @"\Default";
+                    //MessageBox.Show("DEBUG: setting default skin");
+                    CustomMethods.SaveCurrentSkin();
+                    //skininfo.ini Area
+                    //MessageBox.Show("DEBUG: creating default skin config");
+                    CustomMethods.CreateModifySkin("Default", "Default", "FrostHive", "2.0.0", "DefaultIcon", "SkinText Default Skin");
+                    //skininfo.ini Area
+                }
             }
             catch (Exception ex) {
                 //MessageBox.Show("Error creating Initial Config", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -59,11 +62,7 @@ namespace SkinText {
              */
 
         private static void FileAssociaton(string path) {
-            IllusoryStudios.Wpf.LostControls.Win32.StartupSettings startupSettings = new IllusoryStudios.Wpf.LostControls.Win32.StartupSettings(nameof(SkinText)) {
-                CurrentPath = path,
-                DesiredPath = path,
-                StartsWithSystem = true
-            };
+
             IllusoryStudios.Wpf.LostControls.Win32.FileAssociationHelper.RegisterHandlerForPath(nameof(SkinText), "SkinText File", path);
             IllusoryStudios.Wpf.LostControls.Win32.FileAssociationHelper.RegisterAssociation(".xamlp", nameof(SkinText));
             IllusoryStudios.Wpf.LostControls.Win32.FileAssociationHelper.RegisterAssociation(".xaml", nameof(SkinText));
@@ -98,8 +97,9 @@ namespace SkinText {
             CustomMethods.AppDataPath = appdatapath;
             string curPath = Path.GetDirectoryName(curFileNamePath);
 
-
-            MessageBox.Show("DEBUG:\r\n AppDatapath: " +appdatapath+"\r\n curPath: " + curPath);
+            #if DEBUG
+            //MessageBox.Show("DEBUG:\r\n AppDatapath: " +appdatapath+"\r\n curPath: " + curPath);
+            #endif
 
 
             CheckCmdParameters(e, appdatapath, curFileName);
@@ -137,6 +137,7 @@ namespace SkinText {
 
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         private static void UpdateFile(string curFileNamePath, string curFileName, string appdatapath) {
             if (!System.IO.File.Exists(appdatapath + "\\" + "SkinText.exe")) {
                 try {
@@ -205,6 +206,7 @@ namespace SkinText {
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         private static void CheckCmdParameters(StartupEventArgs e, string appdatapath, string curFileName) {
             // Application is running
             // Process command line args
@@ -249,6 +251,7 @@ namespace SkinText {
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         private static void RunAppdata(string appdatapath) {
             try {
                 using (Process process = new Process()) {
@@ -271,6 +274,7 @@ namespace SkinText {
             //Environment.Exit(0);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         private static void FirstRunAdmin(string curFileName) {
             try {
                 //Request admin rights

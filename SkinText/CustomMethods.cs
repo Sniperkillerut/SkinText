@@ -408,6 +408,7 @@ namespace SkinText {
             MainW.Conf.ResizeVisible.IsChecked = true;
             MainW.Conf.BgBlur.IsChecked = true;
             MainW.Conf.toolsalwaysontop.IsChecked = true;
+            MainW.Conf.StartWithWindows.IsChecked = true;
 
             //Image Checkboxes
             MainW.Conf.GifMethodCPU.IsChecked = true;
@@ -833,6 +834,15 @@ namespace SkinText {
                                 }
                                 break;
                             }
+                        case "START_WITH_WINDOWS":
+                            {
+                                if (bool.TryParse(line[1], out bool1))
+                                {
+                                    MainW.Conf.StartWithWindows.IsChecked = bool1;
+                                }
+                                break;
+                            }
+
                         default: {
 #if DEBUG
                                 MessageBox.Show("Not recognized:  \"" + line[0] + "\" in SkinConfig file");
@@ -1055,6 +1065,10 @@ namespace SkinText {
 
                     //ToolBar Enabled
                     data = "toolbar_enabled = " + MainW.ToolBarMenuItem.IsChecked.ToString();
+                    writer.WriteLine(data);
+
+                    //START WITH WINDOWS
+                    data = "start_with_windows = " + MainW.Conf.StartWithWindows.IsChecked.ToString();
                     writer.WriteLine(data);
 
                     //////////////////////////////////////
@@ -1396,6 +1410,16 @@ namespace SkinText {
                     fileFunc();
                 }
             }
+        }
+
+        public static void StartWithWindows(bool doStart)
+        {
+            IllusoryStudios.Wpf.LostControls.Win32.StartupSettings startupSettings = new IllusoryStudios.Wpf.LostControls.Win32.StartupSettings(nameof(SkinText))
+            {
+                CurrentPath = AppDataPath,
+                DesiredPath = AppDataPath,
+                StartsWithSystem = doStart
+            };
         }
 
 #endregion General

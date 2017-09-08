@@ -1025,6 +1025,17 @@
                         </CheckBox.ToolTip>
                         <TextBlock Text="Blur Background" Style="{DynamicResource ToolTipTextStyle}" />
                     </CheckBox>
+
+                    <CheckBox x:Name="StartWithWindows" Grid.Column="0" Grid.Row="5" Margin="10,0" Checked="StartWithWindows_Checked" Unchecked="StartWithWindows_Checked" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" VerticalAlignment="Center">
+                        <CheckBox.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="Start SkinText With Windows" Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </CheckBox.ToolTip>
+                        <TextBlock Text="Start With Windows" Style="{DynamicResource ToolTipTextStyle}" />
+                    </CheckBox>
                 </Grid>
             </TabItem>
 
