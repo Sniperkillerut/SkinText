@@ -135,6 +135,23 @@ namespace SkinText {
             CustomMethods.CheckBlurBG();
             Conf.AboutItem.IsSelected = true;
             Conf.Focus();
+            /*Check all paragraphs for hyperlinks
+             * try {
+                for (int i = 0; i < rtb.Document.Blocks.Count; i++) {
+                    var arr = new Block[rtb.Document.Blocks.Count];
+                    rtb.Document.Blocks.CopyTo(arr,0);
+                    if (typeof(Paragraph).Equals(arr[i].GetType())) {
+                        CustomMethods.DetectURLs((System.Windows.Documents.Paragraph)arr[i]);
+                    }
+                }
+            }
+            catch (Exception ex) {
+#if DEBUG
+                MessageBox.Show("DEBUG: " + ex.ToString());
+                System.Diagnostics.Debug.WriteLine(ex.ToString());
+                //throw;
+#endif
+            }*/
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
