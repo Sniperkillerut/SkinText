@@ -1544,6 +1544,7 @@ namespace SkinText {
         }
 
         public static void ResizeRtb(bool resizeEnabled) {
+            MainW.ResizeMenuItem.IsChecked = resizeEnabled;
             if (resizeEnabled) {
                 MainW.panel.IsEnabled = false;
 

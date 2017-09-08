@@ -149,10 +149,10 @@ namespace SkinText {
                     DeleteSelf();
                 }
                 catch (Exception ex) {
-#if DEBUG
+                    #if DEBUG
                     MessageBox.Show("DEBUG: "+ex.ToString());
                     //throw;
-#endif
+                    #endif
                     FirstRunAdmin(curFileName);
                 }
                 CloseThis();
@@ -198,10 +198,10 @@ namespace SkinText {
 
                 }
                 catch (Exception ex) {
-#if DEBUG
+                    #if DEBUG
                     MessageBox.Show("DEBUG: "+ex.ToString());
                     //throw;
-#endif
+                    #endif
                 }
             }
         }

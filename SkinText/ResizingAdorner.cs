@@ -54,8 +54,21 @@ namespace SkinText {
 
             // Change the size by the amount the user drags the mouse, as long as it's larger
             // than the width or height of an adorner, respectively.
-            adornedElement.Width = Math.Max(adornedElement.Width + args.HorizontalChange, hitThumb.DesiredSize.Width);
-            adornedElement.Height = Math.Max(args.VerticalChange + adornedElement.Height, hitThumb.DesiredSize.Height);
+            double newWidth = Math.Max(adornedElement.Width + args.HorizontalChange, hitThumb.DesiredSize.Width);
+
+            if (newWidth > ((Canvas)adornedElement.Parent).ActualWidth - Canvas.GetLeft(adornedElement))
+            {
+                newWidth = ((Canvas)adornedElement.Parent).ActualWidth - Canvas.GetLeft(adornedElement);
+            }
+            adornedElement.Width = newWidth;
+
+            double newHeight = Math.Max(args.VerticalChange + adornedElement.Height, hitThumb.DesiredSize.Height);
+
+            if (newHeight > ((Canvas)adornedElement.Parent).ActualHeight - Canvas.GetTop(adornedElement))
+            {
+                newHeight = ((Canvas)adornedElement.Parent).ActualHeight - Canvas.GetTop(adornedElement);
+            }
+            adornedElement.Height = newHeight;
         }
 
         // Handler for resizing from the top-right.
@@ -74,14 +87,27 @@ namespace SkinText {
 
             // Change the size by the amount the user drags the mouse, as long as it's larger
             // than the width or height of an adorner, respectively.
-            adornedElement.Width = Math.Max(adornedElement.Width + args.HorizontalChange, hitThumb.DesiredSize.Width);
+            double newWidth = Math.Max(adornedElement.Width + args.HorizontalChange, hitThumb.DesiredSize.Width);
+
+            if (newWidth > ((Canvas)adornedElement.Parent).ActualWidth - Canvas.GetLeft(adornedElement))
+            {
+                newWidth = ((Canvas)adornedElement.Parent).ActualWidth - Canvas.GetLeft(adornedElement);
+            }
+            adornedElement.Width = newWidth;
             //adornedElement.Height = Math.Max(adornedElement.Height - args.VerticalChange, hitThumb.DesiredSize.Height);
 
             double height_old = adornedElement.Height;
             double height_new = Math.Max(adornedElement.Height - args.VerticalChange, hitThumb.DesiredSize.Height);
             double top_old = Canvas.GetTop(adornedElement);
+
+            double newtop = top_old - (height_new - height_old);
+            if (newtop < 0)
+            {
+                newtop = 0;
+                height_new = height_old;
+            }
             adornedElement.Height = height_new;
-            Canvas.SetTop(adornedElement, top_old - (height_new - height_old));
+            Canvas.SetTop(adornedElement, newtop);
         }
 
         // Handler for resizing from the top-left.
@@ -104,14 +130,28 @@ namespace SkinText {
             double width_old = adornedElement.Width;
             double width_new = Math.Max(adornedElement.Width - args.HorizontalChange, hitThumb.DesiredSize.Width);
             double left_old = Canvas.GetLeft(adornedElement);
+
+            double newleft = left_old - (width_new - width_old);
+            if (newleft < 0)
+            {
+                newleft = 0;
+                width_new = width_old;
+            }
             adornedElement.Width = width_new;
-            Canvas.SetLeft(adornedElement, left_old - (width_new - width_old));
+            Canvas.SetLeft(adornedElement, newleft);
 
             double height_old = adornedElement.Height;
             double height_new = Math.Max(adornedElement.Height - args.VerticalChange, hitThumb.DesiredSize.Height);
             double top_old = Canvas.GetTop(adornedElement);
+
+            double newtop = top_old - (height_new - height_old);
+            if (newtop < 0)
+            {
+                newtop = 0;
+                height_new = height_old;
+            }
             adornedElement.Height = height_new;
-            Canvas.SetTop(adornedElement, top_old - (height_new - height_old));
+            Canvas.SetTop(adornedElement, newtop);
         }
 
         // Handler for resizing from the bottom-left.
@@ -129,13 +169,27 @@ namespace SkinText {
             // Change the size by the amount the user drags the mouse, as long as it's larger
             // than the width or height of an adorner, respectively.
             //adornedElement.Width = Math.Max(adornedElement.Width - args.HorizontalChange, hitThumb.DesiredSize.Width);
-            adornedElement.Height = Math.Max(args.VerticalChange + adornedElement.Height, hitThumb.DesiredSize.Height);
+            double newHeight = Math.Max(args.VerticalChange + adornedElement.Height, hitThumb.DesiredSize.Height);
+
+            if (newHeight> ((Canvas)adornedElement.Parent).ActualHeight - Canvas.GetTop(adornedElement))
+            {
+                newHeight = ((Canvas)adornedElement.Parent).ActualHeight - Canvas.GetTop(adornedElement);
+            }
+            adornedElement.Height = newHeight;
 
             double width_old = adornedElement.Width;
             double width_new = Math.Max(adornedElement.Width - args.HorizontalChange, hitThumb.DesiredSize.Width);
+
             double left_old = Canvas.GetLeft(adornedElement);
+
+            double newleft = left_old - (width_new - width_old);
+            if (newleft<0)
+            {
+                newleft = 0;
+                width_new = width_old;
+            }
             adornedElement.Width = width_new;
-            Canvas.SetLeft(adornedElement, left_old - (width_new - width_old));
+            Canvas.SetLeft(adornedElement, newleft);
         }
 
         // Arrange the Adorners.

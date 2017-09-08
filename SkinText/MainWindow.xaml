@@ -15,7 +15,7 @@
         UseLayoutRounding="True"
         AllowsTransparency="True" Background="{DynamicResource MainWindowBackgroundColorBrush}"
         WindowStyle="None" MouseDown="Window_MouseDown" ResizeMode="CanResizeWithGrip"
-        Loaded="Window_Loaded" Closing="Window_Closing">
+        Loaded="Window_Loaded" Closing="Window_Closing" SizeChanged="Window_SizeChanged">
     <Window.CommandBindings>
         <CommandBinding Command="local:CustomCommands.Exit" CanExecute="ExitCommand_CanExecute" Executed="ExitCommand_Executed" />
         <CommandBinding Command="local:CustomCommands.Save" CanExecute="SaveCommand_CanExecute" Executed="SaveCommand_Executed" />
@@ -159,10 +159,9 @@
                                 </MenuItem.Icon>
                             </MenuItem>
                             <Separator />
-                            <MenuItem x:Name="LineWrapMenuItem" Header="Line Wrap" Template="{DynamicResource MenuItemControlTemplate2}" Click="LineWrapMenuItem_Click" IsCheckable="true" IsChecked="True">
-                            </MenuItem>
-                        <MenuItem x:Name="ToolBarMenuItem" Header="Tool Bars" Template="{DynamicResource MenuItemControlTemplate2}" Checked="ToolBarMenuItem_Checked" Unchecked="ToolBarMenuItem_Checked" IsCheckable="true">
-                            </MenuItem>
+                            <MenuItem x:Name="LineWrapMenuItem" Header="Line Wrap" Template="{DynamicResource MenuItemControlTemplate2}" Click="LineWrapMenuItem_Click" IsCheckable="true" IsChecked="True"/>
+                            <MenuItem x:Name="ToolBarMenuItem" Header="Tool Bars" Template="{DynamicResource MenuItemControlTemplate2}" Checked="ToolBarMenuItem_Checked" Unchecked="ToolBarMenuItem_Checked" IsCheckable="true"/>
+                            <MenuItem x:Name="ResizeMenuItem" Header="Resize Text Area" Template="{DynamicResource MenuItemControlTemplate2}" Checked="ResizeMenuItem_Checked" Unchecked="ResizeMenuItem_Checked" IsCheckable="true"/>
                             <Separator />
                             <MenuItem Header="Open Character _Map" Template="{DynamicResource MenuItemControlTemplate2}" Click="CharMap_Click">
                                 <MenuItem.Icon>
@@ -1078,7 +1077,7 @@
                                     SelectionChanged="Rtb_SelectionChanged" IsDocumentEnabled="True" KeyUp="Rtb_KeyUp" TextChanged="Rtb_TextChanged"
                                     MouseMove="Rtb_MouseMove"
                                     IsInactiveSelectionHighlightEnabled="True"
-                                    AllowDrop="True" PreviewDragEnter="Rtb_PreviewDragEnter" Drop="Window_Drop" PreviewDragOver="Rtb_PreviewDragOver" >
+                                    AllowDrop="True" PreviewDragEnter="Rtb_PreviewDragEnter" Drop="Window_Drop" PreviewDragOver="Rtb_PreviewDragOver" PreviewKeyDown="Rtb_PreviewKeyDown" >
                             <FlowDocument LineStackingStrategy="BlockLineHeight" />
                             <RichTextBox.Resources>
                                 <Style TargetType="{x:Type Paragraph}">

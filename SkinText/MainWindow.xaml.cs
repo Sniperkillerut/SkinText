@@ -8,11 +8,13 @@ using System.Windows.Interop;
 
 namespace SkinText {
 
-    public partial class MainWindow : Window {
+    public partial class MainWindow : Window
+    {
         private FontConfig fontConf;
         private ConfigWin conf;
 
-        public MainWindow() {
+        public MainWindow()
+        {
             InitializeComponent();
         }
 
@@ -29,15 +31,18 @@ namespace SkinText {
 
         #region General
 
-        private void Exit_Click(object sender, RoutedEventArgs e) {
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
             this.Close();
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
             CustomMethods.SaveChanges(CustomMethods.ExitProgram, e, "Exit");
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e) {
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
             CustomMethods.MainW = this;
             FontConf = new FontConfig();
             Conf = new ConfigWin();
@@ -75,14 +80,18 @@ namespace SkinText {
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e) {
-            if (Mouse.LeftButton == MouseButtonState.Pressed) {
-                try {
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (Mouse.LeftButton == MouseButtonState.Pressed)
+            {
+                try
+                {
                     this.DragMove();
                 }
-                catch (Exception ex) {
+                catch (Exception ex)
+                {
 #if DEBUG
-                    MessageBox.Show("DEBUG: "+ex.ToString());
+                    MessageBox.Show("DEBUG: " + ex.ToString());
                     //throw;
 #endif
                     //System.InvalidOperationException
@@ -96,16 +105,20 @@ namespace SkinText {
 
         #region DragDrop
         //http://xcalibursystems.com/2011/12/wpf-drag-and-drop-textbox-for-windows-explorer-files/
-        private void Window_Drop(object sender, DragEventArgs e) {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop)) {
+        private void Window_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
                 string ext = System.IO.Path.GetExtension(files[0]).ToUpperInvariant();
 
-                if (Array.Exists(new string[] { ".JPG", ".JPEG", ".JPE", ".JFIF", ".PNG", ".GIF" }, element => element == ext)) {
+                if (Array.Exists(new string[] { ".JPG", ".JPEG", ".JPE", ".JFIF", ".PNG", ".GIF" }, element => element == ext))
+                {
                     CustomMethods.LoadImage(files[0]);
                 }
-                else {
+                else
+                {
                     CustomMethods.ReadFile(files[0]);
                 }
                 //to stop calling multiple times on drop
@@ -113,16 +126,20 @@ namespace SkinText {
             }
         }
 
-        private void Rtb_PreviewDragEnter(object sender, DragEventArgs e) {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop)) {
+        private void Rtb_PreviewDragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
                 e.Effects = DragDropEffects.All;
             }
-            else {
+            else
+            {
                 e.Effects = DragDropEffects.None;
             }
         }
 
-        private void Rtb_PreviewDragOver(object sender, DragEventArgs e) {
+        private void Rtb_PreviewDragOver(object sender, DragEventArgs e)
+        {
             e.Handled = true;
         }
 
@@ -130,91 +147,93 @@ namespace SkinText {
 
         #region menu
 
-        private void About_Click(object sender, RoutedEventArgs e) {
+        private void About_Click(object sender, RoutedEventArgs e)
+        {
             Conf.Show();
             CustomMethods.CheckBlurBG();
             Conf.AboutItem.IsSelected = true;
             Conf.Focus();
-            /*Check all paragraphs for hyperlinks
-             * try {
-                for (int i = 0; i < rtb.Document.Blocks.Count; i++) {
-                    var arr = new Block[rtb.Document.Blocks.Count];
-                    rtb.Document.Blocks.CopyTo(arr,0);
-                    if (typeof(Paragraph).Equals(arr[i].GetType())) {
-                        CustomMethods.DetectURLs((System.Windows.Documents.Paragraph)arr[i]);
-                    }
-                }
-            }
-            catch (Exception ex) {
-#if DEBUG
-                MessageBox.Show("DEBUG: " + ex.ToString());
-                System.Diagnostics.Debug.WriteLine(ex.ToString());
-                //throw;
-#endif
-            }*/
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        private void CharMap_Click(object sender, RoutedEventArgs e) {
+        private void CharMap_Click(object sender, RoutedEventArgs e)
+        {
             Process process = new Process();
-            try {
+            try
+            {
                 process.StartInfo.FileName = "charmap";
                 //process.StartInfo.Arguments = arguments;
                 //process.StartInfo.ErrorDialog = true;
                 //process.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
                 process.Start();
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
 #if DEBUG
-                MessageBox.Show("DEBUG: "+ex.ToString());
+                MessageBox.Show("DEBUG: " + ex.ToString());
                 //throw;
 #endif
             }
-            finally {
+            finally
+            {
                 process.Dispose();
             }
             //process.WaitForExit(1000 * 60 * 5);    // Wait up to five minutes.
         }
 
-        private void Config_Click(object sender, RoutedEventArgs e) {
+        private void Config_Click(object sender, RoutedEventArgs e)
+        {
             Conf.Show();
             CustomMethods.CheckBlurBG();
             Conf.Focus();
         }
 
-        private void Donate_Click(object sender, RoutedEventArgs e) {
+        private void Donate_Click(object sender, RoutedEventArgs e)
+        {
             Process.Start("http://google.com");
         }
 
-        private void Font_Click(object sender, RoutedEventArgs e) {
+        private void Font_Click(object sender, RoutedEventArgs e)
+        {
             FontConf.Show();
             CustomMethods.CheckBlurBG();
             FontConf.Focus();
         }
 
-        private void LineWrapMenuItem_Click(object sender, RoutedEventArgs e) {
+        private void LineWrapMenuItem_Click(object sender, RoutedEventArgs e)
+        {
             CustomMethods.LineWrap(LineWrapMenuItem.IsChecked);
         }
 
-        private void ToolBarMenuItem_Checked(object sender, RoutedEventArgs e) {
+        private void ToolBarMenuItem_Checked(object sender, RoutedEventArgs e)
+        {
             CustomMethods.ToolBarVisible(ToolBarMenuItem.IsChecked);
         }
 
-        private void Menu_PreviewMouseDown(object sender, MouseButtonEventArgs e) {
+        private void ResizeMenuItem_Checked(object sender, RoutedEventArgs e)
+        {
+            Conf.resizecheck.IsChecked = ResizeMenuItem.IsChecked;
+        }
+
+        private void Menu_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
             WindowInteropHelper helper = new WindowInteropHelper(window);
             IntPtr wparam = new IntPtr(2);
             IntPtr lparam = new IntPtr(0);
             NativeMethods.SendMessage(helper.Handle, 161, wparam, lparam);
         }
 
-        private void Panel_MouseLeave(object sender, MouseEventArgs e) {
+        private void Panel_MouseLeave(object sender, MouseEventArgs e)
+        {
             rtb.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
             rtb.HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden;
             menu.Visibility = Visibility.Collapsed;
         }
 
-        private void Resettodefaults_Click(object sender, RoutedEventArgs e) {
-            if (sender.Equals(resetToDefaultsTray)) {
+        private void Resettodefaults_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender.Equals(resetToDefaultsTray))
+            {
                 MessageBox.Show("Ignore this");
                 //when called from tray icon the first msgbox is cancelled automaticly
                 //still dont know why, seems to be a library issue, same error reported on the forum
@@ -222,20 +241,17 @@ namespace SkinText {
             CustomMethods.SaveChanges(CustomMethods.ResetDefaults, new System.ComponentModel.CancelEventArgs(), "Reset to Defaults");
         }
 
-        private void Rtb_KeyUp(object sender, KeyEventArgs e) {
-            if (e.SystemKey.Equals(Key.LeftAlt) || e.Key.Equals(Key.LeftAlt) || e.SystemKey.Equals(Key.RightAlt) || e.Key.Equals(Key.RightAlt)) {
-                //FIXME: fix weird menu visibility issues when pressing alt
-                menu.Visibility = Visibility.Visible;
-            }
-        }
-
-        private void MouseMove_Menu(object sender, MouseEventArgs e) {
+        private void MouseMove_Menu(object sender, MouseEventArgs e)
+        {
             Point m = e.GetPosition(panel);
-            if (!e.Source.GetType().Equals(typeof(Menu)) && !e.Source.GetType().Equals(typeof(MenuItem))) {
-                if (m.Y <= 10) {
+            if (!e.Source.GetType().Equals(typeof(Menu)) && !e.Source.GetType().Equals(typeof(MenuItem)))
+            {
+                if (m.Y <= 10)
+                {
                     menu.Visibility = Visibility.Visible;
                 }
-                else if (m.Y > 20) {
+                else if (m.Y > 20)
+                {
                     menu.Visibility = Visibility.Collapsed;
                 }
             }
@@ -245,32 +261,41 @@ namespace SkinText {
 
         #region RTB functions
 
-        private void Rtb_MouseMove(object sender, MouseEventArgs e) {
-            if (sender != ToolBarTray) {
+        private void Rtb_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (sender != ToolBarTray)
+            {
                 Point m = e.GetPosition(rtb);
-                if (m.X >= panel.ActualWidth - 20) {
+                if (m.X >= panel.ActualWidth - 20)
+                {
                     rtb.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
                 }
-                if ((rtb.Document.PageWidth >= panel.ActualWidth - 20) && (m.Y >= panel.ActualHeight - 20)) {
+                if ((rtb.Document.PageWidth >= panel.ActualWidth - 20) && (m.Y >= panel.ActualHeight - 20))
+                {
                     rtb.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
                 }
-                if ((m.X < panel.ActualWidth - 20) && (m.Y < panel.ActualHeight - 20)) {
+                if ((m.X < panel.ActualWidth - 20) && (m.Y < panel.ActualHeight - 20))
+                {
                     rtb.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
                     rtb.HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden;
                 }
             }
         }
 
-        private void Hyperlink_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
-            if (Keyboard.IsKeyDown(Key.LeftCtrl)) {
+        private void Hyperlink_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (Keyboard.IsKeyDown(Key.LeftCtrl))
+            {
                 Hyperlink hyperlink = (Hyperlink)sender;
-                if (hyperlink.NavigateUri != null) {
+                if (hyperlink.NavigateUri != null)
+                {
                     Process.Start(hyperlink.NavigateUri.ToString());
                 }
             }
         }
 
-        private void Rtb_SelectionChanged(object sender, RoutedEventArgs e) {
+        private void Rtb_SelectionChanged(object sender, RoutedEventArgs e)
+        {
             //FontConf
             CustomMethods.RtbSelectionChanged();
             //ToolBar
@@ -280,18 +305,22 @@ namespace SkinText {
             CustomMethods.UpdateSelectedFontSize();
             CustomMethods.UpdateSelectedFontFamily();
 
-            if (!DependencyProperty.UnsetValue.Equals(rtb.Selection.GetPropertyValue(TextElement.ForegroundProperty))) {
+            if (!DependencyProperty.UnsetValue.Equals(rtb.Selection.GetPropertyValue(TextElement.ForegroundProperty)))
+            {
                 System.Windows.Media.SolidColorBrush newBrush = (System.Windows.Media.SolidColorBrush)rtb.Selection.GetPropertyValue(TextElement.ForegroundProperty);
                 newBrush.Freeze();
                 ClrPcker_Font.SelectedColor = newBrush.Color;
             }
-            if (!DependencyProperty.UnsetValue.Equals(rtb.Selection.GetPropertyValue(TextElement.BackgroundProperty))) {
+            if (!DependencyProperty.UnsetValue.Equals(rtb.Selection.GetPropertyValue(TextElement.BackgroundProperty)))
+            {
                 System.Windows.Media.SolidColorBrush newBrush = (System.Windows.Media.SolidColorBrush)rtb.Selection.GetPropertyValue(TextElement.BackgroundProperty);
-                if (newBrush != null) {
+                if (newBrush != null)
+                {
                     newBrush.Freeze();
                     ClrPcker_FontBack.SelectedColor = newBrush.Color;
                 }
-                else {
+                else
+                {
                     ClrPcker_FontBack.SelectedColor = System.Windows.Media.Colors.Transparent;
                 }
             }
@@ -300,13 +329,18 @@ namespace SkinText {
             DropDownFontBackColor.IsEnabled = !rtb.Selection.IsEmpty;
         }
 
-        private void Rtb_TextChanged(object sender, TextChangedEventArgs e) {
+        private void Rtb_TextChanged(object sender, TextChangedEventArgs e)
+        {
             //creates a spam on first load, fixed on window_onLoad()
             CustomMethods.FileChanged = true;
-            if (CustomMethods.Filepath != null) {
-                if (CustomMethods.Filepath.Length > 4) {
-                    if (CustomMethods.FileChanged) {
-                        if (CustomMethods.AutoSaveEnabled) {
+            if (CustomMethods.Filepath != null)
+            {
+                if (CustomMethods.Filepath.Length > 4)
+                {
+                    if (CustomMethods.FileChanged)
+                    {
+                        if (CustomMethods.AutoSaveEnabled)
+                        {
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                             CustomMethods.DelayedSaveAsync();
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
@@ -316,49 +350,95 @@ namespace SkinText {
             }
         }
 
+        private void Rtb_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.SystemKey.Equals(Key.Enter) || e.Key.Equals(Key.Enter) || e.SystemKey.Equals(Key.Space) || e.Key.Equals(Key.Space))
+            {
+                try
+                {
+                    //Check all paragraphs for hyperlinks
+                    /*for (int i = 0; i < rtb.Document.Blocks.Count; i++) {
+                        var arr = new Block[rtb.Document.Blocks.Count];
+                        rtb.Document.Blocks.CopyTo(arr,0);
+                        if (typeof(Paragraph).Equals(arr[i].GetType())) {
+                            CustomMethods.DetectURLs((System.Windows.Documents.Paragraph)arr[i]);
+                        }
+                    }*/
+                    CustomMethods.DetectURLs(rtb.CaretPosition.Paragraph);
+                }
+                catch (Exception ex)
+                {
+#if DEBUG
+                    MessageBox.Show("DEBUG: " + ex.ToString());
+                    System.Diagnostics.Debug.WriteLine(ex.ToString());
+                    //throw;
+#endif
+                }
+            }
+            e.Handled = false;
+        }
+
+        private void Rtb_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.SystemKey.Equals(Key.LeftAlt) || e.Key.Equals(Key.LeftAlt) || e.SystemKey.Equals(Key.RightAlt) || e.Key.Equals(Key.RightAlt))
+            {
+                //FIXME: fix weird menu visibility issues when pressing alt
+                menu.Visibility = Visibility.Visible;
+            }
+        }
         #endregion RTB functions
 
         #region Custom Commands
 
         // Check Custom Commands class
-        private void ExitCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
+        private void ExitCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
             e.CanExecute = true;
         }
 
-        private void ExitCommand_Executed(object sender, ExecutedRoutedEventArgs e) {
+        private void ExitCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
             //Application.Current.Shutdown();
             this.Close();
         }
 
-        private void NewCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
+        private void NewCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
             e.CanExecute = true;
         }
 
-        private void NewCommand_Executed(object sender, ExecutedRoutedEventArgs e) {
+        private void NewCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
             CustomMethods.SaveChanges(CustomMethods.NewFile, new System.ComponentModel.CancelEventArgs(), "New File");
         }
 
-        private void OpenCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
+        private void OpenCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
             e.CanExecute = true;
         }
 
-        private void OpenCommand_Executed(object sender, ExecutedRoutedEventArgs e) {
+        private void OpenCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
             CustomMethods.SaveChanges(CustomMethods.OpenFile, new System.ComponentModel.CancelEventArgs(), "Open File");
         }
 
-        private void SaveAsCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
+        private void SaveAsCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
             e.CanExecute = true;
         }
 
-        private void SaveAsCommand_Executed(object sender, ExecutedRoutedEventArgs e) {
+        private void SaveAsCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
             CustomMethods.Save(true);
         }
 
-        private void SaveCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
+        private void SaveCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
             e.CanExecute = true;
         }
 
-        private void SaveCommand_Executed(object sender, ExecutedRoutedEventArgs e) {
+        private void SaveCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
             CustomMethods.Save(false);
         }
 
@@ -366,69 +446,86 @@ namespace SkinText {
 
         #region Toolbar Buttons
 
-        private void _btnLine_Clicked(object sender, RoutedEventArgs e) {
+        private void _btnLine_Clicked(object sender, RoutedEventArgs e)
+        {
             CustomMethods.ApplyTextDecorators();
         }
 
-        private void _btnScript_Clicked(object sender, RoutedEventArgs e) {
+        private void _btnScript_Clicked(object sender, RoutedEventArgs e)
+        {
             CustomMethods.ApplyTextScript(sender);
         }
 
-        private void _btnFlowDir_Click(object sender, RoutedEventArgs e) {
+        private void _btnFlowDir_Click(object sender, RoutedEventArgs e)
+        {
             CustomMethods.ApplyFlowDir();
         }
 
-        private void _fontSize_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+        private void _fontSize_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
             CustomMethods.ApplyFontSize(e);
         }
 
-        private void _fontFamily_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+        private void _fontFamily_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
             CustomMethods.ApplyFontFamily(e);
         }
 
-        private void _btn_importimg_Click(object sender, RoutedEventArgs e) {
+        private void _btn_importimg_Click(object sender, RoutedEventArgs e)
+        {
             CustomMethods.SelectImg();
         }
 
-        private void ClrPcker_Font_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<System.Windows.Media.Color?> e) {
+        private void ClrPcker_Font_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<System.Windows.Media.Color?> e)
+        {
             CustomMethods.ApplyFontColor();
         }
 
-        private void ClrPcker_FontBack_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<System.Windows.Media.Color?> e) {
+        private void ClrPcker_FontBack_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<System.Windows.Media.Color?> e)
+        {
             CustomMethods.ApplyFontBackColor();
         }
 
-        private void _btnListType_Click(object sender, RoutedEventArgs e) {
+        private void _btnListType_Click(object sender, RoutedEventArgs e)
+        {
             CustomMethods.ApplyListType(sender);
         }
 
-        private void Cmb_KeyUp(object sender, KeyEventArgs e) {
+        private void Cmb_KeyUp(object sender, KeyEventArgs e)
+        {
             CustomMethods.FilterFontFamilyComboBox();
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:No pasar cadenas literal como parámetros localizados", MessageId = "System.Windows.MessageBox.Show(System.String,System.String,System.Windows.MessageBoxButton,System.Windows.MessageBoxImage,System.Windows.MessageBoxResult,System.Windows.MessageBoxOptions)")]
-        private void _btn_addhyperlink_Click(object sender, RoutedEventArgs e) {
+        private void _btn_addhyperlink_Click(object sender, RoutedEventArgs e)
+        {
             HyperLinkWindow link = new HyperLinkWindow();
-            if (link.ShowDialog() == true) {
-                if (!string.IsNullOrWhiteSpace(link.HyperNameResult) && !string.IsNullOrWhiteSpace(link.HyperLinkResult)) {
-                    try {
+            if (link.ShowDialog() == true)
+            {
+                if (!string.IsNullOrWhiteSpace(link.HyperNameResult) && !string.IsNullOrWhiteSpace(link.HyperLinkResult))
+                {
+                    try
+                    {
 #pragma warning disable RECS0026 // Possible unassigned object created by 'new'
-                        new Hyperlink(new Run(link.HyperNameResult), rtb.CaretPosition.GetInsertionPosition(LogicalDirection.Forward)) {
+                        new Hyperlink(new Run(link.HyperNameResult), rtb.CaretPosition.GetInsertionPosition(LogicalDirection.Forward))
+                        {
                             NavigateUri = new Uri(link.HyperLinkResult),
                             Cursor = Cursors.Hand
                         };
 #pragma warning restore RECS0026 // Possible unassigned object created by 'new'
                     }
-                    catch (Exception ex) {
+                    catch (Exception ex)
+                    {
                         MessageBox.Show("Information is invalid", "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
 #if DEBUG
-                        MessageBox.Show("DEBUG: "+ex.ToString());
+                        MessageBox.Show("DEBUG: " + ex.ToString());
                         //throw;
 #endif
                     }
                 }
-                else {
+                else
+                {
                     MessageBox.Show("Information is invalid", "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
                 }
             }
@@ -501,64 +598,86 @@ namespace SkinText {
         #region Resize with Adorners
 
         // Handler for drag stopping on leaving the window
-        public void Window1MouseLeave(object sender, RoutedEventArgs e) {
+        public void Window1MouseLeave(object sender, RoutedEventArgs e)
+        {
             StopDragging();
             e.Handled = true;
         }
 
         // Handler for drag stopping on user choise
-        public void DragFinishedMouseHandler(object sender, RoutedEventArgs e) {
+        public void DragFinishedMouseHandler(object sender, RoutedEventArgs e)
+        {
             StopDragging();
             e.Handled = true;
         }
 
         // Method for stopping dragging
-        public void StopDragging() {
-            if (_isDown) {
+        public void StopDragging()
+        {
+            if (_isDown)
+            {
                 _isDown = false;
                 _isDragging = false;
             }
         }
 
         // Hanler for providing drag operation with selected element
-        public void Window1MouseMove(object sender, MouseEventArgs e) {
-            if (e != null) {
-                if (_isDown) {
+        public void Window1MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e != null)
+            {
+                if (_isDown)
+                {
                     if ((!_isDragging) &&
                         ((Math.Abs(e.GetPosition(canvas).X - _startPoint.X) > SystemParameters.MinimumHorizontalDragDistance) ||
-                        (Math.Abs(e.GetPosition(canvas).Y - _startPoint.Y) > SystemParameters.MinimumVerticalDragDistance))) {
+                        (Math.Abs(e.GetPosition(canvas).Y - _startPoint.Y) > SystemParameters.MinimumVerticalDragDistance)))
+                    {
                         _isDragging = true;
                     }
 
-                    if (_isDragging) {
+                    if (_isDragging)
+                    {
                         Point position = Mouse.GetPosition(canvas);
-                        Canvas.SetTop(selectedElement, position.Y - (_startPoint.Y - OriginalTop));
-                        Canvas.SetLeft(selectedElement, position.X - (_startPoint.X - OriginalLeft));
+                        if ((position.Y - (_startPoint.Y - OriginalTop) >= 0) && ((position.Y - (_startPoint.Y - OriginalTop) + TitleBorder.ActualHeight) <= canvas.ActualHeight))
+                        {
+                            Canvas.SetTop(selectedElement, position.Y - (_startPoint.Y - OriginalTop));
+                        }
+                        if ((position.X - (_startPoint.X - OriginalLeft) >= 0) && ((position.X - (_startPoint.X - OriginalLeft) + TitleBorder.ActualWidth) <= canvas.ActualWidth))
+                        {
+                            Canvas.SetLeft(selectedElement, position.X - (_startPoint.X - OriginalLeft));
+                        }
                     }
                 }
             }
         }
 
         // Handler for clearing element selection, adorner removal
-        public void Window1MouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
-            if (selected) {
+        public void Window1MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (selected)
+            {
                 selected = false;
-                if (selectedElement != null) {
+                if (selectedElement != null)
+                {
                     aLayer.Remove(aLayer.GetAdorners(selectedElement)[0]);
                     selectedElement = null;
+                    ResizeMenuItem.IsChecked = false;
                 }
             }
         }
 
         // Handler for element selection on the canvas providing resizing adorner
-        public void MyCanvasPreviewMouseLeftButtonDown(object sender, MouseEventArgs e) {
+        public void MyCanvasPreviewMouseLeftButtonDown(object sender, MouseEventArgs e)
+        {
             Deselect();
 
             // If any element except canvas is clicked,
             // assign the selected element and add the adorner
             //if (e.Source != canvas)
-            if (e != null) {
-                if (e.Source == TitleBorder) {
+            if (e != null)
+            {
+                if (e.Source == TitleBorder)
+                {
                     _isDown = true;
                     _startPoint = e.GetPosition(canvas);
 
@@ -572,29 +691,35 @@ namespace SkinText {
                     selected = true;
                     e.Handled = true;
                 }
-                else {
+                else
+                {
                     e.Handled = true;
                 }
             }
         }
 
-        public void Deselect() {
-            try {
+        public void Deselect()
+        {
+            try
+            {
                 // Remove selection on clicking anywhere the window
-                if (selected) {
+                if (selected)
+                {
                     selected = false;
-                    if (selectedElement != null) {
+                    if (selectedElement != null)
+                    {
                         // Remove the adorner from the selected element
                         aLayer.Remove(aLayer.GetAdorners(selectedElement)[0]);
                         selectedElement = null;
                     }
                 }
             }
-            catch (Exception ex) {
-                #if DEBUG
-                MessageBox.Show("DEBUG: "+ex.ToString());
+            catch (Exception ex)
+            {
+#if DEBUG
+                MessageBox.Show("DEBUG: " + ex.ToString());
                 //throw;
-                #endif
+#endif
             }
         }
 
@@ -617,5 +742,39 @@ namespace SkinText {
 
         #endregion Resize with Adorners
 
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            double BLeft = Canvas.GetLeft(TitleBorder);
+            double BTop = Canvas.GetTop(TitleBorder);
+            double BWidth = TitleBorder.ActualWidth;
+            double BHeight = TitleBorder.ActualHeight;
+            double WWidth = window.ActualWidth;
+            double WHeight = window.ActualHeight;
+            //width
+            if (BWidth >= WWidth - BLeft)
+            {
+                if (WWidth - BWidth > 0)
+                {
+                    Canvas.SetLeft(TitleBorder, WWidth - BWidth);
+                }
+                else
+                {
+                    TitleBorder.Width = WWidth;
+                }
+            }
+            //height
+            if (BHeight >= WHeight - BTop)
+            {
+                if (WHeight - BHeight > 0)
+                {
+                    Canvas.SetTop(TitleBorder, WHeight - BHeight);
+                }
+                else
+                {
+                    TitleBorder.Height = WHeight;
+                }
+            }
+        }
     }
+        
 }
