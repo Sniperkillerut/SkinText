@@ -1975,7 +1975,7 @@ namespace SkinText {
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
         }
 
-        public static void ExportSkin(string skin) {
+        public static void ExportSkin(string skinFolder, string skinName) {
             SaveFileDialog savedialog = new SaveFileDialog {
                 CreatePrompt = true,
                 OverwritePrompt = true,
@@ -1983,20 +1983,21 @@ namespace SkinText {
                 ValidateNames = true,
                 RestoreDirectory = true,
                 Filter = "SkinText Skin (*.sktskin)|*.sktskin",
-                FileName = Path.GetFileName(skin)
+                FileName = Path.GetFileName(skinFolder)
             };
 
             if (savedialog.ShowDialog() == true) {
                 try {
-                    ZipFile.CreateFromDirectory(AppDataPath+@"\"+skin, savedialog.FileName, CompressionLevel.Optimal,false);
-                    MessageBox.Show("Export of skin: " + skin + " complete!", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
+                    //TODO: create copy of skintext.ini, delete the "Filepath=", zip, then re-add the filepath
+                    ZipFile.CreateFromDirectory(AppDataPath+@"\"+ skinFolder, savedialog.FileName, CompressionLevel.Optimal,false);
+                    MessageBox.Show("Export of skin: " + skinName + " complete!", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 catch (Exception ex) {
                     MessageBox.Show("Failed to Export skin", "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
-#if DEBUG
+                    #if DEBUG
                     MessageBox.Show("DEBUG: "+ex.ToString());
                     //throw;
-#endif
+                    #endif
                 }
             }
         }
@@ -2017,6 +2018,7 @@ namespace SkinText {
 
         public static void ImportSkin(string skin) {
             try {
+                //TODO: if folder already exists this throws
                 string newSkinPath =  Path.GetFileNameWithoutExtension(skin);
                 Directory.CreateDirectory(AppDataPath + @"\" + newSkinPath);
                 ZipFile.ExtractToDirectory(skin, AppDataPath + @"\" + newSkinPath);
@@ -2931,14 +2933,25 @@ namespace SkinText {
                     if (!uri.IsAbsoluteUri)
                     {
                         // rebuild it it with http to turn it into an Absolute URI
-                        uri = new Uri(@"http://" + word, UriKind.Absolute);
+                        try
+                        {
+                            uri = new Uri(@"http://" + word, UriKind.Absolute);
+                        }
+                        catch (Exception ex)
+                        {
+                            #if DEBUG
+                            //MessageBox.Show("DEBUG: " + word + "   :" + ex.ToString());
+                            System.Diagnostics.Debug.WriteLine(ex.ToString());
+                            //throw;
+                            #endif
+                        }
                     }
 
                     if (uri.IsAbsoluteUri) {
                         return true;
                     }
                 }
-                /*else {
+                else {
 
                     try {
                         Uri wordUri = new Uri(word);
@@ -2955,7 +2968,7 @@ namespace SkinText {
                         //throw;
                         #endif
                     }
-                }*/
+                }
             }
 
             return false;
@@ -3003,7 +3016,6 @@ namespace SkinText {
                                     }
                                 }
                             }
-                            //FIXME: this continues to the next paragraph
                             position = position.GetNextContextPosition(LogicalDirection.Forward);
                         }
                     }

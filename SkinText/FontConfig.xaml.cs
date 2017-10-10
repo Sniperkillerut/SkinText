@@ -87,7 +87,6 @@ namespace SkinText {
                     }*/
                     textrun.Background = brush;
                     //ClrPcker_Bg.SelectedColor = brush.Color;
-                    //NOTE: is this aplied twice on transparent? (no longer necessary to check since this was a RTF fix no longer in use)
                 }
             }
             catch (Exception ex) {

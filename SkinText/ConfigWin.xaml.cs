@@ -324,10 +324,12 @@ namespace SkinText {
         }
 
         private void ExportSkin_Click(object sender, RoutedEventArgs e) {
-            string skin = ((System.Windows.Controls.ListBoxItem)(SkinsListbox.SelectedItem)).Content.ToString();
+            string skinName = SkinName_TextBox.Text;
+            //set the name to the user specified name
+            string skinFolder = ((System.Windows.Controls.ListBoxItem)(SkinsListbox.SelectedItem)).Content.ToString();
             //TODO: check if skin is null on all function calls
-            if (!string.IsNullOrWhiteSpace(skin) && skin != "Create New Skin") {
-                CustomMethods.ExportSkin(skin);
+            if (!string.IsNullOrWhiteSpace(skinFolder) && skinFolder != "Create New Skin") {
+                CustomMethods.ExportSkin(skinFolder,skinName);
             }
         }
         private void ImportSkin_Click(object sender, RoutedEventArgs e) {
