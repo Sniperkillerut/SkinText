@@ -582,7 +582,7 @@ namespace SkinText {
                                 }
                                 break;
                             }
-                        case "FILE": {
+                        case "FILE": {//TODO: move to config.ini
                                 string1 = line[1].Trim(); //fileName
                                 if (!string1.Contains("\\") && !string.IsNullOrEmpty(string1)) {//if is a relative path, use current .exe path to find it //not necesary as it will never be relative, but for historical pruposes
                                     string1 = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + string1;
@@ -626,7 +626,7 @@ namespace SkinText {
                             }
                         case "BG_IMAGE": {//(always after GIF method)
                                 string1 = line[1].Trim();
-                                if (!string1.Contains("\\") && !string.IsNullOrEmpty(string1)) {//if is a relative path, use current .exe path to find it //not necesary as it will never be relative, but for historical pruposes
+                                if (!string1.Contains("\\") && !string.IsNullOrEmpty(string1)) {//if is a relative path, use current .exe path to find it
                                     string1 = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + string1;
                                 }
                                 LoadImage(string1);//this sets Global Imagepath
@@ -821,42 +821,41 @@ namespace SkinText {
                                 break;
                             }
                         case "AUTOSAVE_ENABLED": {
-                                if (bool.TryParse(line[1], out bool1)) {
-                                    AutoSaveEnabled = bool1;
-                                }
-                                break;
+                            if (bool.TryParse(line[1], out bool1)) {
+                                AutoSaveEnabled = bool1;
                             }
+                            break;
+                        }
                         case "AUTOSAVE_TIMER": {
-                                if (double.TryParse(line[1], out double1)) {
-                                    if (double1 <= MainW.Conf.autosavetimersider.Maximum && double1 >= MainW.Conf.autosavetimersider.Minimum) {
-                                        MainW.Conf.autosavetimersider.Value = double1;
-                                    }
+                            if (double.TryParse(line[1], out double1)) {
+                                if (double1 <= MainW.Conf.autosavetimersider.Maximum && double1 >= MainW.Conf.autosavetimersider.Minimum) {
+                                    MainW.Conf.autosavetimersider.Value = double1;
                                 }
-                                break;
                             }
-                        case "START_WITH_WINDOWS":
+                            break;
+                        }
+                        case "START_WITH_WINDOWS":{
+                            if (bool.TryParse(line[1], out bool1))
                             {
-                                if (bool.TryParse(line[1], out bool1))
-                                {
-                                    MainW.Conf.StartWithWindows.IsChecked = bool1;
-                                }
-                                break;
+                                MainW.Conf.StartWithWindows.IsChecked = bool1;
                             }
+                            break;
+                        }
 
                         default: {
-#if DEBUG
+                            #if DEBUG
                                 MessageBox.Show("Not recognized:  \"" + line[0] + "\" in SkinConfig file");
-#endif
+                            #endif
                                 break;
-                            }
+                        }
                     }
                 }
                 catch (Exception ex) {
                     //System.FormatException catched from COLOR converters
-#if DEBUG
+                    #if DEBUG
                     MessageBox.Show("DEBUG: "+ex.ToString());
                     //throw;
-#endif
+                    #endif
                 }
             }
         }
@@ -924,8 +923,7 @@ namespace SkinText {
 
                     //filetry
 
-#region relative Path (Disabled)
-
+                    #region relative Path (Disabled)
                     /*
                         //To store as relative Path
                         int index = filepath.LastIndexOf("\\");
@@ -944,9 +942,8 @@ namespace SkinText {
                             filepath = filepath.Substring(index + 1);
                         }
                     */
-
-#endregion relative Path (Disabled)
-
+                    #endregion relative Path (Disabled)
+                    //TODO: move to config.ini
                     data = "file = " + Filepath;
                     writer.WriteLine(data);
 
@@ -974,30 +971,26 @@ namespace SkinText {
                     data = "gif_uses_ram = " + MainW.Conf.GifMethodRAM.IsChecked.Value.ToString();
                     writer.WriteLine(data);
 
-                    //bg_image (always after GIF method)
+                    //bg_image (always after GIF method) (since when reading it is needed to know the method beforehand)
 
-#region relative Path (Disabled)
-
-                    /*
+                    #region relative Path
                         //To store as relative Path
-                        int index = imagepath.LastIndexOf("\\");
+                        int index = Imagepath.LastIndexOf("\\");
                         string tempdir;
                         if (index > 0)
                         {
-                            tempdir = imagepath.Substring(0, index).ToLower();
+                            tempdir = Imagepath.Substring(0, index).ToLower();
                         }
                         else
                         {
-                            tempdir = imagepath.ToLower();
+                            tempdir = Imagepath.ToLower();
                         }
                         string dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location).ToLower();
                         if (object.Equals(tempdir, dir))
                         {
-                            imagepath = imagepath.Substring(index + 1);
+                            Imagepath = Imagepath.Substring(index + 1);
                         }
-                    */
-
-#endregion relative Path (Disabled)
+                    #endregion relative Path
 
                     data = "bg_image = " + Imagepath;
                     writer.WriteLine(data);
@@ -1673,13 +1666,14 @@ namespace SkinText {
                     fs = null; //is no longer needed
                     string data = "Skin = " + CurrentSkin.Replace(@"\", "");
                     writer.WriteLine(data);
+                    //TODO: add open file to config.ini
                 }
             }
             catch (Exception ex2) {
-#if DEBUG
+                #if DEBUG
                 MessageBox.Show("DEBUG: "+ex2.ToString());
                 //throw;
-#endif
+                #endif
             }
             finally {
                 fs?.Dispose();
@@ -1725,10 +1719,10 @@ namespace SkinText {
                             }
                             catch (Exception ex) {
                                 MessageBox.Show("Error creating Screenshot, Please try again", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-#if DEBUG
+                                #if DEBUG
                                 MessageBox.Show("DEBUG: "+ex.ToString());
                                 //throw;
-#endif
+                                #endif
                             }
                         }
                         screenshotPath = Path.GetFileName(screenshotPath);
@@ -1742,10 +1736,10 @@ namespace SkinText {
                 ScreenshotUpload = false;
             }
             catch (Exception ex) {
-#if DEBUG
+                #if DEBUG
                 MessageBox.Show("DEBUG: "+ex.ToString());
                 //throw;
-#endif
+                #endif
             }
             finally {
                 fs?.Dispose();
