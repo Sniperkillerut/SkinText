@@ -627,7 +627,7 @@ namespace SkinText {
                         case "BG_IMAGE": {//(always after GIF method)
                                 string1 = line[1].Trim();
                                 if (!string1.Contains("\\") && !string.IsNullOrEmpty(string1)) {//if is a relative path, use current .exe path to find it
-                                    string1 = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + string1;
+                                    string1 = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + CurrentSkin + "\\" + string1;
                                 }
                                 LoadImage(string1);//this sets Global Imagepath
                                 break;
@@ -922,7 +922,7 @@ namespace SkinText {
                     writer.WriteLine(data);
 
                     //filetry
-                    
+
                     #region relative Path (Disabled)
                     /*
                         //To store as relative Path
@@ -945,7 +945,7 @@ namespace SkinText {
                     #endregion relative Path (Disabled)
                     /*
                     //moved to config.ini
-                    data = "file = " + Filepath; 
+                    data = "file = " + Filepath;
                     writer.WriteLine(data);
                     */
 
@@ -977,7 +977,7 @@ namespace SkinText {
 
                     #region relative Path
                         //To store as relative Path
-                        int index = Imagepath.LastIndexOf("\\");
+                        int index = Imagepath.LastIndexOf("\\", StringComparison.Ordinal);
                         string tempdir;
                         if (index > 0)
                         {
@@ -987,7 +987,10 @@ namespace SkinText {
                         {
                             tempdir = Imagepath.ToLower();
                         }
-                        string dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location).ToLower();
+                        string dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                        dir += CurrentSkin;
+                        dir = dir.ToLower();
+                        //MessageBox.Show("DEBUG: \r\n execdir="+dir+"\r\n imgdir="+tempdir);
                         if (object.Equals(tempdir, dir))
                         {
                             Imagepath = Imagepath.Substring(index + 1);
@@ -1164,6 +1167,7 @@ namespace SkinText {
             };
             if (openFileDialog.ShowDialog() == true) {
                 ReadFile(openFileDialog.FileName);
+                SaveCurrentState();//to save file path
             }
         }
 
@@ -1218,10 +1222,10 @@ namespace SkinText {
                     MessageBox.Show("Failed to Open File:\r\n " + pathToFile, "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
                 }
                 NewFile();
-#if DEBUG
+                #if DEBUG
                 MessageBox.Show("DEBUG: "+ex.ToString());
                 //throw;
-#endif
+                #endif
             }
         }
 
@@ -1311,10 +1315,10 @@ namespace SkinText {
                 }
                 catch (Exception ex) {
                     MessageBox.Show("Failed to Write File", "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
-#if DEBUG
+                    #if DEBUG
                     MessageBox.Show("DEBUG: "+ex.ToString());
                     //throw;
-#endif
+                    #endif
                 }
             }
         }
@@ -1652,10 +1656,15 @@ namespace SkinText {
                                     case "FILE":
                                         {//moved from skintext.ini
                                             string string1 = line[1].Trim(); //fileName
-                                            if (!string1.Contains("\\") && !string.IsNullOrEmpty(string1)){//if is a relative path, use current .exe path to find it //not necesary as it will never be relative, but for historical pruposes
-                                                string1 = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + string1;
+                                            if (!string.IsNullOrEmpty(string1))
+                                            {
+                                                if (!string1.Contains("\\"))
+                                                {//if is a relative path, use current .exe path to find it //not necesary as it will never be relative, but for historical pruposes
+                                                    string1 = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + string1;
+                                                }
+                                                ReadFile(string1); //this sets Global Filepath
                                             }
-                                            ReadFile(string1); //this sets Global Filepath
+
                                             break;
                                         }
                                 }

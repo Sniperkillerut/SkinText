@@ -89,7 +89,7 @@ namespace SkinText {
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         private void Application_Startup(object sender, StartupEventArgs e) {
-
+            //TODO: change curFileNamePath it dont work with different names
             string curFileNamePath = Process.GetCurrentProcess().MainModule.FileName;
             string curFileName = Path.GetFileName(curFileNamePath);
 

@@ -52,9 +52,9 @@ namespace SkinText {
             //skin information saved in FrostHive/SkinText/SKIN01/skin.ini
             CustomMethods.AppDataPath = CustomMethods.GAppPath;
 
-            CustomMethods.LoadConfig();
-
             CustomMethods.LoadDefault();
+
+            CustomMethods.LoadConfig();
 
             CustomMethods.ReadConfig();
 
@@ -121,6 +121,7 @@ namespace SkinText {
                     if (Array.Exists(new string[] { ".XAML", ".XAMLP", ".RTF", ".TXT"}, element => element == ext))
                     {
                         CustomMethods.ReadFile(files[0]);
+                        CustomMethods.SaveCurrentState();//to save file path
                     }
                     else
                     {
@@ -787,5 +788,5 @@ namespace SkinText {
             }
         }
     }
-        
+
 }
