@@ -98,6 +98,12 @@ namespace SkinText {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.GC.Collect")]
         public static void ImageClear() {
             string oldpath = Imagepath;
+
+            if (!string.IsNullOrWhiteSpace(oldpath) && !oldpath.Contains("\\"))
+            {//if is a relative path, use current .exe path to find it
+                oldpath = AppDataPath + CurrentSkin + "\\" + oldpath;
+            }
+
             Imagepath = "";
             MainW.backgroundimg.Source = null;
             WpfAnimatedGif.ImageBehavior.SetAnimatedSource(MainW.backgroundimg, null);
@@ -113,10 +119,10 @@ namespace SkinText {
                 }
             }
             catch (Exception ex) {
-#if DEBUG
+                #if DEBUG
                 MessageBox.Show("DEBUG: "+ex.ToString());
                 //throw;
-#endif
+                #endif
             }
         }
 
@@ -126,11 +132,19 @@ namespace SkinText {
         /// <param name="imagepath"></param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public static void LoadImage(string imagepath) {
-            string newImagePath = AppDataPath + CurrentSkin + @"\bgImg" + Path.GetExtension(imagepath);//+ Path.GetFileName(imagepath);
+            //string newImagePath = AppDataPath + CurrentSkin + @"\bgImg" + Path.GetExtension(imagepath);
+            string newImagePath = AppDataPath + CurrentSkin + "\\" + Path.GetFileName(imagepath);// + Path.GetExtension(imagepath);
+            if (!string.IsNullOrWhiteSpace(imagepath) && !imagepath.Contains("\\") )
+            {//if is a relative path, use current .exe path to find it
+                //oldimagepath should contain the skin to be able to copy it
+                imagepath = AppDataPath + CurrentSkin + "\\" + imagepath;
+            }
+            MessageBox.Show("newimagepath=\r\n"+newImagePath+"\r\nimagepath=\r\n"+imagepath);
             try {
                 if (imagepath != newImagePath) {
-                    ImageClear();
+                    ImageClear();//this image clear should not be called when creating a skin, but the copy below should
                     File.Copy(imagepath, newImagePath, true);
+                    MessageBox.Show("copy img");
                     //imagepath = newImagePath;
                     //first copy the img to appdata, then load it
                 }
@@ -195,6 +209,7 @@ namespace SkinText {
             //openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             if (openFileDialog.ShowDialog() == true) {
                 LoadImage(openFileDialog.FileName);
+                SaveConfig();
             }
             else {
                 ImageClear();
@@ -627,7 +642,7 @@ namespace SkinText {
                         case "BG_IMAGE": {//(always after GIF method)
                                 string1 = line[1].Trim();
                                 if (!string1.Contains("\\") && !string.IsNullOrEmpty(string1)) {//if is a relative path, use current .exe path to find it
-                                    string1 = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + CurrentSkin + "\\" + string1;
+                                    string1 = AppDataPath + CurrentSkin + "\\" + string1;
                                 }
                                 LoadImage(string1);//this sets Global Imagepath
                                 break;
@@ -974,7 +989,7 @@ namespace SkinText {
                     writer.WriteLine(data);
 
                     //bg_image (always after GIF method) (since when reading it is needed to know the method beforehand)
-
+                    string imgpath = Imagepath;
                     #region relative Path
                         //To store as relative Path
                         int index = Imagepath.LastIndexOf("\\", StringComparison.Ordinal);
@@ -987,17 +1002,15 @@ namespace SkinText {
                         {
                             tempdir = Imagepath.ToLower();
                         }
-                        string dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                        dir += CurrentSkin;
-                        dir = dir.ToLower();
-                        //MessageBox.Show("DEBUG: \r\n execdir="+dir+"\r\n imgdir="+tempdir);
+                        string dir = (AppDataPath+CurrentSkin).ToLower();
+                        MessageBox.Show("DEBUG: \r\n execdir="+dir+"\r\n imgdir="+tempdir);
                         if (object.Equals(tempdir, dir))
                         {
-                            Imagepath = Imagepath.Substring(index + 1);
+                            imgpath = Imagepath.Substring(index + 1);
                         }
                     #endregion relative Path
 
-                    data = "bg_image = " + Imagepath;
+                    data = "bg_image = " + imgpath;
                     writer.WriteLine(data);
 
                     //image_opacity
@@ -1660,7 +1673,7 @@ namespace SkinText {
                                             {
                                                 if (!string1.Contains("\\"))
                                                 {//if is a relative path, use current .exe path to find it //not necesary as it will never be relative, but for historical pruposes
-                                                    string1 = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + string1;
+                                                    string1 = AppDataPath + "\\" + string1;
                                                 }
                                                 ReadFile(string1); //this sets Global Filepath
                                             }

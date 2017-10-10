@@ -304,8 +304,15 @@ namespace SkinText {
 
                 CustomMethods.CurrentSkin = @"\" + SkinName_TextBox.Text;
                 CustomMethods.SaveCurrentState();
+                //copy img, load img, then save
+                string temp = CustomMethods.Imagepath;
+                CustomMethods.Imagepath = "";
+                CustomMethods.LoadImage(temp);
+
                 CustomMethods.SaveConfig();
                 CustomMethods.GetSkinList();
+
+
             }
             else {
                 if ((@"\" + skin) == CustomMethods.CurrentSkin) {
