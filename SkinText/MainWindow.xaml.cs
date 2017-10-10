@@ -13,8 +13,7 @@ namespace SkinText {
         private FontConfig fontConf;
         private ConfigWin conf;
 
-        public MainWindow()
-        {
+        public MainWindow(){
             InitializeComponent();
         }
 
@@ -119,7 +118,20 @@ namespace SkinText {
                 }
                 else
                 {
-                    CustomMethods.ReadFile(files[0]);
+                    if (Array.Exists(new string[] { ".XAML", ".XAMLP", ".RTF", ".TXT"}, element => element == ext))
+                    {
+                        CustomMethods.ReadFile(files[0]);
+                    }
+                    else
+                    {
+                        //TODO: add as hyperlink
+                        #pragma warning disable RECS0026 // Possible unassigned object created by 'new'
+                        new Hyperlink(new Run(files[0]), rtb.CaretPosition.GetInsertionPosition(LogicalDirection.Forward)) {
+                            NavigateUri = new Uri(files[0]),
+                            Cursor = Cursors.Hand
+                        };
+                        #pragma warning restore RECS0026 // Possible unassigned object created by 'new'
+                    }
                 }
                 //to stop calling multiple times on drop
                 e.Handled = true;
@@ -507,13 +519,12 @@ namespace SkinText {
                 {
                     try
                     {
-#pragma warning disable RECS0026 // Possible unassigned object created by 'new'
-                        new Hyperlink(new Run(link.HyperNameResult), rtb.CaretPosition.GetInsertionPosition(LogicalDirection.Forward))
-                        {
+                        #pragma warning disable RECS0026 // Possible unassigned object created by 'new'
+                        new Hyperlink(new Run(link.HyperNameResult), rtb.CaretPosition.GetInsertionPosition(LogicalDirection.Forward)) {
                             NavigateUri = new Uri(link.HyperLinkResult),
                             Cursor = Cursors.Hand
                         };
-#pragma warning restore RECS0026 // Possible unassigned object created by 'new'
+                        #pragma warning restore RECS0026 // Possible unassigned object created by 'new'
                     }
                     catch (Exception ex)
                     {
