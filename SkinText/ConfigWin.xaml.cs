@@ -293,7 +293,7 @@ namespace SkinText {
             string skin = ((System.Windows.Controls.ListBoxItem)(SkinsListbox.SelectedItem)).Content.ToString();
             CustomMethods.CurrentSkin = @"\"+skin;
             CustomMethods.ReadConfig();
-            CustomMethods.SaveCurrentSkin();
+            CustomMethods.SaveCurrentState();
         }
 
         private void CreateSkin_Click(object sender, RoutedEventArgs e) {
@@ -303,7 +303,7 @@ namespace SkinText {
                 CustomMethods.CreateModifySkin(@"\" + SkinName_TextBox.Text, SkinName_TextBox.Text, SkinAuthor_TextBox.Text, SkinVersion_TextBox.Text, CustomMethods.ScreenShotPath, SkinNotes_TextBox.Text);
 
                 CustomMethods.CurrentSkin = @"\" + SkinName_TextBox.Text;
-                CustomMethods.SaveCurrentSkin();
+                CustomMethods.SaveCurrentState();
                 CustomMethods.SaveConfig();
                 CustomMethods.GetSkinList();
             }

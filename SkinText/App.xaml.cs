@@ -27,7 +27,7 @@ namespace SkinText {
                 {
                     CustomMethods.CurrentSkin = @"\Default";
                     //MessageBox.Show("DEBUG: setting default skin");
-                    CustomMethods.SaveCurrentSkin();
+                    CustomMethods.SaveCurrentState();
                     //skininfo.ini Area
                     //MessageBox.Show("DEBUG: creating default skin config");
                     CustomMethods.CreateModifySkin("Default", "Default", "FrostHive", "2.0.0", "DefaultIcon", "SkinText Default Skin");

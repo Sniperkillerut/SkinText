@@ -52,7 +52,7 @@ namespace SkinText {
             //skin information saved in FrostHive/SkinText/SKIN01/skin.ini
             CustomMethods.AppDataPath = CustomMethods.GAppPath;
 
-            CustomMethods.GetSkin();
+            CustomMethods.LoadConfig();
 
             CustomMethods.LoadDefault();
 

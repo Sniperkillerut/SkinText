@@ -582,14 +582,14 @@ namespace SkinText {
                                 }
                                 break;
                             }
-                        case "FILE": {//TODO: move to config.ini
+                        /*case "FILE": {//moved to config.ini
                                 string1 = line[1].Trim(); //fileName
                                 if (!string1.Contains("\\") && !string.IsNullOrEmpty(string1)) {//if is a relative path, use current .exe path to find it //not necesary as it will never be relative, but for historical pruposes
                                     string1 = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + string1;
                                 }
                                 ReadFile(string1); //this sets Global Filepath
                                 break;
-                            }
+                            }*/
                         case "RESIZE_ENABLED": {
                                 if (bool.TryParse(line[1], out bool1)) //resize checked
                                 {
@@ -922,7 +922,7 @@ namespace SkinText {
                     writer.WriteLine(data);
 
                     //filetry
-
+                    
                     #region relative Path (Disabled)
                     /*
                         //To store as relative Path
@@ -943,9 +943,11 @@ namespace SkinText {
                         }
                     */
                     #endregion relative Path (Disabled)
-                    //TODO: move to config.ini
-                    data = "file = " + Filepath;
+                    /*
+                    //moved to config.ini
+                    data = "file = " + Filepath; 
                     writer.WriteLine(data);
+                    */
 
                     //resize_enabled
                     data = "resize_enabled = " + MainW.Conf.resizecheck.IsChecked.Value.ToString();
@@ -1134,7 +1136,6 @@ namespace SkinText {
 #endregion Config File
 
 #region File
-
         /// <summary>
         /// <para>Sets internal vars ready for empty file usage</para>
         /// Called from <see cref="MainWindow.NewCommand_Executed"/>
@@ -1304,7 +1305,8 @@ namespace SkinText {
                                 }
                         }
                         FileChanged = false;
-                        SaveConfig();
+                        //SaveConfig();//to save file path, since filepath moved to config call SaveCurrentState
+                        SaveCurrentState();
                     }
                 }
                 catch (Exception ex) {
@@ -1345,7 +1347,7 @@ namespace SkinText {
             MainW.FontConf.Close();
             MainW.Conf.Close();
             SaveConfig();
-            SaveCurrentSkin();
+            SaveCurrentState();
             if (CurrentSkin =="\\Default") {
                 CreateModifySkin("Default", "Default", "FrostHive", "2.0.0", "DefaultIcon", "SkinText Default Skin");
             }
@@ -1619,26 +1621,43 @@ namespace SkinText {
         /// Reads Config.ini and sets wich skin to use
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        public static void GetSkin() {
+        public static void LoadConfig() {
             CurrentSkin = @"\Default";
             try {
                 if (File.Exists(AppDataPath + @"\config.ini")) {
                     using (StreamReader reader = new StreamReader(AppDataPath + @"\config.ini", System.Text.Encoding.UTF8)) {
                         string currentLine;
                         string[] line;
-                        if ((currentLine = reader.ReadLine()) != null) {
+                        while ((currentLine = reader.ReadLine()) != null) {
                             line = currentLine.Split('=');
                             line[0] = line[0].Trim();
                             line[0] = line[0].ToUpperInvariant();
-                            if (!string.IsNullOrEmpty(line[0]) && !string.IsNullOrEmpty(line[1])) {
-                                if (line[0] == "SKIN") {
-                                    line[1] = line[1].Trim();
-                                    if (!string.IsNullOrWhiteSpace(line[1])) {
-                                        CurrentSkin = @"\" + line[1];//A Folder
-                                        if (!File.Exists(AppDataPath + CurrentSkin + @"\skintext.ini")) {
-                                            CurrentSkin = @"\Default";
+                            if (!string.IsNullOrEmpty(line[0]) && line.Length > 1 && !string.IsNullOrEmpty(line[1]))
+                            {
+                                line[1] = line[1].Trim();
+                                switch (line[0])
+                                {
+                                    case "SKIN":
+                                        {
+                                            if (!string.IsNullOrWhiteSpace(line[1]))
+                                            {
+                                                CurrentSkin = @"\" + line[1];//A Folder
+                                                if (!File.Exists(AppDataPath + CurrentSkin + @"\skintext.ini"))
+                                                {
+                                                    CurrentSkin = @"\Default";
+                                                }
+                                            }
+                                            break;
                                         }
-                                    }
+                                    case "FILE":
+                                        {//moved from skintext.ini
+                                            string string1 = line[1].Trim(); //fileName
+                                            if (!string1.Contains("\\") && !string.IsNullOrEmpty(string1)){//if is a relative path, use current .exe path to find it //not necesary as it will never be relative, but for historical pruposes
+                                                string1 = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + string1;
+                                            }
+                                            ReadFile(string1); //this sets Global Filepath
+                                            break;
+                                        }
                                 }
                             }
                         }
@@ -1649,15 +1668,15 @@ namespace SkinText {
                 // The appdata folders dont exist
                 //can be first open, let default values
                 CurrentSkin = @"\Default";
-#if DEBUG
+                #if DEBUG
                 MessageBox.Show("DEBUG: "+ex.ToString());
                 //throw;
-#endif
+                #endif
             }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        public static void SaveCurrentSkin() {
+        public static void SaveCurrentState() {
             FileStream fs = null;
             try {
                 string configFile = AppDataPath + @"\config.ini";
@@ -1666,7 +1685,9 @@ namespace SkinText {
                     fs = null; //is no longer needed
                     string data = "Skin = " + CurrentSkin.Replace(@"\", "");
                     writer.WriteLine(data);
-                    //TODO: add open file to config.ini
+                    //added open file to config.ini
+                    data = "file = " + Filepath;
+                    writer.WriteLine(data);
                 }
             }
             catch (Exception ex2) {
