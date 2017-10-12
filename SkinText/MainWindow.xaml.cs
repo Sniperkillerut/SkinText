@@ -69,13 +69,13 @@ namespace SkinText {
             _fontSize.ItemsSource = GetFontSizes();
             _fontFamily.SelectedIndex = 0;
             _fontSize.SelectedIndex = 23;
-            DropDownFontColor.IsEnabled = false;
-            DropDownFontBackColor.IsEnabled = false;
-            rtb.Focus();
+            //DropDownFontColor.IsEnabled = false;
+            //DropDownFontBackColor.IsEnabled = false;
 
             CustomMethods.GetSkinList();
-            string version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            Conf.TxtBloqVersion.Text = version;
+            Conf.TxtBloqVersion.Text = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+
+            rtb.Focus();
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
@@ -337,9 +337,8 @@ namespace SkinText {
                     ClrPcker_FontBack.SelectedColor = System.Windows.Media.Colors.Transparent;
                 }
             }
-
-            DropDownFontColor.IsEnabled = !rtb.Selection.IsEmpty;
-            DropDownFontBackColor.IsEnabled = !rtb.Selection.IsEmpty;
+            //DropDownFontColor.IsEnabled = !rtb.Selection.IsEmpty;
+            //DropDownFontBackColor.IsEnabled = !rtb.Selection.IsEmpty;
         }
 
         private void Rtb_TextChanged(object sender, TextChangedEventArgs e)
@@ -491,12 +490,12 @@ namespace SkinText {
 
         private void ClrPcker_Font_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<System.Windows.Media.Color?> e)
         {
-            CustomMethods.ApplyFontColor();
+            CustomMethods.ApplyFontColorAsync();
         }
 
         private void ClrPcker_FontBack_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<System.Windows.Media.Color?> e)
         {
-            CustomMethods.ApplyFontBackColor();
+            CustomMethods.ApplyFontBackColorAsync();
         }
 
         private void _btnListType_Click(object sender, RoutedEventArgs e)

@@ -139,7 +139,7 @@ namespace SkinText {
                 //oldimagepath should contain the skin to be able to copy it
                 imagepath = AppDataPath + CurrentSkin + "\\" + imagepath;
             }
-            MessageBox.Show("newimagepath=\r\n"+newImagePath+"\r\nimagepath=\r\n"+imagepath);
+            //MessageBox.Show("DEBUG:\r\nnewimagepath=\r\n"+newImagePath+"\r\nimagepath=\r\n"+imagepath);
             try {
                 if (imagepath != newImagePath) {
                     ImageClear();//this image clear should not be called when creating a skin, but the copy below should
@@ -1003,7 +1003,7 @@ namespace SkinText {
                             tempdir = Imagepath.ToLower();
                         }
                         string dir = (AppDataPath+CurrentSkin).ToLower();
-                        MessageBox.Show("DEBUG: \r\n execdir="+dir+"\r\n imgdir="+tempdir);
+                        //MessageBox.Show("DEBUG: \r\n execdir="+dir+"\r\n imgdir="+tempdir);
                         if (object.Equals(tempdir, dir))
                         {
                             imgpath = Imagepath.Substring(index + 1);
@@ -1958,10 +1958,10 @@ namespace SkinText {
                 LoadScreenshot(newImagePath);
             }
             catch (Exception ex) {
-#if DEBUG
+                #if DEBUG
                 MessageBox.Show("DEBUG: "+ex.ToString());
                 //throw;
-#endif
+                #endif
             }
         }
 
@@ -2025,7 +2025,6 @@ namespace SkinText {
 
             if (savedialog.ShowDialog() == true) {
                 try {
-                    //TODO: create copy of skintext.ini, delete the "Filepath=", zip, then re-add the filepath
                     ZipFile.CreateFromDirectory(AppDataPath+@"\"+ skinFolder, savedialog.FileName, CompressionLevel.Optimal,false);
                     MessageBox.Show("Export of skin: " + skinName + " complete!", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
@@ -2055,19 +2054,19 @@ namespace SkinText {
 
         public static void ImportSkin(string skin) {
             try {
-                //TODO: if folder already exists this throws
                 string newSkinPath =  Path.GetFileNameWithoutExtension(skin);
                 Directory.CreateDirectory(AppDataPath + @"\" + newSkinPath);
+                //TODO: if a file already exists extraction throws
                 ZipFile.ExtractToDirectory(skin, AppDataPath + @"\" + newSkinPath);
                 MessageBox.Show("Import of skin: " + newSkinPath + " complete!", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
                 GetSkinList();
             }
             catch (Exception ex) {
-                MessageBox.Show("Failed to Import skin", "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
-#if DEBUG
+                MessageBox.Show("Failed to Import skin (It may already exist)", "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
+                #if DEBUG
                 MessageBox.Show("DEBUG: "+ex.ToString());
                 //throw;
-#endif
+                #endif
             }
         }
 
@@ -2800,10 +2799,44 @@ namespace SkinText {
 
         public static void ApplyPropertyValueToSelectedText(DependencyProperty formattingProperty, object value) {
             if (MainW.rtb?.Selection != null) {
-                if (value == null) {
+                /*if (value == null) {
                     return;
+                }*/
+                if (MainW.rtb.Selection.IsEmpty){
+                    if (MainW.rtb.Selection.Start.Paragraph != null){
+                        TextRange textRange = new TextRange(MainW.rtb.CaretPosition, MainW.rtb.Document.ContentEnd);
+                        if (textRange.IsEmpty || String.IsNullOrWhiteSpace(textRange.Text)){
+                            //caret is at the end of document
+
+                            // Get current position of cursor
+                            TextPointer curCaret = MainW.rtb.CaretPosition;
+                            // Get the current block object that the cursor is in
+                            Block curBlock = MainW.rtb.Document.Blocks.FirstOrDefault(x => x.ContentStart.CompareTo(curCaret) == -1 &&
+                                                                                           x.ContentEnd.CompareTo(curCaret) == 1);
+                            if (curBlock != null)
+                            {
+                                Paragraph curParagraph = curBlock as Paragraph;
+                                // Create a new run object with the font properties, and add it to the current block
+                                Run newRun = new Run();
+                                newRun.SetValue(formattingProperty, value);
+                                curParagraph.Inlines.Add(newRun);
+                                curParagraph.LineStackingStrategy = LineStackingStrategy.BlockLineHeight;
+                                MainW.rtb.CaretPosition = newRun.ElementStart;
+                                MainW.rtb.Focus();//NOTE: this focus dont allow to type on the dropdowns
+                            }
+                        }
+                        else{
+                            //caret is in the middle of a run
+                            TextRange textRange2 = new TextRange(MainW.rtb.CaretPosition, MainW.rtb.CaretPosition.GetNextInsertionPosition(LogicalDirection.Backward));
+                            textRange2.ApplyPropertyValue(formattingProperty, value);
+                            MainW.rtb.Focus();
+                        }
+                    }
                 }
-                MainW.rtb.Selection.ApplyPropertyValue(formattingProperty, value);
+                else{
+                    //if selection not empty
+                    MainW.rtb.Selection.ApplyPropertyValue(formattingProperty, value);
+                }
             }
         }
 
@@ -2816,22 +2849,33 @@ namespace SkinText {
             }
         }
 
-        public static void ApplyFontColor() {
-            if (MainW.rtb != null && MainW.rtb.Selection != null && !MainW.rtb.Selection.IsEmpty) {
+        public static async System.Threading.Tasks.Task ApplyFontColorAsync() {
+            //if (MainW.rtb != null && MainW.rtb.Selection != null && !MainW.rtb.Selection.IsEmpty) {
                 SolidColorBrush newBrush = new SolidColorBrush(MainW.ClrPcker_Font.SelectedColor.Value);
                 newBrush.Freeze();
-                MainW.rtb.Selection.ApplyPropertyValue(TextElement.ForegroundProperty, newBrush);
-            }
+                //MainW.rtb.Selection.ApplyPropertyValue(TextElement.ForegroundProperty, newBrush);
+                ApplyPropertyValueToSelectedText(TextElement.ForegroundProperty, newBrush);
+                MainW.DropDownFontColor.IsEnabled = false;
+                MainW.rtb.Focus();
+                await System.Threading.Tasks.Task.Delay(100);
+                MainW.DropDownFontColor.IsEnabled = true;
+            //}
         }
 
-        public static void ApplyFontBackColor() {
-            if (MainW.rtb != null && MainW.rtb.Selection != null && !MainW.rtb.Selection.IsEmpty) {
+        public static async System.Threading.Tasks.Task ApplyFontBackColorAsync() {
+            //if (MainW.rtb != null && MainW.rtb.Selection != null && !MainW.rtb.Selection.IsEmpty) {
                 SolidColorBrush newBrush = new SolidColorBrush(MainW.ClrPcker_FontBack.SelectedColor.Value);
                 if ((newBrush != null) && (newBrush.Color.A == 0)) {
                     newBrush = null;
                 }
-                MainW.rtb.Selection.ApplyPropertyValue(TextElement.BackgroundProperty, newBrush);
-            }
+                newBrush.Freeze();
+            //MainW.rtb.Selection.ApplyPropertyValue(TextElement.BackgroundProperty, newBrush);
+            ApplyPropertyValueToSelectedText(TextElement.BackgroundProperty, newBrush);
+                MainW.DropDownFontBackColor.IsEnabled = false;
+                MainW.rtb.Focus();
+                await System.Threading.Tasks.Task.Delay(100);
+                MainW.DropDownFontBackColor.IsEnabled = true;
+           // }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
