@@ -2799,15 +2799,16 @@ namespace SkinText {
 
         public static void ApplyPropertyValueToSelectedText(DependencyProperty formattingProperty, object value) {
             if (MainW.rtb?.Selection != null) {
-                /*if (value == null) {
+                if (value == null && !formattingProperty.Equals(TextElement.BackgroundProperty)) {
                     return;
-                }*/
+                }
                 if (MainW.rtb.Selection.IsEmpty){
                     if (MainW.rtb.Selection.Start.Paragraph != null){
                         TextRange textRange = new TextRange(MainW.rtb.CaretPosition, MainW.rtb.Document.ContentEnd);
                         if (textRange.IsEmpty || String.IsNullOrWhiteSpace(textRange.Text)){
                             //caret is at the end of document
-
+                            #region Legacy mode
+                            /*
                             // Get current position of cursor
                             TextPointer curCaret = MainW.rtb.CaretPosition;
                             // Get the current block object that the cursor is in
@@ -2824,12 +2825,19 @@ namespace SkinText {
                                 MainW.rtb.CaretPosition = newRun.ElementStart;
                                 MainW.rtb.Focus();//NOTE: this focus dont allow to type on the dropdowns
                             }
+                            */
+                            #endregion Legacy mode
+                            Run newRun = new Run("", MainW.rtb.CaretPosition);
+                            newRun.SetValue(formattingProperty, value);
+                            MainW.rtb.CaretPosition = newRun.ElementStart;
+                            //MainW.rtb.Selection.Select(newRun.ElementStart, newRun.ElementEnd);
+                            MainW.rtb.Focus();//NOTE: this focus dont allow to type on the dropdowns
                         }
                         else{
                             //caret is in the middle of a run
                             TextRange textRange2 = new TextRange(MainW.rtb.CaretPosition, MainW.rtb.CaretPosition.GetNextInsertionPosition(LogicalDirection.Backward));
                             textRange2.ApplyPropertyValue(formattingProperty, value);
-                            MainW.rtb.Focus();
+                            MainW.rtb.Focus();//NOTE: this focus dont allow to type on the dropdowns
                         }
                     }
                 }
@@ -2868,7 +2876,6 @@ namespace SkinText {
                 if ((newBrush != null) && (newBrush.Color.A == 0)) {
                     newBrush = null;
                 }
-                newBrush.Freeze();
             //MainW.rtb.Selection.ApplyPropertyValue(TextElement.BackgroundProperty, newBrush);
             ApplyPropertyValueToSelectedText(TextElement.BackgroundProperty, newBrush);
                 MainW.DropDownFontBackColor.IsEnabled = false;
