@@ -911,7 +911,7 @@
                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5,5,5,5"
                                 Minimum="{Binding Minimum, ElementName=imageopacityslider}"
                                 Maximum="{Binding Maximum, ElementName=imageopacityslider}"
-                                Value="{Binding Value, ElementName=imageopacityslider}" 
+                                Value="{Binding Value, ElementName=imageopacityslider}"
                                 ScrollViewer.VerticalScrollBarVisibility="Disabled" UpdateValueOnEnterKey="False" ShowButtonSpinner="False" AutoMoveFocus="True" />
                 </Grid>
             </TabItem>
@@ -1169,15 +1169,30 @@
                         </Button>
                     </Grid>
 
-                    <Button x:Name="LoadSkin" Grid.Column="1" Grid.Row="6"
-                                Style="{DynamicResource ButtonsStyle}"
-                                HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch"
-                                Click="LoadSkin_Click">
+                    <Button x:Name="ExploreSkinsFolder"  Grid.Column="1" Grid.Row="6"
+                            Style="{DynamicResource ButtonsStyle}"
+                            HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch"
+                            Click="ExploreSkinsFolder_Click">
+                        <TextBlock Text="Skins Folder" />
+                    </Button>
+                    <Grid Grid.Column="2" Grid.Row="6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                    <Button x:Name="LoadSkin" Grid.Column="0"
+                            Style="{DynamicResource ButtonsStyle}"
+                            HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch"
+                            Click="LoadSkin_Click">
                         <TextBlock Text="Load Skin" />
                     </Button>
-                    <Button x:Name="CreateSkin" Grid.Column="2" Grid.Row="6" Style="{DynamicResource ButtonsStyle}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" Click="CreateSkin_Click">
+                    <Button x:Name="CreateSkin" Grid.Column="1"
+                            Style="{DynamicResource ButtonsStyle}"
+                            HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch"
+                            Click="CreateSkin_Click">
                         <TextBlock Text="Create Skin" />
                     </Button>
+                    </Grid>
                 </Grid>
             </TabItem>
 
@@ -1245,37 +1260,13 @@
                                     </TextDecorationCollection>
                                 </Paragraph.TextDecorations>
                                 <Run FontSize="35" BaselineAlignment="Baseline" Background="#FF00FFFF" Text="Baseline:"/>
-                                <Run Text=" "/>
-                                <Run Text=" "/>
-                                <Run Text=" "/>
                                 <Run FontSize="10" BaselineAlignment="Top" Background="#FF00FFFF" Text="Top"/>
-                                <Run Text=" "/>
-                                <Run Text=" "/>
-                                <Run Text=" "/>
                                 <Run FontSize="10" BaselineAlignment="Superscript" Background="#FF00FFFF" Text="Superscript"/>
-                                <Run Text=" "/>
-                                <Run Text=" "/>
-                                <Run Text=" "/>
                                 <Run FontSize="10" BaselineAlignment="TextTop" Background="#FF00FFFF" Text="TextTop"/>
-                                <Run Text=" "/>
-                                <Run Text=" "/>
-                                <Run Text=" "/>
                                 <Run FontSize="10" BaselineAlignment="Center" Background="#FF00FFFF" Text="Center"/>
-                                <Run Text=" "/>
-                                <Run Text=" "/>
-                                <Run Text=" "/>
                                 <Run FontSize="10" BaselineAlignment="Baseline" Background="#FF00FFFF" Text="Baseline"/>
-                                <Run Text=" "/>
-                                <Run Text=" "/>
-                                <Run Text=" "/>
                                 <Run FontSize="10" BaselineAlignment="Subscript" Background="#FF00FFFF" Text="Subscript"/>
-                                <Run Text=" "/>
-                                <Run Text=" "/>
-                                <Run Text=" "/>
                                 <Run FontSize="10" BaselineAlignment="TextBottom" Background="#FF00FFFF" Text="TextBottom"/>
-                                <Run Text=" "/>
-                                <Run Text=" "/>
-                                <Run Text=" "/>
                                 <Run FontSize="10" BaselineAlignment="Bottom" Background="#FF00FFFF" Text="Bottom"/>
                             </Paragraph>
                         </FlowDocument>
@@ -1297,59 +1288,23 @@
                                 </Paragraph>
                                 <Paragraph Background="#FF00FF00" Margin="0" Foreground="Black" Padding="2">
                                     <Run Foreground="#FFFF0000" Text="Text transparency"/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
                                     <Run Background="#FFFF0000" Text="Background transparency"/>
                                 </Paragraph>
                                 <Paragraph Background="#FFFFFF00" Margin="0" Foreground="Black" Padding="2">
                                     <Run FontSize="15" BaselineAlignment="Baseline" Background="#FF00FFFF" Text="Baseline:"/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
                                     <Run FontSize="10" BaselineAlignment="Baseline" Background="#FF00FFFF" Text="Top"/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
                                     <Run FontSize="10" BaselineAlignment="Superscript" Background="#FF00FFFF" Text="Superscript"/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
                                     <Run FontSize="10" BaselineAlignment="Baseline" Background="#FF00FFFF" Text="TextTop"/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
                                     <Run FontSize="10" BaselineAlignment="Baseline" Background="#FF00FFFF" Text="Center"/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
                                     <Run FontSize="10" BaselineAlignment="Baseline" Background="#FF00FFFF" Text="Baseline"/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
                                     <Run FontSize="10" BaselineAlignment="Subscript" Background="#FF00FFFF" Text="Subscript"/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
                                     <Run FontSize="10" BaselineAlignment="Baseline" Background="#FF00FFFF" Text="TextBottom"/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
                                     <Run FontSize="10" BaselineAlignment="Baseline" Background="#FF00FFFF" Text="Bottom"/>
                                 </Paragraph>
                                 <Paragraph Background="#FF00FF90" Margin="0,2,0,0" Foreground="Black" Padding="2">
                                     <Run Text="Overline" />
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
                                     <Run TextDecorations="Strikethrough" Text="Strikethrough" />
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
                                     <Run Text="Baseline" />
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
                                     <Run TextDecorations="Underline" Text="Underline" />
                                 </Paragraph>
                                 <List MarkerStyle="Disc" Margin="0" Padding="30,0,0,0">
@@ -1426,59 +1381,23 @@
                                 </Paragraph>
                                 <Paragraph Background="#FF00FF00" Margin="0" Foreground="Black" Padding="2">
                                     <Run Foreground="#90FF0000" Text="Text transparency"/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
                                     <Run Background="#90FF0000" Text="Background transparency"/>
                                 </Paragraph>
                                 <Paragraph Background="#FFFFFF00" Margin="0" Foreground="Black" Padding="2">
                                     <Run FontSize="15" BaselineAlignment="Baseline" Background="#FF00FFFF" Text="Baseline:"/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
                                     <Run FontSize="10" BaselineAlignment="Top" Background="#FF00FFFF" Text="Top"/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
                                     <Run FontSize="10" BaselineAlignment="Superscript" Background="#FF00FFFF" Text="Superscript"/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
                                     <Run FontSize="10" BaselineAlignment="TextTop" Background="#FF00FFFF" Text="TextTop"/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
                                     <Run FontSize="10" BaselineAlignment="Center" Background="#FF00FFFF" Text="Center"/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
                                     <Run FontSize="10" BaselineAlignment="Baseline" Background="#FF00FFFF" Text="Baseline"/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
                                     <Run FontSize="10" BaselineAlignment="Subscript" Background="#FF00FFFF" Text="Subscript"/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
                                     <Run FontSize="10" BaselineAlignment="TextBottom" Background="#FF00FFFF" Text="TextBottom"/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
                                     <Run FontSize="10" BaselineAlignment="Bottom" Background="#FF00FFFF" Text="Bottom"/>
                                 </Paragraph>
                                 <Paragraph Background="#FF00FF90" Margin="0,2,0,0" Foreground="Black" Padding="2">
                                     <Run TextDecorations="Overline" Text="Overline" />
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
                                     <Run TextDecorations="Strikethrough" Text="Strikethrough" />
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
                                     <Run TextDecorations="Baseline" Text="Baseline" />
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
-                                    <Run Text=" "/>
                                     <Run TextDecorations="Underline" Text="Underline" />
                                 </Paragraph>
                                 <List MarkerStyle="Disc" Margin="0" Padding="30,0,0,0">
