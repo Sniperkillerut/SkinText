@@ -397,5 +397,10 @@ namespace SkinText {
         {
             CustomMethods.StartWithWindows(StartWithWindows.IsChecked.Value);
         }
+
+        private void ExploreSkinsFolder_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start(CustomMethods.AppDataPath);
+        }
     }
 }
