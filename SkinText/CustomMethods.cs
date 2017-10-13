@@ -1946,7 +1946,7 @@ namespace SkinText {
 
         public static void SaveScreenshot(string skinName, string screenShotFile) {
             try {
-                string newImagePath = AppDataPath + @"\" + skinName + @"\screenshot_temp" + Path.GetExtension(screenShotFile);
+                string newImagePath = AppDataPath + @"\" + skinName + @"\"+ Path.GetFileNameWithoutExtension(screenShotFile) + "_temp" + Path.GetExtension(screenShotFile);
                 if (screenShotFile != newImagePath) {
                     ScreenShotClear();
                     DeleteOldScreenshot(ScreenShotPath);
