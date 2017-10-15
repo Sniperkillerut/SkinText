@@ -402,5 +402,10 @@ namespace SkinText {
         {
             Process.Start(CustomMethods.AppDataPath);
         }
+
+        private void RegisterFileTypes_Checked(object sender, RoutedEventArgs e)
+        {
+            CustomMethods.RegisterFileTypes(RegisterFileTypes.IsChecked.Value);
+        }
     }
 }
