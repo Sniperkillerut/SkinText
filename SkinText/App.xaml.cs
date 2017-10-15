@@ -19,8 +19,6 @@ namespace SkinText {
                 System.IO.File.Copy(curFileName, appdatapath + "\\" + "SkinText.exe", true);
                 //MessageBox.Show("DEBUG: creating default skin folder");
                 Directory.CreateDirectory(appdatapath + @"\Default");
-                //MessageBox.Show("DEBUG: registering in registry");
-                FileAssociaton(appdatapath + "\\" + "SkinText.exe");
                 //MessageBox.Show("DEBUG: creating desktop shortcut");
                 CreateShortcut(appdatapath);
                 if (!System.IO.File.Exists(appdatapath + "\\" + "config.ini"))
@@ -61,26 +59,13 @@ namespace SkinText {
             close, delete current exe
              */
 
-        private static void FileAssociaton(string path) {
-
-            IllusoryStudios.Wpf.LostControls.Win32.FileAssociationHelper.RegisterHandlerForPath(nameof(SkinText), "SkinText File", path);
-            IllusoryStudios.Wpf.LostControls.Win32.FileAssociationHelper.RegisterAssociation(".xamlp", nameof(SkinText));
-            IllusoryStudios.Wpf.LostControls.Win32.FileAssociationHelper.RegisterAssociation(".xaml", nameof(SkinText));
-            IllusoryStudios.Wpf.LostControls.Win32.FileAssociationHelper.RegisterAssociation(".sktskin", nameof(SkinText));
-
-            /*IllusoryStudios.Wpf.LostControls.Win32.StartupSettings startupSettings2 = new IllusoryStudios.Wpf.LostControls.Win32.StartupSettings(nameof(SkinText)) {
-                CurrentPath = path,
-                DesiredPath = path,
-                StartsWithSystem = false
-            };*/
-        }
         private static void CreateShortcut(string appdatapath) {
             string link = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
             + Path.DirectorySeparatorChar + "SkinText.lnk";
             WshShell shell = new WshShell();
             IWshShortcut shortcut = shell.CreateShortcut(link) as IWshShortcut;
             //shortcut.Description = "SkinText \"smart\" Shortcut";
-            shortcut.Hotkey = "Ctrl+Shift+N";
+            //shortcut.Hotkey = "Ctrl+Shift+N";
             shortcut.TargetPath = appdatapath+@"\SkinText.exe";
             shortcut.WorkingDirectory = appdatapath;
             //shortcut...
@@ -96,11 +81,9 @@ namespace SkinText {
             string appdatapath = CustomMethods.GAppPath;
             CustomMethods.AppDataPath = appdatapath;
             string curPath = Path.GetDirectoryName(curFileNamePath);
-
             #if DEBUG
             //MessageBox.Show("DEBUG:\r\n AppDatapath: " +appdatapath+"\r\n curPath: " + curPath);
             #endif
-
 
             CheckCmdParameters(e, appdatapath, curFileName);
 
