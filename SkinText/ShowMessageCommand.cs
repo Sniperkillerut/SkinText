@@ -16,6 +16,7 @@ namespace SkinText {
                         item.Activate();
                     }
                     else {
+                        item.Show();
                         item.Hide();
                     }
                 }
