@@ -12,6 +12,12 @@
              StartupUri="MainWindow.xaml" Startup="Application_Startup">
     <Application.Resources>
 
+        <!--Toolbar Area-->
+
+        <!--Font Family Area-->
+
+        <xctk:ColorModeToTabItemSelectedConverter x:Key="ColorModeToTabItemSelectedConverter"/>
+
         <SolidColorBrush x:Key="BorderColorBrush" Color="#FF424242" />
         <SolidColorBrush x:Key="MainWindowBackgroundColorBrush" Color="#55FFFFFF" />
         <SolidColorBrush x:Key="RTBBackgroundColorBrush" Color="#7DFFFFFF" />
@@ -140,7 +146,7 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <Style x:Key="RadioButtonsStyle" TargetType="RadioButton">
+        <Style x:Key="RadioButtonsStyle" TargetType="{x:Type RadioButton}">
             <Setter Property="FontSize"                Value="16" />
             <Setter Property="FontFamily"              Value="Arial Black" />
             <Setter Property="FontWeight"              Value="Bold" />
@@ -178,30 +184,22 @@
             </Style.Triggers>
         </Style>
         <Style x:Key="ListBoxStyle" TargetType="{x:Type ListBox}">
-            <Setter Property="Margin"                  Value="5" />
-            <Setter Property="Foreground"              Value="{DynamicResource FontPickTextColorBrush}" />
-            <Setter Property="Background"              Value="{DynamicResource FontPickBackgroundColorBrush}" />
-            <Setter Property="BorderBrush"             Value="{x:Null}" />
             <Style.Resources>
-                <Style TargetType="ListBoxItem">
+                <Style TargetType="{x:Type ListBoxItem}">
                     <Setter Property="Template">
                         <Setter.Value>
-                            <ControlTemplate TargetType="ListBoxItem">
-                                <Border Name="Border" Padding="1" SnapsToDevicePixels="true" BorderThickness="1">
+                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                <Border x:Name="Border" Padding="1" SnapsToDevicePixels="true" BorderThickness="1">
                                     <ContentPresenter />
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="true">
-                                        <Setter TargetName="Border" Property="Background" Value="{DynamicResource FontPickMouseOverBackgroundColorBrush}">
-                                        </Setter>
-                                        <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource FontPickMouseOverBorderColorBrush}">
-                                        </Setter>
+                                        <Setter TargetName="Border" Property="Background" Value="{DynamicResource FontPickMouseOverBackgroundColorBrush}"/>
+                                        <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource FontPickMouseOverBorderColorBrush}"/>
                                     </Trigger>
                                     <Trigger Property="IsSelected" Value="true">
-                                        <Setter TargetName="Border" Property="Background" Value="{DynamicResource FontPickSelectedBackgroundColorBrush}">
-                                        </Setter>
-                                        <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource FontPickSelectedBorderColorBrush}">
-                                        </Setter>
+                                        <Setter TargetName="Border" Property="Background" Value="{DynamicResource FontPickSelectedBackgroundColorBrush}"/>
+                                        <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource FontPickSelectedBorderColorBrush}"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -209,33 +207,37 @@
                     </Setter>
                 </Style>
             </Style.Resources>
+            <Setter Property="Margin"                  Value="5" />
+            <Setter Property="Foreground"              Value="{DynamicResource FontPickTextColorBrush}" />
+            <Setter Property="Background"              Value="{DynamicResource FontPickBackgroundColorBrush}" />
+            <Setter Property="BorderBrush"             Value="{x:Null}" />
         </Style>
 
         <LinearGradientBrush x:Key="DarkBrush" StartPoint="0.5,0" EndPoint="0.5,1">
-            <GradientBrush.GradientStops>
+            <LinearGradientBrush.GradientStops>
                 <GradientStopCollection>
                     <GradientStop Color="#90939393" Offset="0.0" />
                     <GradientStop Color="#90717171" Offset="0.05" />
                     <GradientStop Color="#90606060" Offset="1.0" />
                 </GradientStopCollection>
-            </GradientBrush.GradientStops>
+            </LinearGradientBrush.GradientStops>
         </LinearGradientBrush>
         <LinearGradientBrush x:Key="Clicked" StartPoint="0.5,0" EndPoint="0.5,1">
-            <GradientBrush.GradientStops>
+            <LinearGradientBrush.GradientStops>
                 <GradientStopCollection>
                     <GradientStop Color="#60363636" Offset="0.0" />
                     <GradientStop Color="#60393939" Offset="1.0" />
                 </GradientStopCollection>
-            </GradientBrush.GradientStops>
+            </LinearGradientBrush.GradientStops>
         </LinearGradientBrush>
 
-        <Style x:Key="{x:Type Menu}" TargetType="Menu">
+        <Style x:Key="{x:Type Menu}" TargetType="{x:Type Menu}">
             <Setter Property="OverridesDefaultStyle" Value="True" />
             <Setter Property="SnapsToDevicePixels" Value="True" />
             <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}" />
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="Menu">
+                    <ControlTemplate TargetType="{x:Type Menu}">
                         <Border x:Name="MainMenu" Background="{DynamicResource MenuBackgroundColorBrush}">
                             <DockPanel ClipToBounds="True" HorizontalAlignment="Stretch" IsItemsHost="True" />
                         </Border>
@@ -277,7 +279,7 @@
                 <Trigger Property="IsHighlighted" Value="True">
                     <Setter Property="Background" TargetName="templateRoot" Value="{DynamicResource DarkBrush}" />
                     <Setter Property="BorderBrush" TargetName="templateRoot" Value="#2C2C2C" />
-                    <Setter Property="BorderThickness" TargetName="templateRoot" Value="1"></Setter>
+                    <Setter Property="BorderThickness" TargetName="templateRoot" Value="1"/>
                 </Trigger>
                 <Trigger Property="CanContentScroll" SourceName="SubMenuScrollViewer" Value="False">
                     <Setter Property="Canvas.Top" TargetName="OpaqueRect" Value="{Binding VerticalOffset, ElementName=SubMenuScrollViewer}" />
@@ -285,8 +287,8 @@
                 </Trigger>
                 <Trigger Property="IsKeyboardFocusWithin" Value="True">
                     <Setter TargetName="templateRoot" Property="Background" Value="{DynamicResource Clicked}" />
-                    <Setter Property="BorderBrush" Value="#2C2C2C"></Setter>
-                    <Setter Property="BorderThickness" Value="1"></Setter>
+                    <Setter Property="BorderBrush" Value="#2C2C2C"/>
+                    <Setter Property="BorderThickness" Value="1"/>
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
@@ -341,8 +343,7 @@
 
         <!--Toolbar Area-->
         <Style x:Key="{x:Type ToolBarTray}" TargetType="{x:Type ToolBarTray}">
-            <Setter Property="Background" Value="{DynamicResource MenuBackgroundColorBrush}">
-            </Setter>
+            <Setter Property="Background" Value="{DynamicResource MenuBackgroundColorBrush}"/>
         </Style>
 
         <Style x:Key="ToolBarOverflowButtonStyle" TargetType="{x:Type ToggleButton}">
@@ -612,8 +613,6 @@
             </Setter>
         </Style>
 
-        <!--Toolbar Area-->
-
         <!--Color Picker Area-->
 
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -648,7 +647,7 @@
                         <Grid x:Name="mainGrid"
                      ToolTip="{Binding Name}">
                             <Grid.Resources>
-                                <Style TargetType="ToolTip">
+                                <Style TargetType="{x:Type ToolTip}">
                                     <Style.Triggers>
                                         <Trigger Property="Content"
                                     Value="">
@@ -689,7 +688,7 @@
                 <Border Background="{StaticResource CheckerBrush}" BorderBrush="Black" BorderThickness="1" Margin="2,2,2,2">
                     <Rectangle Width="14" Height="14">
                         <Rectangle.Style>
-                            <Style TargetType="Rectangle">
+                            <Style TargetType="{x:Type Rectangle}">
                                 <Setter Property="Fill" Value="{Binding Color, Converter={StaticResource ColorToSolidColorBrushConverter}}" />
                             </Style>
                         </Rectangle.Style>
@@ -698,10 +697,10 @@
             </Grid>
         </DataTemplate>
 
-        <Style x:Key="ColorPickerToggleButtonStyle" TargetType="ToggleButton">
+        <Style x:Key="ColorPickerToggleButtonStyle" TargetType="{x:Type ToggleButton}">
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="ToggleButton">
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
                         <Grid SnapsToDevicePixels="True">
 
                             <Grid>
@@ -720,7 +719,7 @@
 
                                 <xctk:ButtonChrome x:Name="ToggleButtonChrome" Background="{DynamicResource ButtonBackgroundColorBrush}" BorderBrush="{x:Null}"
                                           Grid.Column="1"
-                                          Visibility="{Binding ShowDropDownButton, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=xctk:ColorPicker}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                          Visibility="{Binding ShowDropDownButton, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type xctk:ColorPicker}, Mode=FindAncestor}}">
                                     <!--
                                           RenderChecked="{Binding IsOpen, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=xctk:ColorPicker}}"
                                           RenderEnabled="{Binding IsEnabled, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=xctk:ColorPicker}}"
@@ -760,26 +759,26 @@
             </Setter>
         </Style>
 
-        <Style x:Key="ColorDisplayStyle" TargetType="ContentControl">
+        <Style x:Key="ColorDisplayStyle" TargetType="{x:Type ContentControl}">
             <Setter Property="Focusable" Value="False" />
             <Setter Property="ContentTemplate">
                 <Setter.Value>
                     <DataTemplate>
                         <Border Background="{StaticResource ButtonBackgroundColorBrush}">
-                            <Rectangle Fill="{Binding SelectedColor, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=xctk:ColorPicker}, Converter={StaticResource ColorToSolidColorBrushConverter}}" />
+                            <Rectangle Fill="{Binding SelectedColor, Converter={StaticResource ColorToSolidColorBrushConverter}, RelativeSource={RelativeSource AncestorType={x:Type xctk:ColorPicker}, Mode=FindAncestor}}" />
                         </Border>
                     </DataTemplate>
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
-                <DataTrigger Binding="{Binding SelectedColor, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=xctk:ColorPicker}}"
+                <DataTrigger Binding="{Binding SelectedColor, RelativeSource={RelativeSource AncestorType={x:Type xctk:ColorPicker}, Mode=FindAncestor}}"
                       Value="{x:Null}">
                     <Setter Property="Visibility" Value="Collapsed" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
 
-        <Style x:Key="ColorListStyle" TargetType="ListBox">
+        <Style x:Key="ColorListStyle" TargetType="{x:Type ListBox}">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="ItemsPanel">
@@ -802,7 +801,7 @@
             <Setter Property="Focusable" Value="False" />
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
-            <Setter Property="MaxDropDownWidth" Value="300" />
+            <Setter Property="MaxDropDownWidth" Value="253" />
             <Setter Property="ShowRecentColors" Value="True" />
             <Setter Property="AvailableColorsSortingMode" Value="HueSaturationBrightness" />
 
@@ -811,162 +810,207 @@
                     <ControlTemplate TargetType="{x:Type xctk:ColorPicker}">
                         <Grid>
                             <ToggleButton x:Name="PART_ColorPickerToggleButton"
-                                IsTabStop="True"
-                                MinHeight="22"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                Padding="{TemplateBinding Padding}"
-                                IsChecked="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
-                                IsHitTestVisible="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource InverseBoolConverter}}"
-                                Style="{TemplateBinding ButtonStyle}">
+                                          IsTabStop="True"
+                                          MinHeight="22"
+                                          Background="{TemplateBinding Background}"
+                                          BorderBrush="{TemplateBinding BorderBrush}"
+                                          BorderThickness="{TemplateBinding BorderThickness}"
+                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          Padding="{TemplateBinding Padding}"
+                                          IsHitTestVisible="{Binding IsOpen, Converter={StaticResource InverseBoolConverter}, RelativeSource={RelativeSource TemplatedParent}}"
+                                          IsChecked="{Binding IsOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                          Style="{TemplateBinding ButtonStyle}"
+                                          >
                                 <Grid Margin="2">
                                     <ContentControl x:Name="ColorOnly" Style="{StaticResource ColorDisplayStyle}" />
-
                                     <Border x:Name="ColorAndName" Background="White" Visibility="Hidden">
                                         <StackPanel Orientation="Horizontal">
-                                            <ContentControl HorizontalAlignment="Left" Width="20" Margin="2,1,4,1" Style="{StaticResource ColorDisplayStyle}" BorderThickness="1" BorderBrush="#FFC9CACA" />
-                                            <TextBlock Text="{Binding SelectedColorText, RelativeSource={RelativeSource TemplatedParent}}" VerticalAlignment="Center" />
+                                            <ContentControl
+                                                HorizontalAlignment="Left"
+                                                Width="20"
+                                                Margin="2,1,4,1"
+                                                Style="{StaticResource ColorDisplayStyle}"
+                                                BorderThickness="1"
+                                                BorderBrush="{DynamicResource {ComponentResourceKey ResourceId=ControlNormalBorderKey, TypeInTargetAssembly={x:Type Themes:ResourceKeys}}}"
+                                                />
+                                            <TextBlock Text="{Binding SelectedColorText, RelativeSource={RelativeSource TemplatedParent}}" VerticalAlignment="Center"/>
                                         </StackPanel>
                                     </Border>
                                 </Grid>
                             </ToggleButton>
-
                             <Popup x:Name="PART_ColorPickerPalettePopup"
-                                     VerticalAlignment="Bottom"
-                                     IsOpen="{Binding ElementName=PART_ColorPickerToggleButton, Path=IsChecked}"
-                                     StaysOpen="False"
-                                     AllowsTransparency="True"
-                                     Focusable="False"
-                                     HorizontalOffset="1"
-                                     VerticalOffset="1"
-                                     PopupAnimation="Slide"
-                                     ToolTip="">
+                                   AllowsTransparency="True"
+                                   Focusable="False"
+                                   HorizontalOffset="1"
+                                   IsOpen="{Binding IsChecked, ElementName=PART_ColorPickerToggleButton}"
+                                   PopupAnimation="Slide"
+                                   StaysOpen="False"
+                                   ToolTip=""
+                                   VerticalOffset="1"
+                                   VerticalAlignment="Bottom">
                                 <Popup.Resources>
-                                    <Style TargetType="ToolTip">
+                                    <Style TargetType="{x:Type ToolTip}">
                                         <Style.Triggers>
-                                            <Trigger Property="Content"
-                                                Value="">
-                                                <Setter Property="Visibility"
-                                                  Value="Collapsed" />
+                                            <Trigger Property="Content" Value="">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
                                             </Trigger>
                                         </Style.Triggers>
                                     </Style>
                                 </Popup.Resources>
-                                <Border BorderThickness="1" Background="{DynamicResource BackgroundColorBrush}" BorderBrush="{DynamicResource BorderColorBrush}" Padding="3">
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition />
-                                            <RowDefinition Height="Auto" />
-                                        </Grid.RowDefinitions>
+                                <Border BorderThickness="1"
+                                        Background="{DynamicResource BackgroundColorBrush}"
+                                        BorderBrush="{DynamicResource BorderColorBrush}"
+                                        Padding="3">
+                                    <TabControl x:Name="ColorPickerTabControl" Background="{DynamicResource BackgroundColorBrush}"
+                                                SelectedIndex="{Binding ColorMode, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ColorModeToTabItemSelectedConverter}}">
+                                        <xctk:ColorPickerTabItem x:Name="StandardTabItem" Header="{Binding StandardButtonHeader, RelativeSource={RelativeSource TemplatedParent}}">
+                                            <xctk:ColorPickerTabItem.Template>
+                                                <ControlTemplate TargetType="{x:Type xctk:ColorPickerTabItem}">
+                                                    <Grid x:Name="templateRoot" SnapsToDevicePixels="True">
+                                                        <Border x:Name="mainBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,1,1,0" Background="{DynamicResource ButtonBackgroundColorBrush}" Margin="0">
+                                                            <Border x:Name="innerBorder" BorderBrush="#FFACACAC" BorderThickness="1,1,1,0" Background="{DynamicResource ButtonBackgroundColorBrush}" Margin="-1" Opacity="0"/>
+                                                        </Border>
+                                                        <ContentPresenter x:Name="contentPresenter"
+                                                                          TextBlock.Foreground="{DynamicResource ButtonFrontColorBrush}"
+                                                                          ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" ContentStringFormat="{TemplateBinding HeaderStringFormat}" ContentSource="Header" Focusable="False" HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}"/>
+                                                    </Grid>
+                                                    <ControlTemplate.Triggers>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <Setter Property="Panel.ZIndex" Value="1"/>
+                                                            <Setter Property="Margin" Value="-2,-2,-2,0"/>
+                                                            <Setter Property="Opacity" TargetName="innerBorder" Value="1"/>
+                                                        </MultiDataTrigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </xctk:ColorPickerTabItem.Template>
+                                            <Grid x:Name="_colorPaletteHost" Margin="4">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+                                                <!-- Available Colors -->
+                                                <Grid Grid.Row="1" Visibility="{TemplateBinding ShowAvailableColors, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                                    <Grid>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="Auto"/>
+                                                            <RowDefinition/>
+                                                        </Grid.RowDefinitions>
+                                                        <TextBlock Background="{DynamicResource ButtonBackgroundColorBrush}"
+                                                                   Foreground="{DynamicResource ButtonFrontColorBrush}"
+                                                                   Margin="0,0,0,1" Padding="2"
+                                                                   Text="{TemplateBinding AvailableColorsHeader}"/>
+                                                        <ListBox x:Name="PART_AvailableColors" Grid.Row="1"
+                                                                 ItemsSource="{Binding AvailableColors, RelativeSource={RelativeSource TemplatedParent}}"
+                                                                 Style="{StaticResource ColorListStyle}" />
+                                                    </Grid>
+                                                </Grid>
 
-                                        <Grid x:Name="_colorPaletteHost" Visibility="Collapsed" Margin="4">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                            </Grid.RowDefinitions>
+                                                <!-- Standard Colors-->
+                                                <Grid Grid.Row="2" Visibility="{TemplateBinding ShowStandardColors, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                                    <Grid>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="Auto"/>
+                                                            <RowDefinition Height="Auto"/>
+                                                        </Grid.RowDefinitions>
+                                                        <TextBlock Background="{DynamicResource ButtonBackgroundColorBrush}" Foreground="{DynamicResource ButtonFrontColorBrush}" Margin="0,1" Padding="2" Text="{TemplateBinding StandardColorsHeader}"/>
+                                                        <ListBox x:Name="PART_StandardColors" Grid.Row="1"
+                                                                ItemsSource="{Binding StandardColors, RelativeSource={RelativeSource TemplatedParent}}"
+                                                                Style="{StaticResource ColorListStyle}" />
+                                                    </Grid>
+                                                </Grid>
 
-                                            <!-- Available Colors -->
-                                            <Grid Grid.Row="1" Visibility="{TemplateBinding ShowAvailableColors, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                                <Grid>
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="Auto" />
-                                                        <RowDefinition />
-                                                    </Grid.RowDefinitions>
-                                                    <TextBlock Text="{TemplateBinding AvailableColorsHeader}" Background="{DynamicResource ButtonBackgroundColorBrush}" Foreground="{DynamicResource ButtonFrontColorBrush}" Padding="2" Margin="0,0,0,1" />
-                                                    <ListBox x:Name="PART_AvailableColors"
-                                             Grid.Row="1"
-                                             ItemsSource="{Binding AvailableColors, RelativeSource={RelativeSource TemplatedParent}}"
-                                             Style="{StaticResource ColorListStyle}" />
+                                                <!-- Recent Colors-->
+                                                <Grid Margin="0,1" Grid.Row="3" Visibility="{TemplateBinding ShowRecentColors, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                                    <Grid>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="Auto"/>
+                                                            <RowDefinition Height="22"/>
+                                                        </Grid.RowDefinitions>
+                                                        <TextBlock  Background="{DynamicResource ButtonBackgroundColorBrush}" Foreground="{DynamicResource ButtonFrontColorBrush}" Margin="0,1" Padding="2" Text="{TemplateBinding RecentColorsHeader}"/>
+                                                        <ListBox x:Name="PART_RecentColors" Grid.Row="1"
+                                                                 ItemsSource="{Binding RecentColors, RelativeSource={RelativeSource TemplatedParent}}"
+                                                                Style="{StaticResource ColorListStyle}" />
+                                                    </Grid>
                                                 </Grid>
                                             </Grid>
+                                        </xctk:ColorPickerTabItem>
+                                        <xctk:ColorPickerTabItem x:Name="AdvancedTabItem" Header="{Binding AdvancedButtonHeader, RelativeSource={RelativeSource TemplatedParent}}">
+                                            <xctk:ColorPickerTabItem.Template>
+                                                <ControlTemplate TargetType="{x:Type xctk:ColorPickerTabItem}">
+                                                    <Grid x:Name="templateRoot" SnapsToDevicePixels="True">
+                                                        <Border x:Name="mainBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,1,1,0" Background="{DynamicResource ButtonBackgroundColorBrush}" Margin="0">
+                                                            <Border x:Name="innerBorder" BorderBrush="#FFACACAC" BorderThickness="1,1,1,0" Background="{DynamicResource ButtonBackgroundColorBrush}" Margin="-1" Opacity="0"/>
+                                                        </Border>
+                                                        <ContentPresenter x:Name="contentPresenter"
+                                                                          TextBlock.Foreground="{DynamicResource ButtonFrontColorBrush}"
+                                                                          ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" ContentStringFormat="{TemplateBinding HeaderStringFormat}" ContentSource="Header" Focusable="False" HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}"/>
+                                                    </Grid>
+                                                    <ControlTemplate.Triggers>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <Setter Property="Panel.ZIndex" Value="1"/>
+                                                            <Setter Property="Margin" Value="-2,-2,-2,0"/>
+                                                            <Setter Property="Opacity" TargetName="innerBorder" Value="1"/>
+                                                        </MultiDataTrigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </xctk:ColorPickerTabItem.Template>
 
-                                            <!-- Standard Colors-->
-                                            <Grid Grid.Row="2" Visibility="{TemplateBinding ShowStandardColors, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                                <Grid>
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="Auto" />
-                                                        <RowDefinition Height="Auto" />
-                                                    </Grid.RowDefinitions>
-                                                    <TextBlock Text="{TemplateBinding StandardColorsHeader}" Background="{DynamicResource ButtonBackgroundColorBrush}" Foreground="{DynamicResource ButtonFrontColorBrush}" Padding="2" Margin="0,1,0,1" />
-                                                    <ListBox x:Name="PART_StandardColors"
-                                             Grid.Row="1"
-                                             ItemsSource="{Binding StandardColors, RelativeSource={RelativeSource TemplatedParent}}"
-                                             Style="{StaticResource ColorListStyle}" />
-                                                </Grid>
+                                            <!-- ColorCanvas -->
+                                            <Grid x:Name="_colorCanvasHost">
+                                                <xctk:ColorCanvas BorderThickness="0"
+                                                                  Background="Transparent"
+                                                                  Foreground="{DynamicResource ButtonFrontColorBrush}" FontWeight="Bold"
+                                                                  SelectedColor="{Binding SelectedColor, RelativeSource={RelativeSource TemplatedParent}}"
+                                                                  UsingAlphaChannel="{Binding UsingAlphaChannel, RelativeSource={RelativeSource TemplatedParent}}"
+                                                                  Style="{DynamicResource ColorCanvasStyle1}">
+                                                    <xctk:ColorCanvas.Width>
+                                                        <Binding ConverterParameter="-18" Path="MaxDropDownWidth" RelativeSource="{RelativeSource TemplatedParent}">
+                                                            <Binding.Converter>
+                                                                <xctk:AdditionConverter/>
+                                                            </Binding.Converter>
+                                                        </Binding>
+                                                    </xctk:ColorCanvas.Width>
+
+                                                </xctk:ColorCanvas>
                                             </Grid>
-
-                                            <!-- Recent Colors-->
-                                            <Grid Grid.Row="3" Margin="0,1,0,1" Visibility="{TemplateBinding ShowRecentColors, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                                <Grid>
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="Auto" />
-                                                        <RowDefinition Height="22" />
-                                                    </Grid.RowDefinitions>
-                                                    <TextBlock Text="{TemplateBinding RecentColorsHeader}" Background="{DynamicResource ButtonBackgroundColorBrush}" Foreground="{DynamicResource ButtonFrontColorBrush}" Padding="2" Margin="0,1,0,1" />
-                                                    <ListBox x:Name="PART_RecentColors"
-                                             Grid.Row="1"
-                                             ItemsSource="{Binding RecentColors, RelativeSource={RelativeSource TemplatedParent}}"
-                                             Style="{StaticResource ColorListStyle}" />
-                                                </Grid>
-                                            </Grid>
-                                        </Grid>
-
-                                        <!-- ColorCanvas -->
-                                        <Grid x:Name="_colorCanvasHost" Visibility="Collapsed">
-                                            <xctk:ColorCanvas Background="{DynamicResource BackgroundColorBrush}"
-                                                 BorderThickness="0"
-                                                 Foreground="{DynamicResource ButtonFrontColorBrush}" FontWeight="Bold"
-                                                 UsingAlphaChannel="{Binding UsingAlphaChannel, RelativeSource={RelativeSource TemplatedParent}}"
-                                                 SelectedColor="{Binding SelectedColor, RelativeSource={RelativeSource TemplatedParent}}" 
-                                                 Style="{DynamicResource ColorCanvasStyle1}"/>
-                                        </Grid>
-
-                                        <Separator Grid.Row="1"
-                                      HorizontalAlignment="Stretch"
-                                      Margin="5,0,5,0"
-                                      Visibility="{TemplateBinding ShowAdvancedButton, Converter={StaticResource BooleanToVisibilityConverter}}" />
-
-                                        <!-- More Colors Button -->
-                                        <Button x:Name="PART_ColorModeButton" Grid.Row="2" Margin="5" Visibility="{TemplateBinding ShowAdvancedButton, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource ButtonsStyle}" Width="150" />
-                                    </Grid>
+                                        </xctk:ColorPickerTabItem>
+                                    </TabControl>
                                 </Border>
                             </Popup>
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="DisplayColorAndName" Value="True">
-                                <Setter TargetName="ColorOnly" Property="Visibility" Value="Collapsed" />
-                                <Setter TargetName="ColorAndName" Property="Visibility" Value="Visible" />
+                                <Setter Property="Visibility" TargetName="ColorOnly" Value="Collapsed"/>
+                                <Setter Property="Visibility" TargetName="ColorAndName" Value="Visible"/>
                             </Trigger>
-
-                            <Trigger Property="ColorMode" Value="ColorPalette">
-                                <Setter TargetName="_colorPaletteHost" Property="Visibility" Value="Visible" />
-                                <Setter TargetName="_colorCanvasHost" Property="Visibility" Value="Collapsed" />
-                                <Setter TargetName="PART_ColorModeButton"
-                             Property="Content"
-                             Value="{Binding AdvancedButtonHeader, RelativeSource={RelativeSource TemplatedParent}}" />
+                            <Trigger Property="ShowTabHeaders" Value="False">
+                                <Setter Property="Visibility" TargetName="StandardTabItem" Value="Collapsed"/>
+                                <Setter Property="Visibility" TargetName="AdvancedTabItem" Value="Collapsed"/>
                             </Trigger>
-
-                            <Trigger Property="ColorMode" Value="ColorCanvas">
-                                <Setter TargetName="_colorPaletteHost" Property="Visibility" Value="Collapsed" />
-                                <Setter TargetName="_colorCanvasHost" Property="Visibility" Value="Visible" />
-                                <Setter TargetName="PART_ColorModeButton"
-                             Property="Content"
-                             Value="{Binding StandardButtonHeader, RelativeSource={RelativeSource TemplatedParent}}" />
-                            </Trigger>
-
                             <Trigger Property="ShowDropDownButton" Value="False">
-                                <Setter Property="BorderThickness" Value="1" />
+                                <Setter Property="BorderThickness" Value="1"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderBrush" Value="{DynamicResource {ComponentResourceKey ResourceId=ControlMouseOverBorderKey, TypeInTargetAssembly={x:Type Themes:ResourceKeys}}}"/>
+                </Trigger>
+                <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                    <Setter Property="BorderBrush" Value="{DynamicResource {ComponentResourceKey ResourceId=ControlSelectedBorderKey, TypeInTargetAssembly={x:Type Themes:ResourceKeys}}}"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
 
 
@@ -1170,7 +1214,7 @@
                                             <RowDefinition Height="Auto"/>
                                             <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
-                                        <TextBlock Grid.Column="0" Grid.Row="0" Text="R" VerticalAlignment="Center"></TextBlock>
+                                        <TextBlock Grid.Column="0" Grid.Row="0" Text="R" VerticalAlignment="Center"/>
                                         <Slider x:Name="PART_RSlider" Grid.Column="1" LargeChange="10" Maximum="255" Margin="4,6" Grid.Row="0" SmallChange="1" TickFrequency="1" Value="{Binding R, RelativeSource={RelativeSource TemplatedParent}}" VerticalAlignment="Center"/>
                                         <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding Value, ElementName=PART_RSlider}" VerticalAlignment="Center">
                                             <TextBox.Style>
@@ -1232,7 +1276,7 @@
                                                 </Style>
                                             </TextBox.Style>
                                         </TextBox>
-                                        <TextBlock Grid.Column="0" Grid.Row="1" Text="G" VerticalAlignment="Center"></TextBlock>
+                                        <TextBlock Grid.Column="0" Grid.Row="1" Text="G" VerticalAlignment="Center"/>
                                         <Slider x:Name="PART_GSlider" Grid.Column="1" LargeChange="10" Maximum="255" Margin="4,6" Grid.Row="1" SmallChange="1" TickFrequency="1" Value="{Binding G, RelativeSource={RelativeSource TemplatedParent}}" VerticalAlignment="Center"/>
                                         <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding Value, ElementName=PART_GSlider}" VerticalAlignment="Center">
                                             <TextBox.Style>
@@ -1294,7 +1338,7 @@
                                                 </Style>
                                             </TextBox.Style>
                                         </TextBox>
-                                        <TextBlock Grid.Column="0" Grid.Row="2" Text="B" VerticalAlignment="Center"></TextBlock>
+                                        <TextBlock Grid.Column="0" Grid.Row="2" Text="B" VerticalAlignment="Center"/>
                                         <Slider x:Name="PART_BSlider" Grid.Column="1" LargeChange="10" Maximum="255" Margin="4,6" Grid.Row="2" SmallChange="1" TickFrequency="1" Value="{Binding B, RelativeSource={RelativeSource TemplatedParent}}" VerticalAlignment="Center"/>
                                         <TextBox Grid.Column="3" Grid.Row="2" Text="{Binding Value, ElementName=PART_BSlider}" VerticalAlignment="Center">
                                             <TextBox.Style>
@@ -1464,7 +1508,7 @@
 
         <!--Color Picker Area-->
 
-        <Style x:Key="DropDownButtonStyle" TargetType="xctk:DropDownButton">
+        <Style x:Key="DropDownButtonStyle" TargetType="{x:Type xctk:DropDownButton}">
             <Setter Property="FontSize"                Value="16" />
             <Setter Property="FontFamily"              Value="Arial Black" />
             <Setter Property="FontWeight"              Value="Bold" />
@@ -1475,9 +1519,9 @@
             <Setter Property="VerticalAlignment"       Value="Center" />
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="xctk:DropDownButton">
-                        <Grid Name="MainGrid" SnapsToDevicePixels="True">
-                            <ToggleButton  Grid.Column="1" IsChecked="{Binding Path=IsOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Name="PART_DropDownButton">
+                    <ControlTemplate TargetType="{x:Type xctk:DropDownButton}">
+                        <Grid x:Name="MainGrid" SnapsToDevicePixels="True">
+                            <ToggleButton  Grid.Column="1" IsChecked="{Binding IsOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" x:Name="PART_DropDownButton">
                                 <ToggleButton.IsHitTestVisible>
                                     <Binding Path="IsOpen" RelativeSource="{RelativeSource TemplatedParent}">
                                         <Binding.Converter>
@@ -1486,8 +1530,8 @@
                                     </Binding>
                                 </ToggleButton.IsHitTestVisible>
                                 <ToggleButton.Template>
-                                    <ControlTemplate TargetType="ToggleButton">
-                                        <ContentPresenter Content="{TemplateBinding ContentControl.Content}" ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}" ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}" />
+                                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                        <ContentPresenter Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" ContentTemplate="{TemplateBinding ContentTemplate}" />
                                     </ControlTemplate>
                                 </ToggleButton.Template>
                                 <Grid>
@@ -1504,26 +1548,26 @@
                                                 <ColumnDefinition Width="*" />
                                                 <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
-                                            <ContentPresenter Content="{TemplateBinding ContentControl.Content}" ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}" HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}" Margin="{TemplateBinding Control.Padding}" RecognizesAccessKey="True" VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}" />
-                                            <Grid Grid.Column="1" IsHitTestVisible="False" Margin="4,3" Name="arrowGlyph">
-                                                <Path Data="M0,1C0,1 0,0 0,0 0,0 3,0 3,0 3,0 3,1 3,1 3,1 4,1 4,1 4,1 4,0 4,0 4,0 7,0 7,0 7,0 7,1 7,1 7,1 6,1 6,1 6,1 6,2 6,2 6,2 5,2 5,2 5,2 5,3 5,3 5,3 4,3 4,3 4,3 4,4 4,4 4,4 3,4 3,4 3,4 3,3 3,3 3,3 2,3 2,3 2,3 2,2 2,2 2,2 1,2 1,2 1,2 1,1 1,1 1,1 0,1 0,1z" Fill="{DynamicResource ButtonFrontColorBrush}" Height="4" Name="Arrow" Width="7" />
+                                            <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                            <Grid Grid.Column="1" IsHitTestVisible="False" Margin="4,3" x:Name="arrowGlyph">
+                                                <Path Data="M0,1C0,1 0,0 0,0 0,0 3,0 3,0 3,0 3,1 3,1 3,1 4,1 4,1 4,1 4,0 4,0 4,0 7,0 7,0 7,0 7,1 7,1 7,1 6,1 6,1 6,1 6,2 6,2 6,2 5,2 5,2 5,2 5,3 5,3 5,3 4,3 4,3 4,3 4,4 4,4 4,4 3,4 3,4 3,4 3,3 3,3 3,3 2,3 2,3 2,3 2,2 2,2 2,2 1,2 1,2 1,2 1,1 1,1 1,1 0,1 0,1z" Fill="{DynamicResource ButtonFrontColorBrush}" Height="4" x:Name="Arrow" Width="7" />
                                             </Grid>
                                         </Grid>
                                     </xctk:ButtonChrome>
                                 </Grid>
                             </ToggleButton>
-                            <Popup AllowsTransparency="True" Focusable="False" HorizontalOffset="1" IsOpen="{Binding Path=IsChecked, ElementName=PART_DropDownButton}" Name="PART_Popup" Placement="Bottom" StaysOpen="False" VerticalOffset="1">
+                            <Popup AllowsTransparency="True" Focusable="False" HorizontalOffset="1" IsOpen="{Binding IsChecked, ElementName=PART_DropDownButton}" x:Name="PART_Popup" Placement="Bottom" StaysOpen="False" VerticalOffset="1">
                                 <Border BorderThickness="1"
                                         Background="{DynamicResource MenuBackgroundColorBrush}"
                                         BorderBrush="{DynamicResource BorderColorBrush}"
                                         Padding="4">
-                                    <ContentPresenter Content="{TemplateBinding xctk:DropDownButton.DropDownContent}" Name="PART_ContentPresenter" />
+                                    <ContentPresenter Content="{TemplateBinding DropDownContent}" x:Name="PART_ContentPresenter" />
                                 </Border>
                             </Popup>
                         </Grid>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="UIElement.IsEnabled" Value="False">
-                                <Setter Property="Shape.Fill" TargetName="Arrow" Value="{DynamicResource MenuItem2DisabledColorBrush}" />
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Fill" TargetName="Arrow" Value="{DynamicResource MenuItem2DisabledColorBrush}" />
                             </Trigger>
 
                             <Trigger Property="IsMouseOver"        Value="True">
@@ -1558,15 +1602,13 @@
 
         <DataTemplate DataType="{x:Type FamilyTypeface}">
             <WrapPanel>
-                <TextBlock Text="{Binding Style}"   FontStyle="{Binding Style}" FontWeight="{Binding Weight}" FontStretch="{Binding Stretch}" FontFamily="{Binding SelectedItem, ElementName=lstFamily, FallbackValue=Arial }" />
-                <TextBlock Text="-"                 FontStyle="{Binding Style}" FontWeight="{Binding Weight}" FontStretch="{Binding Stretch}" FontFamily="{Binding SelectedItem, ElementName=lstFamily, FallbackValue=Arial }" />
-                <TextBlock Text="{Binding Weight}"  FontStyle="{Binding Style}" FontWeight="{Binding Weight}" FontStretch="{Binding Stretch}" FontFamily="{Binding SelectedItem, ElementName=lstFamily, FallbackValue=Arial }" />
-                <TextBlock Text="-"                 FontStyle="{Binding Style}" FontWeight="{Binding Weight}" FontStretch="{Binding Stretch}" FontFamily="{Binding SelectedItem, ElementName=lstFamily, FallbackValue=Arial }" />
-                <TextBlock Text="{Binding Stretch}" FontStyle="{Binding Style}" FontWeight="{Binding Weight}" FontStretch="{Binding Stretch}" FontFamily="{Binding SelectedItem, ElementName=lstFamily, FallbackValue=Arial }" />
+                <TextBlock Text="{Binding Style}"   FontStyle="{Binding Style}" FontWeight="{Binding Weight}" FontStretch="{Binding Stretch}" FontFamily="{Binding SelectedItem, ElementName=lstFamily, FallbackValue=Arial}" />
+                <TextBlock Text="-"                 FontStyle="{Binding Style}" FontWeight="{Binding Weight}" FontStretch="{Binding Stretch}" FontFamily="{Binding SelectedItem, ElementName=lstFamily, FallbackValue=Arial}" />
+                <TextBlock Text="{Binding Weight}"  FontStyle="{Binding Style}" FontWeight="{Binding Weight}" FontStretch="{Binding Stretch}" FontFamily="{Binding SelectedItem, ElementName=lstFamily, FallbackValue=Arial}" />
+                <TextBlock Text="-"                 FontStyle="{Binding Style}" FontWeight="{Binding Weight}" FontStretch="{Binding Stretch}" FontFamily="{Binding SelectedItem, ElementName=lstFamily, FallbackValue=Arial}" />
+                <TextBlock Text="{Binding Stretch}" FontStyle="{Binding Style}" FontWeight="{Binding Weight}" FontStretch="{Binding Stretch}" FontFamily="{Binding SelectedItem, ElementName=lstFamily, FallbackValue=Arial}" />
             </WrapPanel>
         </DataTemplate>
-
-        <!--Font Family Area-->
 
         <!--Combox Style Area-->
         <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
@@ -1642,14 +1684,13 @@
                     <ControlTemplate TargetType="{x:Type ComboBox}">
                         <Grid>
                             <ToggleButton
-                                        Name="ToggleButton"
+                                        x:Name="ToggleButton"
                                         Template="{StaticResource ComboBoxToggleButton}"
                                         Grid.Column="2"
                                         Focusable="false"
-                                        IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
-                                        ClickMode="Press">
-                            </ToggleButton>
-                            <ContentPresenter Name="ContentSite" IsHitTestVisible="False"  Content="{TemplateBinding SelectionBoxItem}"
+                                        IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                        ClickMode="Press"/>
+                            <ContentPresenter x:Name="ContentSite" IsHitTestVisible="False"  Content="{TemplateBinding SelectionBoxItem}"
                                                 ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
                                                 ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                                 Margin="3,3,23,3"
@@ -1667,13 +1708,13 @@
                                         Visibility="Hidden"
                                         IsReadOnly="{TemplateBinding IsReadOnly}" />
                             <Popup
-                                    Name="Popup"
+                                    x:Name="Popup"
                                     Placement="Bottom"
                                     IsOpen="{TemplateBinding IsDropDownOpen}"
                                     AllowsTransparency="True"
                                     Focusable="False"
                                     PopupAnimation="Slide">
-                                <Grid Name="DropDown"
+                                <Grid x:Name="DropDown"
                                       SnapsToDevicePixels="True"
                                       MinWidth="{TemplateBinding ActualWidth}"
                                       MaxHeight="{TemplateBinding MaxDropDownHeight}">
@@ -1713,8 +1754,6 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <Style.Triggers>
-            </Style.Triggers>
         </Style>
 
         <!-- SimpleStyles: ComboBoxItem -->
@@ -1726,7 +1765,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ComboBoxItem}">
-                        <Border Name="Border"
+                        <Border x:Name="Border"
                               Padding="2"
                               SnapsToDevicePixels="true"
                               BorderThickness="1">
@@ -1734,20 +1773,16 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsHighlighted" Value="true">
-                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource FontPickMouseOverBackgroundColorBrush}">
-                                </Setter>
-                                <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource FontPickMouseOverBorderColorBrush}">
-                                </Setter>
+                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource FontPickMouseOverBackgroundColorBrush}"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource FontPickMouseOverBorderColorBrush}"/>
                             </Trigger>
                             <Trigger Property="IsEnabled"       Value="false">
                                 <Setter Property="Foreground"  Value="{DynamicResource MenuItem2DisabledColorBrush}" />
                                 <Setter Property="Opacity"     Value="0.6" />
                             </Trigger>
                             <Trigger Property="IsSelected" Value="true">
-                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource FontPickSelectedBackgroundColorBrush}">
-                                </Setter>
-                                <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource FontPickSelectedBorderColorBrush}">
-                                </Setter>
+                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource FontPickSelectedBackgroundColorBrush}"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource FontPickSelectedBorderColorBrush}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
