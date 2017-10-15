@@ -424,6 +424,7 @@ namespace SkinText {
             MainW.Conf.BgBlur.IsChecked = true;
             MainW.Conf.toolsalwaysontop.IsChecked = true;
             MainW.Conf.StartWithWindows.IsChecked = true;
+            MainW.Conf.RegisterFileTypes.IsChecked = true;
 
             //Image Checkboxes
             MainW.Conf.GifMethodCPU.IsChecked = true;
@@ -856,6 +857,13 @@ namespace SkinText {
                             }
                             break;
                         }
+                        case "REGISTER_FILE_TYPES":{
+                            if (bool.TryParse(line[1], out bool1))
+                            {
+                                MainW.Conf.RegisterFileTypes.IsChecked = bool1;
+                            }
+                            break;
+                        }
 
                         default: {
                             #if DEBUG
@@ -1080,6 +1088,10 @@ namespace SkinText {
 
                     //START WITH WINDOWS
                     data = "start_with_windows = " + MainW.Conf.StartWithWindows.IsChecked.ToString();
+                    writer.WriteLine(data);
+
+                    //Register File Types
+                    data = "register_file_types = " + MainW.Conf.RegisterFileTypes.IsChecked.ToString();
                     writer.WriteLine(data);
 
                     //////////////////////////////////////
@@ -1424,19 +1436,56 @@ namespace SkinText {
             }
         }
 
-        public static void StartWithWindows(bool doStart)
+        public static void StartWithWindows(bool doStart = false)
         {
-            IllusoryStudios.Wpf.LostControls.Win32.StartupSettings startupSettings = new IllusoryStudios.Wpf.LostControls.Win32.StartupSettings(nameof(SkinText))
+            string execPath = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
+            const string name = nameof(SkinText);
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
+            if (doStart)
             {
-                CurrentPath = AppDataPath,
-                DesiredPath = AppDataPath,
-                StartsWithSystem = doStart
-            };
+                key.SetValue(name, execPath);
+            }
+            else
+            {
+                key.DeleteValue(name);
+            }
         }
 
-#endregion General
+        public static void RegisterFileTypes(bool doRegister = false)
+        {
+            const string name = nameof(SkinText);
+            if (!doRegister)
+            {
+                string execPath = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
 
-#region Window Config
+                Registry.SetValue(@"HKEY_CURRENT_USER\Software\Classes\" + name, null, "SkinText File", RegistryValueKind.String);
+                Registry.SetValue(@"HKEY_CURRENT_USER\Software\Classes\" + name + @"\shell\open\command", null, "\""+execPath+ "\" " + "\"%1\"", RegistryValueKind.ExpandString);
+
+                Registry.SetValue(@"HKEY_CURRENT_USER\Software\Classes\" + ".xaml", null, name, RegistryValueKind.String);
+                Registry.SetValue(@"HKEY_CURRENT_USER\Software\Classes\" + ".xamlp", null, name, RegistryValueKind.String);
+                Registry.SetValue(@"HKEY_CURRENT_USER\Software\Classes\" + ".sktskin", null, name, RegistryValueKind.String);
+            }
+            else
+            {
+                using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Classes", true)){
+                    //delete file associations
+                    key.DeleteSubKeyTree(name, false);
+                    key.DeleteSubKeyTree(".xaml", false);
+                    key.DeleteSubKeyTree(".xamlp", false);
+                    key.DeleteSubKeyTree(".sktskin", false);
+                }
+                using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts", true)){
+                    //delete explorer file extension cache
+                    key.DeleteSubKeyTree(".xaml",false);
+                    key.DeleteSubKeyTree(".xamlp", false);
+                    key.DeleteSubKeyTree(".sktskin", false);
+                }
+            }
+        }
+
+        #endregion General
+
+        #region Window Config
 
         /// <summary>
         /// Flips the <see cref="MainWindow.rtb"/>
@@ -2835,7 +2884,7 @@ namespace SkinText {
                         }
                         else{
                             //caret is in the middle of a run
-                            TextRange textRange2 = new TextRange(MainW.rtb.CaretPosition, MainW.rtb.CaretPosition.GetNextInsertionPosition(LogicalDirection.Backward));
+                            TextRange textRange2 = new TextRange(MainW.rtb.CaretPosition, MainW.rtb.CaretPosition.GetNextInsertionPosition(LogicalDirection.Backward)??MainW.rtb.CaretPosition.GetNextInsertionPosition(LogicalDirection.Forward)??MainW.rtb.CaretPosition);
                             textRange2.ApplyPropertyValue(formattingProperty, value);
                             MainW.rtb.Focus();//NOTE: this focus dont allow to type on the dropdowns
                         }
