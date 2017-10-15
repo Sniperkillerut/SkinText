@@ -313,10 +313,10 @@
                         <TextBlock Text="Windows Background: " Style="{DynamicResource ToolTipTextStyle}" />
                     </Label>
                     <xctk:ColorPicker x:Name="ClrPcker_BackgroundColorBrush"
-                          Grid.Column="1" Grid.Row="1"
-                          SelectedColorChanged="ClrPcker_SelectedColorChanged"
-                          Style="{DynamicResource ColorPickerStyle}"
-                          DisplayColorAndName="True" ColorMode="ColorCanvas" />
+                                      Grid.Column="1" Grid.Row="1"
+                                      SelectedColorChanged="ClrPcker_SelectedColorChanged"
+                                      Style="{DynamicResource ColorPickerStyle}"
+                                      DisplayColorAndName="True" ColorMode="ColorCanvas" />
 
                     <Label Grid.Column="0" Grid.Row="2">
                         <TextBlock Text="Button Background: " Style="{DynamicResource ToolTipTextStyle}" />
@@ -1036,6 +1036,17 @@
                         </CheckBox.ToolTip>
                         <TextBlock Text="Start With Windows" Style="{DynamicResource ToolTipTextStyle}" />
                     </CheckBox>
+
+                    <CheckBox x:Name="RegisterFileTypes" Grid.Column="1" Grid.Row="5" Margin="10,0" Checked="RegisterFileTypes_Checked" Unchecked="RegisterFileTypes_Checked" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" VerticalAlignment="Center">
+                        <CheckBox.ToolTip>
+                            <ToolTip Style="{DynamicResource ToolTipStyle}">
+                                <Border Style="{DynamicResource ToolTipBorderStyle}">
+                                    <TextBlock Text="Register SkinText Default FileTypes" Style="{DynamicResource ToolTipTextStyle}" />
+                                </Border>
+                            </ToolTip>
+                        </CheckBox.ToolTip>
+                        <TextBlock Text="Register File Types" Style="{DynamicResource ToolTipTextStyle}" />
+                    </CheckBox>
                 </Grid>
             </TabItem>
 
@@ -1180,18 +1191,18 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                    <Button x:Name="LoadSkin" Grid.Column="0"
+                        <Button x:Name="LoadSkin" Grid.Column="0"
                             Style="{DynamicResource ButtonsStyle}"
                             HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch"
                             Click="LoadSkin_Click">
-                        <TextBlock Text="Load Skin" />
-                    </Button>
-                    <Button x:Name="CreateSkin" Grid.Column="1"
+                            <TextBlock Text="Load Skin" />
+                        </Button>
+                        <Button x:Name="CreateSkin" Grid.Column="1"
                             Style="{DynamicResource ButtonsStyle}"
                             HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch"
                             Click="CreateSkin_Click">
-                        <TextBlock Text="Create Skin" />
-                    </Button>
+                            <TextBlock Text="Create Skin" />
+                        </Button>
                     </Grid>
                 </Grid>
             </TabItem>
