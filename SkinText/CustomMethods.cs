@@ -144,7 +144,6 @@ namespace SkinText {
                 if (imagepath != newImagePath) {
                     ImageClear();//this image clear should not be called when creating a skin, but the copy below should
                     File.Copy(imagepath, newImagePath, true);
-                    MessageBox.Show("copy img");
                     //imagepath = newImagePath;
                     //first copy the img to appdata, then load it
                 }
@@ -1454,7 +1453,7 @@ namespace SkinText {
         public static void RegisterFileTypes(bool doRegister = false)
         {
             const string name = nameof(SkinText);
-            if (!doRegister)
+            if (doRegister)
             {
                 string execPath = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
 
@@ -2074,6 +2073,9 @@ namespace SkinText {
 
             if (savedialog.ShowDialog() == true) {
                 try {
+                    if (File.Exists(savedialog.FileName)){
+                        File.Delete(savedialog.FileName);
+                    }
                     ZipFile.CreateFromDirectory(AppDataPath+@"\"+ skinFolder, savedialog.FileName, CompressionLevel.Optimal,false);
                     MessageBox.Show("Export of skin: " + skinName + " complete!", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
