@@ -355,8 +355,7 @@ namespace SkinText {
         #endregion Skins
 
         private void GoToReddit_Click(object sender, RoutedEventArgs e) {
-            //TODO: Reddit link
-            //Process.Start("http://google.com");
+            Process.Start("https://www.reddit.com/r/SkinText/");
         }
 
         private void GoToWebPage_Click(object sender, RoutedEventArgs e) {
@@ -365,8 +364,7 @@ namespace SkinText {
         }
 
         private void GoToDeviantArt_Click(object sender, RoutedEventArgs e) {
-            //TODO: DeviantArt link
-            //Process.Start("http://google.com");
+            Process.Start("https://skintext.deviantart.com/");
         }
 
         private void GoToLicense_Click(object sender, RoutedEventArgs e) {
@@ -406,6 +404,11 @@ namespace SkinText {
         private void RegisterFileTypes_Checked(object sender, RoutedEventArgs e)
         {
             CustomMethods.RegisterFileTypes(RegisterFileTypes.IsChecked.Value);
+        }
+
+        private void HelpButt_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("http://skintext-documentation.readthedocs.io/en/latest/index.html");
         }
     }
 }
